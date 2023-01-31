@@ -16,3 +16,11 @@ plot-1
 q4
 a-1
 b-1
+q1-1
+q2-1
+part-a
+part-b
+part-c
+part-d
+part-e
+q3-1

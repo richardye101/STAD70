@@ -5,16 +5,19 @@
 \documentclass[
 ]{book}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -108,7 +111,7 @@
 \bibliographystyle{plainnat}
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
   pdftitle={STAD70 Course Work},
   pdfauthor={Richard Ye},
@@ -610,6 +613,105 @@ Note: You will have to use (pnorm(), pbinom()) to find the numerical values of t
 \begin{verbatim}
 ## [1] 0.9177322
 \end{verbatim}
+
+\hypertarget{q1-1}{%
+\chapter{Q1}\label{q1-1}}
+
+An MLE can be derived from finding the derivative of the log \(L(\alpha)\), \(l(\alpha)\) function, where \[
+\begin{aligned}
+L(\alpha) &= \prod^{n}_{i=1} \left[ \frac{\alpha x_{i}^{-(\alpha+1)}}{\ell^{-\alpha}} \right]\\
+\log L(\alpha) = l(\alpha) &= \sum^{n}_{i=1} \left[ \log(\alpha) - (\alpha+1)\log(x_{i}) +\alpha\log(\ell) \right]\\
+\\
+l^{'}(\alpha) &= \sum^{n}_{i=1} \left( \frac{1}{\alpha} - [\log (x_{i}) + \log(\ell)]\right) = 0\\
+0 &= \frac{n}{\alpha} - \sum^{n}_{i=1} \left( \log(x_{i}) -\log(\ell) \right)\\
+\frac{n}{\alpha} &= \sum^{n}_{i=1} \left( \log(x_{i}) -\log(\ell) \right)\\
+\frac{1}{\alpha} &= \frac{1}{n} \left[ \sum^{n}_{i=1}\log\left( \frac{x_{i}}{\ell} \right) \right]\\
+\\
+\therefore \hat{\alpha} &= \left(  \frac{1}{n} \left[ \sum^{n}_{i=1}\log\left( \frac{x_{i}}{\ell} \right) \right] \right)^{-1}
+\end{aligned}
+\]
+
+\hypertarget{q2-1}{%
+\chapter{Q2}\label{q2-1}}
+
+\hypertarget{part-a}{%
+\section{Part A}\label{part-a}}
+
+Heavy tail distributions are those with polynomial tails which follow by
+\[f(x) \propto x^{-(1+\alpha)}\]
+where smaller \(\alpha \to\) heavier tails
+
+We say that distribution \(F\) is heavy tailed if the integral on the positive half of \(\mathbb{R}^{+}\) is infinite for some t
+
+\[
+\begin{aligned}
+m_{X}(t) = E(e^{tX}) = \left[ 1 + tE(X) + \frac{(tE(X))^2}{2!} + \frac{(tE(X))^3}{3!} + ... + (tE(X))^n/n! + ...  \right]
+\end{aligned}
+\]
+
+\^{} not complete
+
+\hypertarget{part-b}{%
+\section{Part B}\label{part-b}}
+
+\[
+\begin{aligned}
+\phi_{X}(t) &= \mathbb{E}[e^{itX}] = \mathbb{E}[\cos(tX) + i\sin(tX)]\\
+&= \mathbb{E}[\cos(tX)] + i\mathbb{E}[\sin(tX)]\\
+\mathbb{E}[\sin(tX)] &= \int ^{\infty}_{-\infty} \sin(tX)f(x)\, dx \\
+&= \int ^{0}_{-\infty} \sin(tX)f(x)\, dx + \int ^{\infty}_{0} \sin(tX)f(x)\, dx \\
+&= -\int ^{\infty}_{0} \sin(tX)f(x)\, dx + \int ^{\infty}_{0} \sin(tX)f(x)\, dx \\
+&= 0\\
+\therefore \phi_{X}(t) &= \mathbb{E}[\cos(tX)] \text{ which only takes real values }
+\end{aligned}
+\]
+
+\hypertarget{part-c}{%
+\section{Part C}\label{part-c}}
+
+\[
+\begin{aligned}
+\phi_{X}(t) &= \mathbb{E}[e^{itX}]\\
+\phi_{Y}(t) &= \mathbb{E}[e^{itY}]\\
+\phi_{Z}(t) &= \mathbb{E}[e^{itZ}]\\
+&= \mathbb{E}[e^{it(X+Y)}]\\
+&=\mathbb{E}[e^{itX}e^{itY}]\\
+&=\mathbb{E}[e^{itX}]\mathbb{E}[e^{itY}]
+\quad \text{As they are independent}\\
+&= e^{-c|t|^{\alpha}}\cdot e^{-d|t|^{\alpha}}\\
+&= e^{-(c+d)|t|^{\alpha}}
+\end{aligned}
+\]
+Which shows that \(\phi_{Z}(t)\) shares the same form as \(X\) and \(Y\).
+
+\hypertarget{part-d}{%
+\section{Part D}\label{part-d}}
+
+\[
+\begin{aligned}
+\phi_{X}(t) &= \mathbb{E}[e^{itX}] = e^{-|t|}\\
+\phi_{\bar{X}}(t) &= \mathbb{E}[e^{it\bar{X}}]\\
+&= \mathbb{E}\left[ e^{it \frac{1}{n}\left(\sum^{n}_{i=1}X_{i} \right)} \right]\\
+&=\mathbb{E}\left[ e^{it\frac{1}{n}X_{1}} e^{it\frac{1}{n}X_{2}}\dots e^{it\frac{1}{n}X_{n}}\right]\\
+&= \mathbb{E}\left[ e^{it\frac{1}{n}X_{1}} \right] \mathbb{E}\left[e^{it\frac{1}{n}X_{2}}\right] \dots \mathbb{E}\left[e^{it\frac{1}{n}X_{n}}\right]\\
+&= [e^{-|t|/n}]^{n}\\
+&= e^{-|t|/n\cdot n} = e^{-|t|} \quad \text{Which is exactly the $t(1)$ distribution}
+\end{aligned}
+\]
+
+\hypertarget{part-e}{%
+\section{Part E}\label{part-e}}
+
+According to theory, \(\mathbb{E}[X^{k}]=\infty\) for any \(k\geq \alpha\) where \(\alpha\) is the tail index.
+
+If the tail index is greater than 2, then the second order moment exists, implying both the mean and variance both exist/are finite.
+
+By definition, a sum of stable distributions would converge to a stable distribution as shown by the characteristic functions above, but according to the Central Limit Theorem, any sum of iid random variables with finite mean and variance will produce a Normal distribution.
+
+\hypertarget{q3-1}{%
+\chapter{Q3}\label{q3-1}}
+
+later
 
   \bibliography{book.bib,packages.bib}
 
