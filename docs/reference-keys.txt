@@ -23,6 +23,9 @@ generalized-central-limit-theorem
 measuring-tail-behaviour
 mixture-distributions
 normal-scale-mixture
+modelling-extreme-events
+stylized-facts
+extreme-value-theory
 problem-set-1
 q1
 data-prep
