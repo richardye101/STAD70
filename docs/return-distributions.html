@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | STAD70 Course Work</title>
+  <title>Chapter 3 Return Distributions | STAD70 Course Work</title>
   <meta name="description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | STAD70 Course Work" />
+  <meta property="og:title" content="Chapter 3 Return Distributions | STAD70 Course Work" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | STAD70 Course Work" />
+  <meta name="twitter:title" content="Chapter 3 Return Distributions | STAD70 Course Work" />
   
   <meta name="twitter:description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="financial-data-and-returns.html"/>
+<link rel="next" href="problem-set-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -223,19 +223,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="return-distributions" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Return Distributions<a href="return-distributions.html#return-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="skewness" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Skewness<a href="return-distributions.html#skewness" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Skewness measures symmetry.
+- Positive skew <span class="math inline">\(\to\)</span> right skewed
+- Negative skew <span class="math inline">\(\to\)</span> left skewed
+<span class="math display">\[
+Sk = \mathbb{E}\left[ \left( \frac{X-\mu}{\sigma} \right)^{3} \right]
+\]</span>
+[[Pasted image 20230205211849.png]]</p>
+</div>
+<div id="kurtosis" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Kurtosis<a href="return-distributions.html#kurtosis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Kurtosis measures how concentrated the data is around the mean, or how heavy the tails are. You can only measure kurtosis (meaningfully) if the distribution has 0 skew.</p>
+<p>Kurtosis of a distribution is measured against the kurtosis of the Normal distribution, which is <span class="math inline">\(3\)</span>.</p>
+<p><span class="math display">\[
+Kur = \mathbb{E}\left[ \left( \frac{X-\mu}{\sigma} \right)^{3} \right] - 3
+\]</span>
+[[Pasted image 20230205211901.png]]</p>
+</div>
+<div id="qq-plot" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> QQ Plot<a href="return-distributions.html#qq-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>[[Pasted image 20230205212417.png]]</p>
+<ul>
+<li>Top left: The sample quantiles spread further on the right than the theoretical quantiles, which implies a <strong>right/pos skewness</strong></li>
+<li>Top right: The sample quantiles for the tails are very concentrated compared to the theoretical quantiles, which implies the data has short/finite tails implying it is <strong>platykurtic/neg kurtosis</strong></li>
+<li>Bottom left: The sample quantiles spread further on the left than the theoretical quantiles, which implies a <strong>left/neg skewness</strong></li>
+<li>Bottom right: The sample quantiles for the tails are very spread compared to the theoretical quantiles, which implies the data has long/heavy tails implying it is <strong>leptokurtic/pos kurtosis</strong></li>
+</ul>
+</div>
+<div id="heavy-tail-distributions" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Heavy Tail Distributions<a href="return-distributions.html#heavy-tail-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A distribution <span class="math inline">\(f(x)\)</span> is said to have:</p>
+<ul>
+<li>Exponential tails (short/finite tails) if
+<span class="math display">\[f(x) \propto e^{-x/\lambda}\]</span></li>
+<li>Polynomial tails (long/heavy tails) if
+<span class="math display">\[
+\begin{aligned}
+f(x) &amp;\propto x^{-(1+\alpha)}\\
+\\
+\text{Where } &amp;\alpha \text{ is the tail index}
+\end{aligned}
+\]</span></li>
+</ul>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="financial-data-and-returns.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="problem-set-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -266,7 +309,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/%s",
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/Notes/2-Return-Distributions.md",
 "text": "Edit"
 },
 "history": {

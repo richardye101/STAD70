@@ -134,6 +134,301 @@
 
 Work from the STAD70 course taken Winter 2023.
 
+\hypertarget{financial-data-and-returns}{%
+\chapter{Financial Data and Returns}\label{financial-data-and-returns}}
+
+\begin{itemize}
+\tightlist
+\item
+  Prices of financial instruments (stocks, bonds, futures, options, etc)
+\item
+  LIBOR: London Inter-Bank Offered Rate
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Avg interest rate that major London Banks would charge when borrowing from each other
+  \end{itemize}
+\item
+  FX Rates: Decentralized market that sets currency prices
+\end{itemize}
+
+There are two types of \emph{raw (tick)} data:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Quote data}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Record of bid/ask prices from the order book, usually just the top \(N\) lines of the order book on the bid and ask sides
+  \end{itemize}
+\item
+  \textbf{Trade data}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Trade records (filled orders)
+  \end{itemize}
+\end{itemize}
+
+Data that is identified using time:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Intraday Data}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Data of the most current bids/asks, last price, volume etc
+  \item
+    Describes the data of a stock within a given day
+  \end{itemize}
+\item
+  \textbf{Daily data}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    For longer term analysis
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{trading}{%
+\section{Trading}\label{trading}}
+
+There are two types:
+- \textbf{OTC (Over the counter)}
+- Negotiated and traded directly between parties, not for the public to bid on
+- \textbf{Through an Exchange}
+- The TSX, NYSE, LSE (London)
+- Uses an \textbf{auction} system where there are many potential buyers and sellers
+- Uses a \textbf{continuous double auction (CDA)}, where the bids and asks are matched in real-time to determine which trades to execute.
+- A matching order (bid \(\geq\) ask) is executed right away
+- Outstanding orders are maintained in an \textbf{order book}
+
+\hypertarget{order-types}{%
+\section{Order Types}\label{order-types}}
+
+\begin{itemize}
+\tightlist
+\item
+  Limit order: buy/sell are no more/les than a specified price
+
+  \begin{itemize}
+  \tightlist
+  \item
+    It is maintained in the order book if not filled immediately
+  \end{itemize}
+\item
+  Market order: buy/sell at the current market price immediately
+
+  \begin{itemize}
+  \tightlist
+  \item
+    No control over the price at which the order will execute
+  \end{itemize}
+\item
+  Iceberg order: Only a portion of the total (giant) order is displayed in the order book, and when it is filled, a new portion is shown
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Used to maintain anonymity
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{returns}{%
+\section{Returns}\label{returns}}
+
+\begin{itemize}
+\tightlist
+\item
+  The ratio of money gained/lost on an investment relative to the invested amount
+\item
+  It is defined relative tot he holding period (daily, monthly, annual)
+\end{itemize}
+
+\hypertarget{net-returns}{%
+\subsection{Net Returns}\label{net-returns}}
+
+\[
+R_{t} = \frac{P_{t}-P_{t-1}}{P_{t-1}} = \frac{P_{t}}{P_{t-1}} - 1
+\]
+Where \(P_{t}\) is the price at time \(T\).
+
+Gross return is just \(\frac{P_{t}}{P_{t-1}} = 1 + R_{t}\)
+
+\hypertarget{log-returns}{%
+\subsection{Log Returns}\label{log-returns}}
+
+\[
+\begin{aligned}
+r_{t} &= \log(1+R_{t})\\
+&= \log\left( \frac{P_{t}}{P_{t-1}} \right)\\
+&= \log(P_{t}) - \log(P_{t-1})
+\end{aligned}
+\]
+
+You can obtain the log return from the net return (for small returns, \(<1\%\)) using the Taylor Approximation:
+\[
+\begin{aligned}
+f(x) &\approx f(x_{0}) + f'(x_{0})(x-x_{0}) + \frac{1}{2}f''(x_{0})(x-x_{0})^{2}+\dots\\
+\\
+r_{t} &= \log(1+R_{t})\\
+&\approx \log(x_{0})+\log'(x)|_{x=x_{0}}\cdot (\underbrace{ 1+R_{t} }_{ x }-x_{0})+\dots\\
+& \text{Expand around } x_{0} = 1\\
+\\
+&= 0 + \frac{1}{1}\cdot R_{t}\\
+&\approx R_{t}
+\end{aligned}
+\]
+
+We like to work with log returns because they are also easy to aggregate!
+\[
+\begin{aligned}
+R_{1-22} &= (1+R_{1})\cdot(1+R_{2})\cdot \dots \cdot (1+R_{22}) - 1\\
+r_{1-22} &= r_{1} + r_{2} + \dots + r_{22}\\
+&= \log\left( \frac{P_{1}}{P_{0}}\cdot \frac{P_{2}}{P_{1}} \cdot \dots \cdot \frac{P_{22}}{P_{21}} \right)\\
+&= \log\left( \frac{P_{22}}{P_{0}} \right)\\
+\end{aligned}
+\]
+
+\hypertarget{returns-accounting-for-dividends}{%
+\subsection{Returns accounting for dividends}\label{returns-accounting-for-dividends}}
+
+If a dividend was paid just before time \(t\), and after \(t-1\), then we would have:
+\[
+\begin{aligned}
+R_{t} &= \frac{P_{t}-D_{t}}{P_{t-1}} - 1 \\
+\\
+r_{t} &= \log(P_{t}+D_{t}) - \log(P_{t-1})
+\end{aligned}
+\]
+\#\#\# Returns accounting for splits
+\[
+\begin{aligned}
+R_{t} &= \frac{P_{t}}{P_{t-1}/s}-1\\
+r_{t} &= \log(P_{t}) - \log(P_{t-1}/s)\\
+\text{Where } s &= \text{number of shares recieved per 1 share owned}
+\end{aligned}
+\]
+
+\hypertarget{adjusted-returns}{%
+\subsection{Adjusted returns}\label{adjusted-returns}}
+
+These returns have already accounted for dividends and splits, so returns should always be calculated on \textbf{adjusted returns.}
+\textbf{They should not be used as prices (ie the adjusted close)!}
+
+\hypertarget{random-walk-model}{%
+\subsection{Random Walk Model}\label{random-walk-model}}
+
+We say the additive log returns
+\[
+\log\left( \frac{P_{t}}{P_{0}} \right) = r_{1} + r_{2} + \dots + r_{t}
+\]
+Follow a random walk model if:
+\[
+\begin{aligned}
+r_{t} &\sim (\mu, \sigma^{2})\\
+\\
+\text{Where } \quad  \mathbb{E}[r_{i}] &= \mu \text{ is drift}\\
+ \sqrt{ Var[r_{i}] } &= \sigma \text{ is volatility}
+\end{aligned}
+\]
+However they follow a Normal random walk if:
+\[
+r_{t} \sim N(\mu, \sigma^{2})
+\]
+Which implies that log-returns are Normally distributed.
+
+The random walk from \(1-n\) has:
+\[
+\begin{aligned}
+r_{1-n} &= r_1 + r_{2} + \dots +r_{n}\\
+\\
+\text{Mean: }& \mathbb{E}(r_{1-n}) = n\mu\\
+\text{Variance: }& \sqrt{ Var[r_{1-n}] } = \sqrt{ n }\sigma
+\end{aligned}
+\]
+Which can be converted to the asset price simply using
+\[
+P_{t} = P_{0}\cdot e^{r_{1} + r_{2}+\dots +r_{t}}
+\]
+
+Which is referred to as the Exponential/Geometric Random walk
+
+Random walks are not a good description of reality, but they are useful for modelling.
+
+\hypertarget{return-distributions}{%
+\chapter{Return Distributions}\label{return-distributions}}
+
+\hypertarget{skewness}{%
+\section{Skewness}\label{skewness}}
+
+Skewness measures symmetry.
+- Positive skew \(\to\) right skewed
+- Negative skew \(\to\) left skewed
+\[
+Sk = \mathbb{E}\left[ \left( \frac{X-\mu}{\sigma} \right)^{3} \right]
+\]
+{[}{[}Pasted image 20230205211849.png{]}{]}
+
+\hypertarget{kurtosis}{%
+\section{Kurtosis}\label{kurtosis}}
+
+Kurtosis measures how concentrated the data is around the mean, or how heavy the tails are. You can only measure kurtosis (meaningfully) if the distribution has 0 skew.
+
+Kurtosis of a distribution is measured against the kurtosis of the Normal distribution, which is \(3\).
+
+\[
+Kur = \mathbb{E}\left[ \left( \frac{X-\mu}{\sigma} \right)^{3} \right] - 3
+\]
+{[}{[}Pasted image 20230205211901.png{]}{]}
+
+\hypertarget{qq-plot}{%
+\section{QQ Plot}\label{qq-plot}}
+
+{[}{[}Pasted image 20230205212417.png{]}{]}
+
+\begin{itemize}
+\tightlist
+\item
+  Top left: The sample quantiles spread further on the right than the theoretical quantiles, which implies a \textbf{right/pos skewness}
+\item
+  Top right: The sample quantiles for the tails are very concentrated compared to the theoretical quantiles, which implies the data has short/finite tails implying it is \textbf{platykurtic/neg kurtosis}
+\item
+  Bottom left: The sample quantiles spread further on the left than the theoretical quantiles, which implies a \textbf{left/neg skewness}
+\item
+  Bottom right: The sample quantiles for the tails are very spread compared to the theoretical quantiles, which implies the data has long/heavy tails implying it is \textbf{leptokurtic/pos kurtosis}
+\end{itemize}
+
+\hypertarget{heavy-tail-distributions}{%
+\section{Heavy Tail Distributions}\label{heavy-tail-distributions}}
+
+A distribution \(f(x)\) is said to have:
+
+\begin{itemize}
+\tightlist
+\item
+  Exponential tails (short/finite tails) if
+  \[f(x) \propto e^{-x/\lambda}\]
+\item
+  Polynomial tails (long/heavy tails) if
+  \[
+  \begin{aligned}
+  f(x) &\propto x^{-(1+\alpha)}\\
+  \\
+  \text{Where } &\alpha \text{ is the tail index}
+  \end{aligned}
+  \]
+\end{itemize}
+
 \hypertarget{problem-set-1}{%
 \chapter{Problem Set 1}\label{problem-set-1}}
 
