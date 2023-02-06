@@ -152,8 +152,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3.1" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html#net-returns"><i class="fa fa-check"></i><b>2.3.1</b> Net Returns</a></li>
 <li class="chapter" data-level="2.3.2" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html#log-returns"><i class="fa fa-check"></i><b>2.3.2</b> Log Returns</a></li>
 <li class="chapter" data-level="2.3.3" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html#returns-accounting-for-dividends"><i class="fa fa-check"></i><b>2.3.3</b> Returns accounting for dividends</a></li>
-<li class="chapter" data-level="2.3.4" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html#adjusted-returns"><i class="fa fa-check"></i><b>2.3.4</b> Adjusted returns</a></li>
-<li class="chapter" data-level="2.3.5" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html#random-walk-model"><i class="fa fa-check"></i><b>2.3.5</b> Random Walk Model</a></li>
+<li class="chapter" data-level="2.3.4" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html#returns-accounting-for-splits"><i class="fa fa-check"></i><b>2.3.4</b> Returns accounting for splits</a></li>
+<li class="chapter" data-level="2.3.5" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html#adjusted-returns"><i class="fa fa-check"></i><b>2.3.5</b> Adjusted returns</a></li>
+<li class="chapter" data-level="2.3.6" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html#random-walk-model"><i class="fa fa-check"></i><b>2.3.6</b> Random Walk Model</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="return-distributions.html"><a href="return-distributions.html"><i class="fa fa-check"></i><b>3</b> Return Distributions</a>
@@ -161,7 +162,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1" data-path="return-distributions.html"><a href="return-distributions.html#skewness"><i class="fa fa-check"></i><b>3.1</b> Skewness</a></li>
 <li class="chapter" data-level="3.2" data-path="return-distributions.html"><a href="return-distributions.html#kurtosis"><i class="fa fa-check"></i><b>3.2</b> Kurtosis</a></li>
 <li class="chapter" data-level="3.3" data-path="return-distributions.html"><a href="return-distributions.html#qq-plot"><i class="fa fa-check"></i><b>3.3</b> QQ Plot</a></li>
-<li class="chapter" data-level="3.4" data-path="return-distributions.html"><a href="return-distributions.html#heavy-tail-distributions"><i class="fa fa-check"></i><b>3.4</b> Heavy Tail Distributions</a></li>
+<li class="chapter" data-level="3.4" data-path="return-distributions.html"><a href="return-distributions.html#heavy-tail-distributions"><i class="fa fa-check"></i><b>3.4</b> Heavy Tail Distributions</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="return-distributions.html"><a href="return-distributions.html#common-heavy-tail-distributions"><i class="fa fa-check"></i><b>3.4.1</b> Common Heavy Tail Distributions</a></li>
+<li class="chapter" data-level="3.4.2" data-path="return-distributions.html"><a href="return-distributions.html#stable-distributions"><i class="fa fa-check"></i><b>3.4.2</b> Stable Distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="return-distributions.html"><a href="return-distributions.html#mixture-distributions"><i class="fa fa-check"></i><b>3.5</b> Mixture Distributions</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="problem-set-1.html"><a href="problem-set-1.html"><i class="fa fa-check"></i><b>4</b> Problem Set 1</a>
 <ul>
@@ -233,7 +239,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="math display">\[
 Sk = \mathbb{E}\left[ \left( \frac{X-\mu}{\sigma} \right)^{3} \right]
 \]</span>
-[[Pasted image 20230205211849.png]]</p>
+<img src="Notes/Obsidian-Attachments/2-Return-Distributions.png" /></p>
 </div>
 <div id="kurtosis" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Kurtosis<a href="return-distributions.html#kurtosis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -242,11 +248,11 @@ Sk = \mathbb{E}\left[ \left( \frac{X-\mu}{\sigma} \right)^{3} \right]
 <p><span class="math display">\[
 Kur = \mathbb{E}\left[ \left( \frac{X-\mu}{\sigma} \right)^{3} \right] - 3
 \]</span>
-[[Pasted image 20230205211901.png]]</p>
+<img src="Notes/Obsidian-Attachments/2-Return-Distributions-1.png" /></p>
 </div>
 <div id="qq-plot" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> QQ Plot<a href="return-distributions.html#qq-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>[[Pasted image 20230205212417.png]]</p>
+<p><img src="Notes/Obsidian-Attachments/2-Return-Distributions-2.png" /></p>
 <ul>
 <li>Top left: The sample quantiles spread further on the right than the theoretical quantiles, which implies a <strong>right/pos skewness</strong></li>
 <li>Top right: The sample quantiles for the tails are very concentrated compared to the theoretical quantiles, which implies the data has short/finite tails implying it is <strong>platykurtic/neg kurtosis</strong></li>
@@ -269,7 +275,109 @@ f(x) &amp;\propto x^{-(1+\alpha)}\\
 \end{aligned}
 \]</span></li>
 </ul>
+<blockquote>
+<p><strong>The smaller the tail index, the heavier the tail</strong></p>
+</blockquote>
+<p>Heavy tailed distributions can also have infinite moments (including the mean!)</p>
+<p><span class="math display">\[
+\mathbb{E}(X^{k}) = \infty \text{ for } k \geq \alpha
+\]</span>
+<em>So if the tail index is high, the tail is lighter, and the first <span class="math inline">\(\alpha\)</span> moments exist.</em></p>
+<p>The tail index can be estimated using:
+- MLE approximation, which takes the derivative log of the product of n the distributions when it equals 0, and solving for <span class="math inline">\(\alpha\)</span>
+- <span class="math inline">\(\hat{\alpha} = \frac{n}{\sum^n_{i=1}\ln\left( r_{i}/r_{min} \right)}\)</span>
+- <span class="math display">\[
+\begin{aligned}
+L(\alpha) &amp;= \prod^{n}_{i=1}[f(x)]\\
+\log(L(\alpha)) = l(\alpha) &amp;= \sum^{n}_{i=1} f(x)\\
+l&#39;(\alpha) &amp;= \sum^{n}_{i=1} f&#39;(x) = 0
+\end{aligned}
+\]</span>
+- Pareto Q-Q plot of the empirical CDF and the returns in log x log scale
+- <span class="math inline">\(\alpha\)</span> is the estimated slope of the line of best fit
+<img src="Notes/Obsidian-Attachments/2-Return-Distributions-3.png" /></p>
+<div id="common-heavy-tail-distributions" class="section level3 hasAnchor" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> Common Heavy Tail Distributions<a href="return-distributions.html#common-heavy-tail-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="pareto" class="section level4 hasAnchor" number="3.4.1.1">
+<h4><span class="header-section-number">3.4.1.1</span> Pareto<a href="return-distributions.html#pareto" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><span class="math display">\[
+\begin{aligned}
+f(x) &amp;= \frac{c\ x^{-(1+\alpha)}}{l^{\alpha}}, \ x \geq l\\
+\end{aligned}
+\]</span></p>
+<p>Can be used to model <strong>absolute</strong> returns above a cutoff <span class="math inline">\(r_{min}\)</span>
+<span class="math display">\[
+\bar{F}(r) = \left( \frac{r}{r_{min}} \right)^{\alpha} \quad \forall\ r &gt; r_{min}
+\]</span></p>
+</div>
+<div id="cauchy" class="section level4 hasAnchor" number="3.4.1.2">
+<h4><span class="header-section-number">3.4.1.2</span> Cauchy<a href="return-distributions.html#cauchy" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><span class="math display">\[
+\begin{aligned}
+f(x) &amp;= \frac{1}{\pi(1+x^{2})}\\
+&amp;= \frac{1+x^{-(\alpha+1)}}{\pi}  \implies \alpha = 1
+\end{aligned}
+\]</span></p>
+</div>
+<div id="students-t" class="section level4 hasAnchor" number="3.4.1.3">
+<h4><span class="header-section-number">3.4.1.3</span> Students t<a href="return-distributions.html#students-t" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><span class="math display">\[
+\begin{aligned}
+f(x) &amp;= \frac{\Gamma\left( \frac{v+1}{2} \right)}{\sqrt{ v\pi }\Gamma(v/2)}\left( 1+\frac{x^{2}}{v} \right)^{-\frac{v+1}{2}}\\
+\\
+\text{Where } &amp;\alpha = v = \text{degrees of freedom}
+\end{aligned}
+\]</span>
+The Students t distributions offers a tractable heavy-tail model of the entire return distribution (not just the tail). It is typically adjusted for the location and scale:
+<span class="math display">\[
+Y = \mu + \sigma X \quad \text{where } X \sim t(df=v)
+\]</span></p>
+</div>
+</div>
+<div id="stable-distributions" class="section level3 hasAnchor" number="3.4.2">
+<h3><span class="header-section-number">3.4.2</span> Stable Distributions<a href="return-distributions.html#stable-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If we let log returns <span class="math inline">\(r_{i} \sim\)</span> heavy tail distribution with <span class="math inline">\(0&lt;\alpha&lt;2\)</span> (the first and second moment - mean/variance exist)</p>
+<p>The aggregate return <span class="math inline">\(r_{1\to n} = r_{1} = r_{2} + \dots r_{n} \sim\)</span> Stable Distribution</p>
+<div id="generalized-central-limit-theorem" class="section level4 hasAnchor" number="3.4.2.1">
+<h4><span class="header-section-number">3.4.2.1</span> Generalized Central Limit Theorem<a href="return-distributions.html#generalized-central-limit-theorem" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Stable distributions have no closed form expression, although the share heavy tails and the same tail index <span class="math inline">\(\alpha\)</span> as it’s individual distributions.</p>
+<p>As you sum independent, <strong>STABLE</strong> random variables, the sum will follow a Stable Distribution.</p>
+</div>
+<div id="measuring-tail-behaviour" class="section level4 hasAnchor" number="3.4.2.2">
+<h4><span class="header-section-number">3.4.2.2</span> Measuring tail behaviour<a href="return-distributions.html#measuring-tail-behaviour" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>We use the complementary CDF
+<span class="math display">\[
+\bar{F}(x) = 1 - F(x) = P(X &gt; x) \sim x^{-\alpha}
+\]</span></p>
+</div>
+</div>
+</div>
+<div id="mixture-distributions" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Mixture Distributions<a href="return-distributions.html#mixture-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can generate a random variable using one of out a selection of a family of distributions, choosing the distribution using another distribution.</p>
+<p>They are easy to generate, but harder to work with analytically.</p>
+<p>We can select from a discrete and finite set of distributions, or of a continuous family of distributions (possibly countable) known as compound distributions.</p>
+<p>Example:
+<span class="math display">\[
+\text{Generate RV from: } \begin{cases}
+N(0,1) &amp; p=60\%\\
+N(5,3) &amp; p=40\%
+\end{cases}
+\]</span>
+<img src="Notes/Obsidian-Attachments/2-Return-Distributions-4.png" /></p>
+<div id="normal-scale-mixture" class="section level4 hasAnchor" number="3.5.0.1">
+<h4><span class="header-section-number">3.5.0.1</span> Normal scale mixture<a href="return-distributions.html#normal-scale-mixture" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><span class="math inline">\(Y = \mu+\sqrt{ V } \cdot Z\)</span>
+Where <span class="math inline">\(V\)</span> is a RV with non-negative mixing distribution and represents a random sd of <span class="math inline">\(Y\)</span>.</p>
+<p>Example (probably don’t need to memorize…)
+<span class="math display">\[
+\begin{aligned}
+\text{t-dist } t &amp;= Z\sqrt{ v/W } \quad \text{ where } W \sim \chi^{2}(df=v)\\
+\text{GARCH model } r_{t} &amp;= \mu + \sigma_{t}Z_{t} \quad \text{ where } \sigma^{2}_{t} = \omega + \sum^{p}_{i=1}a_{i}r^{2}_{t-i}+\sum^{q}_{j=1}\beta_{j}\sigma^{2}_{t-j}\\
+\end{aligned}
+\]</span></p>
 
+</div>
 </div>
 </div>
             </section>

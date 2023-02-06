@@ -310,7 +310,10 @@ R_{t} &= \frac{P_{t}-D_{t}}{P_{t-1}} - 1 \\
 r_{t} &= \log(P_{t}+D_{t}) - \log(P_{t-1})
 \end{aligned}
 \]
-\#\#\# Returns accounting for splits
+
+\hypertarget{returns-accounting-for-splits}{%
+\subsection{Returns accounting for splits}\label{returns-accounting-for-splits}}
+
 \[
 \begin{aligned}
 R_{t} &= \frac{P_{t}}{P_{t-1}/s}-1\\
@@ -377,7 +380,7 @@ Skewness measures symmetry.
 \[
 Sk = \mathbb{E}\left[ \left( \frac{X-\mu}{\sigma} \right)^{3} \right]
 \]
-{[}{[}Pasted image 20230205211849.png{]}{]}
+\includegraphics{Notes/Obsidian-Attachments/2-Return-Distributions.png}
 
 \hypertarget{kurtosis}{%
 \section{Kurtosis}\label{kurtosis}}
@@ -389,12 +392,12 @@ Kurtosis of a distribution is measured against the kurtosis of the Normal distri
 \[
 Kur = \mathbb{E}\left[ \left( \frac{X-\mu}{\sigma} \right)^{3} \right] - 3
 \]
-{[}{[}Pasted image 20230205211901.png{]}{]}
+\includegraphics{Notes/Obsidian-Attachments/2-Return-Distributions-1.png}
 
 \hypertarget{qq-plot}{%
 \section{QQ Plot}\label{qq-plot}}
 
-{[}{[}Pasted image 20230205212417.png{]}{]}
+\includegraphics{Notes/Obsidian-Attachments/2-Return-Distributions-2.png}
 
 \begin{itemize}
 \tightlist
@@ -428,6 +431,127 @@ A distribution \(f(x)\) is said to have:
   \end{aligned}
   \]
 \end{itemize}
+
+\begin{quote}
+\textbf{The smaller the tail index, the heavier the tail}
+\end{quote}
+
+Heavy tailed distributions can also have infinite moments (including the mean!)
+
+\[
+\mathbb{E}(X^{k}) = \infty \text{ for } k \geq \alpha
+\]
+\emph{So if the tail index is high, the tail is lighter, and the first \(\alpha\) moments exist.}
+
+The tail index can be estimated using:
+- MLE approximation, which takes the derivative log of the product of n the distributions when it equals 0, and solving for \(\alpha\)
+- \(\hat{\alpha} = \frac{n}{\sum^n_{i=1}\ln\left( r_{i}/r_{min} \right)}\)
+- \[
+\begin{aligned}
+L(\alpha) &= \prod^{n}_{i=1}[f(x)]\\
+\log(L(\alpha)) = l(\alpha) &= \sum^{n}_{i=1} f(x)\\
+l'(\alpha) &= \sum^{n}_{i=1} f'(x) = 0
+\end{aligned}
+\]
+- Pareto Q-Q plot of the empirical CDF and the returns in log x log scale
+- \(\alpha\) is the estimated slope of the line of best fit
+\includegraphics{Notes/Obsidian-Attachments/2-Return-Distributions-3.png}
+
+\hypertarget{common-heavy-tail-distributions}{%
+\subsection{Common Heavy Tail Distributions}\label{common-heavy-tail-distributions}}
+
+\hypertarget{pareto}{%
+\subsubsection{Pareto}\label{pareto}}
+
+\[
+\begin{aligned}
+f(x) &= \frac{c\ x^{-(1+\alpha)}}{l^{\alpha}}, \ x \geq l\\
+\end{aligned}
+\]
+
+Can be used to model \textbf{absolute} returns above a cutoff \(r_{min}\)
+\[
+\bar{F}(r) = \left( \frac{r}{r_{min}} \right)^{\alpha} \quad \forall\ r > r_{min}
+\]
+
+\hypertarget{cauchy}{%
+\subsubsection{Cauchy}\label{cauchy}}
+
+\[
+\begin{aligned}
+f(x) &= \frac{1}{\pi(1+x^{2})}\\
+&= \frac{1+x^{-(\alpha+1)}}{\pi}  \implies \alpha = 1
+\end{aligned}
+\]
+
+\hypertarget{students-t}{%
+\subsubsection{Students t}\label{students-t}}
+
+\[
+\begin{aligned}
+f(x) &= \frac{\Gamma\left( \frac{v+1}{2} \right)}{\sqrt{ v\pi }\Gamma(v/2)}\left( 1+\frac{x^{2}}{v} \right)^{-\frac{v+1}{2}}\\
+\\
+\text{Where } &\alpha = v = \text{degrees of freedom}
+\end{aligned}
+\]
+The Students t distributions offers a tractable heavy-tail model of the entire return distribution (not just the tail). It is typically adjusted for the location and scale:
+\[
+Y = \mu + \sigma X \quad \text{where } X \sim t(df=v)
+\]
+
+\hypertarget{stable-distributions}{%
+\subsection{Stable Distributions}\label{stable-distributions}}
+
+If we let log returns \(r_{i} \sim\) heavy tail distribution with \(0<\alpha<2\) (the first and second moment - mean/variance exist)
+
+The aggregate return \(r_{1\to n} = r_{1} = r_{2} + \dots r_{n} \sim\) Stable Distribution
+
+\hypertarget{generalized-central-limit-theorem}{%
+\subsubsection{Generalized Central Limit Theorem}\label{generalized-central-limit-theorem}}
+
+Stable distributions have no closed form expression, although the share heavy tails and the same tail index \(\alpha\) as it's individual distributions.
+
+As you sum independent, \textbf{STABLE} random variables, the sum will follow a Stable Distribution.
+
+\hypertarget{measuring-tail-behaviour}{%
+\subsubsection{Measuring tail behaviour}\label{measuring-tail-behaviour}}
+
+We use the complementary CDF
+\[
+\bar{F}(x) = 1 - F(x) = P(X > x) \sim x^{-\alpha}
+\]
+
+\hypertarget{mixture-distributions}{%
+\section{Mixture Distributions}\label{mixture-distributions}}
+
+We can generate a random variable using one of out a selection of a family of distributions, choosing the distribution using another distribution.
+
+They are easy to generate, but harder to work with analytically.
+
+We can select from a discrete and finite set of distributions, or of a continuous family of distributions (possibly countable) known as compound distributions.
+
+Example:
+\[
+\text{Generate RV from: } \begin{cases}
+N(0,1) & p=60\%\\
+N(5,3) & p=40\%
+\end{cases}
+\]
+\includegraphics{Notes/Obsidian-Attachments/2-Return-Distributions-4.png}
+
+\hypertarget{normal-scale-mixture}{%
+\subsubsection{Normal scale mixture}\label{normal-scale-mixture}}
+
+\(Y = \mu+\sqrt{ V } \cdot Z\)
+Where \(V\) is a RV with non-negative mixing distribution and represents a random sd of \(Y\).
+
+Example (probably don't need to memorize\ldots)
+\[
+\begin{aligned}
+\text{t-dist } t &= Z\sqrt{ v/W } \quad \text{ where } W \sim \chi^{2}(df=v)\\
+\text{GARCH model } r_{t} &= \mu + \sigma_{t}Z_{t} \quad \text{ where } \sigma^{2}_{t} = \omega + \sum^{p}_{i=1}a_{i}r^{2}_{t-i}+\sum^{q}_{j=1}\beta_{j}\sigma^{2}_{t-j}\\
+\end{aligned}
+\]
 
 \hypertarget{problem-set-1}{%
 \chapter{Problem Set 1}\label{problem-set-1}}

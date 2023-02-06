@@ -6,6 +6,7 @@ returns
 net-returns
 log-returns
 returns-accounting-for-dividends
+returns-accounting-for-splits
 adjusted-returns
 random-walk-model
 return-distributions
@@ -13,6 +14,15 @@ skewness
 kurtosis
 qq-plot
 heavy-tail-distributions
+common-heavy-tail-distributions
+pareto
+cauchy
+students-t
+stable-distributions
+generalized-central-limit-theorem
+measuring-tail-behaviour
+mixture-distributions
+normal-scale-mixture
 problem-set-1
 q1
 data-prep
