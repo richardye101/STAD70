@@ -3,7 +3,9 @@
 
 cd book/
 # fix image links in obsidian
-find Notes/ -type f -name '*.md' -exec gsed -i 's+\!\[\[STAD70\/book/+!\[\](+g' {} \;
+find Notes/ -type f -name '*.md' -exec gsed -i 
+'s+\!\[\[Obsidian\/+!\[\](Notes\/Obsidian\/+g' 
+{} \;
 find Notes/ -type f -name '*.md' -exec gsed -i 's+.png\]\]+.png)+g' {} \;
 
 # build book 
