@@ -176,6 +176,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="modelling-extreme-events.html"><a href="modelling-extreme-events.html#two-main-results"><i class="fa fa-check"></i><b>4.2.1</b> Two main results</a></li>
 <li class="chapter" data-level="4.2.2" data-path="modelling-extreme-events.html"><a href="modelling-extreme-events.html#st-theorem-fisher-tippet-gnedenko"><i class="fa fa-check"></i><b>4.2.2</b> 1st Theorem: Fisher-Tippet-Gnedenko</a></li>
+<li class="chapter" data-level="4.2.3" data-path="modelling-extreme-events.html"><a href="modelling-extreme-events.html#generalized-extreme-value-gev-distribution"><i class="fa fa-check"></i><b>4.2.3</b> Generalized Extreme Value (GEV) Distribution</a></li>
+<li class="chapter" data-level="4.2.4" data-path="modelling-extreme-events.html"><a href="modelling-extreme-events.html#nd-theorem-pickands-balkema-de-haan"><i class="fa fa-check"></i><b>4.2.4</b> 2nd Theorem: Pickands-Balkema-De Haan</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="problem-set-1.html"><a href="problem-set-1.html"><i class="fa fa-check"></i><b>5</b> Problem Set 1</a>
@@ -286,23 +288,88 @@ F(a_{n}x+b_{n}) &amp;= \text{Single RV}
 \end{aligned}
 \]</span>
 This is just saying that the normalized max RV is less than some value <span class="math inline">\(x\)</span> is just the probability of each individual RV being less than the transformed value of <span class="math inline">\(x\)</span>.</p>
-<p><span class="math display">\[
-\begin{aligned}
+$$
+<span class="math display">\[\begin{aligned}
 H(x) &amp;= \begin{cases}
-Gumbel &amp; \exp\{-e^{-x}\} &amp; x \in \mathbb{R}\\
+Gumbel &amp; \exp\{-e^{-x}\} &amp; x \in \mathbb{R}\\ \\
+
 Frechet &amp; \begin{cases}
 0 &amp; x &lt; 0 \\
 \exp\{-x^{-\alpha}\}  &amp; x &gt;0
-\end{cases} \\
+\end{cases} \\ \\
+
 Weibull  &amp; \begin{cases}
 \exp\{-|x|^{\alpha}\}  &amp; x&lt;0 \\
 1 &amp; x &gt; 0
 \end{cases}
 \end{cases}
-\end{aligned}
-\]</span>
+\end{aligned}\]</span>
+<p>$$
 Where <span class="math inline">\(\alpha &gt; 0\)</span> for the Frechet and Weibull distributions.</p>
 <p><img src="Notes/Obsidian-Attachments/3-Modelling-Extreme-Events.png" /></p>
+</div>
+<div id="generalized-extreme-value-gev-distribution" class="section level3 hasAnchor" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> Generalized Extreme Value (GEV) Distribution<a href="modelling-extreme-events.html#generalized-extreme-value-gev-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The three types of distributions can be represented using:
+<span class="math display">\[
+\begin{aligned}
+H(x) &amp;= \exp\left\{ -\left( 1+\xi\frac{x-\mu}{\sigma} \right)^{-1/\xi}_{+} \right\}\\
+\text{Where } \mu &amp;= \text{location}\\
+\sigma &amp;= \text{scale}\\
+\xi &amp;= \text{shape parameters} \begin{cases}
+\xi&gt;0 &amp; \text{heavy tails (Frechet)} \\
+\xi=0 &amp; \text{exponential tails (Gumbel)} \\
+\xi &lt; 0  &amp; \text{short/light tails (Weibull)}
+\end{cases}
+\end{aligned}
+\]</span>
+Where the <span class="math inline">\(\xi\)</span> value describes the tail behaviour</p>
+<p>As an example, we’ll show that the normalized maximum of i.i.d. Uniform(0,1) aka <span class="math inline">\(F_{n}(x) = x\)</span> with <span class="math inline">\(a_{n}=1/n, b_{n}=1\)</span> converges to the Weibull distribution.
+<span class="math display">\[
+\begin{aligned}
+P\left( \frac{M_{n}-b_{n}}{a_{n}} \leq x\right) &amp;= P\left( \frac{M_{n}-1}{1/n} \leq x\right)\\
+&amp; b_{n}\text{ shifts the Uniform from (0,1) to (-1,0)}\\
+&amp;= P\left( M_{n} \leq \frac{x}{n}+1 \right)\\
+&amp;= P\left( \max(U_{1}, U_{2}, \dots U_{n}) \leq 1+\frac{x}{n} \right)\\
+&amp;= \prod^{n}_{i=1} \underbrace{ P\left( U_{i}\leq 1+\frac{x}{n} \right) }_{ \left( 1+\frac{x}{n} \right) }\\
+&amp;= \left( 1+\frac{x}{n} \right)^{n}\\
+&amp; \text{because } x&lt;0, \quad 1+ (-.4) = 1-|-.4|\\
+&amp;=\left( 1-\frac{|x|}{n} \right)^{n}\\
+\\
+\lim_{ n \to \infty } \left( 1-\frac{|x|}{n} \right)^{n} &amp;\to \exp\{((-1)|x|)^{-1/-1}\}\\
+&amp;= \exp\{-|x|^{1}\} \implies Weibull(\alpha=1)\\
+\end{aligned}
+\]</span></p>
+</div>
+<div id="nd-theorem-pickands-balkema-de-haan" class="section level3 hasAnchor" number="4.2.4">
+<h3><span class="header-section-number">4.2.4</span> 2nd Theorem: Pickands-Balkema-De Haan<a href="modelling-extreme-events.html#nd-theorem-pickands-balkema-de-haan" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For any RV <span class="math inline">\(X\)</span> with CDF <span class="math inline">\(F(\cdot)\)</span>, it’s conditional distribution when exceeding a certain threshold <span class="math inline">\(u\)</span> is:
+<span class="math display">\[
+\begin{aligned}
+F_{u}(y) &amp;= \frac{F(u+y)-F(u)}{1-F(u)}, \quad 0\leq y\leq x_{F}-u\\
+\text{Where } x_{F} &amp;= sup\{x \in \mathbb{R}:F(x) &lt; 1\} \text{ is the right endpoint of } F
+\end{aligned}
+\]</span></p>
+<p><span class="math inline">\(x_{F}\)</span> could be finite, or <span class="math inline">\(\infty\)</span>. As <span class="math inline">\(u\to x_{F}\)</span>, the conditional distribution converges to something belonging to the <strong>Generalized Pareto Distribution (GPD).</strong>
+<span class="math display">\[
+F_{u}(y) \to G_{\xi, \sigma}(y)
+\]</span>
+The <strong>Generalized Pareto Distribution (GPD)</strong> is given by:
+<span class="math display">\[
+\begin{aligned}
+G_{\xi,\sigma}(y) &amp;= 1 - \left( 1+\xi \frac{y}{\sigma} \right)^{-1/\xi}_{+} = \begin{cases}
+G_{\xi, \sigma}(y) = 1-\left( 1+\xi  \frac{y}{\sigma} \right)^{-1/\xi}  &amp; \xi \ne 0\\
+G_{\xi, \sigma}(y) = 1-\exp\left\{ -\frac{y}{\sigma} \right\}  &amp; \xi = 0
+\end{cases}\\
+\text{Where } &amp; \sigma &gt; 0, y\geq 0, \quad y\leq-\frac{\sigma}{\xi} \text{ when } \xi &lt; 0
+\end{aligned}
+\]</span></p>
+<p><span class="math inline">\(f(x) = \lambda e^{-\lambda x}, \lambda&gt;0\)</span></p>
+<pre class="desmos-graph"><code>bottom=-1; left=-0.5; right=1.5;
+---
+y=2 \exp(-2x)
+x=.9|dashed</code></pre>
+<p>The exponential distribution is used to model waiting times, no matter how much time has passed. The conditional distribution</p>
 
 </div>
 </div>
