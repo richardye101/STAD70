@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 7 Problem Set 2 | STAD70 Course Work</title>
+  <title>Chapter 5 Multivariate Return Modelling | STAD70 Course Work</title>
   <meta name="description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 7 Problem Set 2 | STAD70 Course Work" />
+  <meta property="og:title" content="Chapter 5 Multivariate Return Modelling | STAD70 Course Work" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 7 Problem Set 2 | STAD70 Course Work" />
+  <meta name="twitter:title" content="Chapter 5 Multivariate Return Modelling | STAD70 Course Work" />
   
   <meta name="twitter:description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="problem-set-1.html"/>
-
+<link rel="prev" href="modelling-extreme-events.html"/>
+<link rel="next" href="problem-set-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -250,95 +250,114 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="problem-set-2" class="section level1 hasAnchor" number="7">
-<h1><span class="header-section-number">Chapter 7</span> Problem Set 2<a href="problem-set-2.html#problem-set-2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="q1-1" class="section level2 hasAnchor" number="7.1">
-<h2><span class="header-section-number">7.1</span> Q1<a href="problem-set-2.html#q1-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>An MLE can be derived from finding the derivative of the log <span class="math inline">\(L(\alpha)\)</span>, <span class="math inline">\(l(\alpha)\)</span> function, where <span class="math display">\[
+<div id="multivariate-return-modelling" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Multivariate Return Modelling<a href="multivariate-return-modelling.html#multivariate-return-modelling" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>When modelling returns of multiple assets, it’s common to assume the correlation between them is constant.</p>
+<p>Many investment strategies combine multiple assets together, but how those assets are related is an important piece of information to understand. It’s also difficult to model. Say we start with a simple multivariate Normal, where dependence <span class="math inline">\(\leftrightarrow\)</span> covariance, so we can model their relations with the covariance matrix.</p>
+<div id="covariance-correlation-matrix" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Covariance &amp; Correlation Matrix<a href="multivariate-return-modelling.html#covariance-correlation-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For a linear combination of assets, we can attempt to use the following covariance matrix to describe their linear dependence:
+<span class="math display">\[
+Cov[A^{T}R] = A^{T}Cov[R]A, \quad \text{where }\begin{cases}
+A = \text{Constant matrix} \\
+R = \text{random vector}
+\end{cases}
+\]</span>
+Unfortunately, sample covariance estimation is very sensitive to extreme values, which happen frequently with return (See heavy tails)</p>
+<p>Returns are often treated as independent samples, but that is not realistic.</p>
+</div>
+<div id="multivariate-students-t-distribution" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Multivariate Student’s t Distribution<a href="multivariate-return-modelling.html#multivariate-students-t-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We should <strong>never remove outliers</strong> in finance. We must model the heavy tails (extreme returns) somehow, and Student’s t distribution is one way to do that.</p>
+<p>A multivariate Normal scale mixture model can be used to describe a multivariate Student’s t distribution:
+<span class="math display">\[
 \begin{aligned}
-L(\alpha) &amp;= \prod^{n}_{i=1} \left[ \frac{\alpha x_{i}^{-(\alpha+1)}}{\ell^{-\alpha}} \right]\\
-\log L(\alpha) = l(\alpha) &amp;= \sum^{n}_{i=1} \left[ \log(\alpha) - (\alpha+1)\log(x_{i}) +\alpha\log(\ell) \right]\\
+\mathbf{R} &amp;= \boldsymbol{\mu} + \mathbf{Z} \sqrt{ v/W } \sim t_{v}(\boldsymbol{\mu}, \boldsymbol{\Lambda})\\
 \\
-l^{&#39;}(\alpha) &amp;= \sum^{n}_{i=1} \left( \frac{1}{\alpha} - [\log (x_{i}) + \log(\ell)]\right) = 0\\
-0 &amp;= \frac{n}{\alpha} - \sum^{n}_{i=1} \left( \log(x_{i}) -\log(\ell) \right)\\
-\frac{n}{\alpha} &amp;= \sum^{n}_{i=1} \left( \log(x_{i}) -\log(\ell) \right)\\
-\frac{1}{\alpha} &amp;= \frac{1}{n} \left[ \sum^{n}_{i=1}\log\left( \frac{x_{i}}{\ell} \right) \right]\\
+\text{Where } &amp; W \sim \chi^{2}(df=v)\\
+&amp; \mathbf{Z} \sim N(\mathbf{0}, \boldsymbol{\Lambda}) \quad \text{where } \boldsymbol{\Lambda} = Indentity \ Mat
+\end{aligned}
+\]</span></p>
+<p>It’s mean and variance are:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{E}(\mathbf{R}) &amp;= \mathbb{E}\left( \boldsymbol{\mu}+\mathbf{Z}\sqrt{ \frac{v}{W} }\right)\\
+&amp;= \boldsymbol{\mu} + \underbrace{ \mathbb{E}(\mathbf{Z}) }_{ =0 }\cdot \mathbb{E}\left( \sqrt{ \frac{v}{W} } \right)\\
+&amp;=\boldsymbol{\mu}\\
 \\
-\therefore \hat{\alpha} &amp;= \left(  \frac{1}{n} \left[ \sum^{n}_{i=1}\log\left( \frac{x_{i}}{\ell} \right) \right] \right)^{-1}
+Cov(\mathbf{R}) &amp;= Cov\left( \boldsymbol{\mu} + \mathbf{Z} \sqrt{ \frac{v}{W} } \right)\\
+&amp;= Cov(\mathbf{Z}) \cdot Cov\left( \sqrt{ \frac{v}{W} } \right)\\
+&amp;= \boldsymbol{\Lambda}\cdot \frac{v}{v-2} \quad \text{where } v &gt; 2
 \end{aligned}
 \]</span></p>
-</div>
-<div id="q2-1" class="section level2 hasAnchor" number="7.2">
-<h2><span class="header-section-number">7.2</span> Q2<a href="problem-set-2.html#q2-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="part-a" class="section level3 hasAnchor" number="7.2.1">
-<h3><span class="header-section-number">7.2.1</span> Part A<a href="problem-set-2.html#part-a" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Heavy tail distributions are those with polynomial tails which follow by
-<span class="math display">\[f(x) \propto x^{-(1+\alpha)}\]</span>
-where smaller <span class="math inline">\(\alpha \to\)</span> heavier tails</p>
-<p>We say that distribution <span class="math inline">\(F\)</span> is heavy tailed if the integral on the positive half of <span class="math inline">\(\mathbb{R}^{+}\)</span> is infinite for some t</p>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling.png" /></p>
+<p>From these plots, we see that with the Multivariate t distribution, the extreme values between the two RVs are more evenly spread (the round shape of the points) and imply extreme values for both assets happen together. This is because they both share the same <span class="math inline">\(\Lambda\)</span>.</p>
+<p>This shows that the multivariate t distribution is more practical and realistic than using the Normal to model multiple assets. We can linearly combine multivariate t-distributions with the same degrees of freedom:</p>
 <p><span class="math display">\[
 \begin{aligned}
-m_{X}(t) = E(e^{tX}) = \left[ 1 + tE(X) + \frac{(tE(X))^2}{2!} + \frac{(tE(X))^3}{3!} + ... + (tE(X))^n/n! + ...  \right]
+\mathbf{Y} &amp;\sim t_{v}(\boldsymbol{\mu}, \boldsymbol{\Lambda}) \implies \mathbf{w}^{T}\mathbf{Y} \sim t_{v}(\mathbf{w}^{T}\boldsymbol{\mu}, \mathbf{w}^{T}\boldsymbol{\Lambda}\mathbf{w})\\
+\\
+\mathbb{E}[\mathbf{w}^{T}\mathbf{Y}] &amp;= \mathbf{w}^{T}\mathbb{E}(\mathbf{Y})\\
+Var[\mathbf{w}^{T}\mathbf{Y}] &amp;= \mathbf{w}^{T}Var\left( \boldsymbol{\mu}+\mathbf{Z}\sqrt{ \frac{v}{W} } \right)\mathbf{w}\\
+&amp;= \mathbf{w}^{T}Var(\mathbf{Z})Var\left( \sqrt{ \frac{v}{W} } \right)\mathbf{w}\\
+&amp;= \frac{v}{v-2}(\mathbf{w}^{T}\boldsymbol{\Lambda}\mathbf{w})
 \end{aligned}
 \]</span></p>
-<p>^ not complete</p>
+<p>However, as seen above, the multivariate t distribution is <strong>restrictive</strong> because all the marginal distributions share the same degrees of freedom, as they all depend on the variance of <span class="math inline">\(W \sim\chi^{2}\)</span>.</p>
 </div>
-<div id="part-b" class="section level3 hasAnchor" number="7.2.2">
-<h3><span class="header-section-number">7.2.2</span> Part B<a href="problem-set-2.html#part-b" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="copulas" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Copulas<a href="multivariate-return-modelling.html#copulas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A more flexible way of modelling dependencies of RVs is using copulas.</p>
+<blockquote>
+<p>Definition: A copula (C) is a multivariate CDF with Uniform(0,1) marginals</p>
+</blockquote>
 <p><span class="math display">\[
 \begin{aligned}
-\phi_{X}(t) &amp;= \mathbb{E}[e^{itX}] = \mathbb{E}[\cos(tX) + i\sin(tX)]\\
-&amp;= \mathbb{E}[\cos(tX)] + i\mathbb{E}[\sin(tX)]\\
-\mathbb{E}[\sin(tX)] &amp;= \int ^{\infty}_{-\infty} \sin(tX)f(x)\, dx \\
-&amp;= \int ^{0}_{-\infty} \sin(tX)f(x)\, dx + \int ^{\infty}_{0} \sin(tX)f(x)\, dx \\
-&amp;= -\int ^{\infty}_{0} \sin(tX)f(x)\, dx + \int ^{\infty}_{0} \sin(tX)f(x)\, dx \\
-&amp;= 0\\
-\therefore \phi_{X}(t) &amp;= \mathbb{E}[\cos(tX)] \text{ which only takes real values }
-\end{aligned}
-\]</span></p>
-</div>
-<div id="part-c" class="section level3 hasAnchor" number="7.2.3">
-<h3><span class="header-section-number">7.2.3</span> Part C<a href="problem-set-2.html#part-c" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><span class="math display">\[
-\begin{aligned}
-\phi_{X}(t) &amp;= \mathbb{E}[e^{itX}]\\
-\phi_{Y}(t) &amp;= \mathbb{E}[e^{itY}]\\
-\phi_{Z}(t) &amp;= \mathbb{E}[e^{itZ}]\\
-&amp;= \mathbb{E}[e^{it(X+Y)}]\\
-&amp;=\mathbb{E}[e^{itX}e^{itY}]\\
-&amp;=\mathbb{E}[e^{itX}]\mathbb{E}[e^{itY}]
-\quad \text{As they are independent}\\
-&amp;= e^{-c|t|^{\alpha}}\cdot e^{-d|t|^{\alpha}}\\
-&amp;= e^{-(c+d)|t|^{\alpha}}
+C(u_{1}, u_{2}, \dots u_{d}) \in [0,1], \quad \forall \ u_{1},\dots u_{d} \in [0,1]\\
+\\
+\text{Where }\begin{cases}
+C(0,0, \ldots, 0)=0 \\
+C(1,1, \ldots, 1)=1 \\
+C\left(\ldots, u_{i-1}, 0, u_{i+1}, \ldots\right)=0 \\
+C\left(1, \ldots, 1, u_i, 1, \ldots, 1\right)=u_i
+\end{cases}
 \end{aligned}
 \]</span>
-Which shows that <span class="math inline">\(\phi_{Z}(t)\)</span> shares the same form as <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
-</div>
-<div id="part-d" class="section level3 hasAnchor" number="7.2.4">
-<h3><span class="header-section-number">7.2.4</span> Part D<a href="problem-set-2.html#part-d" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+Third case: The cumulative probability of one RV being less than or equal to 0 regardless of what the other RVs are in a copula is 0.
+Fourth case: The cumulative probability that the other RVs have values less than 1 but the <span class="math inline">\(i^{th}\)</span> RV is <span class="math inline">\(u_{i}\)</span> is simply <span class="math inline">\(u_{i}\)</span></p>
+<div id="the-independence-copula" class="section level3 hasAnchor" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> The independence copula<a href="multivariate-return-modelling.html#the-independence-copula" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math inline">\(C_{indep} (u_{1}, \dots u_{d} = u_{1} \times \dots \times u_{d}\)</span></p>
+<p>By the <strong>Frechet-Hoeffding</strong> theorem, any/every copula is bounded by</p>
 <p><span class="math display">\[
 \begin{aligned}
-\phi_{X}(t) &amp;= \mathbb{E}[e^{itX}] = e^{-|t|}\\
-\phi_{\bar{X}}(t) &amp;= \mathbb{E}[e^{it\bar{X}}]\\
-&amp;= \mathbb{E}\left[ e^{it \frac{1}{n}\left(\sum^{n}_{i=1}X_{i} \right)} \right]\\
-&amp;=\mathbb{E}\left[ e^{it\frac{1}{n}X_{1}} e^{it\frac{1}{n}X_{2}}\dots e^{it\frac{1}{n}X_{n}}\right]\\
-&amp;= \mathbb{E}\left[ e^{it\frac{1}{n}X_{1}} \right] \mathbb{E}\left[e^{it\frac{1}{n}X_{2}}\right] \dots \mathbb{E}\left[e^{it\frac{1}{n}X_{n}}\right]\\
-&amp;= [e^{-|t|/n}]^{n}\\
-&amp;= e^{-|t|/n\cdot n} = e^{-|t|} \quad \text{Which is exactly the $t(1)$ distribution}
+&amp; \underline{C}\left(u_1, \ldots, u_d\right) \leq C\left(u_1, \ldots, u_d\right) \leq \bar{C}\left(u_1, \ldots, u_d\right) \\
+&amp; \text { where }\left\{\begin{array}{l}
+\underline{C}\left(u_1, \ldots, u_d\right)=\max \left\{1-d+\sum_{i=1}^d u_i, 0\right\} \\
+\bar{C}\left(u_1, \ldots, u_d\right)=\min \left\{u_1, \ldots, u_d\right\}
+\end{array}\right.
 \end{aligned}
 \]</span></p>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-1.png" /></p>
 </div>
-<div id="part-e" class="section level3 hasAnchor" number="7.2.5">
-<h3><span class="header-section-number">7.2.5</span> Part E<a href="problem-set-2.html#part-e" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>According to theory, <span class="math inline">\(\mathbb{E}[X^{k}]=\infty\)</span> for any <span class="math inline">\(k\geq \alpha\)</span> where <span class="math inline">\(\alpha\)</span> is the tail index.</p>
-<p>If the tail index is greater than 2, then the second order moment exists, implying both the mean and variance both exist/are finite.</p>
-<p>By definition, a sum of stable distributions would converge to a stable distribution as shown by the characteristic functions above, but according to the Central Limit Theorem, any sum of iid random variables with finite mean and variance will produce a Normal distribution.</p>
-</div>
-</div>
-<div id="q3-1" class="section level2 hasAnchor" number="7.3">
-<h2><span class="header-section-number">7.3</span> Q3<a href="problem-set-2.html#q3-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>later</p>
+<div id="sklars-theorem" class="section level3 hasAnchor" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> Sklar’s Theorem<a href="multivariate-return-modelling.html#sklars-theorem" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul class="task-list">
+<li><input type="checkbox" />ask Sotorios about this theorem…⏳ 2023-02-08
+Any continuous multivariate CDF <span class="math inline">\(F(x_{1}, \dots x_{d})\)</span> with marginal (1D) CDF’s <span class="math inline">\(F_{i}(x_{i}) \ \forall \ i=1,\dots,d\)</span> can be expressed in terms of a copula <span class="math inline">\(C\)</span>, as
+<span class="math display">\[
+F(x_{1},\dots x_{d}) = C(F_{1}(x_{1}), \dots, F_{d}(x_{d}))
+\]</span></li>
+</ul>
+<p>Inverse is also true, where any copula combined with marginal CDF’s can give a multivariate CDF.</p>
+<ul>
+<li>Copula’s model dependence separately from the marginal distributions of the RVs</li>
+</ul>
+<p>If <span class="math inline">\(X \sim F \implies F(x) \sim Unif(0,1) \implies F^{-1}(Unif) \sim F\)</span>
+<em>If an RV follows some CDF <span class="math inline">\(F\)</span>, then …</em></p>
+<p>If you take a copula and a bunch of marginal CDF’s, you can figure out what the multivariate CDF of all the marginals is. The inverse is true, where you can take a multivaraite CDF and come up with a copula to represent the dependency between the marginal distributions, and the marginal distributions themselves. (I think is what this is saying.)</p>
 
+</div>
 </div>
 </div>
             </section>
@@ -346,8 +365,8 @@ Which shows that <span class="math inline">\(\phi_{Z}(t)\)</span> shares the sam
           </div>
         </div>
       </div>
-<a href="problem-set-1.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="modelling-extreme-events.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="problem-set-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -378,7 +397,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/ProblemSets/PS2/PS2.md",
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/Notes/4-Multivariate-Return-Modelling.md",
 "text": "Edit"
 },
 "history": {
