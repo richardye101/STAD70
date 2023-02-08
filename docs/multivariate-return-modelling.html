@@ -191,6 +191,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.3.3" data-path="multivariate-return-modelling.html"><a href="multivariate-return-modelling.html#gaussian-copula"><i class="fa fa-check"></i><b>5.3.3</b> Gaussian Copula</a></li>
 <li class="chapter" data-level="5.3.4" data-path="multivariate-return-modelling.html"><a href="multivariate-return-modelling.html#creating-copulas-from-multivariate-distributions"><i class="fa fa-check"></i><b>5.3.4</b> Creating Copula’s from Multivariate Distributions</a></li>
 </ul></li>
+<li class="chapter" data-level="5.4" data-path="multivariate-return-modelling.html"><a href="multivariate-return-modelling.html#capm"><i class="fa fa-check"></i><b>5.4</b> CAPM</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="multivariate-return-modelling.html"><a href="multivariate-return-modelling.html#security-market-line"><i class="fa fa-check"></i><b>5.4.1</b> Security Market Line</a></li>
+<li class="chapter" data-level="5.4.2" data-path="multivariate-return-modelling.html"><a href="multivariate-return-modelling.html#security-characteristic-line"><i class="fa fa-check"></i><b>5.4.2</b> Security Characteristic Line</a></li>
+<li class="chapter" data-level="5.4.3" data-path="multivariate-return-modelling.html"><a href="multivariate-return-modelling.html#legacy-of-capm"><i class="fa fa-check"></i><b>5.4.3</b> Legacy of CAPM</a></li>
+<li class="chapter" data-level="5.4.4" data-path="multivariate-return-modelling.html"><a href="multivariate-return-modelling.html#performance-evaluation"><i class="fa fa-check"></i><b>5.4.4</b> Performance Evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="multivariate-return-modelling.html"><a href="multivariate-return-modelling.html#factor-models"><i class="fa fa-check"></i><b>5.5</b> Factor models</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="multivariate-return-modelling.html"><a href="multivariate-return-modelling.html#time-series-regression-models"><i class="fa fa-check"></i><b>5.5.1</b> Time Series Regression Models</a></li>
+<li class="chapter" data-level="5.5.2" data-path="multivariate-return-modelling.html"><a href="multivariate-return-modelling.html#statistical-factor-models"><i class="fa fa-check"></i><b>5.5.2</b> Statistical Factor Models</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="problem-set-1.html"><a href="problem-set-1.html"><i class="fa fa-check"></i><b>6</b> Problem Set 1</a>
 <ul>
@@ -457,6 +469,320 @@ X_{i} = F_{i}^{-1}(U_{i}) \ \forall \ i
 <p>We can also see the differences between a Copula created using Normal and t distributions
 <img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-6.png" /></p>
 
+</div>
+</div>
+<div id="capm" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> CAPM<a href="multivariate-return-modelling.html#capm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The CAPM theory suggests that all investors hold some form of the tangency/market portfolio.</p>
+<p>The slope of the tangency portfolio is also known as the Sharpe Ratio, or Market Price of Risk.</p>
+<div id="security-market-line" class="section level3 hasAnchor" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> Security Market Line<a href="multivariate-return-modelling.html#security-market-line" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For each individual asset, CAPM implies the following risk/reward relationship (Security Market Line)
+<span class="math display">\[
+\begin{aligned}
+\mu_{i} &amp;= \mu_{f} + \beta_{i}(\mu_{M}-\mu_{f})
+\quad \text{Where } \begin{cases}
+\beta_{i} = \frac{\sigma_{iM}}{\sigma^{2}_{M}} \\
+\sigma_{iM} = Cov(R_{i, R_{M}})
+\end{cases}\\
+&amp;= \mu_{f} + \left( \frac{\mu_{M}-\mu_{f}}{\sigma_{M}} \right) \cdot \sigma_{p}
+\end{aligned}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\beta_{i}\)</span> is different for each asset, it captures how related the return on the given asset is with the Market return.</li>
+<li><span class="math inline">\(\sigma_{M}\)</span> is the market risk AKA undiversifiable risk</li>
+</ul>
+</div>
+<div id="security-characteristic-line" class="section level3 hasAnchor" number="5.4.2">
+<h3><span class="header-section-number">5.4.2</span> Security Characteristic Line<a href="multivariate-return-modelling.html#security-characteristic-line" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <span class="math inline">\(\beta_{i}\)</span>’s are found empirically, by regressing (<span class="math inline">\(R_{i}-R_{f}\)</span>) on (<span class="math inline">\(R_{M}-R_{f}\)</span>)
+- Where <span class="math inline">\(R_{M}\)</span> is the market return (Proxy by large market index, ex S&amp;P500)
+- <span class="math inline">\(R_{f}\)</span> is the risk free rate (proxy by T-bill)</p>
+<p><span class="math display">\[
+(R_{i,t} - R_{f,t}) = \beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}, \quad \text{ where } \epsilon_{t} \sim N(0,\sigma^{2}_{\epsilon,i})
+\]</span></p>
+<p>By fitting this, we can then extract the <span class="math inline">\(\beta_{i}\)</span>’s!
+<img src="Notes/Obsidian-Attachments/4-Factor-Models.png" /></p>
+<p>However the mean expected return is much different than the actual return. Therefore the CAPM model doesn’t work very well, or hold.
+<img src="Notes/Obsidian-Attachments/4-Factor-Models-1.png" /></p>
+<p>An iteration of this model includes an intercept, <span class="math inline">\(\alpha\)</span>
+<span class="math display">\[
+(R_{i,t} - R_{f,t}) = \alpha_{i} + \beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}
+\]</span>
+Finding the mean and variance:
+<span class="math display">\[
+\begin{aligned}
+\mu_{i} = \mathbb{E}[R_{i}] &amp;= \mathbb{E}[R_{f,t}+\alpha_{i}+\beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}]\\
+&amp;= \underbrace{ \mathbb{E}[R_{f}] }_{ R_{f} } + \alpha_{i} + \beta_{i}\underbrace{ \mathbb{E}[R_{m}-R_{f}] }_{ \mu_{m - R_{f}} } + \underbrace{ \mathbb{E}[\epsilon_{t}] }_{ =0 }\\
+&amp;= R_{f} + \alpha_{i} + \beta_{i}(\mu_{m}-R_{f})\\
+\\
+\sigma^{2}_{i} = \mathbb{V}[R_{i}] &amp;= \mathbb{V}[\underbrace{ R_{f}+\alpha_{i} }_{ Var = 0 }+\beta_{i}(R_{m}-R_{f})+\epsilon_{i})]\\
+&amp;= \mathbb{V}[\beta_{i}(R_{m}-\underbrace{ R_{f} }_{ Var = 0 }] + \mathbb{V}[\epsilon_{i}]\\
+&amp;= \beta_{i}^{2} \cdot \mathbb{V}[R_{M}] + \sigma^{2}_{\epsilon, i}\\
+&amp;= \beta^{2}_{i}\cdot \sigma^{2}_{m}+\sigma^{2}_{\epsilon,i}
+\end{aligned}
+\]</span></p>
+<p>Time doesn’t matter for the risk free or market returns</p>
+<div id="alpha-beta" class="section level4 hasAnchor" number="5.4.2.1">
+<h4><span class="header-section-number">5.4.2.1</span> Alpha &amp; Beta<a href="multivariate-return-modelling.html#alpha-beta" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>An asset’s beta <span class="math inline">\(\beta_{i}\)</span> can be seen as a measure of both risk &amp; reward
+<span class="math display">\[
+CAPM \to \mu_{f}  = \mu_{f} + \beta_{i}(\mu_{M}-\mu_{f}) \implies \mu_{i} = \mu_{f} + \beta_{i}\underbrace{ \left(\frac{\mu_{M}-\mu_{f}}{\sigma_{M}}  \right)}_{ \text{Sharpe Ratio} }\sigma_{M}
+\]</span></p>
+<p><span class="math inline">\(\beta_{i}\)</span> measures extent of the return of a given asset is related to the market</p>
+<blockquote>
+<p><em>If you believe in CAPM, then the bigger beta is, the more risk you will have but also the more reward you will have.</em></p>
+</blockquote>
+<p><span class="math inline">\(\alpha_{i}\)</span> measure how much the asset outperforms the market consistently, the amount returned on top of the <span class="math inline">\(\beta_{i}\)</span></p>
+</div>
+</div>
+<div id="legacy-of-capm" class="section level3 hasAnchor" number="5.4.3">
+<h3><span class="header-section-number">5.4.3</span> Legacy of CAPM<a href="multivariate-return-modelling.html#legacy-of-capm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>CAPM is wrong, but had immense practical impact on investing, specifically in terms of
+- Diversification: concept of decreasing risk by spreading portfolio over different assets
+- Index investing: justification for common investing strategy of tracking some broad index with mutual funds or ETF’s
+- Benchmarking: Measuring performance of investment relative to market / index</p>
+</div>
+<div id="performance-evaluation" class="section level3 hasAnchor" number="5.4.4">
+<h3><span class="header-section-number">5.4.4</span> Performance Evaluation<a href="multivariate-return-modelling.html#performance-evaluation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>CAPM says the best portfolio you can create is the tangency/market portfolio. This implies the best you can do is get the broadest index and combine it with a T-bill.</p>
+<blockquote>
+<p>Aside: In the past, you needed to use a mutual fund because exchange traded funds didn’t exist. Thats how most people invested, even though they cost high fees as there was a lot of human involvement.</p>
+</blockquote>
+<p>There are several ways to measure an asset’s performance, based on CAPM</p>
+<p>Sharpe ratio: (excess return per unit risk)
+<span class="math display">\[
+S_i=\frac{\mu_i-\mu_f}{\sigma_i}
+\]</span></p>
+<ul>
+<li>If you combine different assets, you can reduce the <span class="math inline">\(\sigma_{i}\)</span> of the portfolio, so it’s not objective because two assets may be really risky, but negatively correlated reducing <span class="math inline">\(\sigma_{i}\)</span>.</li>
+<li>It doesn’t however measure how correlated a portfolio is to the market.</li>
+</ul>
+<p>Treynor index: (excess return per unit non-diversifiable risk)
+<span class="math display">\[
+\quad T_i=\frac{\mu_i-\mu_f}{\beta_i}
+\]</span></p>
+<ul>
+<li>You would look at this to find the best return</li>
+</ul>
+<p>Jensen’s alpha: (excess return on top of the return explained by the market)
+<span class="math display">\[
+\quad \alpha_i=\hat{\alpha}_i
+\]</span></p>
+<ul>
+<li>Usually the most important measure a portfolio manager tries to use to convince people to invest in them.</li>
+</ul>
+</div>
+</div>
+<div id="factor-models" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Factor models<a href="multivariate-return-modelling.html#factor-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The CAPM model assumes the market is a single factor that drives asset returns.
+- In practice, CAPM does not adequately describe real-world returns</p>
+<p>We can improve this model by including more factors in the regression.</p>
+<p>There are three types of factor models we will look at:</p>
+<ul>
+<li>Macroeconomic: Factors are <em>observable</em> economic and financial time series data (eg return of the S&amp;P 500)</li>
+<li>Fundamental: Created explicitly or implicitly from observable asset characteristics</li>
+<li>Statistical (Latent variable model): Factors are unobservable and extracted from asset returns</li>
+</ul>
+<p>All three types follow some form of
+<span class="math display">\[
+R_{i}(t) = \beta_{i,0} + \beta_{i,1}F_{1}(t)+\dots+\beta_{i,p}F_{p}(t)+\epsilon_{i}(t), \quad \forall \begin{cases}
+i=1,\dots, N \\
+t \in \mathbb{R}
+\end{cases}\\
+\]</span>
+where:
+- <span class="math inline">\(R_{i}(t)\)</span> is return on the <span class="math inline">\(i^{th}\)</span> asset at time t
+- <span class="math inline">\(F_{j}(t)\)</span> is the <span class="math inline">\(j^{th}\)</span> common factor at time t
+- <span class="math inline">\(\beta_{i,j}\)</span> is the factor loading/beta of <span class="math inline">\(i^{th}\)</span> asset on the <span class="math inline">\(j^{th}\)</span> factor
+- <span class="math inline">\(\epsilon_{i}(t)\)</span> is the idiosyncratic/unique return of asset <span class="math inline">\(i^{th}\)</span></p>
+<p>We want the errors to be independent from the factors,
+<span class="math display">\[
+Cov[\epsilon(t), F(t)] = 0
+\]</span></p>
+<p>In matrix form,</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp; \Leftrightarrow \\
+&amp; {\left[\begin{array}{c}
+R_1(t) \\
+\vdots \\
+R_N(t)
+\end{array}\right] }=\left[\begin{array}{c}
+\beta_{1,0} \\
+\vdots \\
+\beta_{N, 0}
+\end{array}\right]+\left[\begin{array}{ccc}
+\beta_{1,1} &amp; \cdots &amp; \beta_{1, p} \\
+\vdots &amp; \ddots &amp; \vdots \\
+\beta_{N, 1} &amp; \cdots &amp; \beta_{N, p}
+\end{array}\right]\left[\begin{array}{c}
+F_1(t) \\
+\vdots \\
+F_p(t)
+\end{array}\right]+\left[\begin{array}{c}
+\varepsilon_1(t) \\
+\vdots \\
+\varepsilon_p(t)
+\end{array}\right] \\
+&amp; \Leftrightarrow \\
+&amp; \mathbf{R}(t)=\boldsymbol{\beta}_0+\boldsymbol{\beta}^{\top} \mathbf{F}(t)+\boldsymbol{\varepsilon}(t)
+\end{aligned}
+\]</span></p>
+<p>The factors <span class="math inline">\(F_{j}(t)\)</span> are stationary with moments:
+<span class="math display">\[
+\begin{aligned}
+R(t) &amp;= \beta_{0} + \beta^{T}F(t) + \epsilon(t)\\
+\\
+\mu_{r} &amp;= \mathbb{E}(R(t)) = \mathbb{E}[\beta_{0} + \beta^{T}F(t) + \epsilon(t)]\\
+&amp;= \beta_{0}+\beta^{T}\underbrace{ \mathbb{E}[F(t)] }_{ \mu_{F} } + \underbrace{ \mathbb{E}[\epsilon(t)] }_{ 0 }\\
+&amp;= \beta_{0} + \beta^{T}\mu_{F}\\
+\\
+\Sigma_{R} &amp;= \mathbb{V}[\beta_{0}+\beta^{T}F(t) +\epsilon(t)]\\
+&amp;\underbrace{= \mathbb{V}[\beta^{T}F(t)] + \mathbb{V}[\epsilon(t)]}_{ \text{As } F(t)\text{ indep of } \epsilon_(t)}\\
+&amp;= \beta^{T}\underbrace{ \mathbb{V}[F(t)] }_{ \Sigma_{F} }\beta+\Sigma_{\epsilon}\\
+&amp;= \beta^{T}\Sigma_{F}\beta+\underbrace{ \Sigma_{\epsilon} }_{ \text{Diagonal} }
+\end{aligned}
+\]</span></p>
+<p>We can also find the moments of the portfolio with weights <span class="math inline">\(w = [w_{1}, \dots w_{N}]^{T}\)</span>
+<span class="math display">\[
+\begin{aligned}
+R_{port} = w^{T}R \implies \begin{cases}
+\mu_{port} = \mathbb{E}[R_{port}] = w^{T}\mathbb{E}[R] = w^{T}(\beta_{0}+\beta_{\mu_{F}}) \\
+\sigma^{2}_{port} = \mathbb{V}[R_{port} = \mathbb{V}[w^{T}R] = w^{T}\mathbb{V}[R]w = w^{T}(\beta^{T}\Sigma_{F}\beta+\Sigma_{\epsilon})w
+\end{cases}
+\end{aligned}
+\]</span></p>
+<div id="time-series-regression-models" class="section level3 hasAnchor" number="5.5.1">
+<h3><span class="header-section-number">5.5.1</span> Time Series Regression Models<a href="multivariate-return-modelling.html#time-series-regression-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider model for which factor values are known (e.g. macro/fundamental model)</p>
+<p>Estimate betas &amp; risks (variances) one asset at a time, using time series regression
+- For each fixed <span class="math inline">\(i=1,\dots N\)</span>, fir regression model:
+<span class="math display">\[
+R_{i}(t) = = \beta_{i,0} + \beta_{i,1}F_{1}(t)+ \dots + \beta_{i,p}F_{p}(t) + \epsilon_{i}(t)
+\]</span></p>
+<p>Most models will always include some proxy for the overall economy (eg the market)</p>
+<p>Instead of Fama-French, there is BARRA which uses the cross section of returns? Still regression tho</p>
+<div id="fama-french-3-factor-model" class="section level4 hasAnchor" number="5.5.1.1">
+<h4><span class="header-section-number">5.5.1.1</span> Fama-French 3 Factor Model<a href="multivariate-return-modelling.html#fama-french-3-factor-model" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Additionally to the market, they looked at two other factors that are consistent over many datasets and time periods.</p>
+<p><strong>Small Minus Big: (SMB)</strong>
+One factor tries to capture the size(market cap) of the company/stock, which empirically showed that size played a role in its return
+- Regressed returns on how companies of a certain size/group did
+- They took the smallest and biggest companies, and looked at their avg return over some period, creating a difference to use to separate the groups of companies</p>
+<p><strong>High Minus Low (HML):</strong>
+The second factor looks at whether a company is a <strong>value</strong> one or not. Measured using book-to-market ratio.</p>
+<blockquote>
+<p>These two factors were found to have statistically significant coefficients in multiple regression.</p>
+</blockquote>
+<p>People frequently use the factor model to estimate the return covariance matrix.
+They can use the sample covariance matrix of the factors and apply the beta vector in order to obtain the return covariance matrix</p>
+<p><span class="math display">\[
+\operatorname{Var}(\mathbf{R})=\hat{\boldsymbol{\Sigma}}_R=\hat{\boldsymbol{\beta}}^{\top} \hat{\boldsymbol{\Sigma}}_F \hat{\boldsymbol{\beta}}+\hat{\boldsymbol{\Sigma}}_{\varepsilon}
+\]</span>
+where:
+<span class="math display">\[
+\begin{aligned}
+&amp; \hat{\boldsymbol{\beta}}=\text { beta coefficient matrix (from regressions) } \\
+&amp; \hat{\boldsymbol{\Sigma}}_F=\text { factor sample covariance matrix } \\
+&amp; \hat{\boldsymbol{\Sigma}}_{\varepsilon}=\text { diagonal error variance matrix (from residuals) }
+\end{aligned}
+\]</span>
+This gives more stable estimates than sample covariance.</p>
+</div>
+</div>
+<div id="statistical-factor-models" class="section level3 hasAnchor" number="5.5.2">
+<h3><span class="header-section-number">5.5.2</span> Statistical Factor Models<a href="multivariate-return-modelling.html#statistical-factor-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In this model, the factors are <strong>unknown (latent) and unobserved</strong>. THis implies that we need to estimate both <span class="math inline">\(\beta\)</span> and <span class="math inline">\(F\)</span>.</p>
+<p>Unusual constraint: Because the factors are uncorrelated (not necessarily i.i.d.)
+<span class="math display">\[
+\Sigma_{F} = Cov(F)= I \sigma_F \quad \&amp; \quad \mu_{F}=\mathbb{E}(F) = 0
+\]</span></p>
+<p>This gives us the resulting moments of the returns:
+<span class="math display">\[
+\begin{aligned}
+\mu_{R} &amp;= \mathbb{E}[R] = \mathbb{E}[\beta_{0}+\beta^TF + \epsilon] = \beta_{0}+\beta^{T}\underbrace{ \mathbb{E}[F] }_{ 0 }+\underbrace{ \mathbb{E}[\epsilon] }_{ 0 } = \beta e_{0}\\
+\\
+\Sigma_{R} &amp;= \mathbb{V}[R] = \mathbb{V}[\boldsymbol{\beta}_{0}+\boldsymbol{\beta}^{T}F+\boldsymbol{\epsilon}] = \boldsymbol{\beta}^{T}\mathbb{V}[F]\boldsymbol{\beta}+\boldsymbol{\Sigma_{\epsilon} = \beta^{T}(I\cdot \sigma_{F})\beta+\Sigma_{\epsilon}}
+\end{aligned}
+\]</span></p>
+<div id="principle-component-analysis-pca" class="section level4 hasAnchor" number="5.5.2.1">
+<h4><span class="header-section-number">5.5.2.1</span> Principle Component Analysis (PCA)<a href="multivariate-return-modelling.html#principle-component-analysis-pca" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>This technique helps reduce the dimensionality of a problem. Consider a factor model without errors:
+<span class="math display">\[
+\mathbf{R}(t) = \boldsymbol{\beta}_{0}+\boldsymbol{\beta}^{T}\mathbf{F}(t) \implies \boldsymbol{\Sigma_{R}=\beta^{T}\Sigma_{F}\beta}
+\]</span></p>
+<p>Given a set of N assets, we can construct a set of variables (components) capturing most of the variability.</p>
+<ul>
+<li>PCA is a linear transformation</li>
+<li>The goal is to capture as much variation as possible.</li>
+</ul>
+<p>When we apply PCA to the statistical model, we find <span class="math inline">\(n\)</span> factors set as the PCA components. These components are <strong>uncorrelated</strong>, and have <strong>maximum variance.</strong></p>
+<p><span class="math display">\[
+F_{1},\dots,F_{n} \text{ are factors which are the Principle Components}
+\]</span>
+<span class="math display">\[
+\begin{aligned}
+F_{1} &amp;= \gamma_{1}^{T}\mathbf{R} = \gamma_{11}R_{1}+\dots+\gamma_{1n}R_{n}\\
+\vdots\\
+F_{n} &amp;= \gamma_{n}^{T}\mathbf{R} = \gamma_{n1}R_{1}+\dots+\gamma_{nn}R_{n}\\
+\end{aligned}
+\]</span></p>
+<p>Where each factor:</p>
+<p><span class="math display">\[
+\begin{aligned}
+F_{i} &amp;= \gamma_{i}^{T}\mathbf{X} \quad \text{Maximizes } \ Var(F_{i})=\boldsymbol{\gamma_{i}^{T}\Sigma_{R}\gamma_{i}} \quad s.t. \boldsymbol{\gamma_{i}^{T}\gamma_{i}}=1\\
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+Cov(F_{i},F_{j}) &amp;= \gamma_{j}^{T}\Sigma_{R}\gamma_{i} = 0\\
+\\
+\text{Where }&amp; i,j\in 1,\dots,n, \quad i &gt; j
+\end{aligned}
+\]</span></p>
+<p>supposedly does not imply that <span class="math inline">\(\gamma_{j}^{T}\gamma_{i} = 0\)</span> which may mean they are not orthogonal? But PCA components should be orthogonal?</p>
+<p><img src="Notes/Obsidian-Attachments/5-Factor-Models.png" /></p>
+<p>We can find the <span class="math inline">\(Cov(F)\)</span> and beta (loading factor) of <span class="math inline">\(R_i\)</span> on <span class="math inline">\(F_j\)</span>:
+<span class="math display">\[
+\begin{aligned}
+\mathbb{V}(\mathbf{F})&amp;= \mathbb{V}(\mathbf{P}^{T}\mathbf{R})\\
+&amp;= \mathbf{P}^{T}\mathbb{V}(\mathbf{R})\mathbf{P}\\
+&amp;= \mathbf{P}^{T}\boldsymbol{\Sigma}_{R}\mathbf{P}\\
+&amp;\text{By Eigen-decomposition}\\
+&amp;= \mathbf{P^{T}(P\Lambda P^{T})P}\\
+&amp;\text{Where } \mathbf{P^{T}P} = 1\\
+&amp;= \boldsymbol{\Lambda}
+\end{aligned}
+\]</span></p>
+<p>It’s kind of circular logic. Also, <span class="math inline">\(\Lambda\)</span> is sorted with the eigenvalue associated with the eigenvector that captures the most variance is first.</p>
+<blockquote>
+<p>Fact: Total variance of all PC’s is equal to original variable variance.</p>
+</blockquote>
+<p><span class="math display">\[
+\begin{aligned}
+\text{ PC Total Variance = Population Total Variance } &amp;\iff\\
+tr(\Lambda) = tr(\Sigma) &amp;\iff\\
+\lambda_{1}+\dots+\lambda_{P} = \sigma_{1}^{2}+\dots+\sigma^{2}_{N}
+\end{aligned}
+\]</span></p>
+<p>The proportion of total variance that is explained by each PC is:
+<span class="math display">\[
+Var(PC_{j}) =\frac{\lambda_{j}}{\lambda_{1}+\lambda_{2}+\dots+\lambda_{N}} \quad \text{Where } j=1,\dots,N
+\]</span></p>
+<div id="selecting-components" class="section level5 hasAnchor" number="5.5.2.1.1">
+<h5><span class="header-section-number">5.5.2.1.1</span> Selecting Components<a href="multivariate-return-modelling.html#selecting-components" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>The important part of PCA is how many components to select to capture a suitable amount of variability.</p>
+<p><em>You don’t need many components if the data is very correlated, and a few components may represent most of the variance in the data.</em></p>
+<p>We can also use a scree plot and pick the number of components before some “elbow” point.
+<img src="Notes/Obsidian-Attachments/5-Factor-Models-1.png" /></p>
+<p><img src="Notes/Obsidian-Attachments/5-Factor-Models-2.png" /></p>
+<p>PCA run on the correlation matrix (which is the standardized covariance matrix, which is preferred when there is very large range of variances between variables)
+<img src="Notes/Obsidian-Attachments/5-Factor-Models-3.png" /></p>
+
+</div>
+</div>
 </div>
 </div>
 </div>
