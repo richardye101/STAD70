@@ -225,10 +225,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="6.2.1.1" data-path="factor-models.html"><a href="factor-models.html#fama-french-3-factor-model"><i class="fa fa-check"></i><b>6.2.1.1</b> Fama-French 3 Factor Model</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2.2" data-path="factor-models.html"><a href="factor-models.html#statistical-factor-models"><i class="fa fa-check"></i><b>6.2.2</b> Statistical Factor Models</a>
-<ul>
-<li class="chapter" data-level="6.2.2.1" data-path="factor-models.html"><a href="factor-models.html#principle-component-analysis-pca"><i class="fa fa-check"></i><b>6.2.2.1</b> Principle Component Analysis (PCA)</a></li>
+<li class="chapter" data-level="6.2.2" data-path="factor-models.html"><a href="factor-models.html#statistical-factor-models"><i class="fa fa-check"></i><b>6.2.2</b> Statistical Factor Models</a></li>
 </ul></li>
+<li class="chapter" data-level="6.3" data-path="factor-models.html"><a href="factor-models.html#principle-component-analysis-pca"><i class="fa fa-check"></i><b>6.3</b> Principle Component Analysis (PCA)</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="factor-models.html"><a href="factor-models.html#selecting-components"><i class="fa fa-check"></i><b>6.3.1</b> Selecting Components</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="problem-set-1.html"><a href="problem-set-1.html"><i class="fa fa-check"></i><b>7</b> Problem Set 1</a>
@@ -529,8 +530,10 @@ This gives more stable estimates than sample covariance.</p>
 \Sigma_{R} &amp;= \mathbb{V}[R] = \mathbb{V}[\boldsymbol{\beta}_{0}+\boldsymbol{\beta}^{T}F+\boldsymbol{\epsilon}] = \boldsymbol{\beta}^{T}\mathbb{V}[F]\boldsymbol{\beta}+\boldsymbol{\Sigma_{\epsilon} = \beta^{T}(I\cdot \sigma_{F})\beta+\Sigma_{\epsilon}}
 \end{aligned}
 \]</span></p>
-<div id="principle-component-analysis-pca" class="section level4 hasAnchor" number="6.2.2.1">
-<h4><span class="header-section-number">6.2.2.1</span> Principle Component Analysis (PCA)<a href="factor-models.html#principle-component-analysis-pca" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+</div>
+<div id="principle-component-analysis-pca" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Principle Component Analysis (PCA)<a href="factor-models.html#principle-component-analysis-pca" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This technique helps reduce the dimensionality of a problem. Consider a factor model without errors:
 <span class="math display">\[
 \mathbf{R}(t) = \boldsymbol{\beta}_{0}+\boldsymbol{\beta}^{T}\mathbf{F}(t) \implies \boldsymbol{\Sigma_{R}=\beta^{T}\Sigma_{F}\beta}
@@ -559,12 +562,12 @@ F_{i} &amp;= \gamma_{i}^{T}\mathbf{X} \quad \text{Maximizes } \ Var(F_{i})=\bold
 \]</span></p>
 <p><span class="math display">\[
 \begin{aligned}
-Cov(F_{i},F_{j}) &amp;= \gamma_{j}^{T}\Sigma_{R}\gamma_{i} = 0\\
+Cov(F_{i},F_{j}) &amp;= \boldsymbol{\gamma_{j}^{T}\Sigma_{R}\gamma_{i}} = 0\\
 \\
 \text{Where }&amp; i,j\in 1,\dots,n, \quad i &gt; j
 \end{aligned}
 \]</span></p>
-<p>supposedly does not imply that <span class="math inline">\(\gamma_{j}^{T}\gamma_{i} = 0\)</span> which may mean they are not orthogonal? But PCA components should be orthogonal?</p>
+<p>Supposedly does not imply that <span class="math inline">\(\gamma_{j}^{T}\gamma_{i} = 0\)</span> which may mean they are not orthogonal? But PCA components should be orthogonal?</p>
 <p><img src="Notes/Obsidian-Attachments/5-Factor-Models.png" /></p>
 <p>We can find the <span class="math inline">\(Cov(F)\)</span> and beta (loading factor) of <span class="math inline">\(R_i\)</span> on <span class="math inline">\(F_j\)</span>:
 <span class="math display">\[
@@ -593,8 +596,8 @@ tr(\Lambda) = tr(\Sigma) &amp;\iff\\
 <span class="math display">\[
 Var(PC_{j}) =\frac{\lambda_{j}}{\lambda_{1}+\lambda_{2}+\dots+\lambda_{N}} \quad \text{Where } j=1,\dots,N
 \]</span></p>
-<div id="selecting-components" class="section level5 hasAnchor" number="6.2.2.1.1">
-<h5><span class="header-section-number">6.2.2.1.1</span> Selecting Components<a href="factor-models.html#selecting-components" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div id="selecting-components" class="section level3 hasAnchor" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Selecting Components<a href="factor-models.html#selecting-components" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The important part of PCA is how many components to select to capture a suitable amount of variability.</p>
 <p><em>You don’t need many components if the data is very correlated, and a few components may represent most of the variance in the data.</em></p>
 <p>We can also use a scree plot and pick the number of components before some “elbow” point.
@@ -603,8 +606,6 @@ Var(PC_{j}) =\frac{\lambda_{j}}{\lambda_{1}+\lambda_{2}+\dots+\lambda_{N}} \quad
 <p>PCA run on the correlation matrix (which is the standardized covariance matrix, which is preferred when there is very large range of variances between variables)
 <img src="Notes/Obsidian-Attachments/5-Factor-Models-3.png" /></p>
 
-</div>
-</div>
 </div>
 </div>
 </div>
