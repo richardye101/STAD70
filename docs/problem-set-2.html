@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="problem-set-1.html"/>
-
+<link rel="next" href="problem-set-3.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -294,6 +294,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.5.2" data-path="problem-set-2.html"><a href="problem-set-2.html#part-c-2"><i class="fa fa-check"></i><b>8.5.2</b> Part c</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="problem-set-3.html"><a href="problem-set-3.html"><i class="fa fa-check"></i><b>9</b> Problem Set 3</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="problem-set-3.html"><a href="problem-set-3.html#q1-2"><i class="fa fa-check"></i><b>9.1</b> Q1</a></li>
+<li class="chapter" data-level="9.2" data-path="problem-set-3.html"><a href="problem-set-3.html#part-a-2"><i class="fa fa-check"></i><b>9.2</b> Part A</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -343,10 +348,12 @@ where smaller <span class="math inline">\(\alpha \to\)</span> heavier tails</p>
 <p>We say that distribution <span class="math inline">\(F\)</span> is heavy tailed if the integral on the positive half of <span class="math inline">\(\mathbb{R}^{+}\)</span> is infinite for some t</p>
 <p><span class="math display">\[
 \begin{aligned}
-m_{X}(t) = E(e^{tX}) = \left[ 1 + tE(X) + \frac{(tE(X))^2}{2!} + \frac{(tE(X))^3}{3!} + ... + (tE(X))^n/n! + ...  \right]
+m_{X}(t) &amp;= \mathbb{E}(e^{tX})\\
+&amp;= \sum^{\infty}_{k=1}\frac{t^{k}}{k!}\mathbb{E}[X^{k}]\\
+&amp;= \left[ 1 + t\mathbb{E}(X) + \frac{t^2\mathbb{E}(X^2)}{2!} + \frac{t^3\mathbb{E}(X^3)}{3!} + ... + \frac{t^n\mathbb{E}(X^n)}{n!} + ...  \right]\\
 \end{aligned}
 \]</span></p>
-<p>^ not complete</p>
+<p>But for any <span class="math inline">\(n^{th}\)</span> moment where <span class="math inline">\(n&gt;\alpha\)</span>, <span class="math inline">\(\mathbb{E}(X^{n})=\infty\)</span>. This implies that the mfg of any heavy tail distribution (which by definition has <span class="math inline">\(\alpha &gt;0\)</span>) will be infinite.</p>
 </div>
 <div id="part-b" class="section level3 hasAnchor" number="8.2.2">
 <h3><span class="header-section-number">8.2.2</span> Part B<a href="problem-set-2.html#part-b" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -446,11 +453,11 @@ X &amp;\sim Exp(1) \quad Y \sim Exp(1)\\
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="problem-set-2.html#cb38-1" tabindex="-1"></a><span class="fu">head</span>(lto_adj_close)</span></code></pre></div>
 <pre><code>##                  date adj_close
 ## 1 2015-01-02 14:30:00  44.17995
-## 2 2015-01-05 14:30:00  43.25631
+## 2 2015-01-05 14:30:00  43.25630
 ## 3 2015-01-06 14:30:00  42.38907
 ## 4 2015-01-07 14:30:00  42.80506
 ## 5 2015-01-08 14:30:00  42.80506
-## 6 2015-01-09 14:30:00  42.08589</code></pre>
+## 6 2015-01-09 14:30:00  42.08588</code></pre>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="problem-set-2.html#cb40-1" tabindex="-1"></a>net_ret <span class="ot">=</span> lto_adj_close <span class="sc">%&gt;%</span></span>
 <span id="cb40-2"><a href="problem-set-2.html#cb40-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">net_returns =</span> </span>
 <span id="cb40-3"><a href="problem-set-2.html#cb40-3" tabindex="-1"></a>           (adj_close <span class="sc">-</span> <span class="fu">lag</span>(adj_close, <span class="dv">1</span>)) <span class="sc">/</span> <span class="fu">lag</span>(adj_close, <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
@@ -481,8 +488,8 @@ Based on the QQ plot, the distribution seems leptokurtic as the sample quantiles
 <span id="cb44-8"><a href="problem-set-2.html#cb44-8" tabindex="-1"></a></span>
 <span id="cb44-9"><a href="problem-set-2.html#cb44-9" tabindex="-1"></a>sample_mu <span class="ot">=</span> <span class="fu">mean</span>(net_ret<span class="sc">$</span>net_returns)</span>
 <span id="cb44-10"><a href="problem-set-2.html#cb44-10" tabindex="-1"></a>sample_var <span class="ot">=</span> <span class="fu">var</span>(net_ret<span class="sc">$</span>net_returns)</span></code></pre></div>
-<p>We have a fitted mean <span class="math inline">\(\mu\)</span> of 3.2240116^{-4} and variance <span class="math inline">\(\sigma^{2}\)</span> of 1.463435^{-4}.
-This is compared to the sample mean <span class="math inline">\(\mu\)</span> of 5.6615324^{-4} and variance <span class="math inline">\(\sigma^2\)</span> of 1.3827251^{-4}.</p>
+<p>We have a fitted mean <span class="math inline">\(\mu\)</span> of 3.2240519^{-4} and variance <span class="math inline">\(\sigma^{2}\)</span> of 1.4634787^{-4}.
+This is compared to the sample mean <span class="math inline">\(\mu\)</span> of 5.6615322^{-4} and variance <span class="math inline">\(\sigma^2\)</span> of 1.3827266^{-4}.</p>
 <p>These differences can occur due to the fitted t-distribution smoothing away more extreme values.</p>
 </div>
 <div id="part-c-1" class="section level3 hasAnchor" number="8.4.3">
@@ -633,8 +640,8 @@ On average, the sample and theoretical quantiles agree. With heavy tailed distri
           </div>
         </div>
       </div>
-<a href="problem-set-1.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="problem-set-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="problem-set-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

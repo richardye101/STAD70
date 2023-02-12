@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Return Distributions | STAD70 Course Work</title>
+  <title>Chapter 9 Problem Set 3 | STAD70 Course Work</title>
   <meta name="description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Return Distributions | STAD70 Course Work" />
+  <meta property="og:title" content="Chapter 9 Problem Set 3 | STAD70 Course Work" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Return Distributions | STAD70 Course Work" />
+  <meta name="twitter:title" content="Chapter 9 Problem Set 3 | STAD70 Course Work" />
   
   <meta name="twitter:description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="financial-data-and-returns.html"/>
-<link rel="next" href="modelling-extreme-events.html"/>
+<link rel="prev" href="problem-set-2.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -319,159 +319,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="return-distributions" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Return Distributions<a href="return-distributions.html#return-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="skewness" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Skewness<a href="return-distributions.html#skewness" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Skewness measures symmetry.
-- Positive skew <span class="math inline">\(\to\)</span> right skewed
-- Negative skew <span class="math inline">\(\to\)</span> left skewed
-<span class="math display">\[
-Sk = \mathbb{E}\left[ \left( \frac{X-\mu}{\sigma} \right)^{3} \right]
-\]</span>
-<img src="Notes/Obsidian-Attachments/2-Return-Distributions.png" /></p>
+<div id="problem-set-3" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Problem Set 3<a href="problem-set-3.html#problem-set-3" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="q1-2" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Q1<a href="problem-set-3.html#q1-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 </div>
-<div id="kurtosis" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> Kurtosis<a href="return-distributions.html#kurtosis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Kurtosis measures how concentrated the data is around the mean, or how heavy the tails are. You can only measure kurtosis (meaningfully) if the distribution has 0 skew.</p>
-<p>Kurtosis of a distribution is measured against the kurtosis of the Normal distribution, which is <span class="math inline">\(3\)</span>.</p>
-<p><span class="math display">\[
-Kur = \mathbb{E}\left[ \left( \frac{X-\mu}{\sigma} \right)^{3} \right] - 3
-\]</span>
-<img src="Notes/Obsidian-Attachments/2-Return-Distributions-1.png" /></p>
-</div>
-<div id="qq-plot" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> QQ Plot<a href="return-distributions.html#qq-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><img src="Notes/Obsidian-Attachments/2-Return-Distributions-2.png" /></p>
-<ul>
-<li>Top left: The sample quantiles spread further on the right than the theoretical quantiles, which implies a <strong>right/pos skewness</strong></li>
-<li>Top right: The sample quantiles for the tails are very concentrated compared to the theoretical quantiles, which implies the data has short/finite tails implying it is <strong>platykurtic/neg kurtosis</strong></li>
-<li>Bottom left: The sample quantiles spread further on the left than the theoretical quantiles, which implies a <strong>left/neg skewness</strong></li>
-<li>Bottom right: The sample quantiles for the tails are very spread compared to the theoretical quantiles, which implies the data has long/heavy tails implying it is <strong>leptokurtic/pos kurtosis</strong></li>
-</ul>
-</div>
-<div id="heavy-tail-distributions" class="section level2 hasAnchor" number="3.4">
-<h2><span class="header-section-number">3.4</span> Heavy Tail Distributions<a href="return-distributions.html#heavy-tail-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>A distribution <span class="math inline">\(f(x)\)</span> is said to have:</p>
-<ul>
-<li>Exponential tails (short/finite tails) if
-<span class="math display">\[f(x) \propto e^{-x/\lambda}\]</span></li>
-<li>Polynomial tails (long/heavy tails) if
-<span class="math display">\[
-\begin{aligned}
-f(x) &amp;\propto x^{-(1+\alpha)}\\
-\\
-\text{Where } &amp;\alpha \text{ is the tail index}
-\end{aligned}
-\]</span></li>
-</ul>
-<blockquote>
-<p><strong>The smaller the tail index, the heavier the tail</strong></p>
-</blockquote>
-<p>Heavy tailed distributions can also have infinite moments (including the mean!)</p>
-<p><span class="math display">\[
-\mathbb{E}(X^{k}) = \infty \text{ for } k \geq \alpha
-\]</span>
-<em>So if the tail index is high, the tail is lighter, and the first <span class="math inline">\(\alpha\)</span> moments exist.</em></p>
-<p>The tail index can be estimated using:
-- MLE approximation, which takes the derivative log of the product of n the distributions when it equals 0, and solving for <span class="math inline">\(\alpha\)</span>
-- <span class="math inline">\(\hat{\alpha} = \frac{n}{\sum^n_{i=1}\ln\left( r_{i}/r_{min} \right)}\)</span>
-- <span class="math display">\[
-\begin{aligned}
-L(\alpha) &amp;= \prod^{n}_{i=1}[f(x)]\\
-\log(L(\alpha)) = l(\alpha) &amp;= \sum^{n}_{i=1} f(x)\\
-l&#39;(\alpha) &amp;= \sum^{n}_{i=1} f&#39;(x) = 0
-\end{aligned}
-\]</span>
-- Pareto Q-Q plot of the empirical CDF and the returns in log x log scale
-- <span class="math inline">\(\alpha\)</span> is the estimated slope of the line of best fit
-<img src="Notes/Obsidian-Attachments/2-Return-Distributions-3.png" /></p>
-<div id="common-heavy-tail-distributions" class="section level3 hasAnchor" number="3.4.1">
-<h3><span class="header-section-number">3.4.1</span> Common Heavy Tail Distributions<a href="return-distributions.html#common-heavy-tail-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="pareto" class="section level4 hasAnchor" number="3.4.1.1">
-<h4><span class="header-section-number">3.4.1.1</span> Pareto<a href="return-distributions.html#pareto" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p><span class="math display">\[
-\begin{aligned}
-f(x) &amp;= \frac{c\ x^{-(1+\alpha)}}{l^{\alpha}}, \ x \geq l\\
-\end{aligned}
-\]</span></p>
-<p>Can be used to model <strong>absolute</strong> returns above a cutoff <span class="math inline">\(r_{min}\)</span>
-<span class="math display">\[
-\bar{F}(r) = \left( \frac{r}{r_{min}} \right)^{\alpha} \quad \forall\ r &gt; r_{min}
-\]</span></p>
-</div>
-<div id="cauchy" class="section level4 hasAnchor" number="3.4.1.2">
-<h4><span class="header-section-number">3.4.1.2</span> Cauchy<a href="return-distributions.html#cauchy" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p><span class="math display">\[
-\begin{aligned}
-f(x) &amp;= \frac{1}{\pi(1+x^{2})}\\
-&amp;= \frac{1+x^{-(\alpha+1)}}{\pi}  \implies \alpha = 1
-\end{aligned}
-\]</span>
-Which is the t-distribution when df = 1.
-<span class="math display">\[
-f(x) \sim t(df=1)
-\]</span></p>
-</div>
-<div id="students-t" class="section level4 hasAnchor" number="3.4.1.3">
-<h4><span class="header-section-number">3.4.1.3</span> Students t<a href="return-distributions.html#students-t" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p><span class="math display">\[
-\begin{aligned}
-f(x) &amp;= \frac{\Gamma\left( \frac{v+1}{2} \right)}{\sqrt{ v\pi }\Gamma(v/2)}\left( 1+\frac{x^{2}}{v} \right)^{-\frac{v+1}{2}}\\
-\\
-\text{Where } &amp;\alpha = v = \text{degrees of freedom}
-\end{aligned}
-\]</span>
-The Students t distributions offers a tractable heavy-tail model of the entire return distribution (not just the tail). It is typically adjusted for the location and scale:
-<span class="math display">\[
-Y = \mu + \sigma X \quad \text{where } X \sim t(df=v)
-\]</span></p>
-</div>
-</div>
-<div id="stable-distributions" class="section level3 hasAnchor" number="3.4.2">
-<h3><span class="header-section-number">3.4.2</span> Stable Distributions<a href="return-distributions.html#stable-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>If we let log returns <span class="math inline">\(r_{i} \sim\)</span> heavy tail distribution with <span class="math inline">\(0&lt;\alpha&lt;2\)</span> (the first and second moment - mean/variance exist)</p>
-<p>The aggregate return <span class="math inline">\(r_{1\to n} = r_{1} = r_{2} + \dots r_{n} \sim\)</span> Stable Distribution</p>
-<div id="generalized-central-limit-theorem" class="section level4 hasAnchor" number="3.4.2.1">
-<h4><span class="header-section-number">3.4.2.1</span> Generalized Central Limit Theorem<a href="return-distributions.html#generalized-central-limit-theorem" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Stable distributions have no closed form expression, although the share heavy tails and the same tail index <span class="math inline">\(\alpha\)</span> as it’s individual distributions.</p>
-<p>As you sum independent, <strong>STABLE</strong> random variables, the sum will follow a Stable Distribution.</p>
-</div>
-<div id="measuring-tail-behaviour" class="section level4 hasAnchor" number="3.4.2.2">
-<h4><span class="header-section-number">3.4.2.2</span> Measuring tail behaviour<a href="return-distributions.html#measuring-tail-behaviour" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>We use the complementary CDF
-<span class="math display">\[
-\bar{F}(x) = 1 - F(x) = P(X &gt; x) \sim x^{-\alpha}
-\]</span></p>
-</div>
-</div>
-</div>
-<div id="mixture-distributions" class="section level2 hasAnchor" number="3.5">
-<h2><span class="header-section-number">3.5</span> Mixture Distributions<a href="return-distributions.html#mixture-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We can generate a random variable using one of out a selection of a family of distributions, choosing the distribution using another distribution.</p>
-<p>They are easy to generate, but harder to work with analytically.</p>
-<p>We can select from a discrete and finite set of distributions, or of a continuous family of distributions (possibly countable) known as compound distributions.</p>
-<p>Example:
-<span class="math display">\[
-\text{Generate RV from: } \begin{cases}
-N(0,1) &amp; p=60\%\\
-N(5,3) &amp; p=40\%
-\end{cases}
-\]</span>
-<img src="Notes/Obsidian-Attachments/2-Return-Distributions-4.png" /></p>
-<div id="normal-scale-mixture" class="section level4 hasAnchor" number="3.5.0.1">
-<h4><span class="header-section-number">3.5.0.1</span> Normal scale mixture<a href="return-distributions.html#normal-scale-mixture" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p><span class="math inline">\(Y = \mu+\sqrt{ V } \cdot Z\)</span>
-Where <span class="math inline">\(V\)</span> is a RV with non-negative mixing distribution and represents a random sd of <span class="math inline">\(Y\)</span>.</p>
-<p>Example (probably don’t need to memorize…) which is used when simulating returns, as seem in PS2 Q4c part ii and iii.</p>
-<p><span class="math display">\[
-\begin{aligned}
-\text{t-dist } t &amp;= Z\sqrt{ v/W } \quad \text{ where } W \sim \chi^{2}(df=v)\\
-\text{GARCH model } r_{t} &amp;= \mu + \sigma_{t}Z_{t} \quad \text{ where } \sigma^{2}_{t} = \omega + \sum^{p}_{i=1}a_{i}r^{2}_{t-i}+\sum^{q}_{j=1}\beta_{j}\sigma^{2}_{t-j}\\
-\end{aligned}
-\]</span></p>
+<div id="part-a-2" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Part A<a href="problem-set-3.html#part-a-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 
-</div>
 </div>
 </div>
             </section>
@@ -479,8 +334,8 @@ Where <span class="math inline">\(V\)</span> is a RV with non-negative mixing di
           </div>
         </div>
       </div>
-<a href="financial-data-and-returns.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="modelling-extreme-events.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="problem-set-2.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -511,7 +366,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/Notes/2-Return-Distributions.md",
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/ProblemSets/PS3/PS3.md",
 "text": "Edit"
 },
 "history": {
