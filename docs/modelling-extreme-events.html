@@ -382,6 +382,15 @@ H(x) &amp;= \exp\left\{ -\left( 1+\xi\frac{x-\mu}{\sigma} \right)^{-1/\xi}_{+} \
 \end{aligned}
 \]</span>
 Where the <span class="math inline">\(\xi\)</span> value describes the tail behaviour</p>
+<p>The log-transformation of the Frechet(<span class="math inline">\(\alpha=1\)</span>) is the Gumbel distribution!
+<span class="math display">\[
+\begin{aligned}
+\ln(H_{F}(x)) &amp;= \ln\left[ \exp\{-x^{-1}\}\right]\\
+&amp;= -\left( 1+\frac{x-\mu}{\sigma} \right)^{-1}\\
+\\
+&amp;= H_{G} = \exp \left\{ -\left( 1+0\cdot \frac{x-\mu}{\sigma} \right)^{-1/0} \right\}
+\end{aligned}
+\]</span></p>
 <p>As an example, we’ll show that the normalized maximum of i.i.d. Uniform(0,1) aka <span class="math inline">\(F_{n}(x) = x\)</span> with <span class="math inline">\(a_{n}=1/n, b_{n}=1\)</span> converges to the Weibull distribution.
 <span class="math display">\[
 \begin{aligned}
