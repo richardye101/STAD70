@@ -385,7 +385,30 @@ Which shows that <span class="math inline">\(\phi_{Z}(t)\)</span> shares the sam
 </div>
 <div id="q3-1" class="section level2 hasAnchor" number="8.3">
 <h2><span class="header-section-number">8.3</span> Q3<a href="problem-set-2.html#q3-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>later</p>
+<p><span class="math display">\[
+\begin{aligned}
+Z&amp;=\frac{X}{Y}\\
+X &amp;\sim Exp(1) \quad Y \sim Exp(1)\\
+\bar{F}_{X}(x) &amp;= 1-(1-e^{-x}) = e^{-x}\quad x &gt; 0\\
+\bar{F}_{Y}(y) &amp;= 1-(1-e^{-y}) = e^{-y}\quad y &gt; 0
+\end{aligned}
+\]</span></p>
+<p>Show <span class="math inline">\(Z\)</span> follows a heavy-tailed distribution, and find the tail index:</p>
+<p><span class="math inline">\(Z\)</span> follows a heavy-tailed distribution if it has polynomial tails ie <span class="math inline">\(Z \propto x^{-(1+\alpha)}\)</span></p>
+<p>We will integrate w.r.t <span class="math inline">\(F_{Y}(y)\)</span>, as we condition on the fact that <span class="math inline">\(y&gt;0\)</span>. We can also convert the probability to be of <span class="math inline">\(\mathbb{P}(X&lt;\alpha y)\)</span> so that it becomes a function of <span class="math inline">\(y\)</span>, which will work in our integral.
+<span class="math display">\[
+\begin{aligned}
+\bar{F}_{Z}(z) = \mathbb{P}(Z &gt; z) &amp;= \mathbb{P}\left( \frac{X}{Y} &gt; z, x &gt; 0, y &gt; 0\right)\\
+&amp;= \int_{y=0}^{\infty}\mathbb{P}\left( \frac{X}{Y} &gt; z | Y = y \right) \, dF_{y}(y)\\
+&amp;= \int _{y=0}^{\infty}\underbrace{ \mathbb{P}(X &gt; zy) }_{ e^{-zy} }\underbrace{ f_{Y}(y) }_{ e^{-y} } \, dy\\
+&amp;\quad \quad \quad \ \ \text{as } Y = y\\
+&amp;= \int ^{\infty}_{y=0} e^{-y(z+1)}\, dy\\
+&amp;= \left[ \frac{e^{-y(z+1)}}{-(z+1)} \right]^{\infty}_{y=0}\\
+&amp;= 0 + \frac{1}{z+1} = (z+1)^{-1} \quad z &gt; 0\\
+\implies f_{Z}(z) &amp;= (z+1)^{-2} \propto x^{-(1+\alpha)} \text{ Where } \alpha = 1
+\end{aligned}
+\]</span></p>
+<p><span class="math inline">\(\therefore Z\)</span> is heavy tailed with tail index <span class="math inline">\(\alpha=1\)</span></p>
 
 </div>
 </div>
