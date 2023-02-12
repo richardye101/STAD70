@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Multivariate Return Modelling | STAD70 Course Work</title>
+  <title>Chapter 6 Copulas | STAD70 Course Work</title>
   <meta name="description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Multivariate Return Modelling | STAD70 Course Work" />
+  <meta property="og:title" content="Chapter 6 Copulas | STAD70 Course Work" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Multivariate Return Modelling | STAD70 Course Work" />
+  <meta name="twitter:title" content="Chapter 6 Copulas | STAD70 Course Work" />
   
   <meta name="twitter:description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="modelling-extreme-events.html"/>
-<link rel="next" href="copulas.html"/>
+<link rel="prev" href="multivariate-return-modelling.html"/>
+<link rel="next" href="factor-models.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -327,60 +327,238 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="multivariate-return-modelling" class="section level1 hasAnchor" number="5">
-<h1><span class="header-section-number">Chapter 5</span> Multivariate Return Modelling<a href="multivariate-return-modelling.html#multivariate-return-modelling" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>When modelling returns of multiple assets, it’s common to assume the correlation between them is constant.</p>
-<p>Many investment strategies combine multiple assets together, but how those assets are related is an important piece of information to understand. It’s also difficult to model. Say we start with a simple multivariate Normal, where dependence <span class="math inline">\(\leftrightarrow\)</span> covariance, so we can model their relations with the covariance matrix.</p>
-<div id="covariance-correlation-matrix" class="section level2 hasAnchor" number="5.1">
-<h2><span class="header-section-number">5.1</span> Covariance &amp; Correlation Matrix<a href="multivariate-return-modelling.html#covariance-correlation-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>For a linear combination of assets, we can attempt to use the following covariance matrix to describe their linear dependence:
-<span class="math display">\[
-Cov[A^{T}R] = A^{T}Cov[R]A, \quad \text{where }\begin{cases}
-A = \text{Constant matrix} \\
-R = \text{random vector}
+<div id="copulas" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Copulas<a href="copulas.html#copulas" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>A more flexible way of modelling dependencies of RVs is using copulas.</p>
+<blockquote>
+<p>Definition: A copula (C) is a multivariate CDF with Uniform(0,1) marginals</p>
+</blockquote>
+<p><span class="math display">\[
+\begin{aligned}
+C(u_{1}, u_{2}, \dots u_{d}) \in [0,1], \quad \forall \ u_{1},\dots u_{d} \in [0,1]\\
+\\
+\text{Where }\begin{cases}
+C(0,0, \ldots, 0)=0 \\
+C(1,1, \ldots, 1)=1 \\
+C\left(\ldots, u_{i-1}, 0, u_{i+1}, \ldots\right)=0 \\
+C\left(1, \ldots, 1, u_i, 1, \ldots, 1\right)=u_i
 \end{cases}
+\end{aligned}
 \]</span>
-Unfortunately, sample covariance estimation is very sensitive to extreme values, which happen frequently with return (See heavy tails)</p>
-<p>Returns are often treated as independent samples, but that is not realistic.</p>
+Third case: The cumulative probability of one RV being less than or equal to 0 regardless of what the other RVs are in a copula is 0.
+Fourth case: The cumulative probability that the other RVs have values less than 1 is 1 but the <span class="math inline">\(i^{th}\)</span> RV is <span class="math inline">\(u_{i}\)</span> is simply <span class="math inline">\(u_{i}\)</span></p>
+<div id="the-independence-copula" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> The independence copula<a href="copulas.html#the-independence-copula" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><span class="math inline">\(C_{indep} (u_{1}, \dots u_{d} = u_{1} \times \dots \times u_{d})\)</span></p>
+<p>By the <strong>Frechet-Hoeffding</strong> theorem, any/every copula is bounded by</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp; \underline{C}\left(u_1, \ldots, u_d\right) \leq C\left(u_1, \ldots, u_d\right) \leq \bar{C}\left(u_1, \ldots, u_d\right) \\
+&amp; \text { where }
+\begin{cases}
+\underline{C}\left(u_1, \ldots, u_d\right)=\max \left\{1-d+\sum_{i=1}^d u_i, 0\right\} \\
+\bar{C}\left(u_1, \ldots, u_d\right)=\min \left\{u_1, \ldots, u_d\right\}
+\end{cases}
+\end{aligned}
+\]</span>
+<span class="math inline">\(\max \left\{1-d+\sum_{i=1}^d u_i, 0\right\}\)</span> is 1 minus number of uniforms plus the values of the uniforms</p>
+<ul>
+<li>(if <span class="math inline">\(\mathbf{d=5}, u_{1}=.5,u_{2}=.4,u_{3}=.7,u_{4}=.2,u_{5}=.6\)</span>
+<ul>
+<li>then <span class="math inline">\(\max(1-5+2.4 = \mathbf{-1.6},0)\)</span> )</li>
+</ul></li>
+<li>This implies the minimum of the Copula is bounded by 0, or higher if the average value of the uniforms are <span class="math inline">\(\geq\frac{d-1}{d}\)</span>.</li>
+</ul>
+<p><span class="math inline">\(\min \left\{u_1, \ldots, u_d\right\}\)</span> implies the max of the Copula is bounded by the smallest marginal probability, which makes sense as that is the only one limiting the <strong>cumulative probability</strong>.</p>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-1.png" /></p>
 </div>
-<div id="multivariate-students-t-distribution" class="section level2 hasAnchor" number="5.2">
-<h2><span class="header-section-number">5.2</span> Multivariate Student’s t Distribution<a href="multivariate-return-modelling.html#multivariate-students-t-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We should <strong>never remove outliers</strong> in finance. We must model the heavy tails (extreme returns) somehow, and Student’s t distribution is one way to do that.</p>
-<p>A multivariate Normal scale mixture model can be used to describe a multivariate Student’s t distribution:
+<div id="sklars-theorem" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Sklar’s Theorem<a href="copulas.html#sklars-theorem" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Any continuous multivariate CDF <span class="math inline">\(F(x_{1}, \dots x_{d})\)</span> with marginal (1D) CDF’s <span class="math inline">\(F_{i}(x_{i}) \ \forall \ i=1,\dots,d\)</span> can be expressed in terms of a copula <span class="math inline">\(C\)</span>, as
+<span class="math display">\[
+F(x_{1},\dots x_{d}) = C(F_{1}(x_{1}), \dots, F_{d}(x_{d}))
+\]</span></p>
+<p>Inverse is also true, where any copula combined with marginal CDF’s can give a multivariate CDF.</p>
+<ul>
+<li>Copula’s model dependence separately from the marginal distributions of the RVs</li>
+</ul>
+<p>If <span class="math inline">\(X \sim F \implies F(x) \sim Unif(0,1) \implies F^{-1}(Unif) \sim F\)</span>
+<em>If an RV follows some CDF <span class="math inline">\(F\)</span>, then …</em></p>
+<blockquote>
+<p>If you take a copula of a bunch of marginal CDF’s, you can obtain the multivariate CDF of all the marginals. The inverse is true, where you can take a multivariate CDF and come up with a copula to represent the dependency between the marginal distributions, and the marginal distributions themselves. (I think is what this is saying.)</p>
+</blockquote>
+<div id="example" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Example<a href="copulas.html#example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For a continuous CDF <span class="math inline">\(F(x_{1},\dots,x_{d})\)</span> with marginals <span class="math inline">\(F_{i}(x_{i})\)</span>, the copula is given by:
 <span class="math display">\[
 \begin{aligned}
-\mathbf{R} &amp;= \boldsymbol{\mu} + \mathbf{Z} \sqrt{ v/W } \sim t_{v}(\boldsymbol{\mu}, \boldsymbol{\Lambda})\\
+C(F_{1}(x_{1}),\dots,F_{d}(F_{d})) &amp;= F(x_{1},\dots,x_{d}) \ \text{by Sklar&#39;s Thm}\\
 \\
-\text{Where } &amp; W \sim \chi^{2}(df=v)\\
-&amp; \mathbf{Z} \sim N(\mathbf{0}, \boldsymbol{\Lambda}) \quad \text{where } \boldsymbol{\Lambda} = Indentity \ Mat
+\text{Let } u_{i}= F_{i}(x_{i}) &amp;\implies x_{i} = F_{i}^{-1}(u_{i})\\
 \end{aligned}
+\]</span>
+<span class="math display">\[
+\therefore \mathbf{C(u_{1},\dots,u_{d}) = F(F_{1}^{-1}(u_{1}),\dots,F_{d}^{-1}(u_{d}))}\\
 \]</span></p>
-<p>It’s mean and variance are:</p>
+<ul class="task-list">
+<li><input type="checkbox" />Ask Sotirios what if <span class="math inline">\(F_{i}(x_{i})\)</span> is not uniform?</li>
+</ul>
+</div>
+</div>
+<div id="gaussian-copula" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Gaussian Copula<a href="copulas.html#gaussian-copula" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can also construct copula’s of non uniform distributions, such as this multivariate Normal CDF:</p>
 <p><span class="math display">\[
+\text{Let } \mathbf{X}\sim N_{d}(\boldsymbol{\mu}, \boldsymbol{\Sigma}) \quad \text{with Correlation Mat} \ \boldsymbol{\rho}\\
+\]</span>
+We can find the copula <span class="math inline">\(C_{p}\)</span> of <span class="math inline">\(\mathbf{X}\)</span> using:
+<span class="math display">\[
+C_{p}(u_{1},\dots u_{d}) = \Phi_{\boldsymbol{\mu},\boldsymbol{\Sigma}}(\Phi_{\mu_{1},\sigma_{1}^{2}}^{-1}(u_{1}), \dots, \Phi_{u_{d},\sigma_{d}^{2}}^{-1}(u_{d}))
+\]</span>
+For multivariate distributions that have a Gaussian Copula are called <strong>meta-Gaussian</strong> distributions. These distributions themselves do not need to be Gaussian.</p>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-2.png" /></p>
+<p>The second plot would be flat/uniform if the two independent distributions were not correlated (<span class="math inline">\(\rho=0\)</span>). This plot shows that the probability of both being <span class="math inline">\(1\)</span> or <span class="math inline">\(0\)</span> is very high, but the probability that one is <span class="math inline">\(1\)</span> and the other is <span class="math inline">\(0\)</span> is virtually 0. This supports our goal of modelling distributions where extreme values occur together.</p>
+</div>
+<div id="creating-copulas-from-multivariate-distributions" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Creating Copula’s from Multivariate Distributions<a href="copulas.html#creating-copulas-from-multivariate-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can create Copula’s from known multivariate Distributions such as the Normal or t distributions.</p>
+<p><em>We copy the dependence structure of known distributions (allowing us to use different marginals for modelling)</em></p>
+<p><strong>Copula from multivariate Normal CDF with correlation matrix <span class="math inline">\(\boldsymbol{\rho}\)</span></strong>
+<span class="math display">\[
 \begin{aligned}
-\mathbb{E}(\mathbf{R}) &amp;= \mathbb{E}\left( \boldsymbol{\mu}+\mathbf{Z}\sqrt{ \frac{v}{W} }\right)\\
-&amp;= \boldsymbol{\mu} + \underbrace{ \mathbb{E}(\mathbf{Z}) }_{ =0 }\cdot \mathbb{E}\left( \sqrt{ \frac{v}{W} } \right)\\
-&amp;=\boldsymbol{\mu}\\
-\\
-Cov(\mathbf{R}) &amp;= Cov\left( \boldsymbol{\mu} + \mathbf{Z} \sqrt{ \frac{v}{W} } \right)\\
-&amp;= Cov(\mathbf{Z}) \cdot Cov\left( \sqrt{ \frac{v}{W} } \right)\\
-&amp;= \boldsymbol{\Lambda}\cdot \frac{v}{v-2} \quad \text{where } v &gt; 2
+C_{\rho}(u_{1},\dots ,u_{d}) &amp;= \Phi_{\boldsymbol{\rho}}(\Phi ^{-1}(u_{1}), \dots, \Phi ^{-1}(u_{d}))\\
+\end{aligned}
+\]</span>
+<span class="math display">\[
+\begin{aligned}
+\text{Where } &amp; \begin{cases}
+\Phi_{\rho} \text{ is multivariate Normal CDF with correlation } \boldsymbol{\rho} \\ \\
+\Phi \text{ is Standard univariate Normal CDF}
+\end{cases}
+\end{aligned}
+\]</span>
+## Simulating from a Copula
+Simulating from a distribution with a copula (dependence between marginals) and marginals themselves can be done with the following steps:</p>
+<ol style="list-style-type: decimal">
+<li>Generate (dependent) uniforms from the copula:
+<ul>
+<li><span class="math display">\[
+(U_{1},\dots U_{d}) \sim C
+\]</span></li>
+<li>This is done by generating from a multivariate normal with correlation <span class="math inline">\(\boldsymbol{\rho}\)</span></li>
+<li><span class="math display">\[
+\mathbf{Z} = \left[ \begin{array}{}
+Z_{1} \\
+\vdots \\
+Z_{d}
+\end{array} \right] \sim N_{d}(0,\boldsymbol{\rho})
+\]</span></li>
+<li>Calculate uniforms as their marginal CDF’s (value of uniform var is a probability <span class="math inline">\(P(Z \leq Z_{i})\)</span>)</li>
+<li><span class="math display">\[
+U_{i}=\Phi(Z_{i}), \ i=1,\dots,d
+\]</span></li>
+<li>Then we can use the uniforms with any other marginal</li>
+<li>This is a very involved process, that we don’t need to go into</li>
+</ul></li>
+<li>Generate target variates from marginals, using the inverse CDF method
+<ul>
+<li><span class="math display">\[
+X_{i} = F_{i}^{-1}(U_{i}) \ \forall \ i
+\]</span></li>
+</ul></li>
+</ol>
+<p>It’s difficult for simulating uniforms from multivariate copula.</p>
+<p>Simulating from just the 2D Multivariate normal with a correlation of 75% compared to simulating from the Gaussian Copula with the same correlation between variables.</p>
+<div id="copula-example-plots" class="section level3 hasAnchor" number="6.4.1">
+<h3><span class="header-section-number">6.4.1</span> Copula example plots<a href="copulas.html#copula-example-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-3.png" /></p>
+<p>We can use two different marginals (<span class="math inline">\(\chi^{2}\)</span> in this case), which are meta-Gaussian as they have a gaussian copula.
+<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-4.png" /></p>
+<blockquote>
+<p>Here we see the simulated copula values for different correlation values.
+<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-5.png" /></p>
+</blockquote>
+<blockquote>
+<p>We can also see the differences between a Copula created using Normal and t distributions
+<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-6.png" /></p>
+</blockquote>
+<blockquote>
+<p>The Normal copula shows <span class="math inline">\(u_{1},u_{2}\)</span> are independent with 0 correlation as there is equal probability any value is sampled from <span class="math inline">\(u_{1}\)</span> and any value of <span class="math inline">\(u_{2}\)</span>.</p>
+<p>On the right, the t copula shows that values on the borders (<span class="math inline">\(u_{1}=0 \mid\mid u_{2} =0\)</span>) drop to probability 0, and at the extreme values, jump very high.</p>
+<p>Peaks at extreme combinations <span class="math inline">\(\to\)</span> manifestation of tail dependence.
+<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-7.png" /></p>
+</blockquote>
+</div>
+</div>
+<div id="elliptical-copulas" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Elliptical Copulas<a href="copulas.html#elliptical-copulas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The Normal and t distributions have a specific type of dependence: <strong>elliptical dependence</strong>.</p>
+<p>The ellipses describe the contours of the multivariate Normal and t distributions:
+<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-8.png" /></p>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-9.png" /></p>
+<p>The ellipses are determined by the covariance matrix of the distributions. This implies a symmetry in the dependency structure, where <strong>the strength</strong> is the same for positively and negatively correlated variables.</p>
+</div>
+<div id="archimedean-copulas" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Archimedean Copulas<a href="copulas.html#archimedean-copulas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A Family of copula’s whose form is given by
+<span class="math display">\[
+C(u_{1},\dots,u_{d}) = \phi ^{-1}[\phi(u_{1})+\dots+\phi(u_{d})]
+\]</span>
+Where <span class="math inline">\(\phi\)</span>:</p>
+<ul>
+<li>is a <strong>continuous convex</strong> generator function</li>
+<li>maps from <span class="math inline">\([0,1] \to [0,\infty]\)</span></li>
+<li><span class="math inline">\(\phi(0)=\infty, \phi(1)=0\)</span>
+<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-10.png" />
+&gt;This is just an example of a possible <span class="math inline">\(\phi\)</span></li>
+</ul>
+<p>There are infinitely many <span class="math inline">\(\phi\)</span> but some popular choices for <span class="math inline">\(\phi\)</span> are:
+| Name | Generator <span class="math inline">\(\phi(t)\)</span> | Generator Inverse <span class="math inline">\(\phi ^{-1}(t)\)</span> | Parameter |
+| ——- | ————————————————- | ———————————————– | ————– |
+| Clayton | <span class="math inline">\(t^{-\theta}-1\)</span> | <span class="math inline">\((1+s)^{-1/\theta}\)</span> | <span class="math inline">\(\theta\geq 0\)</span> |
+| Frank | <span class="math inline">\(-\ln \frac{e^{-\theta t}-1}{\theta^{-\theta}-1}\)</span> | <span class="math inline">\(-\frac{1}{\alpha}\ln(1+e^{-s}(e^{-\theta}-1))\)</span> | <span class="math inline">\(\theta\geq 0\)</span> |
+| Gumbel | <span class="math inline">\((-\ln t)^{\theta}\)</span> | <span class="math inline">\(\exp\{-s ^{-1/\theta}\}\)</span> | <span class="math inline">\(\theta\geq 1\)</span> |
+&gt;<span class="math inline">\(\theta\)</span> seems to represent how extreme the function varies between its domain, with larger <span class="math inline">\(\theta\)</span>’s implying larger values throughout the domain.</p>
+<p>For example, the Clayton generator with <span class="math inline">\(\theta=0.25\)</span> in blue, and <span class="math inline">\(\theta=3\)</span> in red.</p>
+<pre class="desmos-graph"><code>bottom=-0.2;top=4;
+right=1.2;left=-0.2;
+---
+y=1/x^{0.25}-1|0&lt;=x&lt;=1|blue
+y=1/x^{3}-1|0&lt;=x&lt;=1|red</code></pre>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-12.png" /></p>
+<p>Samples from the Archimedean copula’s:
+<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-11.png" /></p>
+<p>The dependency contours of each type of archimedean copula’s base distribution covariance
+<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-13.png" />
+This plot shows that we can use Archimedean copula’s to model <strong>asymmetric dependencies</strong>, but suffer limitation in <span class="math inline">\(\geq\)</span> 3 dimensions.</p>
+<p>The Archimedean Copula’s value is constant for any permutation of coordinates <span class="math inline">\(u_{1}, \dots, u_{d}\)</span>
+<span class="math display">\[
+\begin{aligned}
+C(u_{1}, u_{2}, \dots, u_{d}) &amp;= \phi ^{-1}(\phi(u_{1})+\phi(u_{\mathbf{2}})+\dots+\phi(u_{\mathbf{d}}))\\
+&amp;= \phi ^{-1}(\phi(u_{1})+\phi(u_{\mathbf{d}})+\dots+\phi(u_{\mathbf{2}}))\\
 \end{aligned}
 \]</span></p>
-<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling.png" /></p>
-<p>From these plots, we see that with the Multivariate t distribution, the extreme values between the two RVs are more evenly spread (the round shape of the points) and imply extreme values for both assets happen together. This is because they both share the same <span class="math inline">\(\Lambda\)</span>.</p>
-<p>This shows that the multivariate t distribution is more practical and realistic than using the Normal to model multiple assets. We can linearly combine multivariate t-distributions with the same degrees of freedom:</p>
-<p><span class="math display">\[
+<p>All pairs of coordinates(variables) have the same dependence, <strong>which is not the case for elliptical copulas</strong>.</p>
+<blockquote>
+<p>There exist copulas that can both model asymmetric dependencies, <strong>and</strong> differences in pairwise dependence called <strong>vine copula’s</strong>.</p>
+</blockquote>
+</div>
+<div id="fitting-copulas" class="section level2 hasAnchor" number="6.7">
+<h2><span class="header-section-number">6.7</span> Fitting Copula’s<a href="copulas.html#fitting-copulas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Given a copula and marginal distributions, the MLE method can be applied to fit multivariate distribution parameters to sample data. This could however lead to a very high number of parameters.</p>
+<p>Instead, <em>pseudo-MLE</em> could be used to break down the problem into the marginals and copula.
+<span class="math display">\[
 \begin{aligned}
-\mathbf{Y} &amp;\sim t_{v}(\boldsymbol{\mu}, \boldsymbol{\Lambda}) \implies \mathbf{w}^{T}\mathbf{Y} \sim t_{v}(\mathbf{w}^{T}\boldsymbol{\mu}, \mathbf{w}^{T}\boldsymbol{\Lambda}\mathbf{w})\\
-\\
-\mathbb{E}[\mathbf{w}^{T}\mathbf{Y}] &amp;= \mathbf{w}^{T}\mathbb{E}(\mathbf{Y})\\
-Var[\mathbf{w}^{T}\mathbf{Y}] &amp;= \mathbf{w}^{T}Var\left( \boldsymbol{\mu}+\mathbf{Z}\sqrt{ \frac{v}{W} } \right)\mathbf{w}\\
-&amp;= \mathbf{w}^{T}Var(\mathbf{Z})Var\left( \sqrt{ \frac{v}{W} } \right)\mathbf{w}\\
-&amp;= \frac{v}{v-2}(\mathbf{w}^{T}\boldsymbol{\Lambda}\mathbf{w})
+U_{i}^{(j)} = \hat{F}_{j}(X_{i}^{(j)}) \quad \forall \ i, \dots,n \ j = 1, \dots, d
 \end{aligned}
-\]</span></p>
-<p>However, as seen above, the multivariate t distribution is <strong>restrictive</strong> because all the marginal distributions share the same degrees of freedom, as they all depend on the variance of <span class="math inline">\(W \sim\chi^{2}\)</span>.</p>
+\]</span>
+&gt;Each <span class="math inline">\(n\)</span> uniforms in <span class="math inline">\(d\)</span> dimensions of the copula can be created from the actual multivariate distribution. Alternatively, the empirical CDF could be used to obtain the uniforms.</p>
+<p>We can then estimate the copula using MLE on the uniforms.</p>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-14.png" />
+&gt;Guess: The uniforms are created by plugging in each asset return into their own marginal CDF.</p>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-15.png" />
+&gt;The <em>pseudo-MLE</em> can give the uniform marginals used to construct/fit a t-copula.</p>
+
 </div>
 </div>
             </section>
@@ -388,8 +566,8 @@ Var[\mathbf{w}^{T}\mathbf{Y}] &amp;= \mathbf{w}^{T}Var\left( \boldsymbol{\mu}+\m
           </div>
         </div>
       </div>
-<a href="modelling-extreme-events.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="copulas.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="multivariate-return-modelling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="factor-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
