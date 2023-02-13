@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>STAD70 Course Work</title>
+  <title>Chapter 11 Problem Set 4 | STAD70 Course Work</title>
   <meta name="description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="STAD70 Course Work" />
+  <meta property="og:title" content="Chapter 11 Problem Set 4 | STAD70 Course Work" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="STAD70 Course Work" />
+  <meta name="twitter:title" content="Chapter 11 Problem Set 4 | STAD70 Course Work" />
   
   <meta name="twitter:description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="problem-set-3.html"/>
 
-<link rel="next" href="financial-data-and-returns.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -344,22 +344,112 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">STAD70 Course Work</h1>
-<p class="author"><em>Richard Ye</em></p>
+<div id="problem-set-4" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">Chapter 11</span> Problem Set 4<a href="problem-set-4.html#problem-set-4" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="q1-3" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> Q1<a href="problem-set-4.html#q1-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose that there are two risky assets, A and B, with expected returns equal to 2.3% and 4.5%, respectively. Suppose that the standard deviations of the returns are <span class="math inline">\(\sqrt{ 6 }\%\)</span> and <span class="math inline">\(\sqrt{ 11 }\%\)</span> and that the returns on the assets have a correlation of 0.17.</p>
+<div id="part-a-5" class="section level3 hasAnchor" number="11.1.1">
+<h3><span class="header-section-number">11.1.1</span> Part A<a href="problem-set-4.html#part-a-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{E}(wA+ (1-w)B) &amp;= 0.03\\
+&amp;= w\mathbb{E}(A) + (1-w)\mathbb{E}(B)\\
+&amp;= w\cdot .023 + (1-w)\cdot.045\\
+0.03 &amp;= w(.023-.045) + .045\\
+w &amp;= \frac{.03-.045}{.023-.045}\\
+w &amp;= 0.6818
+\end{aligned}
+\]</span></p>
+<p>A portfolio made up of <span class="math inline">\(68\%\)</span> of asset A and <span class="math inline">\(32\%\)</span> of asset B will achieve a <span class="math inline">\(3\%\)</span> rate of expected return.</p>
 </div>
-<div id="introduction" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Introduction<a href="index.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Work from the STAD70 course taken Winter 2023.</p>
+<div id="part-b-5" class="section level3 hasAnchor" number="11.1.2">
+<h3><span class="header-section-number">11.1.2</span> Part B<a href="problem-set-4.html#part-b-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math display">\[
+\begin{aligned}
+\sqrt{ 5.5 }\% &amp;= \sqrt{ Var(wA + (1-w)B) }\\
+&amp;= \sqrt{ w^{2}Var(A) + (1-w)^{2}Var(B) + 2w(1-w)Cov(A,B) }\\
+&amp;= w\sqrt{0.06 }+(1-w)\sqrt{ 0.11 } + 2w(1-w)0.17\cdot \sqrt{  0.06}\cdot \sqrt{0.11}\\
+&amp;= \sqrt{ 0.11 } + w(\sqrt{ 0.06 }-\sqrt{ 0.11 }+0.0276) -0.02762w^{2}\\
+\sqrt{ 0.055 } - \sqrt{ 0.11 } &amp;= w(-0.0591) - 0.02762w^{2}\\
+0 &amp;= - 0.02762w^{2} -0.3907w + 0.0971\\
+w &amp;= [0.2443, -14.3898]
+\end{aligned}
+\]</span></p>
+<p>We should invest in a portfolio made up of 24.43% asset A, and 75.67% asset B to achieve a <span class="math inline">\(\sqrt{ 5.5 }\%\)</span> standard deviation of return.</p>
+<blockquote>
+<p>I’m wrong.</p>
+</blockquote>
+<p><img src="ProblemSets/Obsidian-Attachments/PS4.png" /></p>
+<p><em>Theres more from the textbook i will skip for now</em></p>
+</div>
+</div>
+<div id="q2-3" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> Q2<a href="problem-set-4.html#q2-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="part-a-6" class="section level2 hasAnchor" number="11.3">
+<h2><span class="header-section-number">11.3</span> Part A<a href="problem-set-4.html#part-a-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose that stock A shares sell at $75 and stock B shares at $115. A portfolio has 300 shares of stock A and 100 of stock B. What are the weights w and 1−w of stocks A and B in this portfolio?</p>
+<p><span class="math display">\[
+\begin{aligned}
+w &amp;= \frac{75\cdot 300}{75\cdot 300 + 115 \cdot 100} = 0.66176\\
+\\
+1-w &amp;= 0.33824
+\end{aligned}
+\]</span></p>
+<div id="part-b-6" class="section level3 hasAnchor" number="11.3.1">
+<h3><span class="header-section-number">11.3.1</span> Part B<a href="problem-set-4.html#part-b-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>More generally, if a portfolio has <span class="math inline">\(N\)</span> stocks, if the price per share of the <span class="math inline">\(j\)</span>th stock is <span class="math inline">\(P_j\)</span>, and if the portfolio has <span class="math inline">\(n_j\)</span> shares of stock <span class="math inline">\(j\)</span>, then find a formula for <span class="math inline">\(w_j\)</span> as a function of <span class="math inline">\(n_{1},\dots,n_{N}\)</span> and <span class="math inline">\(P_{1},\dots,P_{N}\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+w_{j} = \frac{n_{j}\cdot P_{j}}{\sum^{N}_{i=1}n_{i}P_{i}}
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+<div id="q3-3" class="section level2 hasAnchor" number="11.4">
+<h2><span class="header-section-number">11.4</span> Q3<a href="problem-set-4.html#q3-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let <span class="math inline">\(R_{P}\)</span> be a return of some type on a portfolio and let <span class="math inline">\(R_{1},\dots, R_{N}\)</span> be the same type of returns on the assets in this portfolio. Is <span class="math inline">\(R_P = w_{1}R_{1}+ \dots + w_{N}R_{N}\)</span> true if <span class="math inline">\(R_{P}\)</span> is a net return? Is this equation true if <span class="math inline">\(R_{P}\)</span> is a gross return? Is it true if <span class="math inline">\(R_{P}\)</span> is a log return? Justify your answers.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Gross Returns:}&amp;\\
+R&#39;(t) &amp;= \frac{S(t)}{S(t-1)}\\
+\text{Net Returns:}&amp;\\
+R(t) &amp;= R&#39;(t)-1 = \frac{S(t)-S(t-1)}{S(t-1)}\\
+\text{Log Returns:}&amp;\\
+r(t) &amp;= \log(R&#39;(t)) = \log\{S(t)\}-\log\{S(t-1)\}\\
+\end{aligned}
+\]</span></p>
+<p>We have shown in class that this equation holds for net returns. For gross returns:
+<span class="math display">\[
+\begin{aligned}
+R&#39;(t) = R(t)+1 &amp;= w_{1}R_{1}(t) + \dots + w_{N}R_{N}(t) + 1\\
+&amp;= w_{1}R_{1}(t) + \dots + w_{N}R_{N}(t) + (w_{1}+\dots+w_{N})\\
+&amp;= w_{1}(R_{1}(t)+1) + \dots + w_{N}(R_{N}(t)+1)\\
+&amp;= w_{1}R&#39;_{1}(t) + \dots + w_{N}R&#39;_{N}(t)
+\end{aligned}
+\]</span></p>
+<p>So it holds for gross returns as well.</p>
+<p><span class="math display">\[
+\begin{aligned}
+r(t) &amp;= \log(R&#39;(t)) = \log(w_{1}R&#39;_{1}(t) + \dots + w_{N}R&#39;_{N}(t))\\
+&amp;= \log(w_{1}R&#39;_{1}(t)) \times \dots \times \log(w_{N}R&#39;_{N}(t))\\
+&amp;= [\log(w_{1}) + \log(R&#39;_{1}(t))] \times \dots \times [\log(w_{N}) + \log(R&#39;_{N}(t))]\\
+&amp;= [\log(w_{1}) + r_{1}(t)] \times \dots \times [\log(w_{N}) + \log(r_{N}(t))]\\
+&amp;\ne w_{1}r_{1}(t) + \dots + w_{N}R_{N}(t)
+\end{aligned}
+\]</span></p>
+<p>So it does not hold for log returns.</p>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
+<a href="problem-set-3.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="financial-data-and-returns.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -390,7 +480,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/index.Rmd",
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/ProblemSets/PS4.md",
 "text": "Edit"
 },
 "history": {
