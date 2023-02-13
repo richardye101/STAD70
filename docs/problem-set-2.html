@@ -478,11 +478,11 @@ X &amp;\sim Exp(1) \quad Y \sim Exp(1)\\
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="problem-set-2.html#cb38-1" tabindex="-1"></a><span class="fu">head</span>(lto_adj_close)</span></code></pre></div>
 <pre><code>##                  date adj_close
 ## 1 2015-01-02 14:30:00  44.17995
-## 2 2015-01-05 14:30:00  43.25630
+## 2 2015-01-05 14:30:00  43.25631
 ## 3 2015-01-06 14:30:00  42.38906
-## 4 2015-01-07 14:30:00  42.80506
-## 5 2015-01-08 14:30:00  42.80506
-## 6 2015-01-09 14:30:00  42.08588</code></pre>
+## 4 2015-01-07 14:30:00  42.80505
+## 5 2015-01-08 14:30:00  42.80505
+## 6 2015-01-09 14:30:00  42.08589</code></pre>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="problem-set-2.html#cb40-1" tabindex="-1"></a>net_ret <span class="ot">=</span> lto_adj_close <span class="sc">%&gt;%</span></span>
 <span id="cb40-2"><a href="problem-set-2.html#cb40-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">net_returns =</span> </span>
 <span id="cb40-3"><a href="problem-set-2.html#cb40-3" tabindex="-1"></a>           (adj_close <span class="sc">-</span> <span class="fu">lag</span>(adj_close, <span class="dv">1</span>)) <span class="sc">/</span> <span class="fu">lag</span>(adj_close, <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
@@ -519,8 +519,8 @@ X &amp;\sim Exp(1) \quad Y \sim Exp(1)\\
 <span id="cb44-8"><a href="problem-set-2.html#cb44-8" tabindex="-1"></a></span>
 <span id="cb44-9"><a href="problem-set-2.html#cb44-9" tabindex="-1"></a>sample_mu <span class="ot">=</span> <span class="fu">mean</span>(net_ret<span class="sc">$</span>net_returns)</span>
 <span id="cb44-10"><a href="problem-set-2.html#cb44-10" tabindex="-1"></a>sample_var <span class="ot">=</span> <span class="fu">var</span>(net_ret<span class="sc">$</span>net_returns)</span></code></pre></div>
-<p>We have a fitted mean <span class="math inline">\(\mu\)</span> of 3.2241083^{-4} and variance <span class="math inline">\(\sigma^{2}\)</span> of 1.4634789^{-4}.
-This is compared to the sample mean <span class="math inline">\(\mu\)</span> of 5.6615322^{-4} and variance <span class="math inline">\(\sigma^2\)</span> of 1.3827265^{-4}.</p>
+<p>We have a fitted mean <span class="math inline">\(\mu\)</span> of 3.2242257^{-4} and variance <span class="math inline">\(\sigma^{2}\)</span> of 1.4634839^{-4}.
+This is compared to the sample mean <span class="math inline">\(\mu\)</span> of 5.6615324^{-4} and variance <span class="math inline">\(\sigma^2\)</span> of 1.3827261^{-4}.</p>
 <p>These differences can occur due to the fitted t-distribution smoothing away more extreme values.</p>
 </div>
 <div id="part-c-1" class="section level3 hasAnchor" number="9.4.3">
@@ -554,32 +554,27 @@ This is compared to the sample mean <span class="math inline">\(\mu\)</span> of 
 </div>
 <div id="part-iii" class="section level4 hasAnchor" number="9.4.3.3">
 <h4><span class="header-section-number">9.4.3.3</span> Part iii<a href="problem-set-2.html#part-iii" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="problem-set-2.html#cb47-1" tabindex="-1"></a><span class="fu">library</span>(fGarch)</span></code></pre></div>
-<pre><code>## NOTE: Packages &#39;fBasics&#39;, &#39;timeDate&#39;, and &#39;timeSeries&#39; are no longer
-## attached to the search() path when &#39;fGarch&#39; is attached.
-## 
-## If needed attach them yourself in your R script by e.g.,
-##         require(&quot;timeSeries&quot;)</code></pre>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="problem-set-2.html#cb49-1" tabindex="-1"></a>garch_model<span class="ot">=</span><span class="fu">garchFit</span>(<span class="sc">~</span><span class="fu">garch</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">data=</span>net_ret<span class="sc">$</span>net_returns, <span class="at">trace =</span> <span class="cn">FALSE</span>) <span class="co"># fit GARCH(1,1) model</span></span>
-<span id="cb49-2"><a href="problem-set-2.html#cb49-2" tabindex="-1"></a>GARCH.param<span class="ot">=</span>garch_model<span class="sc">@</span>fit<span class="sc">$</span>coef <span class="co"># fitted coefficients</span></span>
-<span id="cb49-3"><a href="problem-set-2.html#cb49-3" tabindex="-1"></a>GARCH.spec<span class="ot">=</span><span class="fu">garchSpec</span>(<span class="at">model=</span><span class="fu">list</span>(<span class="at">mu=</span>GARCH.param[<span class="st">&#39;mu&#39;</span>], <span class="co"># define GARCH model specification for simulation</span></span>
-<span id="cb49-4"><a href="problem-set-2.html#cb49-4" tabindex="-1"></a>                                <span class="at">omega=</span>GARCH.param[<span class="st">&#39;omega&#39;</span>], </span>
-<span id="cb49-5"><a href="problem-set-2.html#cb49-5" tabindex="-1"></a>                                <span class="at">alpha=</span>GARCH.param[<span class="st">&#39;alpha1&#39;</span>], </span>
-<span id="cb49-6"><a href="problem-set-2.html#cb49-6" tabindex="-1"></a>                                <span class="at">beta=</span>GARCH.param[<span class="st">&#39;beta1&#39;</span>] ))</span>
-<span id="cb49-7"><a href="problem-set-2.html#cb49-7" tabindex="-1"></a>R.garch <span class="ot">=</span> <span class="fu">matrix</span>( <span class="dv">0</span>, <span class="at">nrow =</span> n, <span class="at">ncol =</span>m )</span>
-<span id="cb49-8"><a href="problem-set-2.html#cb49-8" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n){</span>
-<span id="cb49-9"><a href="problem-set-2.html#cb49-9" tabindex="-1"></a>  R.garch[i,]<span class="ot">=</span><span class="fu">as.numeric</span>(<span class="fu">garchSim</span>(GARCH.spec,m))</span>
-<span id="cb49-10"><a href="problem-set-2.html#cb49-10" tabindex="-1"></a>}</span>
-<span id="cb49-11"><a href="problem-set-2.html#cb49-11" tabindex="-1"></a>Rcm.garch <span class="ot">=</span> <span class="fu">t</span>( <span class="fu">apply</span>( <span class="dv">1</span><span class="sc">+</span>R.garch, <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">FUN =</span> cumprod) <span class="sc">-</span> <span class="dv">1</span> )</span>
-<span id="cb49-12"><a href="problem-set-2.html#cb49-12" tabindex="-1"></a>Rfn.garch <span class="ot">=</span> Rcm.garch[,m]</span>
-<span id="cb49-13"><a href="problem-set-2.html#cb49-13" tabindex="-1"></a>MDD.garch <span class="ot">=</span> <span class="fu">apply</span>(Rcm.garch, <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">FUN =</span> mdd )</span></code></pre></div>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="problem-set-2.html#cb50-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</span>
-<span id="cb50-2"><a href="problem-set-2.html#cb50-2" tabindex="-1"></a><span class="fu">hist</span>(sim_norm_returns)</span>
-<span id="cb50-3"><a href="problem-set-2.html#cb50-3" tabindex="-1"></a><span class="fu">hist</span>(sim_t_returns)</span>
-<span id="cb50-4"><a href="problem-set-2.html#cb50-4" tabindex="-1"></a><span class="fu">hist</span>(Rfn.garch)</span>
-<span id="cb50-5"><a href="problem-set-2.html#cb50-5" tabindex="-1"></a><span class="fu">hist</span>(MDD)</span>
-<span id="cb50-6"><a href="problem-set-2.html#cb50-6" tabindex="-1"></a><span class="fu">hist</span>(MDD_t)</span>
-<span id="cb50-7"><a href="problem-set-2.html#cb50-7" tabindex="-1"></a><span class="fu">hist</span>(MDD.garch)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="problem-set-2.html#cb47-1" tabindex="-1"></a><span class="fu">library</span>(fGarch)</span>
+<span id="cb47-2"><a href="problem-set-2.html#cb47-2" tabindex="-1"></a>garch_model<span class="ot">=</span><span class="fu">garchFit</span>(<span class="sc">~</span><span class="fu">garch</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">data=</span>net_ret<span class="sc">$</span>net_returns, <span class="at">trace =</span> <span class="cn">FALSE</span>) <span class="co"># fit GARCH(1,1) model</span></span>
+<span id="cb47-3"><a href="problem-set-2.html#cb47-3" tabindex="-1"></a>GARCH.param<span class="ot">=</span>garch_model<span class="sc">@</span>fit<span class="sc">$</span>coef <span class="co"># fitted coefficients</span></span>
+<span id="cb47-4"><a href="problem-set-2.html#cb47-4" tabindex="-1"></a>GARCH.spec<span class="ot">=</span><span class="fu">garchSpec</span>(<span class="at">model=</span><span class="fu">list</span>(<span class="at">mu=</span>GARCH.param[<span class="st">&#39;mu&#39;</span>], <span class="co"># define GARCH model specification for simulation</span></span>
+<span id="cb47-5"><a href="problem-set-2.html#cb47-5" tabindex="-1"></a>                                <span class="at">omega=</span>GARCH.param[<span class="st">&#39;omega&#39;</span>], </span>
+<span id="cb47-6"><a href="problem-set-2.html#cb47-6" tabindex="-1"></a>                                <span class="at">alpha=</span>GARCH.param[<span class="st">&#39;alpha1&#39;</span>], </span>
+<span id="cb47-7"><a href="problem-set-2.html#cb47-7" tabindex="-1"></a>                                <span class="at">beta=</span>GARCH.param[<span class="st">&#39;beta1&#39;</span>] ))</span>
+<span id="cb47-8"><a href="problem-set-2.html#cb47-8" tabindex="-1"></a>R.garch <span class="ot">=</span> <span class="fu">matrix</span>( <span class="dv">0</span>, <span class="at">nrow =</span> n, <span class="at">ncol =</span>m )</span>
+<span id="cb47-9"><a href="problem-set-2.html#cb47-9" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n){</span>
+<span id="cb47-10"><a href="problem-set-2.html#cb47-10" tabindex="-1"></a>  R.garch[i,]<span class="ot">=</span><span class="fu">as.numeric</span>(<span class="fu">garchSim</span>(GARCH.spec,m))</span>
+<span id="cb47-11"><a href="problem-set-2.html#cb47-11" tabindex="-1"></a>}</span>
+<span id="cb47-12"><a href="problem-set-2.html#cb47-12" tabindex="-1"></a>Rcm.garch <span class="ot">=</span> <span class="fu">t</span>( <span class="fu">apply</span>( <span class="dv">1</span><span class="sc">+</span>R.garch, <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">FUN =</span> cumprod) <span class="sc">-</span> <span class="dv">1</span> )</span>
+<span id="cb47-13"><a href="problem-set-2.html#cb47-13" tabindex="-1"></a>Rfn.garch <span class="ot">=</span> Rcm.garch[,m]</span>
+<span id="cb47-14"><a href="problem-set-2.html#cb47-14" tabindex="-1"></a>MDD.garch <span class="ot">=</span> <span class="fu">apply</span>(Rcm.garch, <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">FUN =</span> mdd )</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="problem-set-2.html#cb48-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb48-2"><a href="problem-set-2.html#cb48-2" tabindex="-1"></a><span class="fu">hist</span>(sim_norm_returns)</span>
+<span id="cb48-3"><a href="problem-set-2.html#cb48-3" tabindex="-1"></a><span class="fu">hist</span>(sim_t_returns)</span>
+<span id="cb48-4"><a href="problem-set-2.html#cb48-4" tabindex="-1"></a><span class="fu">hist</span>(Rfn.garch)</span>
+<span id="cb48-5"><a href="problem-set-2.html#cb48-5" tabindex="-1"></a><span class="fu">hist</span>(MDD)</span>
+<span id="cb48-6"><a href="problem-set-2.html#cb48-6" tabindex="-1"></a><span class="fu">hist</span>(MDD_t)</span>
+<span id="cb48-7"><a href="problem-set-2.html#cb48-7" tabindex="-1"></a><span class="fu">hist</span>(MDD.garch)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 <p>The final returns for t-distr. and GARCH gave lower negative values, but are comparable to those of Normal. In terms of maximum drawdown, the GARCH values have a smaller range, but are otherwise also comparable. Not that for for both metrics we combine/compound many returns, so the effects of heavy tails is suppressed.</p>
 <blockquote>
@@ -592,11 +587,11 @@ This is compared to the sample mean <span class="math inline">\(\mu\)</span> of 
 <h2><span class="header-section-number">9.5</span> Q5<a href="problem-set-2.html#q5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="part-a-2" class="section level3 hasAnchor" number="9.5.1">
 <h3><span class="header-section-number">9.5.1</span> Part A<a href="problem-set-2.html#part-a-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="problem-set-2.html#cb51-1" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">5000</span></span>
-<span id="cb51-2"><a href="problem-set-2.html#cb51-2" tabindex="-1"></a></span>
-<span id="cb51-3"><a href="problem-set-2.html#cb51-3" tabindex="-1"></a><span class="co"># simulate from t distribution with df=1</span></span>
-<span id="cb51-4"><a href="problem-set-2.html#cb51-4" tabindex="-1"></a><span class="fu">plot</span>( <span class="fu">cumsum</span>( <span class="fu">rt</span>(n , <span class="at">df =</span> <span class="dv">1</span>) ) <span class="sc">/</span> (<span class="dv">1</span><span class="sc">:</span>n), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>); </span>
-<span id="cb51-5"><a href="problem-set-2.html#cb51-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">0</span>, <span class="at">lty =</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="problem-set-2.html#cb49-1" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">5000</span></span>
+<span id="cb49-2"><a href="problem-set-2.html#cb49-2" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="problem-set-2.html#cb49-3" tabindex="-1"></a><span class="co"># simulate from t distribution with df=1</span></span>
+<span id="cb49-4"><a href="problem-set-2.html#cb49-4" tabindex="-1"></a><span class="fu">plot</span>( <span class="fu">cumsum</span>( <span class="fu">rt</span>(n , <span class="at">df =</span> <span class="dv">1</span>) ) <span class="sc">/</span> (<span class="dv">1</span><span class="sc">:</span>n), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>); </span>
+<span id="cb49-5"><a href="problem-set-2.html#cb49-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">0</span>, <span class="at">lty =</span><span class="dv">2</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 <p>If the WLLN held for this distribution, you would expect to see the average converge to 0.</p>
 <blockquote>
@@ -605,50 +600,50 @@ This is compared to the sample mean <span class="math inline">\(\mu\)</span> of 
 </div>
 <div id="part-b-2" class="section level3 hasAnchor" number="9.5.2">
 <h3><span class="header-section-number">9.5.2</span> Part B<a href="problem-set-2.html#part-b-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="problem-set-2.html#cb52-1" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rt</span>(n , <span class="at">df =</span> <span class="dv">1</span>)</span>
-<span id="cb52-2"><a href="problem-set-2.html#cb52-2" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">rt</span>(n , <span class="at">df =</span> <span class="dv">1</span>)</span>
-<span id="cb52-3"><a href="problem-set-2.html#cb52-3" tabindex="-1"></a>w <span class="ot">=</span> x<span class="sc">+</span>y<span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb52-4"><a href="problem-set-2.html#cb52-4" tabindex="-1"></a></span>
-<span id="cb52-5"><a href="problem-set-2.html#cb52-5" tabindex="-1"></a><span class="co"># sort w so we can create a qq plot</span></span>
-<span id="cb52-6"><a href="problem-set-2.html#cb52-6" tabindex="-1"></a>w_sorted <span class="ot">=</span> <span class="fu">sort</span>(w)</span>
-<span id="cb52-7"><a href="problem-set-2.html#cb52-7" tabindex="-1"></a>cauchy_quantiles <span class="ot">=</span> <span class="fu">qt</span>(<span class="fu">ppoints</span>(n), <span class="at">df =</span> <span class="dv">1</span>)</span>
-<span id="cb52-8"><a href="problem-set-2.html#cb52-8" tabindex="-1"></a><span class="fu">plot</span>(w_sorted, cauchy_quantiles, <span class="at">xlab=</span><span class="st">&quot;Sample Quantiles&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Theoretical Quantiles&quot;</span>)</span>
-<span id="cb52-9"><a href="problem-set-2.html#cb52-9" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="problem-set-2.html#cb50-1" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rt</span>(n , <span class="at">df =</span> <span class="dv">1</span>)</span>
+<span id="cb50-2"><a href="problem-set-2.html#cb50-2" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">rt</span>(n , <span class="at">df =</span> <span class="dv">1</span>)</span>
+<span id="cb50-3"><a href="problem-set-2.html#cb50-3" tabindex="-1"></a>w <span class="ot">=</span> x<span class="sc">+</span>y<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb50-4"><a href="problem-set-2.html#cb50-4" tabindex="-1"></a></span>
+<span id="cb50-5"><a href="problem-set-2.html#cb50-5" tabindex="-1"></a><span class="co"># sort w so we can create a qq plot</span></span>
+<span id="cb50-6"><a href="problem-set-2.html#cb50-6" tabindex="-1"></a>w_sorted <span class="ot">=</span> <span class="fu">sort</span>(w)</span>
+<span id="cb50-7"><a href="problem-set-2.html#cb50-7" tabindex="-1"></a>cauchy_quantiles <span class="ot">=</span> <span class="fu">qt</span>(<span class="fu">ppoints</span>(n), <span class="at">df =</span> <span class="dv">1</span>)</span>
+<span id="cb50-8"><a href="problem-set-2.html#cb50-8" tabindex="-1"></a><span class="fu">plot</span>(w_sorted, cauchy_quantiles, <span class="at">xlab=</span><span class="st">&quot;Sample Quantiles&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Theoretical Quantiles&quot;</span>)</span>
+<span id="cb50-9"><a href="problem-set-2.html#cb50-9" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>) </span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 <p>On average, the sample and theoretical quantiles agree. With heavy tailed distributions like the Cauchy, we can expect some (but few) extreme values like the outliers we see here.</p>
 </div>
 <div id="part-c-2" class="section level3 hasAnchor" number="9.5.3">
 <h3><span class="header-section-number">9.5.3</span> Part C<a href="problem-set-2.html#part-c-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A simulation experiment demonstrating the first EVT (convergence of the max of RVs goes to one of three distributions)</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="problem-set-2.html#cb53-1" tabindex="-1"></a>m <span class="ot">=</span> <span class="dv">1000</span></span>
-<span id="cb53-2"><a href="problem-set-2.html#cb53-2" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span></span>
-<span id="cb53-3"><a href="problem-set-2.html#cb53-3" tabindex="-1"></a></span>
-<span id="cb53-4"><a href="problem-set-2.html#cb53-4" tabindex="-1"></a>partc <span class="ot">=</span> <span class="cf">function</span>(func, an, bn, ...){</span>
-<span id="cb53-5"><a href="problem-set-2.html#cb53-5" tabindex="-1"></a>  mn <span class="ot">=</span> <span class="fu">c</span>()</span>
-<span id="cb53-6"><a href="problem-set-2.html#cb53-6" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>m){</span>
-<span id="cb53-7"><a href="problem-set-2.html#cb53-7" tabindex="-1"></a>    mn[i] <span class="ot">=</span> <span class="fu">max</span>(<span class="fu">func</span>(n,...))</span>
-<span id="cb53-8"><a href="problem-set-2.html#cb53-8" tabindex="-1"></a>  }</span>
-<span id="cb53-9"><a href="problem-set-2.html#cb53-9" tabindex="-1"></a>  yj <span class="ot">=</span> (mn <span class="sc">-</span> bn)<span class="sc">/</span>an</span>
-<span id="cb53-10"><a href="problem-set-2.html#cb53-10" tabindex="-1"></a>  <span class="fu">return</span>(yj);</span>
-<span id="cb53-11"><a href="problem-set-2.html#cb53-11" tabindex="-1"></a>}</span>
-<span id="cb53-12"><a href="problem-set-2.html#cb53-12" tabindex="-1"></a></span>
-<span id="cb53-13"><a href="problem-set-2.html#cb53-13" tabindex="-1"></a>i <span class="ot">=</span> <span class="fu">partc</span>(runif, <span class="dv">1</span><span class="sc">/</span>n, <span class="dv">1</span>)</span>
-<span id="cb53-14"><a href="problem-set-2.html#cb53-14" tabindex="-1"></a>ii <span class="ot">=</span> <span class="fu">partc</span>(rnorm, <span class="dv">1</span><span class="sc">/</span>(n<span class="sc">*</span><span class="fu">dnorm</span>(<span class="fu">qnorm</span>(<span class="dv">1-1</span><span class="sc">/</span>n))), <span class="fu">qnorm</span>(<span class="dv">1-1</span><span class="sc">/</span>n))</span>
-<span id="cb53-15"><a href="problem-set-2.html#cb53-15" tabindex="-1"></a>iii <span class="ot">=</span> <span class="fu">partc</span>(rt, n<span class="sc">/</span>pi, <span class="dv">0</span>, <span class="at">df =</span><span class="dv">1</span>)</span>
-<span id="cb53-16"><a href="problem-set-2.html#cb53-16" tabindex="-1"></a></span>
-<span id="cb53-17"><a href="problem-set-2.html#cb53-17" tabindex="-1"></a><span class="co"># overlay theoretical distribution</span></span>
-<span id="cb53-18"><a href="problem-set-2.html#cb53-18" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb53-19"><a href="problem-set-2.html#cb53-19" tabindex="-1"></a><span class="fu">hist</span>(<span class="sc">-</span>i, <span class="at">probability =</span> T)</span>
-<span id="cb53-20"><a href="problem-set-2.html#cb53-20" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,.<span class="dv">01</span>)</span>
-<span id="cb53-21"><a href="problem-set-2.html#cb53-21" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">dexp</span>(x), <span class="at">col =</span> <span class="dv">2</span>)</span>
-<span id="cb53-22"><a href="problem-set-2.html#cb53-22" tabindex="-1"></a></span>
-<span id="cb53-23"><a href="problem-set-2.html#cb53-23" tabindex="-1"></a><span class="fu">hist</span>(ii, <span class="at">probability =</span> T)</span>
-<span id="cb53-24"><a href="problem-set-2.html#cb53-24" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>,.<span class="dv">01</span>)</span>
-<span id="cb53-25"><a href="problem-set-2.html#cb53-25" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">exp</span>( <span class="sc">-</span> x <span class="sc">-</span> <span class="fu">exp</span>(<span class="sc">-</span>x)), <span class="at">col =</span> <span class="dv">2</span>)</span>
-<span id="cb53-26"><a href="problem-set-2.html#cb53-26" tabindex="-1"></a></span>
-<span id="cb53-27"><a href="problem-set-2.html#cb53-27" tabindex="-1"></a><span class="fu">hist</span>(iii, <span class="at">probability =</span> T)</span>
-<span id="cb53-28"><a href="problem-set-2.html#cb53-28" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">150</span>,.<span class="dv">01</span>)</span>
-<span id="cb53-29"><a href="problem-set-2.html#cb53-29" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="dv">1</span><span class="sc">/</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span>x), <span class="at">col =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="problem-set-2.html#cb51-1" tabindex="-1"></a>m <span class="ot">=</span> <span class="dv">1000</span></span>
+<span id="cb51-2"><a href="problem-set-2.html#cb51-2" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span></span>
+<span id="cb51-3"><a href="problem-set-2.html#cb51-3" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="problem-set-2.html#cb51-4" tabindex="-1"></a>partc <span class="ot">=</span> <span class="cf">function</span>(func, an, bn, ...){</span>
+<span id="cb51-5"><a href="problem-set-2.html#cb51-5" tabindex="-1"></a>  mn <span class="ot">=</span> <span class="fu">c</span>()</span>
+<span id="cb51-6"><a href="problem-set-2.html#cb51-6" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>m){</span>
+<span id="cb51-7"><a href="problem-set-2.html#cb51-7" tabindex="-1"></a>    mn[i] <span class="ot">=</span> <span class="fu">max</span>(<span class="fu">func</span>(n,...))</span>
+<span id="cb51-8"><a href="problem-set-2.html#cb51-8" tabindex="-1"></a>  }</span>
+<span id="cb51-9"><a href="problem-set-2.html#cb51-9" tabindex="-1"></a>  yj <span class="ot">=</span> (mn <span class="sc">-</span> bn)<span class="sc">/</span>an</span>
+<span id="cb51-10"><a href="problem-set-2.html#cb51-10" tabindex="-1"></a>  <span class="fu">return</span>(yj);</span>
+<span id="cb51-11"><a href="problem-set-2.html#cb51-11" tabindex="-1"></a>}</span>
+<span id="cb51-12"><a href="problem-set-2.html#cb51-12" tabindex="-1"></a></span>
+<span id="cb51-13"><a href="problem-set-2.html#cb51-13" tabindex="-1"></a>i <span class="ot">=</span> <span class="fu">partc</span>(runif, <span class="dv">1</span><span class="sc">/</span>n, <span class="dv">1</span>)</span>
+<span id="cb51-14"><a href="problem-set-2.html#cb51-14" tabindex="-1"></a>ii <span class="ot">=</span> <span class="fu">partc</span>(rnorm, <span class="dv">1</span><span class="sc">/</span>(n<span class="sc">*</span><span class="fu">dnorm</span>(<span class="fu">qnorm</span>(<span class="dv">1-1</span><span class="sc">/</span>n))), <span class="fu">qnorm</span>(<span class="dv">1-1</span><span class="sc">/</span>n))</span>
+<span id="cb51-15"><a href="problem-set-2.html#cb51-15" tabindex="-1"></a>iii <span class="ot">=</span> <span class="fu">partc</span>(rt, n<span class="sc">/</span>pi, <span class="dv">0</span>, <span class="at">df =</span><span class="dv">1</span>)</span>
+<span id="cb51-16"><a href="problem-set-2.html#cb51-16" tabindex="-1"></a></span>
+<span id="cb51-17"><a href="problem-set-2.html#cb51-17" tabindex="-1"></a><span class="co"># overlay theoretical distribution</span></span>
+<span id="cb51-18"><a href="problem-set-2.html#cb51-18" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb51-19"><a href="problem-set-2.html#cb51-19" tabindex="-1"></a><span class="fu">hist</span>(<span class="sc">-</span>i, <span class="at">probability =</span> T)</span>
+<span id="cb51-20"><a href="problem-set-2.html#cb51-20" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,.<span class="dv">01</span>)</span>
+<span id="cb51-21"><a href="problem-set-2.html#cb51-21" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">dexp</span>(x), <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb51-22"><a href="problem-set-2.html#cb51-22" tabindex="-1"></a></span>
+<span id="cb51-23"><a href="problem-set-2.html#cb51-23" tabindex="-1"></a><span class="fu">hist</span>(ii, <span class="at">probability =</span> T)</span>
+<span id="cb51-24"><a href="problem-set-2.html#cb51-24" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>,.<span class="dv">01</span>)</span>
+<span id="cb51-25"><a href="problem-set-2.html#cb51-25" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">exp</span>( <span class="sc">-</span> x <span class="sc">-</span> <span class="fu">exp</span>(<span class="sc">-</span>x)), <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb51-26"><a href="problem-set-2.html#cb51-26" tabindex="-1"></a></span>
+<span id="cb51-27"><a href="problem-set-2.html#cb51-27" tabindex="-1"></a><span class="fu">hist</span>(iii, <span class="at">probability =</span> T)</span>
+<span id="cb51-28"><a href="problem-set-2.html#cb51-28" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">150</span>,.<span class="dv">01</span>)</span>
+<span id="cb51-29"><a href="problem-set-2.html#cb51-29" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="dv">1</span><span class="sc">/</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span>x), <span class="at">col =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
 <p>From answer key:
 &gt;In cases i. and ii. the convergence to the theoretical distribution is evident, but in iii. the histogram is not as informative because of the extreme values involved. For the last case, one can plot the histogram &amp; density of the log-transformed normalized maxima, which actually show the convergence.
@@ -657,10 +652,10 @@ This is compared to the sample mean <span class="math inline">\(\mu\)</span> of 
 <p>I think it is incorrect, as I think the exponential transform of the Frechet(<span class="math inline">\(\alpha=1\)</span>) is the Gumbel distribution.</p>
 </blockquote>
 <p>The solutions continue on to show:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="problem-set-2.html#cb54-1" tabindex="-1"></a><span class="fu">hist</span>( <span class="fu">log</span>(iii), <span class="at">probability =</span> T, <span class="at">main =</span> <span class="st">&quot;iii. log-transform&quot;</span> )</span>
-<span id="cb54-2"><a href="problem-set-2.html#cb54-2" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="dv">15</span>,.<span class="dv">01</span>)</span>
-<span id="cb54-3"><a href="problem-set-2.html#cb54-3" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">exp</span>( <span class="sc">-</span>x<span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>x)), <span class="at">col =</span> <span class="dv">2</span>)</span>
-<span id="cb54-4"><a href="problem-set-2.html#cb54-4" tabindex="-1"></a><span class="fu">legend</span>( <span class="st">&quot;topright&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="fu">c</span>(<span class="st">&quot;log-Sample hist.&quot;</span>,<span class="st">&quot;log-Frechet&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="problem-set-2.html#cb52-1" tabindex="-1"></a><span class="fu">hist</span>( <span class="fu">log</span>(iii), <span class="at">probability =</span> T, <span class="at">main =</span> <span class="st">&quot;iii. log-transform&quot;</span> )</span>
+<span id="cb52-2"><a href="problem-set-2.html#cb52-2" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="dv">15</span>,.<span class="dv">01</span>)</span>
+<span id="cb52-3"><a href="problem-set-2.html#cb52-3" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">exp</span>( <span class="sc">-</span>x<span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>x)), <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb52-4"><a href="problem-set-2.html#cb52-4" tabindex="-1"></a><span class="fu">legend</span>( <span class="st">&quot;topright&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="fu">c</span>(<span class="st">&quot;log-Sample hist.&quot;</span>,<span class="st">&quot;log-Frechet&quot;</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
 
 </div>

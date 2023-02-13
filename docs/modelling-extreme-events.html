@@ -392,23 +392,21 @@ F(a_{n}x+b_{n}) &amp;= \text{Single RV}
 \end{aligned}
 \]</span>
 This is just saying that the normalized max RV is less than some value <span class="math inline">\(x\)</span> is just the probability of each individual RV being less than the transformed value of <span class="math inline">\(x\)</span>.</p>
-$$
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[
+\begin{aligned}
 H(x) &amp;= \begin{cases}
-Gumbel &amp; \exp\{-e^{-x}\} &amp; x \in \mathbb{R}\\ \\
-
+Gumbel &amp; \exp\{-e^{-x}\} \quad\quad x \in \mathbb{R}\\
 Frechet &amp; \begin{cases}
 0 &amp; x &lt; 0 \\
 \exp\{-x^{-\alpha}\}  &amp; x &gt;0
-\end{cases} \\ \\
-
+\end{cases}\\
 Weibull  &amp; \begin{cases}
 \exp\{-|x|^{\alpha}\}  &amp; x&lt;0 \\
 1 &amp; x &gt; 0
 \end{cases}
 \end{cases}
-\end{aligned}\]</span>
-<p>$$
+\end{aligned}
+\]</span>
 Where <span class="math inline">\(\alpha &gt; 0\)</span> for the Frechet and Weibull distributions.</p>
 <p><img src="Notes/Obsidian-Attachments/3-Modelling-Extreme-Events.png" /></p>
 </div>

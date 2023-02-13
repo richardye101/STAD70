@@ -352,10 +352,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">5.1</span> Covariance &amp; Correlation Matrix<a href="multivariate-return-modelling.html#covariance-correlation-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>For a linear combination of assets, we can attempt to use the following covariance matrix to describe their linear dependence:
 <span class="math display">\[
+\begin{aligned}
 Cov[A^{T}R] = A^{T}Cov[R]A, \quad \text{where }\begin{cases}
 A = \text{Constant matrix} \\
 R = \text{random vector}
 \end{cases}
+\end{aligned}
 \]</span>
 Unfortunately, sample covariance estimation is very sensitive to extreme values, which happen frequently with return (See heavy tails)</p>
 <p>Returns are often treated as independent samples, but that is not realistic.</p>

@@ -3,7 +3,7 @@
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
-]{book}
+  oneside]{book}
 \usepackage{amsmath,amssymb}
 \usepackage{iftex}
 \ifPDFTeX
@@ -36,6 +36,7 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
+\usepackage[margin=5cm]{geometry}
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -446,7 +447,8 @@ Heavy tailed distributions can also have infinite moments (including the mean!)
 The tail index can be estimated using:
 - MLE approximation, which takes the derivative log of the product of n the distributions when it equals 0, and solving for \(\alpha\)
 - \(\hat{\alpha} = \frac{n}{\sum^n_{i=1}\ln\left( r_{i}/r_{min} \right)}\)
-- \[
+
+\[
 \begin{aligned}
 L(\alpha) &= \prod^{n}_{i=1}[f(x)]\\
 \log(L(\alpha)) = l(\alpha) &= \sum^{n}_{i=1} f(x)\\
@@ -455,6 +457,7 @@ l'(\alpha) &= \sum^{n}_{i=1} f'(x) = 0
 \]
 - Pareto Q-Q plot of the empirical CDF and the returns in log x log scale
 - \(\alpha\) is the estimated slope of the line of best fit
+
 \includegraphics{Notes/Obsidian-Attachments/2-Return-Distributions-3.png}
 
 \hypertarget{common-heavy-tail-distributions}{%
@@ -483,6 +486,10 @@ f(x) &= \frac{1}{\pi(1+x^{2})}\\
 &= \frac{1+x^{-(\alpha+1)}}{\pi}  \implies \alpha = 1
 \end{aligned}
 \]
+Which is the t-distribution when df = 1.
+\[
+f(x) \sim t(df=1)
+\]
 
 \hypertarget{students-t}{%
 \subsubsection{Students t}\label{students-t}}
@@ -495,6 +502,7 @@ f(x) &= \frac{\Gamma\left( \frac{v+1}{2} \right)}{\sqrt{ v\pi }\Gamma(v/2)}\left
 \end{aligned}
 \]
 The Students t distributions offers a tractable heavy-tail model of the entire return distribution (not just the tail). It is typically adjusted for the location and scale:
+
 \[
 Y = \mu + \sigma X \quad \text{where } X \sim t(df=v)
 \]
@@ -532,10 +540,12 @@ We can select from a discrete and finite set of distributions, or of a continuou
 
 Example:
 \[
+\begin{aligned}
 \text{Generate RV from: } \begin{cases}
 N(0,1) & p=60\%\\
 N(5,3) & p=40\%
 \end{cases}
+\end{aligned}
 \]
 \includegraphics{Notes/Obsidian-Attachments/2-Return-Distributions-4.png}
 
@@ -545,7 +555,8 @@ N(5,3) & p=40\%
 \(Y = \mu+\sqrt{ V } \cdot Z\)
 Where \(V\) is a RV with non-negative mixing distribution and represents a random sd of \(Y\).
 
-Example (probably don't need to memorize\ldots)
+Example (probably don't need to memorize\ldots) which is used when simulating returns, as seem in PS2 Q4c part ii and iii.
+
 \[
 \begin{aligned}
 \text{t-dist } t &= Z\sqrt{ v/W } \quad \text{ where } W \sim \chi^{2}(df=v)\\
@@ -605,7 +616,936 @@ Characteristics of typical empirical asset returns:
 \hypertarget{extreme-value-theory}{%
 \section{Extreme Value Theory}\label{extreme-value-theory}}
 
-This
+This theory helps with modelling extreme events that have small probabilities of occurring.
+
+\hypertarget{two-main-results}{%
+\subsection{Two main results}\label{two-main-results}}
+
+\begin{itemize}
+\tightlist
+\item
+  Maxima of i.i.d. sequences
+\item
+  Values exceeding threshold
+\end{itemize}
+
+\hypertarget{st-theorem-fisher-tippet-gnedenko}{%
+\subsection{1st Theorem: Fisher-Tippet-Gnedenko}\label{st-theorem-fisher-tippet-gnedenko}}
+
+\emph{Theres no need to prove any results}
+
+If \(X_{1}, X_{2}, \dots\) are i.i.d. RVs, we can create a RV that simply takes the maximum of \(n\) RVs called \(M_{n} = max(X_{1}, X_{2}, \dots X_{n})\).
+
+\textbf{In certain cases}, we can find normalizing constants \(a_{n}>0, b_{n}\) such that they can be transformed into one of the three distributions (identified by \(H(x)\)) which can be much easier to work with.
+
+\[
+\begin{aligned}
+P\left( \frac{M_{n}-b_{n}}{a_{n}} \leq x\right) &= [F(a_{n}x+b_{n})]^{n} \to H(x)\\
+F(a_{n}x+b_{n}) &= \text{Single RV}
+\end{aligned}
+\]
+This is just saying that the normalized max RV is less than some value \(x\) is just the probability of each individual RV being less than the transformed value of \(x\).
+
+\[
+\begin{aligned}
+H(x) &= \begin{cases}
+Gumbel & \exp\{-e^{-x}\} \quad\quad x \in \mathbb{R}\\
+Frechet & \begin{cases}
+0 & x < 0 \\
+\exp\{-x^{-\alpha}\}  & x >0
+\end{cases}\\
+Weibull  & \begin{cases}
+\exp\{-|x|^{\alpha}\}  & x<0 \\
+1 & x > 0
+\end{cases}
+\end{cases}
+\end{aligned}
+\]
+Where \(\alpha > 0\) for the Frechet and Weibull distributions.
+
+\includegraphics{Notes/Obsidian-Attachments/3-Modelling-Extreme-Events.png}
+
+\hypertarget{generalized-extreme-value-gev-distribution}{%
+\subsection{Generalized Extreme Value (GEV) Distribution}\label{generalized-extreme-value-gev-distribution}}
+
+The three types of distributions can be represented using:
+\[
+\begin{aligned}
+H(x) &= \exp\left\{ -\left( 1+\xi\frac{x-\mu}{\sigma} \right)^{-1/\xi}_{+} \right\}\\
+\text{Where } \mu &= \text{location}\\
+\sigma &= \text{scale}\\
+\xi &= \text{shape parameters} \begin{cases}
+\xi>0 & \text{heavy tails (Frechet)} \\
+\xi=0 & \text{exponential tails (Gumbel)} \\
+\xi < 0  & \text{short/light tails (Weibull)}
+\end{cases}
+\end{aligned}
+\]
+Where the \(\xi\) value describes the tail behaviour
+
+The log-transformation of the Frechet(\(\alpha=1\)) is the Gumbel distribution!
+\[
+\begin{aligned}
+\ln(H_{F}(x)) &= \ln\left[ \exp\{-x^{-1}\}\right]\\
+&= -\left( 1+\frac{x-\mu}{\sigma} \right)^{-1}\\
+\\
+&= H_{G} = \exp \left\{ -\left( 1+0\cdot \frac{x-\mu}{\sigma} \right)^{-1/0} \right\}
+\end{aligned}
+\]
+
+As an example, we'll show that the normalized maximum of i.i.d. Uniform(0,1) aka \(F_{n}(x) = x\) with \(a_{n}=1/n, b_{n}=1\) converges to the Weibull distribution.
+\[
+\begin{aligned}
+P\left( \frac{M_{n}-b_{n}}{a_{n}} \leq x\right) &= P\left( \frac{M_{n}-1}{1/n} \leq x\right)\\
+& b_{n}\text{ shifts the Uniform from (0,1) to (-1,0)}\\
+&= P\left( M_{n} \leq \frac{x}{n}+1 \right)\\
+&= P\left( \max(U_{1}, U_{2}, \dots U_{n}) \leq 1+\frac{x}{n} \right)\\
+&= \prod^{n}_{i=1} \underbrace{ P\left( U_{i}\leq 1+\frac{x}{n} \right) }_{ \left( 1+\frac{x}{n} \right) }\\
+&= \left( 1+\frac{x}{n} \right)^{n}\\
+& \text{because } x<0, \quad 1+ (-.4) = 1-|-.4|\\
+&=\left( 1-\frac{|x|}{n} \right)^{n}\\
+\\
+\lim_{ n \to \infty } \left( 1-\frac{|x|}{n} \right)^{n} &\to \exp\{((-1)|x|)^{-1/-1}\}\\
+&= \exp\{-|x|^{1}\} \implies Weibull(\alpha=1)\\
+\end{aligned}
+\]
+
+\hypertarget{nd-theorem-pickands-balkema-de-haan}{%
+\subsection{2nd Theorem: Pickands-Balkema-De Haan}\label{nd-theorem-pickands-balkema-de-haan}}
+
+For any RV \(X\) with CDF \(F(\cdot)\), it's conditional distribution when exceeding a certain threshold \(u\) is:
+\[
+\begin{aligned}
+F_{u}(y) &= \frac{F(u+y)-F(u)}{1-F(u)}, \quad 0\leq y\leq x_{F}-u\\
+\text{Where } x_{F} &= sup\{x \in \mathbb{R}:F(x) < 1\} \text{ is the right endpoint of } F
+\end{aligned}
+\]
+
+\(x_{F}\) could be finite, or \(\infty\). As \(u\to x_{F}\), the conditional distribution converges to something belonging to the \textbf{Generalized Pareto Distribution (GPD).}
+\[
+F_{u}(y) \to G_{\xi, \sigma}(y)
+\]
+The \textbf{Generalized Pareto Distribution (GPD)} is given by:
+\[
+\begin{aligned}
+G_{\xi,\sigma}(y) &= 1 - \left( 1+\xi \frac{y}{\sigma} \right)^{-1/\xi}_{+} = \begin{cases}
+G_{\xi, \sigma}(y) = 1-\left( 1+\xi  \frac{y}{\sigma} \right)^{-1/\xi}  & \xi \ne 0\\
+G_{\xi, \sigma}(y) = 1-\exp\left\{ -\frac{y}{\sigma} \right\}  & \xi = 0
+\end{cases}\\
+\text{Where } & \sigma > 0, y\geq 0, \quad y\leq-\frac{\sigma}{\xi} \text{ when } \xi < 0
+\end{aligned}
+\]
+
+\(f(x) = \lambda e^{-\lambda x}, \lambda>0\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bottom={-}1; left={-}0.5; right=1.5;}
+\NormalTok{{-}{-}{-}}
+\NormalTok{y=2 \textbackslash{}exp({-}2x)}
+\NormalTok{x=.9|dashed}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Notes/Obsidian-Attachments/3-Modelling-Extreme-Events-1.png}
+
+The exponential distribution is used to model waiting times, no matter how much time has passed. The conditional distribution
+
+\hypertarget{multivariate-return-modelling}{%
+\chapter{Multivariate Return Modelling}\label{multivariate-return-modelling}}
+
+When modelling returns of multiple assets, it's common to assume the correlation between them is constant.
+
+Many investment strategies combine multiple assets together, but how those assets are related is an important piece of information to understand. It's also difficult to model. Say we start with a simple multivariate Normal, where dependence \(\leftrightarrow\) covariance, so we can model their relations with the covariance matrix.
+
+\hypertarget{covariance-correlation-matrix}{%
+\section{Covariance \& Correlation Matrix}\label{covariance-correlation-matrix}}
+
+For a linear combination of assets, we can attempt to use the following covariance matrix to describe their linear dependence:
+\[
+\begin{aligned}
+Cov[A^{T}R] = A^{T}Cov[R]A, \quad \text{where }\begin{cases}
+A = \text{Constant matrix} \\
+R = \text{random vector}
+\end{cases}
+\end{aligned}
+\]
+Unfortunately, sample covariance estimation is very sensitive to extreme values, which happen frequently with return (See heavy tails)
+
+Returns are often treated as independent samples, but that is not realistic.
+
+\hypertarget{multivariate-students-t-distribution}{%
+\section{Multivariate Student's t Distribution}\label{multivariate-students-t-distribution}}
+
+We should \textbf{never remove outliers} in finance. We must model the heavy tails (extreme returns) somehow, and Student's t distribution is one way to do that.
+
+A multivariate Normal scale mixture model can be used to describe a multivariate Student's t distribution:
+\[
+\begin{aligned}
+\mathbf{R} &= \boldsymbol{\mu} + \mathbf{Z} \sqrt{ v/W } \sim t_{v}(\boldsymbol{\mu}, \boldsymbol{\Lambda})\\
+\\
+\text{Where } & W \sim \chi^{2}(df=v)\\
+& \mathbf{Z} \sim N(\mathbf{0}, \boldsymbol{\Lambda}) \quad \text{where } \boldsymbol{\Lambda} = Indentity \ Mat
+\end{aligned}
+\]
+
+It's mean and variance are:
+
+\[
+\begin{aligned}
+\mathbb{E}(\mathbf{R}) &= \mathbb{E}\left( \boldsymbol{\mu}+\mathbf{Z}\sqrt{ \frac{v}{W} }\right)\\ 
+&= \boldsymbol{\mu} + \underbrace{ \mathbb{E}(\mathbf{Z}) }_{ =0 }\cdot \mathbb{E}\left( \sqrt{ \frac{v}{W} } \right)\\
+&=\boldsymbol{\mu}\\
+\\
+Cov(\mathbf{R}) &= Cov\left( \boldsymbol{\mu} + \mathbf{Z} \sqrt{ \frac{v}{W} } \right)\\
+&= Cov(\mathbf{Z}) \cdot Cov\left( \sqrt{ \frac{v}{W} } \right)\\
+&= \boldsymbol{\Lambda}\cdot \frac{v}{v-2} \quad \text{where } v > 2
+\end{aligned}
+\]
+
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling.png}
+
+From these plots, we see that with the Multivariate t distribution, the extreme values between the two RVs are more evenly spread (the round shape of the points) and imply extreme values for both assets happen together. This is because they both share the same \(\Lambda\).
+
+This shows that the multivariate t distribution is more practical and realistic than using the Normal to model multiple assets. We can linearly combine multivariate t-distributions with the same degrees of freedom:
+
+\[
+\begin{aligned}
+\mathbf{Y} &\sim t_{v}(\boldsymbol{\mu}, \boldsymbol{\Lambda}) \implies \mathbf{w}^{T}\mathbf{Y} \sim t_{v}(\mathbf{w}^{T}\boldsymbol{\mu}, \mathbf{w}^{T}\boldsymbol{\Lambda}\mathbf{w})\\
+\\
+\mathbb{E}[\mathbf{w}^{T}\mathbf{Y}] &= \mathbf{w}^{T}\mathbb{E}(\mathbf{Y})\\
+Var[\mathbf{w}^{T}\mathbf{Y}] &= \mathbf{w}^{T}Var\left( \boldsymbol{\mu}+\mathbf{Z}\sqrt{ \frac{v}{W} } \right)\mathbf{w}\\
+&= \mathbf{w}^{T}Var(\mathbf{Z})Var\left( \sqrt{ \frac{v}{W} } \right)\mathbf{w}\\
+&= \frac{v}{v-2}(\mathbf{w}^{T}\boldsymbol{\Lambda}\mathbf{w})
+\end{aligned}
+\]
+
+However, as seen above, the multivariate t distribution is \textbf{restrictive} because all the marginal distributions share the same degrees of freedom, as they all depend on the variance of \(W \sim\chi^{2}\).
+
+\hypertarget{copulas}{%
+\chapter{Copulas}\label{copulas}}
+
+A more flexible way of modelling dependencies of RVs is using copulas.
+
+\begin{quote}
+Definition: A copula (C) is a multivariate CDF with Uniform(0,1) marginals
+\end{quote}
+
+\[
+\begin{aligned}
+C(u_{1}, u_{2}, \dots u_{d}) &=P(u_{1}, u_{2}, \dots u_{d}) \in [0,1], \quad \forall \ u_{1},\dots u_{d} \in [0,1]\\ 
+\\
+&\text{Where }\begin{cases}
+C(0,0, \ldots, 0)=0 \\
+C(1,1, \ldots, 1)=1 \\
+C\left(\ldots, u_{i-1}, 0, u_{i+1}, \ldots\right)=0 \\
+C\left(1, \ldots, 1, u_i, 1, \ldots, 1\right)=u_i
+\end{cases}
+\end{aligned}
+\]
+Third case: The cumulative probability of one RV being less than or equal to 0 regardless of what the other RVs are in a copula is 0.
+Fourth case: The cumulative probability that the other RVs have values less than 1 is 1 but the \(i^{th}\) RV is \(u_{i}\) is simply \(u_{i}\)
+
+\hypertarget{the-independence-copula}{%
+\section{The independence copula}\label{the-independence-copula}}
+
+\begin{quote}
+\textbf{Definition:} \(C_{indep} (u_{1}, \dots u_{d}) = u_{1} \times \dots \times u_{d}\)
+\end{quote}
+
+By the \textbf{Frechet-Hoeffding} theorem, any/every copula is bounded by
+
+\[
+\begin{aligned}
+& \underline{C}\left(u_1, \ldots, u_d\right) \leq C\left(u_1, \ldots, u_d\right) \leq \bar{C}\left(u_1, \ldots, u_d\right) \\
+& \text { where }
+\begin{cases}
+\underline{C}\left(u_1, \ldots, u_d\right)=\max \left\{1-d+\sum_{i=1}^d u_i, 0\right\} = \max\left\{ 1 - \left(\sum^d_{i=1} 1 - u_{i}\right),0 \right\} \\
+\bar{C}\left(u_1, \ldots, u_d\right)=\min \left\{u_1, \ldots, u_d\right\}
+\end{cases}
+\end{aligned}
+\]
+\(\max \left\{1-d+\sum_{i=1}^d u_i, 0\right\}\) is 1 minus number of uniforms plus the values of the uniforms
+
+\begin{itemize}
+\tightlist
+\item
+  (if \(\mathbf{d=5}, u_{1}=.5,u_{2}=.4,u_{3}=.7,u_{4}=.2,u_{5}=.6\)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    then \(\max(1-5+2.4 = \mathbf{-1.6},0)\) )
+  \end{itemize}
+\item
+  This implies the maximum of the Copula is bounded by 0, or higher if the average value of the uniforms are \(\geq\frac{d-1}{d}\).
+\end{itemize}
+
+\(\min \left\{u_1, \ldots, u_d\right\}\) implies the max of the Copula is bounded by the smallest marginal probability, which makes sense as that is the only one limiting the \textbf{cumulative probability}.
+
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-1.png}
+
+\hypertarget{sklars-theorem}{%
+\section{Sklar's Theorem}\label{sklars-theorem}}
+
+Any continuous multivariate CDF \(F(x_{1}, \dots x_{d})\) with marginal (1D) CDF's \(F_{i}(x_{i}) \ \forall \ i=1,\dots,d\) can be expressed in terms of a copula \(C\), as
+\[
+F(x_{1},\dots x_{d}) = C(F_{1}(x_{1}), \dots, F_{d}(x_{d}))
+\]
+
+Inverse is also true, where any copula combined with marginal CDF's can give a multivariate CDF.
+
+\begin{itemize}
+\tightlist
+\item
+  Copula's model dependence separately from the marginal distributions of the RVs
+\end{itemize}
+
+If \(X \sim F \implies F(x) \sim Unif(0,1) \implies F^{-1}(Unif) \sim F\)
+\emph{If an RV follows some CDF \(F\), then \ldots{}}
+
+\begin{quote}
+If you take a copula of a bunch of marginal CDF's, you can obtain the multivariate CDF of all the marginals. The inverse is true, where you can take a multivariate CDF and come up with a copula to represent the dependency between the marginal distributions, and the marginal distributions themselves. (I think is what this is saying.)
+\end{quote}
+
+\hypertarget{example}{%
+\subsection{Example}\label{example}}
+
+For a continuous CDF \(F(x_{1},\dots,x_{d})\) with marginals \(F_{i}(x_{i})\), the copula is given by:
+\[
+\begin{aligned}
+C(F_{1}(x_{1}),\dots,F_{d}(F_{d})) &= F(x_{1},\dots,x_{d}) \ \text{by Sklar's Thm}\\
+\\
+\text{Let } u_{i}= F_{i}(x_{i}) &\implies x_{i} = F_{i}^{-1}(u_{i})\\
+\end{aligned}
+\]
+\[
+\therefore \mathbf{C(u_{1},\dots,u_{d}) = F(F_{1}^{-1}(u_{1}),\dots,F_{d}^{-1}(u_{d}))}\\
+\]
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  Ask Sotirios what if \(F_{i}(x_{i})\) is not uniform?
+\end{itemize}
+
+\hypertarget{gaussian-copula}{%
+\section{Gaussian Copula}\label{gaussian-copula}}
+
+We can also construct copula's of non uniform distributions, such as this multivariate Normal CDF:
+
+\[
+\text{Let } \mathbf{X}\sim N_{d}(\boldsymbol{\mu}, \boldsymbol{\Sigma}) \quad \text{with Correlation Mat} \ \boldsymbol{\rho}\\
+\]
+We can find the copula \(C_{p}\) of \(\mathbf{X}\) using:
+\[
+C_{p}(u_{1},\dots u_{d}) = \Phi_{\boldsymbol{\mu},\boldsymbol{\Sigma}}(\Phi_{\mu_{1},\sigma_{1}^{2}}^{-1}(u_{1}), \dots, \Phi_{u_{d},\sigma_{d}^{2}}^{-1}(u_{d}))
+\]
+For multivariate distributions that have a Gaussian Copula are called \textbf{meta-Gaussian} distributions. These distributions themselves do not need to be Gaussian.
+
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-2.png}
+
+The second plot would be flat/uniform if the two independent distributions were not correlated (\(\rho=0\)). This plot shows that the probability of both being \(1\) or \(0\) is very high, but the probability that one is \(1\) and the other is \(0\) is virtually 0. This supports our goal of modelling distributions where extreme values occur together.
+
+\hypertarget{creating-copulas-from-multivariate-distributions}{%
+\section{Creating Copula's from Multivariate Distributions}\label{creating-copulas-from-multivariate-distributions}}
+
+We can create Copula's from known multivariate Distributions such as the Normal or t distributions.
+
+\emph{We copy the dependence structure of known distributions (allowing us to use different marginals for modelling)}
+
+\textbf{Copula from multivariate Normal CDF with correlation matrix \(\boldsymbol{\rho}\)}
+\[
+\begin{aligned}
+C_{\rho}(u_{1},\dots ,u_{d}) &= \Phi_{\boldsymbol{\rho}}(\Phi ^{-1}(u_{1}), \dots, \Phi ^{-1}(u_{d}))\\
+\end{aligned}
+\]
+\[
+\begin{aligned}
+\text{Where } & \begin{cases}
+\Phi_{\rho} \text{ is multivariate Normal CDF with correlation } \boldsymbol{\rho} \\ \\
+\Phi \text{ is Standard univariate Normal CDF}
+\end{cases}
+\end{aligned}
+\]
+\#\# Simulating from a Copula
+Simulating from a distribution with a copula (dependence between marginals) and marginals themselves can be done with the following steps:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Generate (dependent) uniforms from the copula:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \[
+    (U_{1},\dots U_{d}) \sim C
+    \]
+  \item
+    This is done by generating from a multivariate normal with correlation \(\boldsymbol{\rho}\)
+    \[
+    \mathbf{Z} = \left[ \begin{array}{l}
+    Z_{1} \\
+    \vdots \\
+    Z_{d}
+    \end{array} \right] \sim N_{d}(0,\boldsymbol{\rho})
+    \]
+  \item
+    Calculate uniforms as their marginal CDF's (value of uniform var is a probability \(P(Z \leq Z_{i})\))
+  \item
+    \[
+    U_{i}=\Phi(Z_{i}), \ i=1,\dots,d
+    \]
+  \item
+    Then we can use the uniforms with any other marginal
+  \item
+    This is a very involved process, that we don't need to go into
+  \end{itemize}
+\item
+  Generate target variates from marginals, using the inverse CDF method
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \[
+    X_{i} = F_{i}^{-1}(U_{i}) \ \forall \ i
+    \]
+  \end{itemize}
+\end{enumerate}
+
+It's difficult for simulating uniforms from multivariate copula.
+
+Simulating from just the 2D Multivariate normal with a correlation of 75\% compared to simulating from the Gaussian Copula with the same correlation between variables.
+
+\hypertarget{copula-example-plots}{%
+\subsection{Copula example plots}\label{copula-example-plots}}
+
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-3.png}
+
+We can use two different marginals (\(\chi^{2}\) in this case), which are meta-Gaussian as they have a gaussian copula.
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-4.png}
+
+\begin{quote}
+Here we see the simulated copula values for different correlation values.
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-5.png}
+\end{quote}
+
+\begin{quote}
+We can also see the differences between a Copula created using Normal and t distributions
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-6.png}
+\end{quote}
+
+\begin{quote}
+The Normal copula shows \(u_{1},u_{2}\) are independent with 0 correlation as there is equal probability any value is sampled from \(u_{1}\) and any value of \(u_{2}\).
+
+On the right, the t copula shows that values on the borders (\(u_{1}=0 \mid\mid u_{2} =0\)) drop to probability 0, and at the extreme values, jump very high.
+
+Peaks at extreme combinations \(\to\) manifestation of tail dependence.
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-7.png}
+\end{quote}
+
+\hypertarget{elliptical-copulas}{%
+\section{Elliptical Copulas}\label{elliptical-copulas}}
+
+The Normal and t distributions have a specific type of dependence: \textbf{elliptical dependence}.
+
+The ellipses describe the contours of the multivariate Normal and t distributions:
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-8.png}
+
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-9.png}
+
+The ellipses are determined by the covariance matrix of the distributions. This implies a symmetry in the dependency structure, where \textbf{the strength} is the same for positively and negatively correlated variables.
+
+\hypertarget{archimedean-copulas}{%
+\section{Archimedean Copulas}\label{archimedean-copulas}}
+
+A Family of copula's whose form is given by
+\[
+C(u_{1},\dots,u_{d}) = \phi ^{-1}[\phi(u_{1})+\dots+\phi(u_{d})]
+\]
+Where \(\phi\):
+
+\begin{itemize}
+\tightlist
+\item
+  is a \textbf{continuous convex} generator function
+\item
+  maps from \([0,1] \to [0,\infty]\)
+\item
+  \(\phi(0)=\infty, \phi(1)=0\)
+  \includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-10.png}
+  \textgreater This is just an example of a possible \(\phi\)
+\end{itemize}
+
+There are infinitely many \(\phi\) but some popular choices for \(\phi\) are:
+\textbar{} Name \textbar{} Generator \(\phi(t)\) \textbar{} Generator Inverse \(\phi ^{-1}(t)\) \textbar{} Parameter \textbar{}
+\textbar{} ------- \textbar{} ------------------------------------------------- \textbar{} ----------------------------------------------- \textbar{} -------------- \textbar{}
+\textbar{} Clayton \textbar{} \(t^{-\theta}-1\) \textbar{} \((1+s)^{-1/\theta}\) \textbar{} \(\theta\geq 0\) \textbar{}
+\textbar{} Frank \textbar{} \(-\ln \frac{e^{-\theta t}-1}{\theta^{-\theta}-1}\) \textbar{} \(-\frac{1}{\alpha}\ln(1+e^{-s}(e^{-\theta}-1))\) \textbar{} \(\theta\geq 0\) \textbar{}
+\textbar{} Gumbel \textbar{} \((-\ln t)^{\theta}\) \textbar{} \(\exp\{-s ^{-1/\theta}\}\) \textbar{} \(\theta\geq 1\) \textbar{}
+\textgreater{}\(\theta\) seems to represent how extreme the function varies between its domain, with larger \(\theta\)'s implying larger values throughout the domain.
+
+For example, the Clayton generator with \(\theta=0.25\) in blue, and \(\theta=3\) in red.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bottom={-}0.2;top=4;}
+\NormalTok{right=1.2;left={-}0.2;}
+\NormalTok{{-}{-}{-}}
+\NormalTok{y=1/x\^{}\{0.25\}{-}1|0\textless{}=x\textless{}=1|blue}
+\NormalTok{y=1/x\^{}\{3\}{-}1|0\textless{}=x\textless{}=1|red}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-12.png}
+
+Samples from the Archimedean copula's:
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-11.png}
+
+The dependency contours of each type of archimedean copula's base distribution covariance
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-13.png}
+This plot shows that we can use Archimedean copula's to model \textbf{asymmetric dependencies}, but suffer limitation in \(\geq\) 3 dimensions.
+
+The Archimedean Copula's value is constant for any permutation of coordinates \(u_{1}, \dots, u_{d}\)
+\[
+\begin{aligned}
+C(u_{1}, u_{2}, \dots, u_{d}) &= \phi ^{-1}(\phi(u_{1})+\phi(u_{\mathbf{2}})+\dots+\phi(u_{\mathbf{d}}))\\
+&= \phi ^{-1}(\phi(u_{1})+\phi(u_{\mathbf{d}})+\dots+\phi(u_{\mathbf{2}}))\\
+\end{aligned}
+\]
+
+All pairs of coordinates(variables) have the same dependence, \textbf{which is not the case for elliptical copulas}.
+
+\begin{quote}
+There exist copulas that can both model asymmetric dependencies, \textbf{and} differences in pairwise dependence called \textbf{vine copula's}.
+\end{quote}
+
+\hypertarget{fitting-copulas}{%
+\section{Fitting Copula's}\label{fitting-copulas}}
+
+Given a copula and marginal distributions, the MLE method can be applied to fit multivariate distribution parameters to sample data. This could however lead to a very high number of parameters.
+
+Instead, \emph{pseudo-MLE} could be used to break down the problem into the marginals and copula.
+\[
+\begin{aligned}
+U_{i}^{(j)} = \hat{F}_{j}(X_{i}^{(j)}) \quad \forall \ i, \dots,n \ j = 1, \dots, d
+\end{aligned}
+\]
+\textgreater Each \(n\) uniforms in \(d\) dimensions of the copula can be created from the actual multivariate distribution. Alternatively, the empirical CDF could be used to obtain the uniforms.
+
+We can then estimate the copula using MLE on the uniforms.
+
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-14.png}
+\textgreater Guess: The uniforms are created by plugging in each asset return into their own marginal CDF.
+
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-15.png}
+\textgreater The \emph{pseudo-MLE} can give the uniform marginals used to construct/fit a t-copula.
+
+\hypertarget{factor-models}{%
+\chapter{Factor Models}\label{factor-models}}
+
+\hypertarget{capm}{%
+\section{CAPM}\label{capm}}
+
+The CAPM theory suggests that all investors hold some form of the tangency/market portfolio.
+
+The slope of the tangency portfolio is also known as the Sharpe Ratio, or Market Price of Risk.
+
+\hypertarget{security-market-line}{%
+\subsection{Security Market Line}\label{security-market-line}}
+
+For each individual asset, CAPM implies the following risk/reward relationship (Security Market Line)
+\[
+\begin{aligned}
+\mu_{i} &= \mu_{f} + \beta_{i}(\mu_{M}-\mu_{f})
+\quad \text{Where } \begin{cases}
+\beta_{i} = \frac{\sigma_{iM}}{\sigma^{2}_{M}} \\
+\sigma_{iM} = Cov(R_{i, R_{M}})
+\end{cases}\\
+&= \mu_{f} + \left( \frac{\mu_{M}-\mu_{f}}{\sigma_{M}} \right) \cdot \sigma_{p}
+\end{aligned}
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  \(\beta_{i}\) is different for each asset, it captures how related the return on the given asset is with the Market return.
+\item
+  \(\sigma_{M}\) is the market risk AKA undiversifiable risk
+\end{itemize}
+
+\hypertarget{security-characteristic-line}{%
+\subsection{Security Characteristic Line}\label{security-characteristic-line}}
+
+The \(\beta_{i}\)'s are found empirically, by regressing (\(R_{i}-R_{f}\)) on (\(R_{M}-R_{f}\))
+- Where \(R_{M}\) is the market return (Proxy by large market index, ex S\&P500)
+- \(R_{f}\) is the risk free rate (proxy by T-bill)
+
+\[
+(R_{i,t} - R_{f,t}) = \beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}, \quad \text{ where } \epsilon_{t} \sim N(0,\sigma^{2}_{\epsilon,i})
+\]
+
+By fitting this, we can then extract the \(\beta_{i}\)'s!
+\includegraphics{Notes/Obsidian-Attachments/4-Factor-Models.png}
+
+However the mean expected return is much different than the actual return. Therefore the CAPM model doesn't work very well, or hold.
+\includegraphics{Notes/Obsidian-Attachments/4-Factor-Models-1.png}
+
+An iteration of this model includes an intercept, \(\alpha\)
+\[
+(R_{i,t} - R_{f,t}) = \alpha_{i} + \beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}
+\]
+Finding the mean and variance:
+\[
+\begin{aligned}
+\mu_{i} = \mathbb{E}[R_{i}] &= \mathbb{E}[R_{f,t}+\alpha_{i}+\beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}]\\
+&= \underbrace{ \mathbb{E}[R_{f}] }_{ R_{f} } + \alpha_{i} + \beta_{i}\underbrace{ \mathbb{E}[R_{m}-R_{f}] }_{ \mu_{m - R_{f}} } + \underbrace{ \mathbb{E}[\epsilon_{t}] }_{ =0 }\\
+&= R_{f} + \alpha_{i} + \beta_{i}(\mu_{m}-R_{f})\\
+\\
+\sigma^{2}_{i} = \mathbb{V}[R_{i}] &= \mathbb{V}[\underbrace{ R_{f}+\alpha_{i} }_{ Var = 0 }+\beta_{i}(R_{m}-R_{f})+\epsilon_{i})]\\
+&= \mathbb{V}[\beta_{i}(R_{m}-\underbrace{ R_{f} }_{ Var = 0 }] + \mathbb{V}[\epsilon_{i}]\\
+&= \beta_{i}^{2} \cdot \mathbb{V}[R_{M}] + \sigma^{2}_{\epsilon, i}\\
+&= \beta^{2}_{i}\cdot \sigma^{2}_{m}+\sigma^{2}_{\epsilon,i}
+\end{aligned}
+\]
+
+Time doesn't matter for the risk free or market returns
+
+\hypertarget{alpha-beta}{%
+\subsubsection{Alpha \& Beta}\label{alpha-beta}}
+
+An asset's beta \(\beta_{i}\) can be seen as a measure of both risk \& reward
+\[
+CAPM \to \mu_{f}  = \mu_{f} + \beta_{i}(\mu_{M}-\mu_{f}) \implies \mu_{i} = \mu_{f} + \beta_{i}\underbrace{ \left(\frac{\mu_{M}-\mu_{f}}{\sigma_{M}}  \right)}_{ \text{Sharpe Ratio} }\sigma_{M}
+\]
+
+\(\beta_{i}\) measures extent of the return of a given asset is related to the market
+
+\begin{quote}
+\emph{If you believe in CAPM, then the bigger beta is, the more risk you will have but also the more reward you will have.}
+\end{quote}
+
+\(\alpha_{i}\) measure how much the asset outperforms the market consistently, the amount returned on top of the \(\beta_{i}\)
+
+\hypertarget{legacy-of-capm}{%
+\subsection{Legacy of CAPM}\label{legacy-of-capm}}
+
+CAPM is wrong. A lot of it's assumptions do not hold in reality.
+
+However, it had immense practical impact on investing, specifically in terms of
+- Diversification: concept of decreasing risk by spreading portfolio over different assets
+- Index investing: justification for common investing strategy of tracking some broad index with mutual funds or ETF's
+- Benchmarking: Measuring performance of investment relative to market / index
+
+\hypertarget{performance-evaluation}{%
+\subsection{Performance Evaluation}\label{performance-evaluation}}
+
+CAPM says the best portfolio you can create is the tangency/market portfolio. This implies the best you can do is get the broadest index and combine it with a T-bill.
+
+\begin{quote}
+Aside: In the past, you needed to use a mutual fund because exchange traded funds didn't exist. Thats how most people invested, even though they cost high fees as there was a lot of human involvement.
+\end{quote}
+
+There are several ways to measure an asset's performance, based on CAPM
+
+Sharpe ratio: (excess return per unit risk)
+\[
+S_i=\frac{\mu_i-\mu_f}{\sigma_i}
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  If you combine different assets, you can reduce the \(\sigma_{i}\) of the portfolio, so it's not objective because two assets may be really risky, but negatively correlated reducing \(\sigma_{i}\).
+\item
+  It doesn't however measure how correlated a portfolio is to the market.
+\end{itemize}
+
+Treynor index: (excess return per unit non-diversifiable risk)
+\[
+\quad T_i=\frac{\mu_i-\mu_f}{\beta_i}
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  You would look at this to find the best return
+\end{itemize}
+
+Jensen's alpha: (excess return on top of the return explained by the market)
+\[
+\quad \alpha_i=\hat{\alpha}_i
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  Usually the most important measure a portfolio manager tries to use to convince people to invest in them.
+\end{itemize}
+
+\hypertarget{three-factor-models}{%
+\section{Three Factor models}\label{three-factor-models}}
+
+The CAPM model assumes the market is a single factor that drives asset returns.
+- In practice, CAPM does not adequately describe real-world returns
+
+We can improve this model by including more factors in the regression.
+
+There are three types of factor models we will look at:
+
+\begin{itemize}
+\tightlist
+\item
+  Macroeconomic: Factors are \emph{observable} economic and financial time series data (eg return of the S\&P 500)
+\item
+  Fundamental: Created explicitly or implicitly from observable asset characteristics
+\item
+  Statistical (Latent variable model): Factors are unobservable and extracted from asset returns
+\end{itemize}
+
+All three types follow some form of
+\[
+\begin{aligned}
+R_{i}(t) = \beta_{i,0} + \beta_{i,1}F_{1}(t)+\dots+\beta_{i,p}F_{p}(t)+\epsilon_{i}(t), \quad \forall \begin{cases}
+i=1,\dots, N \\
+t \in \mathbb{R}
+\end{cases}
+\end{aligned}
+\]
+where:
+- \(R_{i}(t)\) is return on the \(i^{th}\) asset at time t
+- \(F_{j}(t)\) is the \(j^{th}\) common factor at time t
+- \(\beta_{i,j}\) is the factor loading/beta of \(i^{th}\) asset on the \(j^{th}\) factor
+- \(\epsilon_{i}(t)\) is the idiosyncratic/unique return of asset \(i^{th}\)
+
+We want the errors to be independent from the factors,
+\[
+Cov[\epsilon(t), F(t)] = 0
+\]
+
+In matrix form,
+
+\[
+\begin{aligned}
+& \Leftrightarrow \\
+& {\left[\begin{array}{c}
+R_1(t) \\
+\vdots \\
+R_N(t)
+\end{array}\right] }=\left[\begin{array}{c}
+\beta_{1,0} \\
+\vdots \\
+\beta_{N, 0}
+\end{array}\right]+\left[\begin{array}{ccc}
+\beta_{1,1} & \cdots & \beta_{1, p} \\
+\vdots & \ddots & \vdots \\
+\beta_{N, 1} & \cdots & \beta_{N, p}
+\end{array}\right]\left[\begin{array}{c}
+F_1(t) \\
+\vdots \\
+F_p(t)
+\end{array}\right]+\left[\begin{array}{c}
+\varepsilon_1(t) \\
+\vdots \\
+\varepsilon_p(t)
+\end{array}\right] \\
+& \Leftrightarrow \\
+& \mathbf{R}(t)=\boldsymbol{\beta}_0+\boldsymbol{\beta}^{\top} \mathbf{F}(t)+\boldsymbol{\varepsilon}(t)
+\end{aligned}
+\]
+
+The factors \(F_{j}(t)\) are stationary with moments:
+\[
+\begin{aligned}
+R(t) &= \beta_{0} + \beta^{T}F(t) + \epsilon(t)\\
+\\
+\mu_{r} &= \mathbb{E}(R(t)) = \mathbb{E}[\beta_{0} + \beta^{T}F(t) + \epsilon(t)]\\
+&= \beta_{0}+\beta^{T}\underbrace{ \mathbb{E}[F(t)] }_{ \mu_{F} } + \underbrace{ \mathbb{E}[\epsilon(t)] }_{ 0 }\\
+&= \beta_{0} + \beta^{T}\mu_{F}\\
+\\
+\Sigma_{R} &= \mathbb{V}[\beta_{0}+\beta^{T}F(t) +\epsilon(t)]\\
+&\underbrace{= \mathbb{V}[\beta^{T}F(t)] + \mathbb{V}[\epsilon(t)]}_{ \text{As } F(t)\text{ indep of } \epsilon_(t)}\\
+&= \beta^{T}\underbrace{ \mathbb{V}[F(t)] }_{ \Sigma_{F} }\beta+\Sigma_{\epsilon}\\
+&= \beta^{T}\Sigma_{F}\beta+\underbrace{ \Sigma_{\epsilon} }_{ \text{Diagonal} }
+\end{aligned}
+\]
+
+We can also find the moments of the portfolio with weights \(w = [w_{1}, \dots w_{N}]^{T}\)
+\[
+\begin{aligned}
+R_{port} = w^{T}R \implies \begin{cases}
+\mu_{port} = \mathbb{E}[R_{port}] = w^{T}\mathbb{E}[R] = w^{T}(\beta_{0}+\beta_{\mu_{F}}) \\
+\sigma^{2}_{port} = \mathbb{V}[R_{port} = \mathbb{V}[w^{T}R] = w^{T}\mathbb{V}[R]w = w^{T}(\beta^{T}\Sigma_{F}\beta+\Sigma_{\epsilon})w
+\end{cases}
+\end{aligned}
+\]
+
+\hypertarget{time-series-regression-models}{%
+\subsection{Time Series Regression Models}\label{time-series-regression-models}}
+
+Consider model for which factor values are known (e.g.~macro/fundamental model)
+
+Estimate betas \& risks (variances) one asset at a time, using time series regression
+- For each fixed \(i=1,\dots N\), fir regression model:
+\[
+R_{i}(t) = = \beta_{i,0} + \beta_{i,1}F_{1}(t)+ \dots + \beta_{i,p}F_{p}(t) + \epsilon_{i}(t)
+\]
+
+Most models will always include some proxy for the overall economy (eg the market)
+
+Instead of Fama-French, there is BARRA which uses the cross section of returns? Still regression tho
+
+\hypertarget{fama-french-3-factor-model}{%
+\subsubsection{Fama-French 3 Factor Model}\label{fama-french-3-factor-model}}
+
+Additionally to the market, they looked at two other factors that are consistent over many datasets and time periods.
+
+\textbf{Small Minus Big: (SMB)}
+One factor tries to capture the size(market cap) of the company/stock, which empirically showed that size played a role in its return
+- Regressed returns on how companies of a certain size/group did
+- They took the smallest and biggest companies, and looked at their avg return over some period, creating a difference to use to separate the groups of companies
+
+\textbf{High Minus Low (HML):}
+The second factor looks at whether a company is a \textbf{value} one or not. Measured using book-to-market ratio.
+
+\begin{quote}
+These two factors were found to have statistically significant coefficients in multiple regression.
+\end{quote}
+
+People frequently use the factor model to estimate the return covariance matrix.
+They can use the sample covariance matrix of the factors and apply the beta vector in order to obtain the return covariance matrix
+
+\[
+\operatorname{Var}(\mathbf{R})=\hat{\boldsymbol{\Sigma}}_R=\hat{\boldsymbol{\beta}}^{\top} \hat{\boldsymbol{\Sigma}}_F \hat{\boldsymbol{\beta}}+\hat{\boldsymbol{\Sigma}}_{\varepsilon}
+\]
+where:
+\[
+\begin{aligned}
+& \hat{\boldsymbol{\beta}}=\text { beta coefficient matrix (from regressions) } \\
+& \hat{\boldsymbol{\Sigma}}_F=\text { factor sample covariance matrix } \\
+& \hat{\boldsymbol{\Sigma}}_{\varepsilon}=\text { diagonal error variance matrix (from residuals) }
+\end{aligned}
+\]
+This gives more stable estimates than sample covariance.
+
+\hypertarget{statistical-factor-models}{%
+\subsection{Statistical Factor Models}\label{statistical-factor-models}}
+
+In this model, the factors are \textbf{unknown (latent) and unobserved}. THis implies that we need to estimate both \(\beta\) and \(F\).
+
+Unusual constraint: Because the factors are uncorrelated (not necessarily i.i.d.)
+\[
+\Sigma_{F} = Cov(F)= I \sigma_F \quad \& \quad \mu_{F}=\mathbb{E}(F) = 0
+\]
+
+This gives us the resulting moments of the returns:
+\[
+\begin{aligned}
+\mu_{R} &= \mathbb{E}[R] = \mathbb{E}[\beta_{0}+\beta^TF + \epsilon] = \beta_{0}+\beta^{T}\underbrace{ \mathbb{E}[F] }_{ 0 }+\underbrace{ \mathbb{E}[\epsilon] }_{ 0 } = \beta e_{0}\\
+\\
+\Sigma_{R} &= \mathbb{V}[R] = \mathbb{V}[\boldsymbol{\beta}_{0}+\boldsymbol{\beta}^{T}F+\boldsymbol{\epsilon}] = \boldsymbol{\beta}^{T}\mathbb{V}[F]\boldsymbol{\beta}+\boldsymbol{\Sigma_{\epsilon} = \beta^{T}(I\cdot \sigma_{F})\beta+\Sigma_{\epsilon}}
+\end{aligned}
+\]
+
+\hypertarget{principle-component-analysis-pca}{%
+\section{Principle Component Analysis (PCA)}\label{principle-component-analysis-pca}}
+
+This technique helps reduce the dimensionality of a problem. Consider a factor model without errors:
+\[
+\mathbf{R}(t) = \boldsymbol{\beta}_{0}+\boldsymbol{\beta}^{T}\mathbf{F}(t) \implies \boldsymbol{\Sigma_{R}=\beta^{T}\Sigma_{F}\beta}
+\]
+
+Given a set of N assets, we can construct a set of variables (components) capturing most of the variability.
+
+\begin{itemize}
+\tightlist
+\item
+  PCA is a linear transformation
+\item
+  The goal is to capture as much variation as possible.
+\end{itemize}
+
+When we apply PCA to the statistical model, we find \(n\) factors set as the PCA components. These components are \textbf{uncorrelated}, and have \textbf{maximum variance.}
+
+\[
+F_{1},\dots,F_{n} \text{ are factors which are the Principle Components}
+\]
+\[
+\begin{aligned}
+F_{1} &= \gamma_{1}^{T}\mathbf{R} = \gamma_{11}R_{1}+\dots+\gamma_{1n}R_{n}\\
+\vdots\\
+F_{n} &= \gamma_{n}^{T}\mathbf{R} = \gamma_{n1}R_{1}+\dots+\gamma_{nn}R_{n}\\
+\end{aligned}
+\]
+
+Where each factor:
+
+\[
+\begin{aligned}
+F_{i} &= \gamma_{i}^{T}\mathbf{X} \quad \text{Maximizes } \ Var(F_{i})=\boldsymbol{\gamma_{i}^{T}\Sigma_{R}\gamma_{i}} \quad s.t. \boldsymbol{\gamma_{i}^{T}\gamma_{i}}=1\\
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+Cov(F_{i},F_{j}) &= \boldsymbol{\gamma_{j}^{T}\Sigma_{R}\gamma_{i}} = 0\\
+\\
+\text{Where }& i,j\in 1,\dots,n, \quad i > j
+\end{aligned}
+\]
+
+Supposedly does not imply that \(\gamma_{j}^{T}\gamma_{i} = 0\) which may mean they are not orthogonal? But PCA components should be orthogonal?
+
+\includegraphics{Notes/Obsidian-Attachments/5-Factor-Models.png}
+
+We can find the \(Cov(F)\) and beta (loading factor) of \(R_i\) on \(F_j\):
+\[
+\begin{aligned}
+\mathbb{V}(\mathbf{F})&= \mathbb{V}(\mathbf{P}^{T}\mathbf{R})\\
+&= \mathbf{P}^{T}\mathbb{V}(\mathbf{R})\mathbf{P}\\
+&= \mathbf{P}^{T}\boldsymbol{\Sigma}_{R}\mathbf{P}\\
+&\text{By Eigen-decomposition}\\
+&= \mathbf{P^{T}(P\Lambda P^{T})P}\\
+&\text{Where } \mathbf{P^{T}P} = 1\\
+&= \boldsymbol{\Lambda}
+\end{aligned} 
+\]
+
+It's kind of circular logic. Also, \(\Lambda\) is sorted with the eigenvalue associated with the eigenvector that captures the most variance is first.
+
+\begin{quote}
+Fact: Total variance of all PC's is equal to original variable variance.
+\end{quote}
+
+\[
+\begin{aligned}
+\text{ PC Total Variance = Population Total Variance } &\iff\\
+tr(\Lambda) = tr(\Sigma) &\iff\\
+\lambda_{1}+\dots+\lambda_{P} = \sigma_{1}^{2}+\dots+\sigma^{2}_{N}
+\end{aligned}
+\]
+
+The proportion of total variance that is explained by each PC is:
+\[
+Var(PC_{j}) =\frac{\lambda_{j}}{\lambda_{1}+\lambda_{2}+\dots+\lambda_{N}} \quad \text{Where } j=1,\dots,N
+\]
+
+\hypertarget{selecting-components}{%
+\subsection{Selecting Components}\label{selecting-components}}
+
+The important part of PCA is how many components to select to capture a suitable amount of variability.
+
+\emph{You don't need many components if the data is very correlated, and a few components may represent most of the variance in the data.}
+
+We can also use a scree plot and pick the number of components before some ``elbow'' point.
+\includegraphics{Notes/Obsidian-Attachments/5-Factor-Models-1.png}
+
+\includegraphics{Notes/Obsidian-Attachments/5-Factor-Models-2.png}
+
+PCA run on the correlation matrix (which is the standardized covariance matrix, which is preferred when there is very large range of variances between variables)
+\includegraphics{Notes/Obsidian-Attachments/5-Factor-Models-3.png}
 
 \hypertarget{problem-set-1}{%
 \chapter{Problem Set 1}\label{problem-set-1}}
@@ -743,7 +1683,7 @@ Setting up the X-axis (time of day) and Y-axis (price) variables
 
 \NormalTok{order\_data }\OtherTok{=}\NormalTok{ order\_book }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{idx =} \FunctionTok{row\_number}\NormalTok{())}
 \NormalTok{price }\OtherTok{=}\NormalTok{ order\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(}\FunctionTok{contains}\NormalTok{(}\StringTok{"p"}\NormalTok{),idx) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\FunctionTok{contains}\NormalTok{(}\StringTok{"p"}\NormalTok{),idx) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{!}\NormalTok{idx,}
                \CommentTok{\# First column is Order Type, takes first capture group, second}
                \CommentTok{\# capture group is excluded, third capture group of levels }
@@ -757,21 +1697,21 @@ Setting up the X-axis (time of day) and Y-axis (price) variables
                \AttributeTok{values\_to=} \StringTok{"Price"}\NormalTok{) }
 
 \NormalTok{quantity }\OtherTok{=}\NormalTok{ order\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{contains}\NormalTok{(}\StringTok{"p"}\NormalTok{), idx) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{contains}\NormalTok{(}\StringTok{"p"}\NormalTok{), idx) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{!}\NormalTok{idx,}
                \AttributeTok{names\_to =} \FunctionTok{c}\NormalTok{(}\StringTok{"Order Type"}\NormalTok{, }\StringTok{".value"}\NormalTok{),}
                \AttributeTok{names\_pattern =} \StringTok{"(...)(?:s)(}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{d\{1,2\})"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{c}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Order Type}\StringTok{\textasciigrave{}}\NormalTok{,idx),}
                \AttributeTok{names\_to =} \FunctionTok{c}\NormalTok{(}\StringTok{"Level"}\NormalTok{),}
                \AttributeTok{values\_to=} \StringTok{"Quantity"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{select}\NormalTok{(Quantity)}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Quantity)}
 
 \NormalTok{order\_longer }\OtherTok{=}\NormalTok{ price }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{bind\_cols}\NormalTok{(quantity) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Limit\_Price =}\NormalTok{ Price }\SpecialCharTok{/} \DecValTok{10000}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(idx }\SpecialCharTok{\%in\%}\NormalTok{ message\_data}\SpecialCharTok{$}\NormalTok{idx) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Price)}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Price)}
 
 \NormalTok{plt\_data }\OtherTok{=}\NormalTok{  order\_longer }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{left\_join}\NormalTok{(message\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(Time, Price, idx, X\_Time), }\AttributeTok{by=}\StringTok{"idx"}\NormalTok{) }
+  \FunctionTok{left\_join}\NormalTok{(message\_data }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Time, Price, idx, X\_Time), }\AttributeTok{by=}\StringTok{"idx"}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
 
@@ -1093,7 +2033,8 @@ Note: You will have to use (pnorm(), pbinom()) to find the numerical values of t
 \hypertarget{q1-1}{%
 \section{Q1}\label{q1-1}}
 
-An MLE can be derived from finding the derivative of the log \(L(\alpha)\), \(l(\alpha)\) function, where \[
+An MLE can be derived from finding the derivative of the log \(L(\alpha)\), \(l(\alpha)\) function, where\\
+\[
 \begin{aligned}
 L(\alpha) &= \prod^{n}_{i=1} \left[ \frac{\alpha x_{i}^{-(\alpha+1)}}{\ell^{-\alpha}} \right]\\
 \log L(\alpha) = l(\alpha) &= \sum^{n}_{i=1} \left[ \log(\alpha) - (\alpha+1)\log(x_{i}) +\alpha\log(\ell) \right]\\
@@ -1121,11 +2062,13 @@ We say that distribution \(F\) is heavy tailed if the integral on the positive h
 
 \[
 \begin{aligned}
-m_{X}(t) = E(e^{tX}) = \left[ 1 + tE(X) + \frac{(tE(X))^2}{2!} + \frac{(tE(X))^3}{3!} + ... + (tE(X))^n/n! + ...  \right]
+m_{X}(t) &= \mathbb{E}(e^{tX})\\
+&= \sum^{\infty}_{k=1}\frac{t^{k}}{k!}\mathbb{E}[X^{k}]\\
+&= \left[ 1 + t\mathbb{E}(X) + \frac{t^2\mathbb{E}(X^2)}{2!} + \frac{t^3\mathbb{E}(X^3)}{3!} + ... + \frac{t^n\mathbb{E}(X^n)}{n!} + ...  \right]\\
 \end{aligned}
 \]
 
-\^{} not complete
+But for any \(n^{th}\) moment where \(n>\alpha\), \(\mathbb{E}(X^{n})=\infty\). This implies that the mfg of any heavy tail distribution (which by definition has \(\alpha >0\)) will be infinite.
 
 \hypertarget{part-b}{%
 \subsection{Part B}\label{part-b}}
@@ -1187,7 +2130,628 @@ By definition, a sum of stable distributions would converge to a stable distribu
 \hypertarget{q3-1}{%
 \section{Q3}\label{q3-1}}
 
-later
+\[
+\begin{aligned}
+Z&=\frac{X}{Y}\\
+X &\sim Exp(1) \quad Y \sim Exp(1)\\
+\bar{F}_{X}(x) &= 1-(1-e^{-x}) = e^{-x}\quad x > 0\\
+\bar{F}_{Y}(y) &= 1-(1-e^{-y}) = e^{-y}\quad y > 0
+\end{aligned}
+\]
+
+Show \(Z\) follows a heavy-tailed distribution, and find the tail index:
+
+\(Z\) follows a heavy-tailed distribution if it has polynomial tails ie \(Z \propto x^{-(1+\alpha)}\)
+
+We will integrate w.r.t \(F_{Y}(y)\), as we condition on the fact that \(y>0\). We can also convert the probability to be of \(\mathbb{P}(X<\alpha y)\) so that it becomes a function of \(y\), which will work in our integral.
+\[
+\begin{aligned}
+\bar{F}_{Z}(z) = \mathbb{P}(Z > z) &= \mathbb{P}\left( \frac{X}{Y} > z, x > 0, y > 0\right)\\
+&= \int_{y=0}^{\infty}\mathbb{P}\left( \frac{X}{Y} > z | Y = y \right) \, dF_{y}(y)\\
+&= \int _{y=0}^{\infty}\underbrace{ \mathbb{P}(X > zy) }_{ e^{-zy} }\underbrace{ f_{Y}(y) }_{ e^{-y} } \, dy\\
+&\quad \quad \quad \ \ \text{as } Y = y\\
+&= \int ^{\infty}_{y=0} e^{-y(z+1)}\, dy\\
+&= \left[ \frac{e^{-y(z+1)}}{-(z+1)} \right]^{\infty}_{y=0}\\
+&= 0 + \frac{1}{z+1} = (z+1)^{-1} \quad z > 0\\
+\implies f_{Z}(z) &= (z+1)^{-2} \propto x^{-(1+\alpha)} \text{ Where } \alpha = 1
+\end{aligned}
+\]
+
+\(\therefore Z\) is heavy tailed with tail index \(\alpha=1\)
+
+\hypertarget{q4-1}{%
+\section{Q4}\label{q4-1}}
+
+Libraries required:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# install.packages("yahoofinancer")}
+\FunctionTok{library}\NormalTok{(yahoofinancer)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(MASS)}
+\end{Highlighting}
+\end{Shaded}
+
+Obtain stock data from Yahoo using \texttt{yahoofinancer} methods:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lto }\OtherTok{\textless{}{-}}\NormalTok{ Ticker}\SpecialCharTok{$}\FunctionTok{new}\NormalTok{(}\StringTok{\textquotesingle{}L.TO\textquotesingle{}}\NormalTok{)}
+
+\NormalTok{lto\_adj\_close }\OtherTok{=}\NormalTok{ lto}\SpecialCharTok{$}\FunctionTok{get\_history}\NormalTok{(}\AttributeTok{start =} \StringTok{\textquotesingle{}2015{-}01{-}01\textquotesingle{}}\NormalTok{, }\AttributeTok{end =} \StringTok{"2022{-}12{-}31"}\NormalTok{,}
+                            \AttributeTok{interval =} \StringTok{\textquotesingle{}1d\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(date, adj\_close)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{part-a-1}{%
+\subsection{Part A}\label{part-a-1}}
+
+Calculate daily net returns, plot the returns, sample auto-correlation plot, and Normal QQ plot.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(lto\_adj\_close)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                  date adj_close
+## 1 2015-01-02 14:30:00  44.17995
+## 2 2015-01-05 14:30:00  43.25630
+## 3 2015-01-06 14:30:00  42.38908
+## 4 2015-01-07 14:30:00  42.80506
+## 5 2015-01-08 14:30:00  42.80506
+## 6 2015-01-09 14:30:00  42.08588
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{net\_ret }\OtherTok{=}\NormalTok{ lto\_adj\_close }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{net\_returns =} 
+\NormalTok{           (adj\_close }\SpecialCharTok{{-}} \FunctionTok{lag}\NormalTok{(adj\_close, }\DecValTok{1}\NormalTok{)) }\SpecialCharTok{/} \FunctionTok{lag}\NormalTok{(adj\_close, }\DecValTok{1}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(net\_returns))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{net\_ret }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ date, }\AttributeTok{y =}\NormalTok{ net\_returns)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title=}\StringTok{"Daily returns of Loblaws 2015{-}Jan{-}01 {-} 2022{-}Dec{-}31"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-25-1.pdf}
+
+\begin{quote}
+The plot of the daily net returns demonstrate volatility clutering right after the start of 2020.
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{acf}\NormalTok{(net\_ret}\SpecialCharTok{$}\NormalTok{net\_returns)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-26-1.pdf}
+
+\begin{quote}
+There are no simple auto-correlations (current returns are not correlated with past returns)
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(net\_ret}\SpecialCharTok{$}\NormalTok{net\_returns,}\AttributeTok{datax =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{qqline}\NormalTok{(net\_ret}\SpecialCharTok{$}\NormalTok{net\_returns,}\AttributeTok{datax =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-27-1.pdf}
+
+Based on the QQ plot, the distribution seems leptokurtic as the sample quantiles are more distributed than the theoretical, implying heavy tails.
+
+\begin{quote}
+This supports the stylized fact that returns follow heavy tail distributions.
+\end{quote}
+
+\hypertarget{part-b-1}{%
+\subsection{Part B}\label{part-b-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fitted }\OtherTok{=} \FunctionTok{fitdistr}\NormalTok{(net\_ret}\SpecialCharTok{$}\NormalTok{net\_returns, }\StringTok{"t"}\NormalTok{)}
+
+\NormalTok{mu }\OtherTok{=}\NormalTok{ fitted}\SpecialCharTok{$}\NormalTok{estimate[}\DecValTok{1}\NormalTok{]}
+\NormalTok{sigma }\OtherTok{=}\NormalTok{ fitted}\SpecialCharTok{$}\NormalTok{estimate[}\DecValTok{2}\NormalTok{]}
+\NormalTok{v }\OtherTok{=}\NormalTok{ fitted}\SpecialCharTok{$}\NormalTok{estimate[}\DecValTok{3}\NormalTok{]}
+\NormalTok{var }\OtherTok{=}\NormalTok{ sigma}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ (v }\SpecialCharTok{/}\NormalTok{ (v}\DecValTok{{-}2}\NormalTok{))}
+
+
+\NormalTok{sample\_mu }\OtherTok{=} \FunctionTok{mean}\NormalTok{(net\_ret}\SpecialCharTok{$}\NormalTok{net\_returns)}
+\NormalTok{sample\_var }\OtherTok{=} \FunctionTok{var}\NormalTok{(net\_ret}\SpecialCharTok{$}\NormalTok{net\_returns)}
+\end{Highlighting}
+\end{Shaded}
+
+We have a fitted mean \(\mu\) of \ensuremath{3.2240439\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4635868\times 10^{-4}}.
+This is compared to the sample mean \(\mu\) of \ensuremath{5.6615327\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827267\times 10^{-4}}.
+
+These differences can occur due to the fitted t-distribution smoothing away more extreme values.
+
+\hypertarget{part-c-1}{%
+\subsection{Part C}\label{part-c-1}}
+
+We will now compare two different return distribution approaches in an practical investment setting. Assume you invest all of your wealth in L.TO for 4 years (4 × 252 = 1008 days). Simulate 5,000 iterations of 1008 daily returns from the following models:
+
+\hypertarget{part-i}{%
+\subsubsection{Part i}\label{part-i}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{n }\OtherTok{=} \DecValTok{5000}
+\NormalTok{m }\OtherTok{=} \DecValTok{1008}
+
+\CommentTok{\# create a matrix of 5000 simulations of 1008 daily returns}
+\NormalTok{R\_mat }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(n}\SpecialCharTok{*}\NormalTok{m, sample\_mu, }\FunctionTok{sqrt}\NormalTok{(sample\_var)), }\AttributeTok{nrow =}\NormalTok{ n, }\AttributeTok{ncol =}\NormalTok{ m)}
+
+\NormalTok{R\_final }\OtherTok{=} \FunctionTok{apply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{R\_mat, }\DecValTok{1}\NormalTok{, cumprod) }\SpecialCharTok{{-}} \DecValTok{1}
+\NormalTok{sim\_norm\_returns }\OtherTok{=}\NormalTok{ R\_final[,m]}
+
+\CommentTok{\# max drawdown}
+\NormalTok{mdd }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(R)\{ }\FunctionTok{return}\NormalTok{(tseries}\SpecialCharTok{::}\FunctionTok{maxdrawdown}\NormalTok{(R)}\SpecialCharTok{$}\NormalTok{maxdrawdown) \}}
+\NormalTok{MDD }\OtherTok{=} \FunctionTok{apply}\NormalTok{(R\_final, }\DecValTok{1}\NormalTok{, mdd)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{part-ii}{%
+\subsubsection{Part ii}\label{part-ii}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# using a t distribution}
+\CommentTok{\# create a matrix of 5000 simulations of 1008 daily returns}
+\NormalTok{R\_mat\_t }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{( n}\SpecialCharTok{*}\NormalTok{m, mu, sigma ) }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{( v }\SpecialCharTok{/} \FunctionTok{rchisq}\NormalTok{( n}\SpecialCharTok{*}\NormalTok{m , }\AttributeTok{df =}\NormalTok{ v) ), }\AttributeTok{nrow =}\NormalTok{ n, }\AttributeTok{ncol =}\NormalTok{ m)}
+
+\NormalTok{R\_final\_t }\OtherTok{=} \FunctionTok{apply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{R\_mat\_t, }\DecValTok{1}\NormalTok{, cumprod) }\SpecialCharTok{{-}} \DecValTok{1}
+\NormalTok{sim\_t\_returns }\OtherTok{=}\NormalTok{ R\_final\_t[,m]}
+\NormalTok{MDD\_t }\OtherTok{=} \FunctionTok{apply}\NormalTok{(R\_final\_t, }\DecValTok{1}\NormalTok{, mdd)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{part-iii}{%
+\subsubsection{Part iii}\label{part-iii}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(fGarch)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## NOTE: Packages 'fBasics', 'timeDate', and 'timeSeries' are no longer
+## attached to the search() path when 'fGarch' is attached.
+## 
+## If needed attach them yourself in your R script by e.g.,
+##         require("timeSeries")
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{garch\_model}\OtherTok{=}\FunctionTok{garchFit}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{garch}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{data=}\NormalTok{net\_ret}\SpecialCharTok{$}\NormalTok{net\_returns, }\AttributeTok{trace =} \ConstantTok{FALSE}\NormalTok{) }\CommentTok{\# fit GARCH(1,1) model}
+\NormalTok{GARCH.param}\OtherTok{=}\NormalTok{garch\_model}\SpecialCharTok{@}\NormalTok{fit}\SpecialCharTok{$}\NormalTok{coef }\CommentTok{\# fitted coefficients}
+\NormalTok{GARCH.spec}\OtherTok{=}\FunctionTok{garchSpec}\NormalTok{(}\AttributeTok{model=}\FunctionTok{list}\NormalTok{(}\AttributeTok{mu=}\NormalTok{GARCH.param[}\StringTok{\textquotesingle{}mu\textquotesingle{}}\NormalTok{], }\CommentTok{\# define GARCH model specification for simulation}
+                                \AttributeTok{omega=}\NormalTok{GARCH.param[}\StringTok{\textquotesingle{}omega\textquotesingle{}}\NormalTok{], }
+                                \AttributeTok{alpha=}\NormalTok{GARCH.param[}\StringTok{\textquotesingle{}alpha1\textquotesingle{}}\NormalTok{], }
+                                \AttributeTok{beta=}\NormalTok{GARCH.param[}\StringTok{\textquotesingle{}beta1\textquotesingle{}}\NormalTok{] ))}
+\NormalTok{R.garch }\OtherTok{=} \FunctionTok{matrix}\NormalTok{( }\DecValTok{0}\NormalTok{, }\AttributeTok{nrow =}\NormalTok{ n, }\AttributeTok{ncol =}\NormalTok{m )}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{n)\{}
+\NormalTok{  R.garch[i,]}\OtherTok{=}\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{garchSim}\NormalTok{(GARCH.spec,m))}
+\NormalTok{\}}
+\NormalTok{Rcm.garch }\OtherTok{=} \FunctionTok{t}\NormalTok{( }\FunctionTok{apply}\NormalTok{( }\DecValTok{1}\SpecialCharTok{+}\NormalTok{R.garch, }\AttributeTok{MARGIN =} \DecValTok{1}\NormalTok{, }\AttributeTok{FUN =}\NormalTok{ cumprod) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{ )}
+\NormalTok{Rfn.garch }\OtherTok{=}\NormalTok{ Rcm.garch[,m]}
+\NormalTok{MDD.garch }\OtherTok{=} \FunctionTok{apply}\NormalTok{(Rcm.garch, }\AttributeTok{MARGIN =} \DecValTok{1}\NormalTok{, }\AttributeTok{FUN =}\NormalTok{ mdd )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{))}
+\FunctionTok{hist}\NormalTok{(sim\_norm\_returns)}
+\FunctionTok{hist}\NormalTok{(sim\_t\_returns)}
+\FunctionTok{hist}\NormalTok{(Rfn.garch)}
+\FunctionTok{hist}\NormalTok{(MDD)}
+\FunctionTok{hist}\NormalTok{(MDD\_t)}
+\FunctionTok{hist}\NormalTok{(MDD.garch)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-32-1.pdf}
+
+The final returns for t-distr. and GARCH gave lower negative values, but are comparable to those of Normal. In terms of maximum drawdown, the GARCH values have a smaller range, but are otherwise also comparable. Not that for for both metrics we combine/compound many returns, so the effects of heavy tails is suppressed.
+
+\begin{quote}
+I definitely fucked up somewhere in these simulations\ldots don't know where though.
+\end{quote}
+
+\hypertarget{q5}{%
+\section{Q5}\label{q5}}
+
+\hypertarget{part-a-2}{%
+\subsection{Part A}\label{part-a-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{=} \DecValTok{5000}
+
+\CommentTok{\# simulate from t distribution with df=1}
+\FunctionTok{plot}\NormalTok{( }\FunctionTok{cumsum}\NormalTok{( }\FunctionTok{rt}\NormalTok{(n , }\AttributeTok{df =} \DecValTok{1}\NormalTok{) ) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n), }\AttributeTok{type =} \StringTok{"l"}\NormalTok{); }
+\FunctionTok{abline}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{, }\AttributeTok{lty =}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-33-1.pdf}
+
+If the WLLN held for this distribution, you would expect to see the average converge to 0.
+
+\begin{quote}
+The cauchy distribution will not converge to 0 because of the extreme values we have sampled will always cause large shifts in the cumulative sum.
+\end{quote}
+
+\hypertarget{part-b-2}{%
+\subsection{Part B}\label{part-b-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{=} \FunctionTok{rt}\NormalTok{(n , }\AttributeTok{df =} \DecValTok{1}\NormalTok{)}
+\NormalTok{y }\OtherTok{=} \FunctionTok{rt}\NormalTok{(n , }\AttributeTok{df =} \DecValTok{1}\NormalTok{)}
+\NormalTok{w }\OtherTok{=}\NormalTok{ x}\SpecialCharTok{+}\NormalTok{y}\SpecialCharTok{/}\DecValTok{2}
+
+\CommentTok{\# sort w so we can create a qq plot}
+\NormalTok{w\_sorted }\OtherTok{=} \FunctionTok{sort}\NormalTok{(w)}
+\NormalTok{cauchy\_quantiles }\OtherTok{=} \FunctionTok{qt}\NormalTok{(}\FunctionTok{ppoints}\NormalTok{(n), }\AttributeTok{df =} \DecValTok{1}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(w\_sorted, cauchy\_quantiles, }\AttributeTok{xlab=}\StringTok{"Sample Quantiles"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Theoretical Quantiles"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-34-1.pdf}
+
+On average, the sample and theoretical quantiles agree. With heavy tailed distributions like the Cauchy, we can expect some (but few) extreme values like the outliers we see here.
+
+\hypertarget{part-c-2}{%
+\subsection{Part C}\label{part-c-2}}
+
+A simulation experiment demonstrating the first EVT (convergence of the max of RVs goes to one of three distributions)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m }\OtherTok{=} \DecValTok{1000}
+\NormalTok{n }\OtherTok{=} \DecValTok{100}
+
+\NormalTok{partc }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(func, an, bn, ...)\{}
+\NormalTok{  mn }\OtherTok{=} \FunctionTok{c}\NormalTok{()}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{m)\{}
+\NormalTok{    mn[i] }\OtherTok{=} \FunctionTok{max}\NormalTok{(}\FunctionTok{func}\NormalTok{(n,...))}
+\NormalTok{  \}}
+\NormalTok{  yj }\OtherTok{=}\NormalTok{ (mn }\SpecialCharTok{{-}}\NormalTok{ bn)}\SpecialCharTok{/}\NormalTok{an}
+  \FunctionTok{return}\NormalTok{(yj);}
+\NormalTok{\}}
+
+\NormalTok{i }\OtherTok{=} \FunctionTok{partc}\NormalTok{(runif, }\DecValTok{1}\SpecialCharTok{/}\NormalTok{n, }\DecValTok{1}\NormalTok{)}
+\NormalTok{ii }\OtherTok{=} \FunctionTok{partc}\NormalTok{(rnorm, }\DecValTok{1}\SpecialCharTok{/}\NormalTok{(n}\SpecialCharTok{*}\FunctionTok{dnorm}\NormalTok{(}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1{-}1}\SpecialCharTok{/}\NormalTok{n))), }\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1{-}1}\SpecialCharTok{/}\NormalTok{n))}
+\NormalTok{iii }\OtherTok{=} \FunctionTok{partc}\NormalTok{(rt, n}\SpecialCharTok{/}\NormalTok{pi, }\DecValTok{0}\NormalTok{, }\AttributeTok{df =}\DecValTok{1}\NormalTok{)}
+
+\CommentTok{\# overlay theoretical distribution}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{hist}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{i, }\AttributeTok{probability =}\NormalTok{ T)}
+\NormalTok{x}\OtherTok{=}\FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{,.}\DecValTok{01}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(x, }\FunctionTok{dexp}\NormalTok{(x), }\AttributeTok{col =} \DecValTok{2}\NormalTok{)}
+
+\FunctionTok{hist}\NormalTok{(ii, }\AttributeTok{probability =}\NormalTok{ T)}
+\NormalTok{x}\OtherTok{=}\FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{,.}\DecValTok{01}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(x, }\FunctionTok{exp}\NormalTok{( }\SpecialCharTok{{-}}\NormalTok{ x }\SpecialCharTok{{-}} \FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{x)), }\AttributeTok{col =} \DecValTok{2}\NormalTok{)}
+
+\FunctionTok{hist}\NormalTok{(iii, }\AttributeTok{probability =}\NormalTok{ T)}
+\NormalTok{x}\OtherTok{=}\FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{150}\NormalTok{,.}\DecValTok{01}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(x, }\DecValTok{1}\SpecialCharTok{/}\NormalTok{x}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{*} \FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}} \DecValTok{1}\SpecialCharTok{/}\NormalTok{x), }\AttributeTok{col =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-35-1.pdf}
+
+From answer key:
+\textgreater In cases i. and ii. the convergence to the theoretical distribution is evident, but in iii. the histogram is not as informative because of the extreme values involved. For the last case, one can plot the histogram \& density of the log-transformed normalized maxima, which actually show the convergence.
+(Note: the log-transformation of the Frechet(\(\alpha=1\)) is the Gumbel distribution.)
+
+\begin{quote}
+I think it is incorrect, as I think the exponential transform of the Frechet(\(\alpha=1\)) is the Gumbel distribution.
+\end{quote}
+
+The solutions continue on to show:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hist}\NormalTok{( }\FunctionTok{log}\NormalTok{(iii), }\AttributeTok{probability =}\NormalTok{ T, }\AttributeTok{main =} \StringTok{"iii. log{-}transform"}\NormalTok{ )}
+\NormalTok{x}\OtherTok{=}\FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{,}\DecValTok{15}\NormalTok{,.}\DecValTok{01}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(x, }\FunctionTok{exp}\NormalTok{( }\SpecialCharTok{{-}}\NormalTok{x}\SpecialCharTok{{-}}\FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{x)), }\AttributeTok{col =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{( }\StringTok{"topright"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{, }\AttributeTok{col =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\FunctionTok{c}\NormalTok{(}\StringTok{"log{-}Sample hist."}\NormalTok{,}\StringTok{"log{-}Frechet"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-36-1.pdf}
+
+\hypertarget{problem-set-3}{%
+\chapter{Problem Set 3}\label{problem-set-3}}
+
+\hypertarget{q1-2}{%
+\section{Q1}\label{q1-2}}
+
+Easy copula question about certain configurations of the marginal distributions. In the first case, we have two exactly equal uniforms and the second case is when one uniform is the exact complement of the other.
+
+\hypertarget{part-a-3}{%
+\subsection{Part A}\label{part-a-3}}
+
+\[
+\begin{aligned}
+U_{1} &= U_{2} \sim U(0,1)\\
+\implies C(u_{1},u_{2}) &= \mathbb{P}(U \leq u_{1},U \leq u_{2})\\
+&= \mathbb{P}(U \leq \min(u_{1},u_{2}))\\
+&= \min(u_{1},u_{2}) \quad \forall \ u_{1},u_{2} \in [0,1]\quad \text{by def of Uniform}\\
+&= \bar{C}(u_{1},u_{2})
+\end{aligned}
+\]
+
+\hypertarget{part-b-3}{%
+\subsection{Part B}\label{part-b-3}}
+
+\[
+\begin{aligned}
+U_{1} &= 1 - U_{2}\\
+C(u_{1},u_{2}) &= \mathbb{P}(U_{1} \leq u_{1}, U_{2} \leq u_{2})\\
+&= \mathbb{P}(1-U \leq u_{1}, U \leq u_{2})\\
+&= \mathbb{P}(U \geq 1-u_{1}, U \leq u_{2})\\
+&= \mathbb{P}(1-u_{1} \leq U \leq u_{2})\\
+&= \begin{cases}
+0 & 1-u_{1} \geq u_{2} \implies 1\geq u_{1}+u_{2}\\
+u_{2}-(1-u_{1}) = u_{1}+u_{2}-1 & 1-u_{1}\leq u_{2} \implies 1 \leq u_{1}+u_{2}
+\end{cases}\\
+&= \max(u_{1}+u_{2}-1, 0)\\
+&= \underline{C}(u_{1},u_{2})
+\end{aligned}
+\]
+
+\includegraphics{ProblemSets/Obsidian-Attachments/PS3.png}
+
+\hypertarget{q2-2}{%
+\section{Q2}\label{q2-2}}
+
+This question concerns Archimedean copula's, where instead of uniforms, it uses some convex generator function \(\phi\).
+
+\[
+\phi(u) = \ln \left( \frac{1-\theta(1-u)}{u} \right) \quad \theta \in [-1,1)
+\]
+
+\hypertarget{part-a-4}{%
+\subsection{Part A}\label{part-a-4}}
+
+Closed form expression for the resulting bivariate copula:
+
+First we need to find the inverse, where instead of \(y\) being a function of \(u\), we have \(u\) is some function of \(y\):
+\[
+\begin{aligned}
+y = \phi(u) &= \ln \left( \frac{1-\theta(1-u)}{u} \right)\\
+e^{y}&= \frac{1-\theta(1-u)}{u}\\
+ue^{y} &= 1-\theta(1-u)\\
+ue^{y} &= 1-\theta +\theta u\\
+u(e^{y}-\theta) &= 1-\theta\\
+\\
+\implies \phi ^{-1}(y) = u &= \frac{1-\theta}{e^{y}-\theta}
+\end{aligned}
+\]
+
+Now we can plug in the two variables:
+
+\[
+\begin{aligned}
+C(u_{1}, u_{2}) &= \phi ^{-1}(\phi(u_{1})+\phi(u_{2}))\\
+&= \phi ^{-1} \left( \ln \left( \frac{1-\theta(1-u_{1})}{u_{1}} \right) + \ln \left( \frac{1-\theta(1-u_{2})}{u_{2}} \right) \right)\\
+&= \phi ^{-1}\left( \ln \left( \frac{1-\theta(1-u_{1})}{u_{1}} \cdot \frac{1-\theta(1-u_{2})}{u_{2}} \right) \right)\\
+&= \frac{1-\theta}{\left( \frac{1-\theta(1-u_{1})}{u_{1}} \cdot \frac{1-\theta(1-u_{2})}{u_{2}} \right)-\theta}\\
+\\
+&\text{Multiply top and bottom by } u_{1}\cdot u_{2}\\
+\\
+&= \frac{(1-\theta)\cdot u_{1}\cdot u_{2}}{\left[ ((1-\theta) + \theta u_{1}) \cdot ((1-\theta) + \theta u_{2}) \right]-\theta\cdot u_{1}\cdot u_{2}}\\
+&= \frac{(1-\theta)\cdot u_{1}\cdot u_{2}}
+{\left[((1-\theta)^{2} + (1-\theta)\theta u_{1} + (1-\theta)\theta u_{2}) + \theta^{2} u_{1}u_{2} \right]
+-\theta\cdot u_{1}\cdot u_{2}}\\
+&= \frac{(1-\theta)\cdot u_{1}\cdot u_{2}}
+{(1-\theta)\left[(1-\theta) + \theta u_{1} + \theta u_{2} \right] + \theta^{2} u_{1}u_{2}
+-\theta\cdot u_{1}\cdot u_{2}}\\
+&= \frac{(1-\theta)\cdot u_{1}\cdot u_{2}}
+{(1-\theta)\left[(1-\theta) + \theta u_{1} + \theta u_{2} \right]- (1-\theta)(\theta u_{1} u_{2})}\\
+&= \frac{u_{1}u_{2}}
+{1-\theta + \theta u_{1} + \theta u_{2} - \theta u_{1} u_{2}}\\
+&= \frac{u_{1}u_{2}}
+{1-\theta(1 - u_{1} - u_{2} + u_{1} u_{2})}\\
+&= \frac{u_{1}u_{2}}
+{1-\theta(1 - u_{1})(1-u_{2})}\\
+\end{aligned}
+\]
+
+\hypertarget{part-b-4}{%
+\subsection{Part B}\label{part-b-4}}
+
+\[
+\begin{aligned}
+M_{n} &= \max\{U_{1},\dots,U_{n}\}\\
+F_{M_{n}}(m) &= P(M_{n} \leq m) = P\left( \prod^{n}_{i=1} (U_{i} \leq m) \right)\\
+&= P(U_{1}\leq m, \dots, U_{n}\leq m)\\
+&= C(U_{1}\leq m, \dots, U_{n}\leq m)\\
+&= \phi ^{-1}(\phi(m)+\dots +\phi(m))\\
+&= \phi ^{-1}(n\phi(m))\\
+&= \frac{1-\theta}{e^{n\phi(m)}-\theta}\\
+&= \frac{1-\theta}{\exp\{n\ln \left( \frac{1-\theta(1-m)}{m} \right)\}-\theta}\\
+&= \frac{1-\theta}{\left( \frac{1-\theta(1-m)}{m} \right)^{n}-\theta}\\
+\end{aligned}
+\]
+
+\hypertarget{q3-2}{%
+\section{Q3}\label{q3-2}}
+
+We want to show that the Archimedean copula with \(\phi(u) = -\log(u)\) is exactly the independence copula.
+
+\[
+\begin{aligned}
+y = \phi(u) &= -\log(u) = \log(u^{-1})\\
+e^{y} &= u^{-1}\\
+e^{-y} &= u = \phi ^{-1}(y)
+\end{aligned}
+\]
+
+\begin{quote}
+Professor's solution has \(\phi ^{-1}=e^{y}\) which makes is key to showing equality to the independence copula. I have yet to understand why that is the inverse generator function.
+\end{quote}
+
+\[
+\begin{aligned}
+C(u_{1}, \dots, u_{n}) &= \phi ^{-1}(\phi(u_{1})+\dots+\phi(u_{n}))\\
+&= \exp(\log(u_{1})+\dots + \log(u_{n}))\\
+&= \exp(\log(u_{1} \times\dots \times u_{n}))\\
+&= u_{1}\times\dots \times u_{n}\\
+&= C_{indep}
+\end{aligned}
+\]
+
+It is easy to show that this holds for any logarithm with any base.
+
+\hypertarget{q4-2}{%
+\section{Q4}\label{q4-2}}
+
+A convex combination of k joint CDFs is itself a joint CDF (finite mixture), but is a convex combination of k copula functions a copula function itself?
+
+The result can be shown using induction. A convex combination of two copula's \(C() = wC_{1}()+(1-w)C_{2}\) is also a copula. We are also given that a convex combination of \(k\) joint CDFs is also a CDF, which means that any convex combination of Copula's will still be some CDF. We only need to show that the marginals are Uniform(0,1) in order to show that it will be a copula.
+
+For 1D Uniform CDFs \(F_{1}(u) = F_{2}(u) = u \quad \forall u \in [0,1]\) then
+\[
+F(u) = wF_{1}(u)+(1-w)F_{2}(u) = wu+(1-w)u = u \quad \forall\ u \in [0,1]
+\]
+
+\hypertarget{problem-set-4}{%
+\chapter{Problem Set 4}\label{problem-set-4}}
+
+\hypertarget{q1-3}{%
+\section{Q1}\label{q1-3}}
+
+Suppose that there are two risky assets, A and B, with expected returns equal to 2.3\% and 4.5\%, respectively. Suppose that the standard deviations of the returns are \(\sqrt{ 6 }\%\) and \(\sqrt{ 11 }\%\) and that the returns on the assets have a correlation of 0.17.
+
+\hypertarget{part-a-5}{%
+\subsection{Part A}\label{part-a-5}}
+
+\[
+\begin{aligned}
+\mathbb{E}(wA+ (1-w)B) &= 0.03\\
+&= w\mathbb{E}(A) + (1-w)\mathbb{E}(B)\\
+&= w\cdot .023 + (1-w)\cdot.045\\
+0.03 &= w(.023-.045) + .045\\
+w &= \frac{.03-.045}{.023-.045}\\
+w &= 0.6818
+\end{aligned}
+\]
+
+A portfolio made up of \(68\%\) of asset A and \(32\%\) of asset B will achieve a \(3\%\) rate of expected return.
+
+\hypertarget{part-b-5}{%
+\subsection{Part B}\label{part-b-5}}
+
+\[
+\begin{aligned}
+\sqrt{ 5.5 }\% &= \sqrt{ Var(wA + (1-w)B) }\\
+&= \sqrt{ w^{2}Var(A) + (1-w)^{2}Var(B) + 2w(1-w)Cov(A,B) }\\
+&= w\sqrt{0.06 }+(1-w)\sqrt{ 0.11 } + 2w(1-w)0.17\cdot \sqrt{  0.06}\cdot \sqrt{0.11}\\
+&= \sqrt{ 0.11 } + w(\sqrt{ 0.06 }-\sqrt{ 0.11 }+0.0276) -0.02762w^{2}\\
+\sqrt{ 0.055 } - \sqrt{ 0.11 } &= w(-0.0591) - 0.02762w^{2}\\
+0 &= - 0.02762w^{2} -0.3907w + 0.0971\\
+w &= [0.2443, -14.3898]
+\end{aligned}
+\]
+
+We should invest in a portfolio made up of 24.43\% asset A, and 75.67\% asset B to achieve a \(\sqrt{ 5.5 }\%\) standard deviation of return.
+
+\begin{quote}
+I'm wrong.
+\end{quote}
+
+\includegraphics{ProblemSets/Obsidian-Attachments/PS4.png}
+
+\emph{Theres more from the textbook i will skip for now}
+
+\hypertarget{q2-3}{%
+\section{Q2}\label{q2-3}}
+
+\hypertarget{part-a-6}{%
+\section{Part A}\label{part-a-6}}
+
+Suppose that stock A shares sell at \$75 and stock B shares at \$115. A portfolio has 300 shares of stock A and 100 of stock B. What are the weights w and 1−w of stocks A and B in this portfolio?
+
+\[
+\begin{aligned}
+w &= \frac{75\cdot 300}{75\cdot 300 + 115 \cdot 100} = 0.66176\\
+\\
+1-w &= 0.33824
+\end{aligned}
+\]
+
+\hypertarget{part-b-6}{%
+\subsection{Part B}\label{part-b-6}}
+
+More generally, if a portfolio has \(N\) stocks, if the price per share of the \(j\)th stock is \(P_j\), and if the portfolio has \(n_j\) shares of stock \(j\), then find a formula for \(w_j\) as a function of \(n_{1},\dots,n_{N}\) and \(P_{1},\dots,P_{N}\).
+
+\[
+\begin{aligned}
+w_{j} = \frac{n_{j}\cdot P_{j}}{\sum^{N}_{i=1}n_{i}P_{i}}
+\end{aligned}
+\]
+
+\hypertarget{q3-3}{%
+\section{Q3}\label{q3-3}}
+
+Let \(R_{P}\) be a return of some type on a portfolio and let \(R_{1},\dots, R_{N}\) be the same type of returns on the assets in this portfolio. Is \(R_P = w_{1}R_{1}+ \dots + w_{N}R_{N}\) true if \(R_{P}\) is a net return? Is this equation true if \(R_{P}\) is a gross return? Is it true if \(R_{P}\) is a log return? Justify your answers.
+
+\[
+\begin{aligned}
+\text{Gross Returns:}&\\
+R'(t) &= \frac{S(t)}{S(t-1)}\\
+\text{Net Returns:}&\\
+R(t) &= R'(t)-1 = \frac{S(t)-S(t-1)}{S(t-1)}\\
+\text{Log Returns:}&\\
+r(t) &= \log(R'(t)) = \log\{S(t)\}-\log\{S(t-1)\}\\
+\end{aligned}
+\]
+
+We have shown in class that this equation holds for net returns. For gross returns:
+\[
+\begin{aligned}
+R'(t) = R(t)+1 &= w_{1}R_{1}(t) + \dots + w_{N}R_{N}(t) + 1\\
+&= w_{1}R_{1}(t) + \dots + w_{N}R_{N}(t) + (w_{1}+\dots+w_{N})\\
+&= w_{1}(R_{1}(t)+1) + \dots + w_{N}(R_{N}(t)+1)\\
+&= w_{1}R'_{1}(t) + \dots + w_{N}R'_{N}(t)
+\end{aligned}
+\]
+
+So it holds for gross returns as well.
+
+\[
+\begin{aligned}
+r(t) &= \log(R'(t)) = \log(w_{1}R'_{1}(t) + \dots + w_{N}R'_{N}(t))\\
+&= \log(w_{1}R'_{1}(t)) \times \dots \times \log(w_{N}R'_{N}(t))\\
+&= [\log(w_{1}) + \log(R'_{1}(t))] \times \dots \times [\log(w_{N}) + \log(R'_{N}(t))]\\
+&= [\log(w_{1}) + r_{1}(t)] \times \dots \times [\log(w_{N}) + \log(r_{N}(t))]\\
+&\ne w_{1}r_{1}(t) + \dots + w_{N}R_{N}(t)
+\end{aligned}
+\]
+
+So it does not hold for log returns.
 
   \bibliography{book.bib,packages.bib}
 

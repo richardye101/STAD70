@@ -400,8 +400,8 @@ f(x) &amp;\propto x^{-(1+\alpha)}\\
 <em>So if the tail index is high, the tail is lighter, and the first <span class="math inline">\(\alpha\)</span> moments exist.</em></p>
 <p>The tail index can be estimated using:
 - MLE approximation, which takes the derivative log of the product of n the distributions when it equals 0, and solving for <span class="math inline">\(\alpha\)</span>
-- <span class="math inline">\(\hat{\alpha} = \frac{n}{\sum^n_{i=1}\ln\left( r_{i}/r_{min} \right)}\)</span>
-- <span class="math display">\[
+- <span class="math inline">\(\hat{\alpha} = \frac{n}{\sum^n_{i=1}\ln\left( r_{i}/r_{min} \right)}\)</span></p>
+<p><span class="math display">\[
 \begin{aligned}
 L(\alpha) &amp;= \prod^{n}_{i=1}[f(x)]\\
 \log(L(\alpha)) = l(\alpha) &amp;= \sum^{n}_{i=1} f(x)\\
@@ -409,8 +409,8 @@ l&#39;(\alpha) &amp;= \sum^{n}_{i=1} f&#39;(x) = 0
 \end{aligned}
 \]</span>
 - Pareto Q-Q plot of the empirical CDF and the returns in log x log scale
-- <span class="math inline">\(\alpha\)</span> is the estimated slope of the line of best fit
-<img src="Notes/Obsidian-Attachments/2-Return-Distributions-3.png" /></p>
+- <span class="math inline">\(\alpha\)</span> is the estimated slope of the line of best fit</p>
+<p><img src="Notes/Obsidian-Attachments/2-Return-Distributions-3.png" /></p>
 <div id="common-heavy-tail-distributions" class="section level3 hasAnchor" number="3.4.1">
 <h3><span class="header-section-number">3.4.1</span> Common Heavy Tail Distributions<a href="return-distributions.html#common-heavy-tail-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="pareto" class="section level4 hasAnchor" number="3.4.1.1">
@@ -447,8 +447,8 @@ f(x) &amp;= \frac{\Gamma\left( \frac{v+1}{2} \right)}{\sqrt{ v\pi }\Gamma(v/2)}\
 \text{Where } &amp;\alpha = v = \text{degrees of freedom}
 \end{aligned}
 \]</span>
-The Students t distributions offers a tractable heavy-tail model of the entire return distribution (not just the tail). It is typically adjusted for the location and scale:
-<span class="math display">\[
+The Students t distributions offers a tractable heavy-tail model of the entire return distribution (not just the tail). It is typically adjusted for the location and scale:</p>
+<p><span class="math display">\[
 Y = \mu + \sigma X \quad \text{where } X \sim t(df=v)
 \]</span></p>
 </div>
@@ -478,10 +478,12 @@ Y = \mu + \sigma X \quad \text{where } X \sim t(df=v)
 <p>We can select from a discrete and finite set of distributions, or of a continuous family of distributions (possibly countable) known as compound distributions.</p>
 <p>Example:
 <span class="math display">\[
+\begin{aligned}
 \text{Generate RV from: } \begin{cases}
 N(0,1) &amp; p=60\%\\
 N(5,3) &amp; p=40\%
 \end{cases}
+\end{aligned}
 \]</span>
 <img src="Notes/Obsidian-Attachments/2-Return-Distributions-4.png" /></p>
 <div id="normal-scale-mixture" class="section level4 hasAnchor" number="3.5.0.1">

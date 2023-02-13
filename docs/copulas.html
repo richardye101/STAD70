@@ -375,7 +375,7 @@ Fourth case: The cumulative probability that the other RVs have values less than
 &amp; \underline{C}\left(u_1, \ldots, u_d\right) \leq C\left(u_1, \ldots, u_d\right) \leq \bar{C}\left(u_1, \ldots, u_d\right) \\
 &amp; \text { where }
 \begin{cases}
-\underline{C}\left(u_1, \ldots, u_d\right)=\max \left\{1-d+\sum_{i=1}^d u_i, 0\right\} \\
+\underline{C}\left(u_1, \ldots, u_d\right)=\max \left\{1-d+\sum_{i=1}^d u_i, 0\right\} = \max\left\{ 1 - \left(\sum^d_{i=1} 1 - u_{i}\right),0 \right\} \\
 \bar{C}\left(u_1, \ldots, u_d\right)=\min \left\{u_1, \ldots, u_d\right\}
 \end{cases}
 \end{aligned}
@@ -386,7 +386,7 @@ Fourth case: The cumulative probability that the other RVs have values less than
 <ul>
 <li>then <span class="math inline">\(\max(1-5+2.4 = \mathbf{-1.6},0)\)</span> )</li>
 </ul></li>
-<li>This implies the minimum of the Copula is bounded by 0, or higher if the average value of the uniforms are <span class="math inline">\(\geq\frac{d-1}{d}\)</span>.</li>
+<li>This implies the maximum of the Copula is bounded by 0, or higher if the average value of the uniforms are <span class="math inline">\(\geq\frac{d-1}{d}\)</span>.</li>
 </ul>
 <p><span class="math inline">\(\min \left\{u_1, \ldots, u_d\right\}\)</span> implies the max of the Copula is bounded by the smallest marginal probability, which makes sense as that is the only one limiting the <strong>cumulative probability</strong>.</p>
 <p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-1.png" /></p>
@@ -464,9 +464,9 @@ Simulating from a distribution with a copula (dependence between marginals) and 
 <li><span class="math display">\[
 (U_{1},\dots U_{d}) \sim C
 \]</span></li>
-<li>This is done by generating from a multivariate normal with correlation <span class="math inline">\(\boldsymbol{\rho}\)</span></li>
-<li><span class="math display">\[
-\mathbf{Z} = \left[ \begin{array}{}
+<li>This is done by generating from a multivariate normal with correlation <span class="math inline">\(\boldsymbol{\rho}\)</span>
+<span class="math display">\[
+\mathbf{Z} = \left[ \begin{array}{l}
 Z_{1} \\
 \vdots \\
 Z_{d}
