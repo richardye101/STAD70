@@ -304,8 +304,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10.2" data-path="problem-set-3.html"><a href="problem-set-3.html#q2-2"><i class="fa fa-check"></i><b>10.2</b> Q2</a>
 <ul>
-<li class="chapter" data-level="10.2.1" data-path="problem-set-3.html"><a href="problem-set-3.html#part-b-4"><i class="fa fa-check"></i><b>10.2.1</b> Part B</a></li>
+<li class="chapter" data-level="10.2.1" data-path="problem-set-3.html"><a href="problem-set-3.html#part-a-4"><i class="fa fa-check"></i><b>10.2.1</b> Part A</a></li>
+<li class="chapter" data-level="10.2.2" data-path="problem-set-3.html"><a href="problem-set-3.html#part-b-4"><i class="fa fa-check"></i><b>10.2.2</b> Part B</a></li>
 </ul></li>
+<li class="chapter" data-level="10.3" data-path="problem-set-3.html"><a href="problem-set-3.html#q3-2"><i class="fa fa-check"></i><b>10.3</b> Q3</a></li>
+<li class="chapter" data-level="10.4" data-path="problem-set-3.html"><a href="problem-set-3.html#q4-2"><i class="fa fa-check"></i><b>10.4</b> Q4</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -335,9 +338,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p><span class="math display">\[
 \begin{aligned}
-C(u_{1}, u_{2}, \dots u_{d}) \in [0,1], \quad \forall \ u_{1},\dots u_{d} \in [0,1]\\
+C(u_{1}, u_{2}, \dots u_{d}) &amp;=P(u_{1}, u_{2}, \dots u_{d}) \in [0,1], \quad \forall \ u_{1},\dots u_{d} \in [0,1]\\
 \\
-\text{Where }\begin{cases}
+&amp;\text{Where }\begin{cases}
 C(0,0, \ldots, 0)=0 \\
 C(1,1, \ldots, 1)=1 \\
 C\left(\ldots, u_{i-1}, 0, u_{i+1}, \ldots\right)=0 \\
@@ -349,7 +352,9 @@ Third case: The cumulative probability of one RV being less than or equal to 0 r
 Fourth case: The cumulative probability that the other RVs have values less than 1 is 1 but the <span class="math inline">\(i^{th}\)</span> RV is <span class="math inline">\(u_{i}\)</span> is simply <span class="math inline">\(u_{i}\)</span></p>
 <div id="the-independence-copula" class="section level2 hasAnchor" number="6.1">
 <h2><span class="header-section-number">6.1</span> The independence copula<a href="copulas.html#the-independence-copula" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><span class="math inline">\(C_{indep} (u_{1}, \dots u_{d} = u_{1} \times \dots \times u_{d})\)</span></p>
+<blockquote>
+<p><strong>Definition:</strong> <span class="math inline">\(C_{indep} (u_{1}, \dots u_{d}) = u_{1} \times \dots \times u_{d}\)</span></p>
+</blockquote>
 <p>By the <strong>Frechet-Hoeffding</strong> theorem, any/every copula is bounded by</p>
 <p><span class="math display">\[
 \begin{aligned}

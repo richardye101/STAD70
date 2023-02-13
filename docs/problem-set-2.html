@@ -304,8 +304,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10.2" data-path="problem-set-3.html"><a href="problem-set-3.html#q2-2"><i class="fa fa-check"></i><b>10.2</b> Q2</a>
 <ul>
-<li class="chapter" data-level="10.2.1" data-path="problem-set-3.html"><a href="problem-set-3.html#part-b-4"><i class="fa fa-check"></i><b>10.2.1</b> Part B</a></li>
+<li class="chapter" data-level="10.2.1" data-path="problem-set-3.html"><a href="problem-set-3.html#part-a-4"><i class="fa fa-check"></i><b>10.2.1</b> Part A</a></li>
+<li class="chapter" data-level="10.2.2" data-path="problem-set-3.html"><a href="problem-set-3.html#part-b-4"><i class="fa fa-check"></i><b>10.2.2</b> Part B</a></li>
 </ul></li>
+<li class="chapter" data-level="10.3" data-path="problem-set-3.html"><a href="problem-set-3.html#q3-2"><i class="fa fa-check"></i><b>10.3</b> Q3</a></li>
+<li class="chapter" data-level="10.4" data-path="problem-set-3.html"><a href="problem-set-3.html#q4-2"><i class="fa fa-check"></i><b>10.4</b> Q4</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -461,10 +464,10 @@ X &amp;\sim Exp(1) \quad Y \sim Exp(1)\\
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="problem-set-2.html#cb38-1" tabindex="-1"></a><span class="fu">head</span>(lto_adj_close)</span></code></pre></div>
 <pre><code>##                  date adj_close
 ## 1 2015-01-02 14:30:00  44.17995
-## 2 2015-01-05 14:30:00  43.25630
+## 2 2015-01-05 14:30:00  43.25631
 ## 3 2015-01-06 14:30:00  42.38906
-## 4 2015-01-07 14:30:00  42.80506
-## 5 2015-01-08 14:30:00  42.80506
+## 4 2015-01-07 14:30:00  42.80505
+## 5 2015-01-08 14:30:00  42.80505
 ## 6 2015-01-09 14:30:00  42.08588</code></pre>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="problem-set-2.html#cb40-1" tabindex="-1"></a>net_ret <span class="ot">=</span> lto_adj_close <span class="sc">%&gt;%</span></span>
 <span id="cb40-2"><a href="problem-set-2.html#cb40-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">net_returns =</span> </span>
@@ -502,8 +505,8 @@ X &amp;\sim Exp(1) \quad Y \sim Exp(1)\\
 <span id="cb44-8"><a href="problem-set-2.html#cb44-8" tabindex="-1"></a></span>
 <span id="cb44-9"><a href="problem-set-2.html#cb44-9" tabindex="-1"></a>sample_mu <span class="ot">=</span> <span class="fu">mean</span>(net_ret<span class="sc">$</span>net_returns)</span>
 <span id="cb44-10"><a href="problem-set-2.html#cb44-10" tabindex="-1"></a>sample_var <span class="ot">=</span> <span class="fu">var</span>(net_ret<span class="sc">$</span>net_returns)</span></code></pre></div>
-<p>We have a fitted mean <span class="math inline">\(\mu\)</span> of 3.2241482^{-4} and variance <span class="math inline">\(\sigma^{2}\)</span> of 1.4634838^{-4}.
-This is compared to the sample mean <span class="math inline">\(\mu\)</span> of 5.6615324^{-4} and variance <span class="math inline">\(\sigma^2\)</span> of 1.382726^{-4}.</p>
+<p>We have a fitted mean <span class="math inline">\(\mu\)</span> of 3.223987^{-4} and variance <span class="math inline">\(\sigma^{2}\)</span> of 1.4634564^{-4}.
+This is compared to the sample mean <span class="math inline">\(\mu\)</span> of 5.6615325^{-4} and variance <span class="math inline">\(\sigma^2\)</span> of 1.3827263^{-4}.</p>
 <p>These differences can occur due to the fitted t-distribution smoothing away more extreme values.</p>
 </div>
 <div id="part-c-1" class="section level3 hasAnchor" number="9.4.3">

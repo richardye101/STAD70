@@ -304,8 +304,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10.2" data-path="problem-set-3.html"><a href="problem-set-3.html#q2-2"><i class="fa fa-check"></i><b>10.2</b> Q2</a>
 <ul>
-<li class="chapter" data-level="10.2.1" data-path="problem-set-3.html"><a href="problem-set-3.html#part-b-4"><i class="fa fa-check"></i><b>10.2.1</b> Part B</a></li>
+<li class="chapter" data-level="10.2.1" data-path="problem-set-3.html"><a href="problem-set-3.html#part-a-4"><i class="fa fa-check"></i><b>10.2.1</b> Part A</a></li>
+<li class="chapter" data-level="10.2.2" data-path="problem-set-3.html"><a href="problem-set-3.html#part-b-4"><i class="fa fa-check"></i><b>10.2.2</b> Part B</a></li>
 </ul></li>
+<li class="chapter" data-level="10.3" data-path="problem-set-3.html"><a href="problem-set-3.html#q3-2"><i class="fa fa-check"></i><b>10.3</b> Q3</a></li>
+<li class="chapter" data-level="10.4" data-path="problem-set-3.html"><a href="problem-set-3.html#q4-2"><i class="fa fa-check"></i><b>10.4</b> Q4</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -369,8 +372,9 @@ u_{2}-(1-u_{1}) = u_{1}+u_{2}-1 &amp; 1-u_{1}\leq u_{2} \implies 1 \leq u_{1}+u_
 <p>This question concerns Archimedean copula’s, where instead of uniforms, it uses some convex generator function <span class="math inline">\(\phi\)</span>.</p>
 <p><span class="math display">\[
 \phi(u) = \ln \left( \frac{1-\theta(1-u)}{u} \right) \quad \theta \in [-1,1)
-\]</span>
-### Part A</p>
+\]</span></p>
+<div id="part-a-4" class="section level3 hasAnchor" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span> Part A<a href="problem-set-3.html#part-a-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Closed form expression for the resulting bivariate copula:</p>
 <p>First we need to find the inverse, where instead of <span class="math inline">\(y\)</span> being a function of <span class="math inline">\(u\)</span>, we have <span class="math inline">\(u\)</span> is some function of <span class="math inline">\(y\)</span>:
 <span class="math display">\[
@@ -416,16 +420,59 @@ C(u_{1}, u_{2}) &amp;= \phi ^{-1}(\phi(u_{1})+\phi(u_{2}))\\
 {1-\theta(1 - u_{1})(1-u_{2})}\\
 \end{aligned}\]</span>
 <p>$$</p>
-<div id="part-b-4" class="section level3 hasAnchor" number="10.2.1">
-<h3><span class="header-section-number">10.2.1</span> Part B<a href="problem-set-3.html#part-b-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="part-b-4" class="section level3 hasAnchor" number="10.2.2">
+<h3><span class="header-section-number">10.2.2</span> Part B<a href="problem-set-3.html#part-b-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><span class="math display">\[
 \begin{aligned}
 M_{n} &amp;= \max\{U_{1},\dots,U_{n}\}\\
-F_{M_{n}}(m) &amp;= P(M_{n} &lt; m) =
+F_{M_{n}}(m) &amp;= P(M_{n} \leq m) = P\left( \prod^{n}_{i=1} (U_{i} \leq m) \right)\\
+&amp;= P(U_{1}\leq m, \dots, U_{n}\leq m)\\
+&amp;= C(U_{1}\leq m, \dots, U_{n}\leq m)\\
+&amp;= \phi ^{-1}(\phi(m)+\dots +\phi(m))\\
+&amp;= \phi ^{-1}(n\phi(m))\\
+&amp;= \frac{1-\theta}{e^{n\phi(m)}-\theta}\\
+&amp;= \frac{1-\theta}{\exp\{n\ln \left( \frac{1-\theta(1-m)}{m} \right)\}-\theta}\\
+&amp;= \frac{1-\theta}{\left( \frac{1-\theta(1-m)}{m} \right)^{n}-\theta}\\
 \end{aligned}
 \]</span></p>
-
 </div>
+</div>
+<div id="q3-2" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> Q3<a href="problem-set-3.html#q3-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We want to show that the Archimedean copula with <span class="math inline">\(\phi(u) = -\log(u)\)</span> is exactly the independence copula.</p>
+<p><span class="math display">\[
+\begin{aligned}
+y = \phi(u) &amp;= -\log(u) = \log(u^{-1})\\
+e^{y} &amp;= u^{-1}\\
+e^{-y} &amp;= u = \phi ^{-1}(y)
+\end{aligned}
+\]</span></p>
+<blockquote>
+<p>Professor’s solution has <span class="math inline">\(\phi ^{-1}=e^{y}\)</span> which makes is key to showing equality to the independence copula. I have yet to understand why that is the inverse generator function.</p>
+</blockquote>
+<p><span class="math display">\[
+\begin{aligned}
+C(u_{1}, \dots, u_{n}) &amp;= \phi ^{-1}(\phi(u_{1})+\dots+\phi(u_{n}))\\
+&amp;= \exp(\log(u_{1})+\dots + \log(u_{n}))\\
+&amp;= \exp(\log(u_{1} \times\dots \times u_{n}))\\
+&amp;= u_{1}\times\dots \times u_{n}\\
+&amp;= C_{indep}
+\end{aligned}
+\]</span></p>
+<p>It is easy to show that this holds for any logarithm with any base.</p>
+</div>
+<div id="q4-2" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> Q4<a href="problem-set-3.html#q4-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A convex combination of k joint CDFs is itself a joint CDF (finite mixture), but is a convex combination of k copula functions a copula function itself?</p>
+<p>The result can be shown using induction. A convex combination of two copula’s <span class="math inline">\(C() = wC_{1}()+(1-w)C_{2}\)</span> is also a copula. We are also given that a convex combination of <span class="math inline">\(k\)</span> joint CDFs is also a CDF, which means that any convex combination of Copula’s will still be some CDF. We only need to show that the marginals are Uniform(0,1) in order to show that it will be a copula.</p>
+<p>For 1D Uniform CDFs <span class="math inline">\(F_{1}(u) = F_{2}(u) = u \quad \forall u \in [0,1]\)</span> then
+<span class="math display">\[
+F(u) = wF_{1}(u)+(1-w)F_{2}(u) = wu+(1-w)u = u \quad \forall\ u \in [0,1]
+\]</span></p>
+
+<p>f</p>
+
 </div>
 </div>
             </section>
