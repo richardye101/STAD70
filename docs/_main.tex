@@ -36,7 +36,7 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\usepackage[margin=5cm]{geometry}
+\usepackage[top=3cm,left=1cm,right=1cm,heightrounded]{geometry}
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -1547,6 +1547,12 @@ We can also use a scree plot and pick the number of components before some ``elb
 PCA run on the correlation matrix (which is the standardized covariance matrix, which is preferred when there is very large range of variances between variables)
 \includegraphics{Notes/Obsidian-Attachments/5-Factor-Models-3.png}
 
+When we look at the first component, we can see it is almost an equal weighting of all the assets.
+\includegraphics{Notes/Obsidian-Attachments/6-Factor-Models.png}
+
+We can use PCA to identify components
+\includegraphics{Notes/Obsidian-Attachments/6-Factor-Models-1.png}
+
 \hypertarget{problem-set-1}{%
 \chapter{Problem Set 1}\label{problem-set-1}}
 
@@ -2198,11 +2204,11 @@ Calculate daily net returns, plot the returns, sample auto-correlation plot, and
 \begin{verbatim}
 ##                  date adj_close
 ## 1 2015-01-02 14:30:00  44.17995
-## 2 2015-01-05 14:30:00  43.25630
-## 3 2015-01-06 14:30:00  42.38908
+## 2 2015-01-05 14:30:00  43.25631
+## 3 2015-01-06 14:30:00  42.38906
 ## 4 2015-01-07 14:30:00  42.80506
 ## 5 2015-01-08 14:30:00  42.80506
-## 6 2015-01-09 14:30:00  42.08588
+## 6 2015-01-09 14:30:00  42.08589
 \end{verbatim}
 
 \begin{Shaded}
@@ -2273,8 +2279,8 @@ This supports the stylized fact that returns follow heavy tail distributions.
 \end{Highlighting}
 \end{Shaded}
 
-We have a fitted mean \(\mu\) of \ensuremath{3.2240439\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4635868\times 10^{-4}}.
-This is compared to the sample mean \(\mu\) of \ensuremath{5.6615327\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827267\times 10^{-4}}.
+We have a fitted mean \(\mu\) of \ensuremath{3.2239324\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4634822\times 10^{-4}}.
+This is compared to the sample mean \(\mu\) of \ensuremath{5.661532\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827244\times 10^{-4}}.
 
 These differences can occur due to the fitted t-distribution smoothing away more extreme values.
 
