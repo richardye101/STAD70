@@ -304,7 +304,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10.2" data-path="problem-set-3.html"><a href="problem-set-3.html#q2-2"><i class="fa fa-check"></i><b>10.2</b> Q2</a>
 <ul>
-<li class="chapter" data-level="10.2.1" data-path="problem-set-3.html"><a href="problem-set-3.html#part-a-4"><i class="fa fa-check"></i><b>10.2.1</b> Part A</a></li>
+<li class="chapter" data-level="10.2.1" data-path="problem-set-3.html"><a href="problem-set-3.html#part-b-4"><i class="fa fa-check"></i><b>10.2.1</b> Part B</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -361,14 +361,69 @@ u_{2}-(1-u_{1}) = u_{1}+u_{2}-1 &amp; 1-u_{1}\leq u_{2} \implies 1 \leq u_{1}+u_
 &amp;= \underline{C}(u_{1},u_{2})
 \end{aligned}
 \]</span></p>
-<p>[[Obsidian-Attachments/PS3.png]]</p>
+<p><img src="Notes/Obsidian-Attachments/PS3.png" /></p>
 </div>
 </div>
 <div id="q2-2" class="section level2 hasAnchor" number="10.2">
 <h2><span class="header-section-number">10.2</span> Q2<a href="problem-set-3.html#q2-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>This question concerns Archimedean copula’s.</p>
-<div id="part-a-4" class="section level3 hasAnchor" number="10.2.1">
-<h3><span class="header-section-number">10.2.1</span> Part A<a href="problem-set-3.html#part-a-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This question concerns Archimedean copula’s, where instead of uniforms, it uses some convex generator function <span class="math inline">\(\phi\)</span>.</p>
+<p><span class="math display">\[
+\phi(u) = \ln \left( \frac{1-\theta(1-u)}{u} \right) \quad \theta \in [-1,1)
+\]</span>
+### Part A</p>
+<p>Closed form expression for the resulting bivariate copula:</p>
+<p>First we need to find the inverse, where instead of <span class="math inline">\(y\)</span> being a function of <span class="math inline">\(u\)</span>, we have <span class="math inline">\(u\)</span> is some function of <span class="math inline">\(y\)</span>:
+<span class="math display">\[
+\begin{aligned}
+y = \phi(u) &amp;= \ln \left( \frac{1-\theta(1-u)}{u} \right)\\
+e^{y}&amp;= \frac{1-\theta(1-u)}{u}\\
+ue^{y} &amp;= 1-\theta(1-u)\\
+ue^{y} &amp;= 1-\theta +\theta u\\
+u(e^{y}-\theta) &amp;= 1-\theta\\
+\\
+\implies \phi ^{-1}(y) = u &amp;= \frac{1-\theta}{e^{y}-\theta}
+\end{aligned}
+\]</span></p>
+Now we can plug in the two variables:
+$$
+<span class="math display">\[\begin{aligned}
+C(u_{1}, u_{2}) &amp;= \phi ^{-1}(\phi(u_{1})+\phi(u_{2}))\\
+&amp;= \phi ^{-1} \left( \ln \left( \frac{1-\theta(1-u_{1})}{u_{1}} \right) + \ln \left( \frac{1-\theta(1-u_{2})}{u_{2}} \right) \right)\\
+&amp;= \phi ^{-1}\left( \ln \left( \frac{1-\theta(1-u_{1})}{u_{1}} \cdot \frac{1-\theta(1-u_{2})}{u_{2}} \right) \right)\\
+&amp;= \frac{1-\theta}{\left( \frac{1-\theta(1-u_{1})}{u_{1}} \cdot \frac{1-\theta(1-u_{2})}{u_{2}} \right)-\theta}\\
+\\
+&amp;\text{Multiply top and bottom by } u_{1}\cdot u_{2}\\
+\\
+&amp;= \frac{(1-\theta)\cdot u_{1}\cdot u_{2}}{\left[ ((1-\theta) + \theta u_{1}) \cdot ((1-\theta) + \theta u_{2}) \right]-\theta\cdot u_{1}\cdot u_{2}}\\
+
+&amp;= \frac{(1-\theta)\cdot u_{1}\cdot u_{2}}
+{\left[((1-\theta)^{2} + (1-\theta)\theta u_{1} + (1-\theta)\theta u_{2}) + \theta^{2} u_{1}u_{2} \right]
+-\theta\cdot u_{1}\cdot u_{2}}\\
+
+&amp;= \frac{(1-\theta)\cdot u_{1}\cdot u_{2}}
+{(1-\theta)\left[(1-\theta) + \theta u_{1} + \theta u_{2} \right] + \theta^{2} u_{1}u_{2}
+-\theta\cdot u_{1}\cdot u_{2}}\\
+
+&amp;= \frac{(1-\theta)\cdot u_{1}\cdot u_{2}}
+{(1-\theta)\left[(1-\theta) + \theta u_{1} + \theta u_{2} \right]- (1-\theta)(\theta u_{1} u_{2})}\\
+
+&amp;= \frac{u_{1}u_{2}}
+{1-\theta + \theta u_{1} + \theta u_{2} - \theta u_{1} u_{2}}\\
+
+&amp;= \frac{u_{1}u_{2}}
+{1-\theta(1 - u_{1} - u_{2} + u_{1} u_{2})}\\
+&amp;= \frac{u_{1}u_{2}}
+{1-\theta(1 - u_{1})(1-u_{2})}\\
+\end{aligned}\]</span>
+<p>$$</p>
+<div id="part-b-4" class="section level3 hasAnchor" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span> Part B<a href="problem-set-3.html#part-b-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math display">\[
+\begin{aligned}
+M_{n} &amp;= \max\{U_{1},\dots,U_{n}\}\\
+F_{M_{n}}(m) &amp;= P(M_{n} &lt; m) =
+\end{aligned}
+\]</span></p>
 
 </div>
 </div>

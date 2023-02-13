@@ -3,8 +3,8 @@
 
 cd book/
 # fix image links in obsidian
-find Notes/ -type f -name '*.md' -exec gsed -i 's+\!\[\[Obsidian-+\!\[\](Notes\/Obsidian-+g' {} \;
-find Notes/ -type f -name '*.md' -exec gsed -i 's+.png\]\]+.png)+g' {} \;
+find . -type f -name '*.md' -exec gsed -i 's+\!\[\[Obsidian-+\!\[\](Notes\/Obsidian-+g' {} \;
+find . -type f -name '*.md' -exec gsed -i 's+.png\]\]+.png)+g' {} \;
 
 # build book 
 R --quiet -e 'rmarkdown::render_site(encoding = 'UTF-8')'
