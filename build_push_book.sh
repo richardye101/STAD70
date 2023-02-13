@@ -10,7 +10,7 @@ find . -type f -name '*.md' -exec gsed -i 's+.png\]\]+.png)+g' {} \;
 
 
 # build book 
-R --quiet -e 'rmarkdown::render_site(encoding = 'UTF-8')'
+R --quiet -e "rmarkdown::render_site(encoding = 'UTF-8')"
 cd ../
 
 touch book/docs/.nojekyll
