@@ -56,6 +56,7 @@ fama-french-3-factor-model
 statistical-factor-models
 principle-component-analysis-pca
 selecting-components
+factor-analysis
 problem-set-1
 q1
 data-prep

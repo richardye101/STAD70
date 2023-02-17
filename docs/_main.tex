@@ -1550,8 +1550,26 @@ PCA run on the correlation matrix (which is the standardized covariance matrix, 
 When we look at the first component, we can see it is almost an equal weighting of all the assets.
 \includegraphics{Notes/Obsidian-Attachments/6-Factor-Models.png}
 
-We can use PCA to identify components
+We can use PCA to identify components that explain overall variation of the data, although it is not guaranteed to give meaning components. For a proper data-generating model, we must use Factor Analysis.
+
 \includegraphics{Notes/Obsidian-Attachments/6-Factor-Models-1.png}
+
+\hypertarget{factor-analysis}{%
+\section{Factor Analysis}\label{factor-analysis}}
+
+\begin{quote}
+He didn't go into much detail, just went over how the factor analysis works at a high level and how you can't really try to interpret the factors.
+\end{quote}
+
+\includegraphics{Notes/Obsidian-Attachments/6-Factor-Models-2.png}
+
+If the variance of the factors is simply the identity matrix, the variance of the returns is just the cross products of the factor variables plus some error variance.
+
+\includegraphics{Notes/Obsidian-Attachments/6-Factor-Models-3.png}
+
+\includegraphics{Notes/Obsidian-Attachments/6-Factor-Models-4.png}
+
+\includegraphics{Notes/Obsidian-Attachments/6-Factor-Models-5.png}
 
 \hypertarget{problem-set-1}{%
 \chapter{Problem Set 1}\label{problem-set-1}}
@@ -2279,8 +2297,8 @@ This supports the stylized fact that returns follow heavy tail distributions.
 \end{Highlighting}
 \end{Shaded}
 
-We have a fitted mean \(\mu\) of \ensuremath{3.2239324\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4634822\times 10^{-4}}.
-This is compared to the sample mean \(\mu\) of \ensuremath{5.661532\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827244\times 10^{-4}}.
+We have a fitted mean \(\mu\) of \ensuremath{3.223931\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4634692\times 10^{-4}}.
+This is compared to the sample mean \(\mu\) of \ensuremath{5.6615327\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827258\times 10^{-4}}.
 
 These differences can occur due to the fitted t-distribution smoothing away more extreme values.
 
