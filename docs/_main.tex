@@ -1571,6 +1571,528 @@ If the variance of the factors is simply the identity matrix, the variance of th
 
 \includegraphics{Notes/Obsidian-Attachments/6-Factor-Models-5.png}
 
+\hypertarget{risk-measures}{%
+\chapter{Risk Measures}\label{risk-measures}}
+
+We will primarily focus on market risk.
+
+Financial risk describes the possibility of an investment losing money. It can have several sources, the main ones being:
+- Market risk: due to changes in market prices
+- Credit risk: counterparty doesn't honor obligations
+- Liquidity risk: lack of asset tradability
+- Operational risk: from organization's internal activities
+- E.g., legal, fraud, or human error risk
+- Risk management is the process of identifying, measuring, and controlling risk
+
+The first thing we want to do is quantify the risk somehow.
+
+To operationalize risk management, we use risk measures to define some capital requirement that the organization should hold in a liquid asset/cash.
+
+The first thing that comes to mind is measuring risk by the variance of returns. \textbf{But it is not a good risk measure}. In the following example, the variances are the same, but clearly the risk is different.
+
+WIth the left distribution, the long tail goes to the left which means your returns could become large negative values. (Reasonable to assume it is ``more risky'')
+
+For the right distribution, the average return is negative although there is no chance of very large negative returns. (Implies that it is ``less risky'')
+\includegraphics{Notes/Obsidian-Attachments/7-Risk-Management.png}
+
+\begin{quote}
+The point of risk mgmt: We want to know the amount of money we should set aside to cover expected losses.
+\end{quote}
+
+\hypertarget{value-at-risk-var}{%
+\section{Value At Risk (VAR)}\label{value-at-risk-var}}
+
+Was really common, although recently it has decreased in use (discredited) although there are variations still in use.
+
+Let \(\mathrm{RV}\) \(L\) be the loss of an investment over some time period \(T\)
+- Loss is negative of gain/revenue \((R): L=-R\)
+
+\begin{quote}
+We look at losses because we only capture the negative losses from this asset
+\end{quote}
+
+Value at Risk at confidence level \((1-\alpha)\) \& time horizon \(T\) is defined as the:
+
+\textbf{\((1-\alpha)\)-quantile of \(L\) for some \(\alpha \in(0,1)\)}
+
+\[
+\begin{aligned}
+\operatorname{VaR}(\alpha)=\inf \{x: P(L \leq x) \geq 1-\alpha\}=\inf \{x: P(L>x) \leq \alpha\}
+\end{aligned}
+\]
+\textgreater Infimum (smallest value of x) is only used for discrete distributions such that the the probability of \(L\) will not exceed some value \(x\) and we want this to happen \((1-\alpha)\) of the time. (Usually want it to be less than \(5\%\))
+
+\begin{itemize}
+\item
+  For continuous RV with \(\operatorname{CDF} F_L\) , we don't need the infimum anymore and can just do: \(\Rightarrow \operatorname{VaR}(\alpha)=F_L^{-1}(1-\alpha)\)
+  \textgreater Basically the quantile of the distribution
+\item
+  VaR represents amount that covers losses with probability \((1-\alpha)\)
+\end{itemize}
+
+\includegraphics{Notes/Obsidian-Attachments/7-Risk-Management-1.png}
+\textgreater We want the quantile at which the probability is at \((1-\alpha)\)
+
+\hypertarget{example-1}{%
+\subsection{Example}\label{example-1}}
+
+Consider asset with \(N(\mu=.03, \sigma^{2}=.04)\) annual log-returns. Find the 95\% confidence level annual VaR for a \(S_{0} =\)\$1000 investment in this asset. Let \(R=S_{T}-S_{0}\) represent revenue (-losses)
+
+We want to find the VaR(\(\alpha\)) s.t
+\[
+\begin{aligned}
+P(L > VaR) &= 5\%\\
+&= P(-R > VaR) \\
+&= P(R < -VaR)\\
+\\
+X &\sim N(0.03, \sigma^{2}=0.04)\\
+\implies S_{T} &= S_{0}\cdot e^{X}\\
+\\
+P(S_{T}-S_{0} < -VaR) &= P(S_{T} < S_{0}-VaR)\\
+&= P(S_{0}e^{X} < S_{0}\cdot VaR)\\
+&= P\left( X < \log\left( \frac{S_{0}-VaR}{S_{0}} \right)\right)\\
+&= P\left( \underbrace{ \frac{X-0.03}{.2} }_{ Z\sim N(0,1) } < \frac{\log\left( \frac{1-VaR}{S_{0}} \right)-0.03}{.2} \right) = 0.05\\
+&= P\left( Z < \underbrace{ \frac{\log\left( 1-\frac{VaR}{S_{0}} \right)-0.03}{.2} }_{ z } \right) = 0.05\\
+\implies z &= -1.645\\
+\frac{\log\left( 1-\frac{VaR}{S_{0}} \right)-0.03}{.2} &= -1.645\\
+\\
+\mathbf{VaR} &= (1-\exp\{-1.645\cdot 0.20+0.03\}) \cdot S_{0}\\
+\mathbf{VaR} &= (1-\exp\{-0.299\})\cdot 1000\\
+&= \mathbf{258.44}
+\end{aligned}
+\]
+
+VaR is basic and widely used as a risk measure to simply indicate
+
+\begin{quote}
+\emph{``What is the most I can lose on this investment?''}
+\end{quote}
+
+It has been widely used partly because of the Basel framework which is some risk management standard for banks and banks implemented Basel to comply.
+
+However it has some glaring issues. No one trusts it as a proper risk management tool.
+
+Flaws:
+- VaR hides tail risk (hides risk of very extreme events) although there is a way to remedy it
+- It discourages diversification
+
+The additional resources talk about why VaR is not a good measure of risk:
+{[}{[}../../Lectures/Risk Mismanagement.pdf{]}{]}
+{[}{[}../../Lectures/Against VaR.pdf{]}{]}
+
+\hypertarget{var-hides-tail-risk}{%
+\section{VaR hides tail risk}\label{var-hides-tail-risk}}
+
+\includegraphics{Notes/Obsidian-Attachments/7-Risk-Management-2.png}
+
+Var doesn't care what happens beyond the cut off, just the actual z-score (or whatever score from some distribution). If we push some density of losses very far (hiding a small probability of really bad events), we can actually concentrate the density of profits higher.
+
+\hypertarget{mitigation-cond-var-or-expected-shortfall}{%
+\subsubsection{Mitigation: Cond VaR or Expected Shortfall}\label{mitigation-cond-var-or-expected-shortfall}}
+
+AKA CVar or ES
+\includegraphics{Notes/Obsidian-Attachments/7-Risk-Management-3.png}
+
+This gives us the expected losses that can occur given that we are beyond \(VaR_{\alpha}\)
+
+\hypertarget{example-2}{%
+\subsubsection{Example}\label{example-2}}
+
+If \(R\sim N(0,1)\), find ES at confidence level \(\alpha\)
+
+\[
+\begin{aligned}
+R\sim N(0,1) &\implies L \sim N(0,1)\\
+\text{Let } Z_{\alpha} &\text{denote the } \alpha \text{-quantile of the std normal}\\
+\\
+ES_{\alpha} &= \mathbb{E}[L|L>Z_{\alpha}] = \int ^{\infty}_{Z_{\alpha}} x \ \phi(x| L> z_{\alpha}) \, dx\\
+&= \int ^{\infty}_{Z_{\alpha}} x \frac{\phi(x)}{\underbrace{ P(L > Z_{\alpha}) }_{ \alpha }}\, dx \\
+&= \frac{1}{\alpha}\int ^{\infty}_{Z_{\alpha}} x \frac{1}{2\sqrt{ \pi }}e^{-x^{2}/2}\, dx \\
+&= \frac{1}{\alpha}  \int ^{\infty}_{Z_{\alpha}}\frac{1}{2\pi} \lfloor-e^{-x^{2}/2}\rfloor  \, dx \\
+&= \frac{1}{\alpha} \frac{1}{2\pi} \left[-e^{-x^{2}/2}\right]^{\infty}_{x=z_{\alpha}}\\
+\implies ES_{\alpha} &= CVaR_{\alpha} = \frac{1}{\alpha}\frac{1}{\sqrt{ 2\pi }}e^{-z_{\alpha}^{2}/2}\\
+&= \frac{1}{\alpha} \phi(z_{\alpha})
+\end{aligned}
+\]
+
+This means that generally for \(L\sim N(\mu, \sigma^{2})\),
+\[
+\begin{aligned}
+ES_{\alpha} &= \mu + \frac{\phi(z_{\alpha})}{\alpha} \cdot \sigma\\
+VaR_{\alpha} &= \mu +z_{\alpha}\cdot \sigma
+\end{aligned}
+\]
+
+and for small \(\alpha\), \(\frac{\phi(z_{\alpha})}{\alpha} > z_{a}\) which implies \(ES_{\alpha}\geq VaR_{\alpha}\)
+
+\hypertarget{risk-measure-properties}{%
+\section{Risk Measure Properties}\label{risk-measure-properties}}
+
+We now look at formal set of requirements for risk measures (5 properties)
+
+We let \(\rho(L)\) represent the risk measure, which takes in a distribution of a some returns and outputs a number indicating the capital requirements (money to be kept aside) should be.
+We let \(L\) is a random variable and let \(\rho\) is a functional distribution of \(L\)
+For this measure \(\rho\) to reasonably quantify risk, it must:
+1. be normalized \(\rho(0)=0\) (risk of holding no assets is 0)
+2. Translation invariance: \(\rho(L+c) = \rho(L) + c \ \forall c \in \mathbb{R}\)
+- adding a loss \(c\) to the portfolio increases risk by exactly \(c\)
+3. Positive Homogeneity: \(\rho(bL) = b\rho(l)\)
+- scaling portfolio returns also will scale risk
+4. Monotonicity: \(L_{1}\geq L_{2} \implies \rho(L_{1}) \geq \rho(L_{2})\)
+- The ordering of the random variables is almost surely \(P(L_{1}\geq L_{2})=1\)
+5. Sub-additivity: \(\rho(L_{1}+L_{2}) \leq \rho(L_{1}+L_{2})\)
+- Only when the two losses are perfectly correlated, then equal
+- The risk of two combined portfolios cannot exceed the sum of the two portfolio risks
+
+If a risk measure has all 5 properties, then it is called a \emph{coherent risk measure}.
+
+\hypertarget{example-that-var-and-cvar-satisfy-prop-2-3}{%
+\subsection{Example that VAR and CVar satisfy prop 2 \& 3}\label{example-that-var-and-cvar-satisfy-prop-2-3}}
+
+We first show that VAR and CVaR satisfy the second and third property of translation invariance and positive homogeneity.
+
+\[
+\begin{aligned}
+VaR_{\alpha}(L) &= inf\{x:P(L>x) \leq \alpha\}\\
+\\
+\text{Let}\ \ L' &= bL+c\\
+\implies VaR(L') &= inf\{x': P(L' >x') \leq \alpha\}\\
+&= inf\{x':\mathbb{P}(bL+c > x') \leq \alpha\}\\
+&= inf\left\{ x': \mathbb{P}\left( L> \frac{x'-c}{b} \leq \alpha \right) \right\}\\
+&= inf\{bx+c : \mathbb{P}(L > x) \leq \alpha\}\\
+&=b\cdot inf\{x: \mathbb{P}(L > x) \leq \alpha\}+c\\
+&= b VaR(L)+c
+\end{aligned}
+\]
+\[
+\begin{aligned}
+CVaR_{\alpha}(L) &= \frac{1}{\alpha}\int ^{\alpha}_{0} VaR_{u}(L) \, du\\
+\implies CVaR_{\alpha}(L') &= \frac{1}{\alpha}\int ^{\alpha}_{0}(bVaR_{u}(L)+c) \, du\\
+&= b\left( \frac{1}{\alpha} \int ^{\alpha}_{0}VaR_{u}(L) \, du\right) +c\\
+&= b \cdot CVaR_{\alpha}(L)+c
+\end{aligned}
+\]
+
+We will show that VaR is not sub-additive
+
+Consider two risky zero-coupon bonds priced at \$95 per \$100 face value. If each one has 4\% independent default probability, show that \(VaR_{5\%}\) is not sub-additive
+
+\[
+\begin{aligned}
+\text{Distribution of }L_{1/2} &= \begin{cases}
+-5 & w.p. 96\% \\
++95  & w.p. 4\%
+\end{cases}\\
+\text{By definitioin, VaR} & = inf\{x: \mathbb{P}(L >x)<5\%\}\\
+&= inf(x: \mathbb{P}(L \leq x)\geq 95\%)\\
+\implies VaR_{5\%}(L_{1/2}) &= -5 \\
+\end{aligned}
+\]
+
+As -5 is the smallest value that satisfies \(\mathbb{P}(L\leq x) \geq 95\%\) as \(\mathbb{P}(L \leq -5) = 96\%\)
+
+\includegraphics{Notes/Obsidian-Attachments/7-Risk-Management-4.png}
+
+\[
+\begin{aligned}
+\text{Distribution of }L_{1} + L_{2} &= \begin{cases}
+-5-5 = -10 \quad w.p. 96\%^{2}=92.16\% & \text{when both don't default}\\
+-5+95 = 90 \quad w.p. 96\% \cdot 4\% = 7.68\% & \text{when only one defaults} \\
+95+95=190 \quad w.p. 4\%^{2}=.16\% & \text{both default}
+\end{cases}\\
+VaR_{5\%} (L_{1}+L_{2}) &= inf\{x:\mathbb{P}(L_{1}+L_{2} < x) \geq 95\%\} = 90
+\end{aligned}
+\]
+
+\includegraphics{Notes/Obsidian-Attachments/7-Risk-Management-7.png}
+
+\[
+\begin{aligned}
+\implies VaR_{5\%}(L_{1}+L_{2}) = 90 > VaR_{5\%}(L_{1}) + VaR_{5\%}(L_{2}) = -5 -5 = 10
+\end{aligned}
+\]
+
+Which suggests holding both bonds is more risky than holding them separately.
+
+We can show that CVaR is sub-additive.
+
+\[
+\begin{aligned}
+CVaR_{5\%}(L_{1}) &= \frac{1}{\alpha}\int ^{\alpha}_{0}VaR_{u}(L_{1}) \, du\\
+&= \frac{1}{5\%} (95\cdot 4\% + (-5)\cdot 1\%) = 73\%\\
+CVaR_{5\%}(L_{1}+L_{2}) &= \frac{1}{5\%}\int ^{5\%}_{0}VaR_{u}(L_{1}+L_{2}) \, du\\
+&= \frac{1}{5\%}[190\cdot.16\%+90\cdot 4.84\%] = 93.2\\
+\\
+\implies CVaR_{5\%}(L_{1}+L_{2}) &= 93.2 \leq CVaR_{5\%}(L_{1})+CVaR_{5\%}(L_{2})\\
+&= 2\cdot 73 = 146
+\end{aligned}
+\]
+
+\hypertarget{entropic-var}{%
+\section{Entropic VaR}\label{entropic-var}}
+
+A coherent alternative to VaR based on the Chernoff bound for tail probability
+
+For positive RV \(X\), the Chernoff inequality gives:
+\[
+P(X\geq c) \leq \frac{\mathbb{E}(x)}{c} \quad \forall c > 0
+\]
+For loss RV \(L\) with mgf \(M_L(z)=E\left[e^{z L}\right]<\infty, \forall z>0\) we have \(P(L \geq c) \Leftrightarrow P\left(e^{z L} \geq e^{z c}\right) \leq M_L(z) e^{-z c}\) Limiting bound to \(M_L(z) e^{-z c} \leq \alpha\) and solving for \(c\) we get \(c=z^{-1} \ln \left(M_L(z) / \alpha\right)\)
+
+EVaR defined as: \(\mathrm{EVaR}_\alpha=\inf _{z>0}\left\{z^{-1} \ln \left(M_L(z) / \alpha\right)\right\}\)
+
+\begin{quote}
+Can define a risk measure we can use the MGF instead of the PDF or CDF which in some cases is convenient. We can just minimize the MGF
+\end{quote}
+
+\hypertarget{calculating-risk-measures}{%
+\section{Calculating Risk Measures}\label{calculating-risk-measures}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Parametric Modelling
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Not used because theres usually no closed form distribution for the losses
+  \end{itemize}
+\item
+  Historical Simulation
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Not favoured because past performance does not predict future performance
+  \end{itemize}
+\item
+  Monte Carlo Simulation
+
+  \begin{itemize}
+  \tightlist
+  \item
+    85\% of large banks use historical simulation, while the remaining use MC simulation
+  \item
+    Usually done by sampling from some estimated parametric model for individual assets
+  \end{itemize}
+\end{enumerate}
+
+Other ways to test are stress-testing (the worst case scenario) and use the Extreme Value Theorem
+
+\begin{quote}
+Rest of the slides were not gone over in detail, just showed how the CVaR performed better than VaR (gave lower z-score -\textgreater{} allocation more money for risk purposes), how parametric modelling can't really be done, how time series models are independent over time but can correlate between assets and show volatility clustering, how RiskMetrics is a time series model but didnt get into it, and the fact GARCH models are used.
+\end{quote}
+
+\hypertarget{betting-strategies}{%
+\chapter{Betting Strategies}\label{betting-strategies}}
+
+There are betting/gambling games where a player has an edge, which just says your expected payoff \(>0\).
+
+Consider roulette, where the ``house'' has an edge:
+- P(win) = 1/37
+- odds: 35:1
+\textgreater In this scenario, the house has a slight edge as the odds don't directly reflect the actual probability.
+
+Consider blackjack, in the 60's, Ed Thorp, a mathematician figured out how to beat the house. Unfortunately, casino's have strategies against card counting, like using multiple decks, burning cards, dealing only some of a deck of cards, etc.
+
+Given a sequence of bets, we can use a \textbf{kelly criterion} to determine how to bet optimally.
+
+\hypertarget{example-3}{%
+\section{Example}\label{example-3}}
+
+Consider a sequence of independent and identical gambles.
+\(P(win) = \frac{1}{2}<p<1 \implies P(lose) = q = 1-p\)
+
+For each \$1 bet:
+- Get \$1 if you win
+- Lose \$1 if you lose.
+
+By starting with an initial wealth \(V_{0}\) what is the best strategy for placing bets?
+
+\hypertarget{scenario-1-bet-fixed-amount}{%
+\subsection{Scenario 1: Bet fixed amount}\label{scenario-1-bet-fixed-amount}}
+
+Bet a fixed amount \(X\) at every step.
+\emph{We ignore ruin (\(V_{t}\leq 0\) for some \(t>0\)) for now}
+
+The expected wealth \(V_{n}\) after \(n\) steps:
+\[
+\begin{aligned}
+\text{Let } I_{i} &= \begin{cases}
+1  & \text{w.p. } p \\
+0  & o/w
+\end{cases}\\
+V_{1} &= V_{0}+(2I_{1}-1)X\\
+V_{2} &= V_{1}+(2I_{2}-1)X\\
+&= V_{0}+(2I_{1}-1)X+(2I_{2}-1)X\\
+&\vdots\\
+V_{n} &= V_{0} + X\left( 2\underbrace{ \sum^{n}_{i=1}I_{i} }_{ \sim \text{Binomial(n,p)} }-n \right)\\
+\implies \mathbb{E}(V_{n}) &= \mathbb{E}\left( V_{0}+X\left( 2\sum^{n}_{i=1}I_{i}-n \right) \right)\\
+&= V_{0}+X\left( 2\mathbb{E}\left( \sum^{n}_{i=1}I_{i} \right)  -n\right)\\
+&= V_{0}+X(2np-n)\\
+&= V_{0}+nX(2p-1)\\
+&\text{Since } \frac{1}{2}\leq p<1 \implies 2p-1 >0
+\end{aligned}
+\]
+
+With this probability and bet \(X\) per step, then we can expect to have some positive wealth at the \(n^{th}\) step which increases linearly, and the variance increases quadratically, but the probability of ruin is very small as \(p>\frac{1}{2}\)
+
+We didn't consider the probability of ruin, as if \(V_{0}\) is very large and \(X\) is very small, the probability of ruin is very small.
+
+\hypertarget{hidden-probability-of-ruin}{%
+\subsubsection{Hidden probability of ruin}\label{hidden-probability-of-ruin}}
+
+By betting \$1 at each step with \(V_{0}\) starting wealth, the probability of eventual ruin at some time step \(n\) is:
+
+\[
+\begin{aligned}
+\text{Let } \pi_{i} &= \mathbb{P}(\text{eventual ruin for }V_{0}=i) \quad \forall\ i\geq 1 \\
+\text{Let } \pi_{0} &= 1 \quad \text{if you start with no money, you are already ruined}\\ \\
+\implies \pi_{i} &= \pi_{i+1}\cdot p + \pi_{i-1}q \quad \forall i \geq 1
+\end{aligned}
+\]
+Which is a second order linear recurrence relation. This can solved like a differential equation.
+
+We will assume a solution of the form: \(\pi_{i} = y^{i}\)
+\[
+\begin{aligned}
+\implies y^{i} &= py^{i+1}+qy^{i-1}\\
+y &= py^{2}+q\\
+=> py^{2}-y+q &= 0\\
+\end{aligned}
+\]
+
+Which leaves a quadratic equation:
+\[
+\begin{aligned}
+y &= \frac{-b\pm \sqrt{ b^{2} -4ac}}{2a}\\
+&= \frac{-(-1)\pm \sqrt{ (-1)^{2}-4pq }}{2p}\\
+&= \frac{1 \pm \sqrt{ 1-4p(1-p) }}{2p}\\
+&= \frac{1\pm \sqrt{ (2p-1)^{2} }}{2p}\\
+\implies y &= \begin{cases}
+\frac{1+2p-1}{2p} = \frac{2p}{2p}=1  & \text{reject} \\
+\frac{1-2p+1}{2p} = \frac{1-p}{p} = \frac{q}{p}
+\end{cases}\\
+\implies \pi_{i} &= y^{i} = \left( \frac{q}{p} \right)^{i} \quad \forall i \geq 0
+\end{aligned}
+\]
+
+Intuitively, if \(q<p\) then the probability of ruin decreases geometrically fast. If they're equal, then the chances of ruin are also practically 0.
+
+\hypertarget{scenario-2-bet-entire-wealth}{%
+\subsection{Scenario 2: Bet entire wealth}\label{scenario-2-bet-entire-wealth}}
+
+What is \(\mathbb{E}(V_{n})\) after \(n\) steps?
+\[
+V_{n} = \begin{cases}
+V_{0}\cdot 2^{n} & w.p. p^{n} \\
+0  &  o/w
+\end{cases}
+\]
+
+\[
+\begin{aligned}
+\mathbb{E}(V_{n}) &= 2^{n}V_{0}p^{n}+0(1-p^{n})\\
+&= V_{0}\cdot (2p)^{n} \to \infty\\
+&\text{Because } p > \frac{1}{2}\implies 2p > 1
+\end{aligned}
+\]
+
+We've achieved exponential growth rate by betting everything every step, but should only be used if \(p=1\) or you are very very desperate. We are combining very extreme events which means the expected value is kind of meaningless.
+
+\hypertarget{scenario-3-exp-growth-wo-ruin}{%
+\subsection{Scenario 3: Exp growth w/o ruin}\label{scenario-3-exp-growth-wo-ruin}}
+
+Betting a fixed fraction of wealth \(f\) at each step.
+\[
+\begin{aligned}
+V_{1} &= \begin{cases}
+V_{0}\cdot (1+f) & \text{win} \\
+V_{0}\cdot (1-f) & \text{lose}
+\end{cases}\\
+\implies V_{i} &= \begin{cases}
+V_{i-1}(1+f) & \text{win with } p\\
+V_{i-1}(1-f) & \text{lose with }q
+\end{cases}\\
+V_{n} &= V_{n-1} \cdot (1+f)^{I_{n}}\cdot(1-f)^{1-I_{n}}\\
+&= V_{0}\cdot(1+f)^{\sum^{n}_{i=1} I_{i}}\cdot (1-f)^{n-\sum^{n}_{i=1}I_{i}}\\
+&\text{Let }w = \sum^{n}_{i=1}I_{i}\\
+&= V_{0}(1+f)^{w}(1-f)^{n-w} \quad \text{where } W\sim Bin(n,p)
+\end{aligned}
+\]
+
+So the expected value becomes:
+\[
+\begin{aligned}
+\mathbb{E}(V_{n}) &= \mathbb{E}(V_{0}(1+f)^{w}(1-f)^{n-w})\\
+&= V_{0}\cdot (1-f)^{n}\mathbb{E}\left( \frac{1+f}{1-f}^{w} \right)\\ \\
+&\text{From Prob Gen Fnc (Laplace Trans) of Bin(n,p)}\\
+&G_{w}(z)= \mathbb{E}(z^{w}) = (q+pz)^{n} \\ \\
+\implies \mathbb{E}(V_{n}) &= V_{0}\cdot (1-f)^{n}\underbrace{ \mathbb{E}\left( \frac{1+f}{1-f}^{w} \right) }_{ G_{w}\left( \frac{1+f}{1-f} \right) }\\
+&= V_{0}\cdot (1-f)^{n}\left( q+p\left( \frac{1+f}{1-f} \right) \right)^{n}\\
+&= V_{0}\cdot \left( q(1-f)+p(1+f) \right)^{n}\\
+&= V_{0}\cdot(1-qf+pf)^{n}\\
+&= V_{0}(1+f\cdot(p-q))^{n}\\
+&= V_{0}(1+f\underbrace{ (2p-1) }_{ >0 })^{n}
+\end{aligned}
+\]
+
+Which gives geometric growth and has very low bankruptcy probability.
+
+\hypertarget{kelly-criterion}{%
+\section{Kelly Criterion}\label{kelly-criterion}}
+
+We can use this criterion to determine the optimal fraction \(f\).
+
+\begin{quote}
+Definition: The fraction \(f\) is the amount that maximizes the expected log returns.
+\end{quote}
+
+The log can be interpreted as because you are compounding your wealth, you don't just want to maximize the next step but the entire sequence of bets.
+
+By maximizing the \emph{expected log-return} \(\leftrightarrow\) maximizing expected log of \(V_{n}\) \(\leftrightarrow\) maximizing geometric avg of returns.
+
+By jensens inequality,
+
+\(E\left[\log \left(V_n\right)\right] \neq \log \left(E\left[V_n\right]\right)\)
+
+\hypertarget{example-4}{%
+\subsection{Example}\label{example-4}}
+
+Finding the optimal value of fraction \(f^{*}\) according to the Kelly criterion
+
+\[
+\begin{aligned}
+\mathbb{E}\left( \log\left( \frac{V_{n}}{V_{0}} \right) \right) &= \mathbb{E}\left( \log\left( \frac{V_{0}-(1+f)^{w}\cdot(1-f)^{w}}{V_{0}} \right) \right)\\
+&= \mathbb{E}[w\log(1+f))+(n-w)\log(1-f)]\\
+&= \log(1+f)\mathbb{E}(w) + \log(1-f)(n-\mathbb{E}(w))\\
+&= \log(1+f)np+\log(1-f)(\underbrace{ n-np }_{ n(1-p)=nq })\\
+&= \underbrace{ \log(1+f)np+\log(1-f)nq }_{ G(f) }\\
+\end{aligned}
+\]
+We want to maximize \(G(f)\) with respect to the fraction \(f\). We can do this by taking the derivative:
+
+\[
+\begin{aligned}
+\frac{\delta G(f)}{\delta f} &= \frac{\delta}{\delta f}(\log(1+f)np+\log(1-f)nq)\\
+\text{Set } 0 &= n\left( \frac{1}{1+f}p+\frac{1}{1-f}(-1)q \right)\\
+\implies \frac{p}{1+f}&=\frac{p}{1-f}\\
+p(1-f)&=q(1+f)\\
+p-q&=f\cdot(p+q)\\
+\implies f^{*} &= p-q = 2p-1
+\end{aligned}
+\]
+
+So the fraction you bet depends on \emph{the edge you have on this bet}.
+
+\begin{quote}
+Will not go through example of geometric average, but he will post
+\end{quote}
+
+\includegraphics{Notes/Obsidian-Attachments/8-Betting-Strategies.png}
+
 \hypertarget{problem-set-1}{%
 \chapter{Problem Set 1}\label{problem-set-1}}
 
@@ -2222,11 +2744,11 @@ Calculate daily net returns, plot the returns, sample auto-correlation plot, and
 \begin{verbatim}
 ##                  date adj_close
 ## 1 2015-01-02 14:30:00  44.17995
-## 2 2015-01-05 14:30:00  43.25631
-## 3 2015-01-06 14:30:00  42.38905
-## 4 2015-01-07 14:30:00  42.80507
-## 5 2015-01-08 14:30:00  42.80507
-## 6 2015-01-09 14:30:00  42.08588
+## 2 2015-01-05 14:30:00  43.25632
+## 3 2015-01-06 14:30:00  42.38906
+## 4 2015-01-07 14:30:00  42.80505
+## 5 2015-01-08 14:30:00  42.80505
+## 6 2015-01-09 14:30:00  42.08590
 \end{verbatim}
 
 \begin{Shaded}
@@ -2297,8 +2819,8 @@ This supports the stylized fact that returns follow heavy tail distributions.
 \end{Highlighting}
 \end{Shaded}
 
-We have a fitted mean \(\mu\) of \ensuremath{3.224034\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4635411\times 10^{-4}}.
-This is compared to the sample mean \(\mu\) of \ensuremath{5.6615326\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827256\times 10^{-4}}.
+We have a fitted mean \(\mu\) of \ensuremath{3.2240717\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4635454\times 10^{-4}}.
+This is compared to the sample mean \(\mu\) of \ensuremath{5.6615321\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827264\times 10^{-4}}.
 
 These differences can occur due to the fitted t-distribution smoothing away more extreme values.
 
