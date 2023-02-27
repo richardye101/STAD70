@@ -238,6 +238,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.1" data-path="factor-models.html"><a href="factor-models.html#selecting-components"><i class="fa fa-check"></i><b>7.3.1</b> Selecting Components</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="factor-models.html"><a href="factor-models.html#factor-analysis"><i class="fa fa-check"></i><b>7.4</b> Factor Analysis</a></li>
+<li class="chapter" data-level="7.5" data-path="factor-models.html"><a href="factor-models.html#risk-measures"><i class="fa fa-check"></i><b>7.5</b> Risk Measures</a></li>
+<li class="chapter" data-level="7.6" data-path="factor-models.html"><a href="factor-models.html#value-at-risk-var"><i class="fa fa-check"></i><b>7.6</b> Value At Risk (VAR)</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="factor-models.html"><a href="factor-models.html#example-1"><i class="fa fa-check"></i><b>7.6.1</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="factor-models.html"><a href="factor-models.html#var-hides-tail-risk"><i class="fa fa-check"></i><b>7.7</b> VaR hides tail risk</a>
+<ul>
+<li class="chapter" data-level="7.7.0.1" data-path="factor-models.html"><a href="factor-models.html#mitigation-cond-var-or-expected-shortfall"><i class="fa fa-check"></i><b>7.7.0.1</b> Mitigation: Cond VaR or Expected Shortfall</a></li>
+<li class="chapter" data-level="7.7.0.2" data-path="factor-models.html"><a href="factor-models.html#example-2"><i class="fa fa-check"></i><b>7.7.0.2</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="factor-models.html"><a href="factor-models.html#risk-measure-properties"><i class="fa fa-check"></i><b>7.8</b> Risk Measure Properties</a>
+<ul>
+<li class="chapter" data-level="7.8.1" data-path="factor-models.html"><a href="factor-models.html#example-that-var-and-cvar-satisfy-prop-2-3"><i class="fa fa-check"></i><b>7.8.1</b> Example that VAR and CVar satisfy prop 2 &amp; 3</a></li>
+</ul></li>
+<li class="chapter" data-level="7.9" data-path="factor-models.html"><a href="factor-models.html#entropic-var"><i class="fa fa-check"></i><b>7.9</b> Entropic VaR</a></li>
+<li class="chapter" data-level="7.10" data-path="factor-models.html"><a href="factor-models.html#calculating-risk-measures"><i class="fa fa-check"></i><b>7.10</b> Calculating Risk Measures</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="problem-set-1.html"><a href="problem-set-1.html"><i class="fa fa-check"></i><b>8</b> Problem Set 1</a>
 <ul>
@@ -677,6 +693,251 @@ Var(PC_{j}) =\frac{\lambda_{j}}{\lambda_{1}+\lambda_{2}+\dots+\lambda_{N}} \quad
 <p><img src="Notes/Obsidian-Attachments/6-Factor-Models-3.png" /></p>
 <p><img src="Notes/Obsidian-Attachments/6-Factor-Models-4.png" /></p>
 <p><img src="Notes/Obsidian-Attachments/6-Factor-Models-5.png" /></p>
+
+<p>We will primarily focus on market risk.</p>
+<p>Financial risk describes the possibility of an investment losing money. It can have several sources, the main ones being:
+- Market risk: due to changes in market prices
+- Credit risk: counterparty doesn’t honor obligations
+- Liquidity risk: lack of asset tradability
+- Operational risk: from organization’s internal activities
+- E.g., legal, fraud, or human error risk
+- Risk management is the process of identifying, measuring, and controlling risk</p>
+<p>The first thing we want to do is quantify the risk somehow.</p>
+</div>
+<div id="risk-measures" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> Risk Measures<a href="factor-models.html#risk-measures" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To operationalize risk management, we use risk measures to define some capital requirement that the organization should hold in a liquid asset/cash.</p>
+<p>The first hting that comes to mind is measuring risk by the variance of returns. <strong>But it is not a good risk measure</strong>. In the following example, the variances are the same, but clearly the risk is different.</p>
+<p>WIth the left distribution, the long tail goes to the left which means your returns could become large negative values. (Reasonable to assume it is “more risky”)</p>
+<p>For the right distribution, the average return is negative although there is no chance of very large negative returns. (Implies that it is “less risky”)
+<img src="Notes/Obsidian-Attachments/7-Risk-Management.png" /></p>
+<blockquote>
+<p>The point of risk mgmt: We want to know the amount of money we should set aside to cover expected losses.</p>
+</blockquote>
+</div>
+<div id="value-at-risk-var" class="section level2 hasAnchor" number="7.6">
+<h2><span class="header-section-number">7.6</span> Value At Risk (VAR)<a href="factor-models.html#value-at-risk-var" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Was really common, although recently it has decreased in use (discredited) although there are variations still in use.</p>
+<p>Let <span class="math inline">\(\mathrm{RV}\)</span> <span class="math inline">\(L\)</span> be the loss of an investment over some time period <span class="math inline">\(T\)</span>
+- Loss is negative of gain/revenue <span class="math inline">\((R): L=-R\)</span></p>
+<blockquote>
+<p>We look at losses because we only capture the negative losses from this asset</p>
+</blockquote>
+<p>Value at Risk at confidence level <span class="math inline">\((1-\alpha)\)</span> &amp; time horizon <span class="math inline">\(T\)</span> is defined as the:</p>
+<p><strong><span class="math inline">\((1-\alpha)\)</span>-quantile of <span class="math inline">\(L\)</span> for some <span class="math inline">\(\alpha \in(0,1)\)</span></strong></p>
+<p><span class="math display">\[
+\begin{aligned}
+\operatorname{VaR}(\alpha)=\inf \{x: P(L \leq x) \geq 1-\alpha\}=\inf \{x: P(L&gt;x) \leq \alpha\}
+\end{aligned}
+\]</span>
+&gt;Infimum (smallest value of x) is only used for discrete distributions such that the the probability of <span class="math inline">\(L\)</span> will not exceed some value <span class="math inline">\(x\)</span> and we want this to happen <span class="math inline">\((1-\alpha)\)</span> of the time. (Usually want it to be less than <span class="math inline">\(5\%\)</span>)</p>
+<ul>
+<li><p>For continuous RV with <span class="math inline">\(\operatorname{CDF} F_L\)</span> , we don’t need the infimum anymore and can just do: <span class="math inline">\(\Rightarrow \operatorname{VaR}(\alpha)=F_L^{-1}(1-\alpha)\)</span>
+&gt;Basically the quantile of the distribution</p></li>
+<li><p>VaR represents amount that covers losses with probability <span class="math inline">\((1-\alpha)\)</span></p></li>
+</ul>
+<p><img src="Notes/Obsidian-Attachments/7-Risk-Management-1.png" />
+&gt;We want the quantile at which the probability is at <span class="math inline">\((1-\alpha)\)</span></p>
+<div id="example-1" class="section level3 hasAnchor" number="7.6.1">
+<h3><span class="header-section-number">7.6.1</span> Example<a href="factor-models.html#example-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider asset with <span class="math inline">\(N(\mu=.03, \sigma^{2}=.04)\)</span> annual log-returns. Find the 95% confidence level annual VaR for a <span class="math inline">\(S_{0} =\)</span>$1000 investment in this asset. Let <span class="math inline">\(R=S_{T}-S_{0}\)</span> represent revenue (-losses)</p>
+<p>We want to find the VaR(<span class="math inline">\(\alpha\)</span>) s.t
+<span class="math display">\[
+\begin{aligned}
+P(L &gt; VaR) &amp;= 5\%\\
+&amp;= P(-R &gt; VaR) \\
+&amp;= P(R &lt; -VaR)\\
+\\
+X &amp;\sim N(0.03, \sigma^{2}=0.04)\\
+\implies S_{T} &amp;= S_{0}\cdot e^{X}\\
+\\
+P(S_{T}-S_{0} &lt; -VaR) &amp;= P(S_{T} &lt; S_{0}-VaR)\\
+&amp;= P(S_{0}e^{X} &lt; S_{0}\cdot VaR)\\
+&amp;= P\left( X &lt; \log\left( \frac{S_{0}-VaR}{S_{0}} \right)\right)\\
+&amp;= P\left( \underbrace{ \frac{X-0.03}{.2} }_{ Z\sim N(0,1) } &lt; \frac{\log\left( \frac{1-VaR}{S_{0}} \right)-0.03}{.2} \right) = 0.05\\
+&amp;= P\left( Z &lt; \underbrace{ \frac{\log\left( 1-\frac{VaR}{S_{0}} \right)-0.03}{.2} }_{ z } \right) = 0.05\\
+\implies z &amp;= -1.645\\
+\frac{\log\left( 1-\frac{VaR}{S_{0}} \right)-0.03}{.2} &amp;= -1.645\\
+\\
+\mathbf{VaR} &amp;= (1-\exp\{-1.645\cdot 0.20+0.03\}) \cdot S_{0}\\
+\mathbf{VaR} &amp;= (1-\exp\{-0.299\})\cdot 1000\\
+&amp;= \mathbf{258.44}
+\end{aligned}
+\]</span></p>
+<p>VaR is basic and widely used as a risk measure to simply indicate</p>
+<blockquote>
+<p><em>“What is the most I can lose on this investment?”</em></p>
+</blockquote>
+<p>It has been widely used partly because of the Basel framework which is some risk management standard for banks and banks implemented Basel to comply.</p>
+<p>However it has some glaring issues. No one trusts it as a proper risk management tool.</p>
+<p>Flaws:
+- VaR hides tail risk (hides risk of very extreme events) although there is a way to remedy it
+- It discourages diversification</p>
+<p>The additional resources talk about why VaR is not a good measure of risk:
+[[../../Lectures/Risk Mismanagement.pdf]]
+[[../../Lectures/Against VaR.pdf]]</p>
+</div>
+</div>
+<div id="var-hides-tail-risk" class="section level2 hasAnchor" number="7.7">
+<h2><span class="header-section-number">7.7</span> VaR hides tail risk<a href="factor-models.html#var-hides-tail-risk" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="Notes/Obsidian-Attachments/7-Risk-Management-2.png" /></p>
+<p>Var doesn’t care what happens beyond the cut off, just the actual z-score (or whatever score from some distribution). If we push some density of losses very far (hiding a small probability of really bad events), we can actually concentrate the density of profits higher.</p>
+<div id="mitigation-cond-var-or-expected-shortfall" class="section level4 hasAnchor" number="7.7.0.1">
+<h4><span class="header-section-number">7.7.0.1</span> Mitigation: Cond VaR or Expected Shortfall<a href="factor-models.html#mitigation-cond-var-or-expected-shortfall" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>AKA CVar or ES
+<img src="Notes/Obsidian-Attachments/7-Risk-Management-3.png" /></p>
+<p>This gives us the expected losses that can occur given that we are beyond <span class="math inline">\(VaR_{\alpha}\)</span></p>
+</div>
+<div id="example-2" class="section level4 hasAnchor" number="7.7.0.2">
+<h4><span class="header-section-number">7.7.0.2</span> Example<a href="factor-models.html#example-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>If <span class="math inline">\(R\sim N(0,1)\)</span>, find ES at confidence level <span class="math inline">\(\alpha\)</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+R\sim N(0,1) &amp;\implies L \sim N(0,1)\\
+\text{Let } Z_{\alpha} &amp;\text{denote the } \alpha \text{-quantile of the std normal}\\
+\\
+ES_{\alpha} &amp;= \mathbb{E}[L|L&gt;Z_{\alpha}] = \int ^{\infty}_{Z_{\alpha}} x \ \phi(x| L&gt; z_{\alpha}) \, dx\\
+&amp;= \int ^{\infty}_{Z_{\alpha}} x \frac{\phi(x)}{\underbrace{ P(L &gt; Z_{\alpha}) }_{ \alpha }}\, dx \\
+&amp;= \frac{1}{\alpha}\int ^{\infty}_{Z_{\alpha}} x \frac{1}{2\sqrt{ \pi }}e^{-x^{2}/2}\, dx \\
+&amp;= \frac{1}{\alpha}  \int ^{\infty}_{Z_{\alpha}}\frac{1}{2\pi} \lfloor-e^{-x^{2}/2}\rfloor  \, dx \\
+&amp;= \frac{1}{\alpha} \frac{1}{2\pi} \left[-e^{-x^{2}/2}\right]^{\infty}_{x=z_{\alpha}}\\
+\implies ES_{\alpha} &amp;= CVaR_{\alpha} = \frac{1}{\alpha}\frac{1}{\sqrt{ 2\pi }}e^{-z_{\alpha}^{2}/2}\\
+&amp;= \frac{1}{\alpha} \phi(z_{\alpha})
+\end{aligned}
+\]</span></p>
+<p>This means that generally for <span class="math inline">\(L\sim N(\mu, \sigma^{2})\)</span>,
+<span class="math display">\[
+\begin{aligned}
+ES_{\alpha} &amp;= \mu + \frac{\phi(z_{\alpha})}{\alpha} \cdot \sigma\\
+VaR_{\alpha} &amp;= \mu +z_{\alpha}\cdot \sigma
+\end{aligned}
+\]</span></p>
+<p>and for small <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\frac{\phi(z_{\alpha})}{\alpha} &gt; z_{a}\)</span> which implies <span class="math inline">\(ES_{\alpha}\geq VaR_{\alpha}\)</span></p>
+</div>
+</div>
+<div id="risk-measure-properties" class="section level2 hasAnchor" number="7.8">
+<h2><span class="header-section-number">7.8</span> Risk Measure Properties<a href="factor-models.html#risk-measure-properties" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We now look at formal set of requirements for risk measures (5 properties)</p>
+<p>We let <span class="math inline">\(\rho(L)\)</span> represent the risk measure, which takes in a distribution of a some returns and outputs a number indicating the capital requirements (money to be kept aside) should be.
+We let <span class="math inline">\(L\)</span> is a random variable and let <span class="math inline">\(\rho\)</span> is a functional distribution of <span class="math inline">\(L\)</span>
+For this measure <span class="math inline">\(\rho\)</span> to reasonably quantify risk, it must:
+1. be normalized <span class="math inline">\(\rho(0)=0\)</span> (risk of holding no assets is 0)
+2. Translation invariance: <span class="math inline">\(\rho(L+c) = \rho(L) + c \ \forall c \in \mathbb{R}\)</span>
+- adding a loss <span class="math inline">\(c\)</span> to the portfolio increases risk by exactly <span class="math inline">\(c\)</span>
+3. Positive Homogeneity: <span class="math inline">\(\rho(bL) = b\rho(l)\)</span>
+- scaling portfolio returns also will scale risk
+4. Monotonicity: <span class="math inline">\(L_{1}\geq L_{2} \implies \rho(L_{1}) \geq \rho(L_{2})\)</span>
+- The ordering of the random variables is almost surely <span class="math inline">\(P(L_{1}\geq L_{2})=1\)</span>
+5. Sub-additivity: <span class="math inline">\(\rho(L_{1}+L_{2}) \leq \rho(L_{1}+L_{2})\)</span>
+- Only when the two losses are perfectly correlated, then equal
+- The risk of two combined portfolios cannot exceed the sum of the two portfolio risks</p>
+<p>If a risk measure has all 5 properties, then it is called a <em>coherent risk measure</em>.</p>
+<div id="example-that-var-and-cvar-satisfy-prop-2-3" class="section level3 hasAnchor" number="7.8.1">
+<h3><span class="header-section-number">7.8.1</span> Example that VAR and CVar satisfy prop 2 &amp; 3<a href="factor-models.html#example-that-var-and-cvar-satisfy-prop-2-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We first show that VAR and CVaR satisfy the second and third property of translation invariance and positive homogeneity.</p>
+<p><span class="math display">\[
+\begin{aligned}
+VaR_{\alpha}(L) &amp;= inf\{x:P(L&gt;x) \leq \alpha\}\\
+\\
+\text{Let}\ \ L&#39; &amp;= bL+c\\
+\implies VaR(L&#39;) &amp;= inf\{x&#39;: P(L&#39; &gt;x&#39;) \leq \alpha\}\\
+&amp;= inf\{x&#39;:\mathbb{P}(bL+c &gt; x&#39;) \leq \alpha\}\\
+&amp;= inf\left\{ x&#39;: \mathbb{P}\left( L&gt; \frac{x&#39;-c}{b} \leq \alpha \right) \right\}\\
+&amp;= inf\{bx+c : \mathbb{P}(L &gt; x) \leq \alpha\}\\
+&amp;=b\cdot inf\{x: \mathbb{P}(L &gt; x) \leq \alpha\}+c\\
+&amp;= b VaR(L)+c
+\end{aligned}
+\]</span>
+<span class="math display">\[
+\begin{aligned}
+CVaR_{\alpha}(L) &amp;= \frac{1}{\alpha}\int ^{\alpha}_{0} VaR_{u}(L) \, du\\
+\implies CVaR_{\alpha}(L&#39;) &amp;= \frac{1}{\alpha}\int ^{\alpha}_{0}(bVaR_{u}(L)+c) \, du\\
+&amp;= b\left( \frac{1}{\alpha} \int ^{\alpha}_{0}VaR_{u}(L) \, du\right) +c\\
+&amp;= b \cdot CVaR_{\alpha}(L)+c
+\end{aligned}
+\]</span></p>
+<p>We will show that VaR is not sub-additive</p>
+<p>Consider two risky zero-coupon bonds priced at $95 per $100 face value. If each one has 4% independent default probability, show that <span class="math inline">\(VaR_{5\%}\)</span> is not sub-additive</p>
+$$
+<span class="math display">\[\begin{aligned}
+\text{Distribution of }L_{1/2} &amp;= \begin{cases}
+-5 &amp; w.p. 96\% \\
++95  &amp; w.p. 4\%
+\end{cases}\\
+
+\text{By definitioin, VaR} &amp; = inf\{x: \mathbb{P}(L &gt;x)&lt;5\%\}\\
+&amp;= inf(x: \mathbb{P}(L \leq x)\geq 95\%)\\
+
+\implies VaR_{5\%}(L_{1/2}) &amp;= -5 \\
+\end{aligned}\]</span>
+<p>$$</p>
+<p>As -5 is the smallest value that satisfies <span class="math inline">\(\mathbb{P}(L\leq x) \geq 95\%\)</span> as <span class="math inline">\(\mathbb{P}(L \leq -5) = 96\%\)</span></p>
+<p><img src="Notes/Obsidian-Attachments/7-Risk-Management-4.png" /></p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Distribution of }L_{1} + L_{2} &amp;= \begin{cases}
+-5-5 = -10 &amp; w.p. 96\%^{2}=92.16\%  &amp; \text{when both don&#39;t default}\\
+-5+95 = 90  &amp; w.p. 96\% \cdot 4\% = 7.68\%  &amp; \text{when only one defaults} \\
+95+95=190  &amp; w.p. 4\%^{2}=.16\%  &amp; \text{both default}
+\end{cases}\\
+VaR_{5\%} (L_{1}+L_{2}) &amp;= inf\{x:\mathbb{P}(L_{1}+L_{2} &lt; x) \geq 95\%\} = 90
+\end{aligned}
+\]</span></p>
+<p><img src="Notes/Obsidian-Attachments/7-Risk-Management-7.png" /></p>
+<p><span class="math display">\[
+\begin{aligned}
+\implies VaR_{5\%}(L_{1}+L_{2}) = 90 &gt; VaR_{5\%}(L_{1}) + VaR_{5\%}(L_{2}) = -5 -5 = 10
+\end{aligned}
+\]</span></p>
+<p>Which suggests holding both bonds is more risky than holding them separately.</p>
+<p>We can show that CVaR is sub-additive.</p>
+<p><span class="math display">\[
+\begin{aligned}
+CVaR_{5\%}(L_{1}) &amp;= \frac{1}{\alpha}\int ^{\alpha}_{0}VaR_{u}(L_{1}) \, du\\
+&amp;= \frac{1}{5\%} (95\cdot 4\% + (-5)\cdot 1\%) = 73\%\\
+CVaR_{5\%}(L_{1}+L_{2}) &amp;= \frac{1}{5\%}\int ^{5\%}_{0}VaR_{u}(L_{1}+L_{2}) \, du\\
+&amp;= \frac{1}{5\%}[190\cdot.16\%+90\cdot 4.84\%] = 93.2\\
+\\
+\implies CVaR_{5\%}(L_{1}+L_{2}) &amp;= 93.2 \leq CVaR_{5\%}(L_{1})+CVaR_{5\%}(L_{2})\\
+&amp;= 2\cdot 73 = 146
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+<div id="entropic-var" class="section level2 hasAnchor" number="7.9">
+<h2><span class="header-section-number">7.9</span> Entropic VaR<a href="factor-models.html#entropic-var" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A coherent alternative to VaR based on the Chernoff bound for tail probability</p>
+<p>For positive RV <span class="math inline">\(X\)</span>, the Chernoff inequality gives:
+<span class="math display">\[
+P(X\geq c) \leq \frac{\mathbb{E}(x)}{c} \quad \forall c &gt; 0
+\]</span>
+For loss RV <span class="math inline">\(L\)</span> with mgf <span class="math inline">\(M_L(z)=E\left[e^{z L}\right]&lt;\infty, \forall z&gt;0\)</span> we have <span class="math inline">\(P(L \geq c) \Leftrightarrow P\left(e^{z L} \geq e^{z c}\right) \leq M_L(z) e^{-z c}\)</span> Limiting bound to <span class="math inline">\(M_L(z) e^{-z c} \leq \alpha\)</span> and solving for <span class="math inline">\(c\)</span> we get <span class="math inline">\(c=z^{-1} \ln \left(M_L(z) / \alpha\right)\)</span></p>
+<p>EVaR defined as: <span class="math inline">\(\mathrm{EVaR}_\alpha=\inf _{z&gt;0}\left\{z^{-1} \ln \left(M_L(z) / \alpha\right)\right\}\)</span></p>
+<blockquote>
+<p>Can define a risk measure we can use the MGF instead of the PDF or CDF which in some cases is convenient. We can just minimize the MGF</p>
+</blockquote>
+</div>
+<div id="calculating-risk-measures" class="section level2 hasAnchor" number="7.10">
+<h2><span class="header-section-number">7.10</span> Calculating Risk Measures<a href="factor-models.html#calculating-risk-measures" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Parametric Modelling
+<ul>
+<li>Not used because theres usually no closed form distribution for the losses</li>
+</ul></li>
+<li>Historical Simulation
+<ul>
+<li>Not favoured because past performance does not predict future performance</li>
+</ul></li>
+<li>Monte Carlo Simulation
+<ul>
+<li>85% of large banks use historical simulation, while the remaining use MC simulation</li>
+<li>Usually done by sampling from some estimated parametric model for individual assets</li>
+</ul></li>
+</ol>
+<p>Other ways to test are stress-testing (the worst case scenario) and use the Extreme Value Theorem</p>
+<blockquote>
+<p>Rest of the slides were not gone over in detail, just showed how the CVaR performed better than VaR (gave lower z-score -&gt; allocation more money for risk purposes), how parametric modelling can’t really be done, how time series models are independent over time but can correlate between assets and show volatility clustering, how RiskMetrics is a time series model but didnt get into it, and the fact GARCH models are used.</p>
+</blockquote>
 
 </div>
 </div>
