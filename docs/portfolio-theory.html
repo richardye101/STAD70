@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 9 Risk Measures | STAD70 Course Work</title>
+  <title>Chapter 7 Portfolio Theory | STAD70 Course Work</title>
   <meta name="description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 9 Risk Measures | STAD70 Course Work" />
+  <meta property="og:title" content="Chapter 7 Portfolio Theory | STAD70 Course Work" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 9 Risk Measures | STAD70 Course Work" />
+  <meta name="twitter:title" content="Chapter 7 Portfolio Theory | STAD70 Course Work" />
   
   <meta name="twitter:description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="factor-models.html"/>
-<link rel="next" href="betting-strategies.html"/>
+<link rel="prev" href="copulas.html"/>
+<link rel="next" href="factor-models.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -404,247 +404,396 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="risk-measures" class="section level1 hasAnchor" number="9">
-<h1><span class="header-section-number">Chapter 9</span> Risk Measures<a href="risk-measures.html#risk-measures" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>We will primarily focus on market risk.</p>
-<p>Financial risk describes the possibility of an investment losing money. It can have several sources, the main ones being:
-- Market risk: due to changes in market prices
-- Credit risk: counterparty doesn’t honor obligations
-- Liquidity risk: lack of asset tradability
-- Operational risk: from organization’s internal activities
-- E.g., legal, fraud, or human error risk
-- Risk management is the process of identifying, measuring, and controlling risk</p>
-<p>The first thing we want to do is quantify the risk somehow.</p>
-<p>To operationalize risk management, we use risk measures to define some capital requirement that the organization should hold in a liquid asset/cash.</p>
-<p>The first thing that comes to mind is measuring risk by the variance of returns. <strong>But it is not a good risk measure</strong>. In the following example, the variances are the same, but clearly the risk is different.</p>
-<p>WIth the left distribution, the long tail goes to the left which means your returns could become large negative values. (Reasonable to assume it is “more risky”)</p>
-<p>For the right distribution, the average return is negative although there is no chance of very large negative returns. (Implies that it is “less risky”)
-<img src="Notes/Obsidian-Attachments/7-Risk-Management.png" /></p>
-<blockquote>
-<p>The point of risk mgmt: We want to know the amount of money we should set aside to cover expected losses.</p>
-</blockquote>
-<div id="value-at-risk-var" class="section level2 hasAnchor" number="9.1">
-<h2><span class="header-section-number">9.1</span> Value At Risk (VAR)<a href="risk-measures.html#value-at-risk-var" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Was really common, although recently it has decreased in use (discredited) although there are variations still in use.</p>
-<p>Let <span class="math inline">\(\mathrm{RV}\)</span> <span class="math inline">\(L\)</span> be the loss of an investment over some time period <span class="math inline">\(T\)</span>
-- Loss is negative of gain/revenue <span class="math inline">\((R): L=-R\)</span></p>
-<blockquote>
-<p>We look at losses because we only capture the negative losses from this asset</p>
-</blockquote>
-<p>Value at Risk at confidence level <span class="math inline">\((1-\alpha)\)</span> &amp; time horizon <span class="math inline">\(T\)</span> is defined as the:</p>
-<p><strong><span class="math inline">\((1-\alpha)\)</span>-quantile of <span class="math inline">\(L\)</span> for some <span class="math inline">\(\alpha \in(0,1)\)</span></strong></p>
-<p><span class="math display">\[
+<div id="portfolio-theory" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Portfolio Theory<a href="portfolio-theory.html#portfolio-theory" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Portfolio theory deals with how an asset manager can form a portfolio that optimizes their goals, whether that be lowest risk, highest return, or some other measure of performance.</p>
+<p>How to pick stocks is a complicated science and there are many ways to go about it.</p>
+<div id="assumptions" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Assumptions<a href="portfolio-theory.html#assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We first make some assumptions when dealing with the theory.
+- Static multivariate return distribution determined by assets’ mean and covariance.
+- This implies a normal or elliptical distribution for returns
+- The investors have the same views on mean and variance
+- Investors also want minimum risk for maximum return
+- Investors measure risk by portfolio’s variance
+- No borrowing or short-selling restrictions
+- No transaction costs</p>
+</div>
+<div id="dealing-with-two-assets" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Dealing with Two Assets<a href="portfolio-theory.html#dealing-with-two-assets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’ll start with a simple example with two risky assets, <span class="math inline">\(S_{1}, S_{2}\)</span></p>
+<p>We assume that net returns (as time <span class="math inline">\(0\to t\)</span> ) satisfy:
+<span class="math display">\[
+\left[\begin{array}{c}
+R_{1} \\
+R_{2}
+\end{array}\right] \sim
+N \left(
+\left[ \begin{array}{c}
+\mu_{1} \\
+\mu_{2}
+\end{array}
+\right],
+\left[
+\begin{array}{c}
+\sigma_{1}^{2}  &amp; \sigma_{12} \\
+\sigma_{21}  &amp; \sigma_{2}^{2}
+\end{array} \right]
+\right) \quad
+\text{where } R_{i} = \frac{S_{i}(t)-S_{i}(0)}{S_{i}(0)}, i = 1,2
+\]</span></p>
+<p>We can form a portfolio with <span class="math inline">\(x_{i}\)</span> units of asset <span class="math inline">\(S_{i}\)</span>, which gives us the following equation:
+<span class="math display">\[
 \begin{aligned}
-\operatorname{VaR}(\alpha)=\inf \{x: P(L \leq x) \geq 1-\alpha\}=\inf \{x: P(L&gt;x) \leq \alpha\}
+V(t=0) &amp;= x_{1}\cdot S_{1}(0)+x_{2}\cdot S_{2}(0)\\
 \end{aligned}
 \]</span>
-&gt;Infimum (smallest value of x) is only used for discrete distributions such that the the probability of <span class="math inline">\(L\)</span> will not exceed some value <span class="math inline">\(x\)</span> and we want this to happen <span class="math inline">\((1-\alpha)\)</span> of the time. (Usually want it to be less than <span class="math inline">\(5\%\)</span>)</p>
+We can derive the initial <em>weights</em> of each asset that we’ve invested into using:
+<span class="math display">\[
+w_{i} = \frac{x_{i}S_{i}(0)}{V(0)}
+\]</span></p>
+<div id="portfolio-return" class="section level3 hasAnchor" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> Portfolio Return<a href="portfolio-theory.html#portfolio-return" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can calculate the return of this two asset portfolio and show that: <span class="math inline">\(R_{p} = w_{1}R_{1}+w_{2}R_{2}\)</span>
+<span class="math display">\[
+\begin{aligned}
+R_{p} &amp;= \frac{V(t)-V(0)}{V(0)} = \frac{[x_{1}S_{1}(t)+x_{2}S_{2}(t)]-[x_{1}S_{1}(0)+x_{2}S_{2}(0)]}{V(0)}\\
+&amp;= \frac{x_{1}[S_{1}(t)-S_{1}(0)]+x_{2}[S_{2}(t)-S_{2}(0)]}{V(0)}\\
+&amp;= x_{1} \underset{ \text{Introduce }S_{1}(0) \text{ to get} R_{1}}{ \frac{S_{1}(t)-S_{1}(0)}{S_{1}(0)} \frac{S_{1}(0)}{V(0)} } + x_{2} \underset{  \text{Introduce }S_{2}(0) \text{ to get} R_{2} }{ \frac{S_{2}(t)-S_{2}(0)}{S_{2}(0)} \frac{S_{2}(0)}{V(0)} }\\
+&amp;= R_{1} \underbrace{ x_{1}\frac{S_{1}(0)}{V(0)} }_{ w_{1} }+R_{2} x_{2}\underbrace{ \frac{S_{2}(0)}{V(0)} }_{ w_{2} }\\
+&amp;= R_{1}w_{1}+R_{2}w_{2}
+\end{aligned}
+\]</span>
+Which shows that the net returns of a portfolio is exactly the weight combination of the net returns of the assets within.</p>
+<p>We can also find the distribution of the portfolio returns (which may not surprise you, is just the linear combination of the individual assets returns)</p>
+<p><span class="math display">\[
+\begin{aligned}
+R_{p} &amp;= \underline{w}^{T}\underline{R} = [ w_{1} \ w_{2}] \left[ \begin{array}{c}
+R_{1} \\
+R_{2}
+\end{array} \right]  \quad
+\text{ where } \underline{R} \sim N_{2D}\left( \left[ \begin{array} {l}
+\mu_{1} \\
+\mu_{2}
+\end{array} \right], \left[ \begin{array}{c}
+\sigma_{1}^{2} &amp; \sigma_{12} \\
+\sigma_{21} &amp; \sigma_{2}^{2}
+\end{array}\right]  \right)\\
+&amp;\implies R_{p} \sim N_{1D}(\mu_{p},\sigma_{p}) \ \text{ where}\\
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\mu_{p} &amp;= \mathbb{E}(R_{p}) = \mathbb{\mathbf{E}}[\underline{w}^{T}\underline{R}]\\
+&amp;= \underline{w}^{T}\mathbb{E}[\underline{R}] = \underline{w}^{T}\underline{\mu}\\
+&amp;= \sum_{i}w_{i}\mu_{i}\\
+\\
+\sigma_{p}^{2} &amp;= \mathbb{V}[R_{p}] = \mathbb{V}[\underline{w}^{T}\underline{R}]\\
+&amp;= \underline{w}^{T} \mathbb{V}(\underline{R})\underline{w} = \underline{w}^{T}\Sigma \underline{w}\\
+&amp;= [ w_{1} \ w_{2}]
+\left[ \begin{array}{c}
+\sigma_{1}^{2} &amp; \sigma_{12} \\
+\sigma_{21} &amp; \sigma_{2}^{2}
+\end{array}\right]
+\left[ \begin{array}{c}
+w_{1} \\
+w_{2}
+\end{array} \right] \\
+&amp;= w_{1}^{2}\sigma_{1}^{2}+2w_{1}w_{2}\sigma_{12}+w_{2}^{2}\sigma_{2}^{2}\\
+\\
+\therefore R_{p} &amp;\sim N\left( \sum_{i}w_{i}p_{i},  \quad w_{1}^{2}\sigma_{1}^{2}+2w_{1}w_{2}\sigma_{12}+w_{2}^{2}\sigma_{2}^{2}\right)
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+<div id="efficiency-frontier" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Efficiency frontier<a href="portfolio-theory.html#efficiency-frontier" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A plot of mean <span class="math inline">\(\mu\)</span> by standard deviation <span class="math inline">\(\sigma\)</span> , where you can load up entirely on <code>AAPL</code> with <span class="math inline">\(w_{1}=1, w_{2}=0\)</span> or entirely on <code>PNC</code> with the opposite.</p>
+<p><img src="Notes/Obsidian-Attachments/5-Portfolio-Theory.png" /></p>
+<p>But how do we know the optimal amount of weight to put in each asset to <strong>minimize variance</strong>? We can simply find the <span class="math inline">\(w\)</span> that minimizes the derivative of the variance w.r.t. <span class="math inline">\(w\)</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Let }w_{1} &amp;= w \quad \&amp; \ w_{2}=1-w\\
+\implies \sigma_{p}^{2} &amp;= w^{2}\sigma_{1}^{2} + 2w(1-w)\sigma_{12} + (1-w)^{2}\sigma_{2}^{2}\\
+\text{Let }\frac{\delta \sigma_{p}^{2}}{\delta w} &amp;= 0\\
+0 &amp;= 2w\sigma_{1}^{2}+2(1-w)\sigma_{12}-2w\sigma_{12}-2(1-w)\sigma_{2}^{2}\\
+0 &amp;= w(\sigma_{1}^{2}-\sigma_{12}) + (1-w)(\sigma_{12}-\sigma_{2}^{2})\\
+0 &amp;= w(\sigma_{1}^{2}+\sigma_{2}^{2}-2\sigma_{12}) + (\sigma_{12}-\sigma_{2}^{2})\\
+w &amp;= \frac{-(\sigma_{12}-\sigma_{2}^{2})}{(\sigma_{1}^{2}+\sigma_{2}^{2}-2\sigma_{12})}
+\end{aligned}
+\]</span></p>
+</div>
+<div id="multiple-asset-portfolio" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Multiple asset portfolio<a href="portfolio-theory.html#multiple-asset-portfolio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Consider <span class="math inline">\(n\)</span> risky assets with returns <span class="math inline">\(R_1, \ldots, R_n\)</span> so that:
+<span class="math display">\[
+\mathbf{R}=\left[\begin{array}{c}
+R_1 \\
+\vdots \\
+R_n
+\end{array}\right] \sim N\left(\boldsymbol{\mu}=\left[\begin{array}{c}
+\mu_1 \\
+\vdots \\
+\mu_n
+\end{array}\right], \boldsymbol{\Sigma}=\left[\begin{array}{ccc}
+\sigma_1^2 &amp; \ldots &amp; \sigma_{1 n} \\
+\vdots &amp; \ddots &amp; \vdots \\
+\sigma_{n 1} &amp; \cdots &amp; \sigma_n^2
+\end{array}\right]\right)
+\]</span>
+We want to create portfolio using weights <span class="math inline">\(\mathbf{w}=\left[\begin{array}{lll}w_1 &amp; \cdots &amp; w_n\end{array}\right]^{\top}\)</span> such that: <span class="math inline">\(\sum_{i=1}^n w_i=\mathbf{w}^{\top} \mathbf{1}=1\)</span></p>
+<p>The distribution of returns for this portfolio would simply be:
+<span class="math display">\[
+\begin{aligned}
+\mathbf{R_{p}} &amp;\sim \mathbf{N_{1D}(\mu_{p}, \sigma_{p}^{2})} \ \text{where }\\
+&amp;\mathbf{\mu_{p} = \underline{w}^{T}\cdot \underline{\mu}}\\
+&amp;\mathbf{\sigma_{p}^{2}=\underline{w}^{T}\cdot\underline{\Sigma}\cdot\underline{w}}
+\end{aligned}
+\]</span></p>
+<p>When fixing an expected return <span class="math inline">\(\mu_{p}\)</span>, we can derive weights that minimize variance:
+<span class="math display">\[
+min_{w}\{\mathbf{w^{T}\Sigma w}\}\ s.t. \ \mathbf{w^{T}\mu} = \mu_{p}, \mathbf{w^{T}1} = 1
+\]</span></p>
+<p>We can use Lagrange multipliers to define the objective function:
+&gt;Lagrange formula: <span class="math inline">\(\mathcal{L}(x,\lambda) = f(x)+\lambda g(x)\)</span>
+&gt;If we want to find the max/min of the function <span class="math inline">\(f(x)\)</span> subject to the constraint <span class="math inline">\(g(x) = 0\)</span>, we can form this Lagrangian and find where it’s derivative is 0. In this case, <span class="math inline">\(x=\underline{w}\)</span> and our constraint <span class="math inline">\(\mathbf{w^{T}\cdot 1} = 1\)</span> can be represented as <span class="math inline">\(g(w) = \mathbf{w^{T}\cdot 1} -1\)</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathcal{L}(\underline{w},\lambda) &amp;= \underline{w}^{T}\underline{\Sigma}\underline{w} - \lambda(\underline{w}^{T}\cdot \underline{1}-1)\\
+\text{Let }\frac{\delta\mathcal{L}}{\delta \underline{w}}&amp;= 0\\
+0 &amp;= 2\cdot\underline{\Sigma}\cdot \underline{w}-\lambda\cdot  \underline{1} \\
+\implies \underline{w} &amp;= \frac{\lambda}{2}\underline{\Sigma}^{-1}\cdot \underline{1}
+\end{aligned}
+\]</span>
+<span class="math display">\[
+\begin{aligned}
+\text{Given } \underline{w}^{T}\cdot  \underline{1} &amp;= 1 \implies  \underline{1}^{T}\underline{w} = 1\\ \\
+\implies&amp; \frac{\lambda}{2}\cdot   \underline{1}^{T}\cdot\underline{\Sigma}^{-1}\cdot  \underline{1} = \underline{1}^{T}\underline{w}  = 1\\
+\implies&amp; \lambda = \frac{2}{\underline{1}^{T}\cdot\underline{\Sigma}^{-1}\cdot  \underline{1}}\\
+\implies &amp;\underline{w}^{*} = \frac{\frac{2}{\underline{1}^{T}\cdot\underline{\Sigma}^{-1}\cdot  \underline{1}}}{2}\underline{\Sigma}^{-1}\cdot \underline{1}\\
+&amp; \quad \ = \frac{\underline{\Sigma}^{-1}\cdot \underline{1}}{\underline{1}^{T}\cdot\underline{\Sigma}^{-1}\cdot  \underline{1}}
+\end{aligned}
+\]</span>
+&gt;<span class="math inline">\(\underline{\Sigma}^{-1}\)</span> represents the <a href="https://stephens999.github.io/fiveMinuteStats/normal_markov_chain.html">precision matrix</a>, where if there is a 0 at <span class="math inline">\((i,j)\)</span> then <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are conditionally independent (given all other assets are held constant, there is no dependence/correlation between these two assets). If it exists, then it is positive definite.</p>
+<blockquote>
+<p>The numerator is a vector containing the L1 norms of each row’s (asset) precision.
+The denominator represents the total precision of the entire Precision matrix.
+The final value is the scaled weights given to each asset <strong>depending</strong> on the total precision.</p>
+</blockquote>
+<p>Instead of only having <span class="math inline">\(n\)</span> risky assets, we can introduce a risk-free asset with constant return <span class="math inline">\(R_{f}=\mu_{f}&gt;0\)</span>, with variance <span class="math inline">\(\sigma_{f} =0\)</span>. A real life example is a government bond.</p>
+<p>With this new asset, we can determine how much to invest in the risky portfolio and the risk-free asset with weights <span class="math inline">\(w_{p}\)</span> and <span class="math inline">\((1-w_{p})\)</span>.</p>
 <ul>
-<li><p>For continuous RV with <span class="math inline">\(\operatorname{CDF} F_L\)</span> , we don’t need the infimum anymore and can just do: <span class="math inline">\(\Rightarrow \operatorname{VaR}(\alpha)=F_L^{-1}(1-\alpha)\)</span>
-&gt;Basically the quantile of the distribution</p></li>
-<li><p>VaR represents amount that covers losses with probability <span class="math inline">\((1-\alpha)\)</span></p></li>
+<li>Return: <span class="math inline">\(R=w_{p}R_{p}+(1-w_{p})R_{f}\)</span></li>
+<li>Mean Return: <span class="math inline">\(\mathbb{E}[R]=w_{p}\mathbb{E}[R_{p}]+(1-w_{p})\mathbb{E}[R_{f}]=w_{p}\mu_{p}+(1-w_{p})\mu_{f}\)</span></li>
+<li>Variance of returns: <span class="math inline">\(\mathbb{V}=\mathbb{V}(w_{p}R_{p}+(1-w_{p}R_{f})) = w_{p}^{2}\mathbb{V}(R_{p})=w_{p}^{2}\cdot \sigma_{p}^{2}\)</span></li>
 </ul>
-<p><img src="Notes/Obsidian-Attachments/7-Risk-Management-1.png" />
-&gt;We want the quantile at which the probability is at <span class="math inline">\((1-\alpha)\)</span></p>
-<div id="example-1" class="section level3 hasAnchor" number="9.1.1">
-<h3><span class="header-section-number">9.1.1</span> Example<a href="risk-measures.html#example-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Consider asset with <span class="math inline">\(N(\mu=.03, \sigma^{2}=.04)\)</span> annual log-returns. Find the 95% confidence level annual VaR for a <span class="math inline">\(S_{0} =\)</span>$1000 investment in this asset. Let <span class="math inline">\(R=S_{T}-S_{0}\)</span> represent revenue (-losses)</p>
-<p>We want to find the VaR(<span class="math inline">\(\alpha\)</span>) s.t
-<span class="math display">\[
-\begin{aligned}
-P(L &gt; VaR) &amp;= 5\%\\
-&amp;= P(-R &gt; VaR) \\
-&amp;= P(R &lt; -VaR)\\
-\\
-X &amp;\sim N(0.03, \sigma^{2}=0.04)\\
-\implies S_{T} &amp;= S_{0}\cdot e^{X}\\
-\\
-P(S_{T}-S_{0} &lt; -VaR) &amp;= P(S_{T} &lt; S_{0}-VaR)\\
-&amp;= P(S_{0}e^{X} &lt; S_{0}\cdot VaR)\\
-&amp;= P\left( X &lt; \log\left( \frac{S_{0}-VaR}{S_{0}} \right)\right)\\
-&amp;= P\left( \underbrace{ \frac{X-0.03}{.2} }_{ Z\sim N(0,1) } &lt; \frac{\log\left( \frac{1-VaR}{S_{0}} \right)-0.03}{.2} \right) = 0.05\\
-&amp;= P\left( Z &lt; \underbrace{ \frac{\log\left( 1-\frac{VaR}{S_{0}} \right)-0.03}{.2} }_{ z } \right) = 0.05\\
-\implies z &amp;= -1.645\\
-\frac{\log\left( 1-\frac{VaR}{S_{0}} \right)-0.03}{.2} &amp;= -1.645\\
-\\
-\mathbf{VaR} &amp;= (1-\exp\{-1.645\cdot 0.20+0.03\}) \cdot S_{0}\\
-\mathbf{VaR} &amp;= (1-\exp\{-0.299\})\cdot 1000\\
-&amp;= \mathbf{258.44}
-\end{aligned}
-\]</span></p>
-<p>VaR is basic and widely used as a risk measure to simply indicate</p>
+<p><img src="Notes/Obsidian-Attachments/5-Portfolio-Theory-1.png" /></p>
+<p>The best portfolio (in terms of risk and return) lie on this green line, where this line is tangent to the efficient frontier.</p>
 <blockquote>
-<p><em>“What is the most I can lose on this investment?”</em></p>
+<p>The slope of this line is called the <strong>Sharpe</strong> ratio, which measure the excess return per unit risk (<strong>risk premium</strong>).</p>
 </blockquote>
-<p>It has been widely used partly because of the Basel framework which is some risk management standard for banks and banks implemented Basel to comply.</p>
-<p>However it has some glaring issues. No one trusts it as a proper risk management tool.</p>
-<p>Flaws:
-- VaR hides tail risk (hides risk of very extreme events) although there is a way to remedy it
-- It discourages diversification</p>
-<p>The additional resources talk about why VaR is not a good measure of risk:
-[[../../Lectures/Risk Mismanagement.pdf]]
-[[../../Lectures/Against VaR.pdf]]</p>
-</div>
-</div>
-<div id="var-hides-tail-risk" class="section level2 hasAnchor" number="9.2">
-<h2><span class="header-section-number">9.2</span> VaR hides tail risk<a href="risk-measures.html#var-hides-tail-risk" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><img src="Notes/Obsidian-Attachments/7-Risk-Management-2.png" /></p>
-<p>Var doesn’t care what happens beyond the cut off, just the actual z-score (or whatever score from some distribution). If we push some density of losses very far (hiding a small probability of really bad events), we can actually concentrate the density of profits higher.</p>
-<div id="mitigation-cond-var-or-expected-shortfall" class="section level4 hasAnchor" number="9.2.0.1">
-<h4><span class="header-section-number">9.2.0.1</span> Mitigation: Cond VaR or Expected Shortfall<a href="risk-measures.html#mitigation-cond-var-or-expected-shortfall" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>AKA CVar or ES
-<img src="Notes/Obsidian-Attachments/7-Risk-Management-3.png" /></p>
-<p>This gives us the expected losses that can occur given that we are beyond <span class="math inline">\(VaR_{\alpha}\)</span></p>
-</div>
-<div id="example-2" class="section level4 hasAnchor" number="9.2.0.2">
-<h4><span class="header-section-number">9.2.0.2</span> Example<a href="risk-measures.html#example-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>If <span class="math inline">\(R\sim N(0,1)\)</span>, find ES at confidence level <span class="math inline">\(\alpha\)</span></p>
+<p>The <strong>tangency portfolio</strong> is exactly the portfolio on the efficient frontier that also belongs to the tangent line. (It is a risky asset only portfolio with <span class="math inline">\(\mu_{T},\sigma_{T}\)</span>)</p>
+<p><img src="Notes/Obsidian-Attachments/5-Portfolio-Theory-2.png" /></p>
+<p>When you have a risk-free asset, the optimal investment strategy is to have a combination of the tangency portfolio and the risk-free asset. To find this tangency portfolio, we <em>maximize</em> the Sharpe ratio.</p>
 <p><span class="math display">\[
-\begin{aligned}
-R\sim N(0,1) &amp;\implies L \sim N(0,1)\\
-\text{Let } Z_{\alpha} &amp;\text{denote the } \alpha \text{-quantile of the std normal}\\
-\\
-ES_{\alpha} &amp;= \mathbb{E}[L|L&gt;Z_{\alpha}] = \int ^{\infty}_{Z_{\alpha}} x \ \phi(x| L&gt; z_{\alpha}) \, dx\\
-&amp;= \int ^{\infty}_{Z_{\alpha}} x \frac{\phi(x)}{\underbrace{ P(L &gt; Z_{\alpha}) }_{ \alpha }}\, dx \\
-&amp;= \frac{1}{\alpha}\int ^{\infty}_{Z_{\alpha}} x \frac{1}{2\sqrt{ \pi }}e^{-x^{2}/2}\, dx \\
-&amp;= \frac{1}{\alpha}  \int ^{\infty}_{Z_{\alpha}}\frac{1}{2\pi} \lfloor-e^{-x^{2}/2}\rfloor  \, dx \\
-&amp;= \frac{1}{\alpha} \frac{1}{2\pi} \left[-e^{-x^{2}/2}\right]^{\infty}_{x=z_{\alpha}}\\
-\implies ES_{\alpha} &amp;= CVaR_{\alpha} = \frac{1}{\alpha}\frac{1}{\sqrt{ 2\pi }}e^{-z_{\alpha}^{2}/2}\\
-&amp;= \frac{1}{\alpha} \phi(z_{\alpha})
-\end{aligned}
+max\left\{ \frac{\mu_{p}-\mu_{f}}{\sigma_{p}} \right\} = max_{w} \left\{ \frac{\mathbf{w^{T}\mu}-\mu_{f}}{\sqrt{ \mathbf{w^{T}\Sigma w} }} \right\} \quad \text{subject to } \mathbf{w^{T}1} = 1
 \]</span></p>
-<p>This means that generally for <span class="math inline">\(L\sim N(\mu, \sigma^{2})\)</span>,
+<p>The tangency portfolio weights are given by:
+<span class="math display">\[
+\mathbf{w_{t}} = \frac{\mathbf{\Sigma ^{-1}(\mu}-\mu_{f}\cdot \mathbf{\underline{1}})}{\mathbf{1^{T}\Sigma ^{-1}(\mu}-\mu_{f}\cdot \mathbf{\underline{1}})}
+\]</span></p>
+</div>
+<div id="capm---capital-asset-pricing-model" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> CAPM - Capital Asset Pricing Model<a href="portfolio-theory.html#capm---capital-asset-pricing-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The CAPM theory suggests that all investors hold some form of the tangency/market portfolio. This model assumes the mean-variance analysis <em>stretched to it’s logical consequences</em> can explain <strong>all financial market behaviour</strong>.(Widely known to be false)</p>
+<p>The slope of the tangency portfolio is also known as the Sharpe Ratio, or <strong>Market Price of Risk</strong>.</p>
+<p>If every investor followed this mean-variance analysis, and the market is in <em>equilibrium</em>:
+&gt;idk what it means to be in equilibrium</p>
+<ul>
+<li>Every investor holds some portion of the same tangency portfolio</li>
+<li>The entire financial market will be made up of the <strong>same</strong> mix of risky assets</li>
+<li><strong>Making the tangency portfolio equal to the market value-weighted index</strong></li>
+</ul>
+<div id="market-portfolio" class="section level3 hasAnchor" number="7.5.1">
+<h3><span class="header-section-number">7.5.1</span> Market Portfolio<a href="portfolio-theory.html#market-portfolio" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Using the above assumptions, the <strong>composition of the tangency portfolio is equivalent to the market</strong> and we can find the weights for each asset as:
+<span class="math display">\[
+w_{i} = \underbrace{ \frac{S_{i}\times O_{i}}{\sum^{N}_{i=1}S_{i}\times O_{i}} }_{ \text{Market Capitalization \%} } \quad \text{where } \begin{cases}
+S_{i} = \text{price of asset i} \\
+O_{i} = \text{shares outstanding}
+\end{cases}
+\]</span></p>
+<p>Therefore the tangency portfolio is exactly a market cap weighted index, such as the S&amp;P500 or FTSE100.</p>
+</div>
+<div id="capital-market-line" class="section level3 hasAnchor" number="7.5.2">
+<h3><span class="header-section-number">7.5.2</span> Capital Market Line<a href="portfolio-theory.html#capital-market-line" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Every mean-variance efficient portfolio <span class="math inline">\((\mu_{p},\sigma_{p})\)</span> lies on a straight line, which is determined by
+<span class="math display">\[
+\mu_{p} = \mu_{f} + \frac{\mu_{M}-\mu_{f}}{\sigma_{M}}, \quad \text{where }\begin{cases}
+(\mu_{M},\sigma_{M}) = \text{market portfolio} \\
+\mu_{f} = \text{risk-free rate}
+\end{cases}
+\]</span></p>
+<p><img src="Notes/Obsidian-Attachments/5-Portfolio-Theory-3.png" /></p>
+</div>
+<div id="security-market-line" class="section level3 hasAnchor" number="7.5.3">
+<h3><span class="header-section-number">7.5.3</span> Security Market Line<a href="portfolio-theory.html#security-market-line" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For <strong>each individual asset</strong>, CAPM implies the following risk/reward relationship (Security Market Line)
 <span class="math display">\[
 \begin{aligned}
-ES_{\alpha} &amp;= \mu + \frac{\phi(z_{\alpha})}{\alpha} \cdot \sigma\\
-VaR_{\alpha} &amp;= \mu +z_{\alpha}\cdot \sigma
-\end{aligned}
-\]</span></p>
-<p>and for small <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\frac{\phi(z_{\alpha})}{\alpha} &gt; z_{a}\)</span> which implies <span class="math inline">\(ES_{\alpha}\geq VaR_{\alpha}\)</span></p>
-</div>
-</div>
-<div id="risk-measure-properties" class="section level2 hasAnchor" number="9.3">
-<h2><span class="header-section-number">9.3</span> Risk Measure Properties<a href="risk-measures.html#risk-measure-properties" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We now look at formal set of requirements for risk measures (5 properties)</p>
-<p>We let <span class="math inline">\(\rho(L)\)</span> represent the risk measure, which takes in a distribution of a some returns and outputs a number indicating the capital requirements (money to be kept aside) should be.
-We let <span class="math inline">\(L\)</span> is a random variable and let <span class="math inline">\(\rho\)</span> is a functional distribution of <span class="math inline">\(L\)</span>.</p>
-<p>For this measure <span class="math inline">\(\rho\)</span> to reasonably quantify risk, it must:
-1. be normalized <span class="math inline">\(\rho(0)=0\)</span> (risk of holding no assets is 0)
-2. Translation invariance: <span class="math inline">\(\rho(L+c) = \rho(L) + c \ \forall c \in \mathbb{R}\)</span>
-- adding a loss <span class="math inline">\(c\)</span> to the portfolio increases risk by exactly <span class="math inline">\(c\)</span>
-3. Positive Homogeneity: <span class="math inline">\(\rho(bL) = b\rho(l)\)</span>
-- scaling portfolio returns also will scale risk
-4. Monotonicity: <span class="math inline">\(L_{1}\geq L_{2} \implies \rho(L_{1}) \geq \rho(L_{2})\)</span>
-- The ordering of the random variables is almost surely <span class="math inline">\(P(L_{1}\geq L_{2})=1\)</span>
-5. Sub-additivity: <span class="math inline">\(\rho(L_{1}+L_{2}) \leq \rho(L_{1}+L_{2})\)</span>
-- Only when the two losses are perfectly correlated, then equal
-- The risk of two combined portfolios cannot exceed the sum of the two portfolio risks</p>
-<p>If a risk measure has all 5 properties, then it is called a <em>coherent risk measure</em>.</p>
-<div id="example-that-var-and-cvar-satisfy-prop-2-3" class="section level3 hasAnchor" number="9.3.1">
-<h3><span class="header-section-number">9.3.1</span> Example that VAR and CVar satisfy prop 2 &amp; 3<a href="risk-measures.html#example-that-var-and-cvar-satisfy-prop-2-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>We first show that VAR and CVaR satisfy the second and third property of translation invariance and positive homogeneity.</p>
-<p><span class="math display">\[
-\begin{aligned}
-VaR_{\alpha}(L) &amp;= inf\{x:P(L&gt;x) \leq \alpha\}\\
-\\
-\text{Let}\ \ L&#39; &amp;= bL+c\\
-\implies VaR(L&#39;) &amp;= inf\{x&#39;: P(L&#39; &gt;x&#39;) \leq \alpha\}\\
-&amp;= inf\{x&#39;:\mathbb{P}(bL+c &gt; x&#39;) \leq \alpha\}\\
-&amp;= inf\left\{ x&#39;: \mathbb{P}\left( L&gt; \frac{x&#39;-c}{b} \leq \alpha \right) \right\}\\
-&amp;= inf\{bx+c : \mathbb{P}(L &gt; x) \leq \alpha\}\\
-&amp;=b\cdot inf\{x: \mathbb{P}(L &gt; x) \leq \alpha\}+c\\
-&amp;= b VaR(L)+c
-\end{aligned}
-\]</span>
-<span class="math display">\[
-\begin{aligned}
-CVaR_{\alpha}(L) &amp;= \frac{1}{\alpha}\int ^{\alpha}_{0} VaR_{u}(L) \, du\\
-\implies CVaR_{\alpha}(L&#39;) &amp;= \frac{1}{\alpha}\int ^{\alpha}_{0}(bVaR_{u}(L)+c) \, du\\
-&amp;= b\left( \frac{1}{\alpha} \int ^{\alpha}_{0}VaR_{u}(L) \, du\right) +c\\
-&amp;= b \cdot CVaR_{\alpha}(L)+c
-\end{aligned}
-\]</span></p>
-<p>We will show that VaR is not sub-additive</p>
-<p>Consider two risky zero-coupon bonds priced at $95 per $100 face value. If each one has 4% independent default probability, show that <span class="math inline">\(VaR_{5\%}\)</span> is not sub-additive</p>
-<p><span class="math display">\[
-\begin{aligned}
-\text{Distribution of }L_{1/2} &amp;= \begin{cases}
--5 &amp; w.p. 96\% \\
-+95  &amp; w.p. 4\%
+\mu_{i} &amp;= \mu_{f} + \beta_{i}\underbrace{ (\mu_{M}-\mu_{f}) }_{ Slope }
+\quad \text{Where } \begin{cases}
+\beta_{i} = \frac{\sigma_{iM}}{\sigma^{2}_{M}} \\
+\sigma_{iM} = Cov(R_{i, R_{M}})
 \end{cases}\\
-\text{By definitioin, VaR} &amp; = inf\{x: \mathbb{P}(L &gt;x)&lt;5\%\}\\
-&amp;= inf(x: \mathbb{P}(L \leq x)\geq 95\%)\\
-\implies VaR_{5\%}(L_{1/2}) &amp;= -5 \\
+&amp;= \mu_{f} + \left( \frac{\mu_{M}-\mu_{f}}{\sigma_{M}} \right) \cdot \sigma_{p}
 \end{aligned}
 \]</span></p>
-<p>As -5 is the smallest value that satisfies <span class="math inline">\(\mathbb{P}(L\leq x) \geq 95\%\)</span> as <span class="math inline">\(\mathbb{P}(L \leq -5) = 96\%\)</span></p>
-<p><img src="Notes/Obsidian-Attachments/7-Risk-Management-4.png" /></p>
+<ul>
+<li><span class="math inline">\(\beta_{i}\)</span> is different for each asset, it captures how related the return on the given asset is with the Market return.</li>
+<li><span class="math inline">\(\sigma_{M}\)</span> is the market risk AKA undiversifiable risk</li>
+<li>Imagine the line is in <span class="math inline">\((\mu,\beta)\)</span>-space, with slope <span class="math inline">\((\mu_{M}-\mu_{f})\)</span>.</li>
+</ul>
+<p>To derive this line, we need to find a market portfolio that maximizes the Sharpe ratio (using first order derivative)</p>
 <p><span class="math display">\[
 \begin{aligned}
-\text{Distribution of }L_{1} + L_{2} &amp;= \begin{cases}
--5-5 = -10 \quad w.p. 96\%^{2}=92.16\% &amp; \text{when both don&#39;t default}\\
--5+95 = 90 \quad w.p. 96\% \cdot 4\% = 7.68\% &amp; \text{when only one defaults} \\
-95+95=190 \quad w.p. 4\%^{2}=.16\% &amp; \text{both default}
-\end{cases}\\
-VaR_{5\%} (L_{1}+L_{2}) &amp;= inf\{x:\mathbb{P}(L_{1}+L_{2} &lt; x) \geq 95\%\} = 90
+f(\underline{w}) &amp;= \frac{\underline{w}^{T}\underline{\mu}-\mu_{f}}{\sqrt{ \underline{w}^{T}\underline{\Sigma}\underline{w} }} = \frac{\underline{w}^{T}\cdot (\underline{\mu}-\underline{1}\mu_{f})}{\sqrt{ \underline{w}^{T}\underline{\Sigma}\underline{w} }} \quad \text{maximized when } \frac{\delta f}{d\underline{w}} = 0\\
+\implies 0 &amp;= \frac{(\underline{\mu}-\underline{1}\mu_{f})\cdot\sqrt{ \underline{w}^{T}\underline{\Sigma}\underline{w} } - \frac{1}{2}{(\overbrace{ \underline{w}^{T}\underline{\Sigma}\underline{w}}^{ \sigma_{m}^{2} }})^{-1/2}\cdot 2\underline{\Sigma}\underline{w}\cdot (\overbrace{ \underline{w}^{T}\cdot (\underline{\mu} }^{ \mu_{M} }-\underline{1}\mu_{f})}{\underline{w}^{T}\underline{\Sigma}\underline{w}}\\
+&amp;= \frac{(\underline{\mu}-\underline{1}\mu_{f})\sigma_{m}-\frac{1}{\sigma_{M}}\underline{\Sigma}\underline{w}(\mu_{M}-\mu_{f})}{\sigma_{M}^{2}}\\
+\implies (\underline{\mu}-\underline{1}\mu_{f}) &amp;= \frac{1}{\sigma_{M}^{2}\underline{\Sigma}\underline{w}(\mu_{M}-\mu_{f})}\\
+\implies \left[ \begin{array}{c}
+\mu_{1}-\mu_{f} \\
+\vdots \\
+\mu_{n}-\mu_{f}
+\end{array}  \right]
+&amp;= \frac{\mu_{M}-\mu_{f}}{\sigma_{M}^{2}}\cdot
+\left[ \begin{array}{c}
+Cov(R_{1},R_{M}) \\
+\vdots \\
+Cov(R_{n},R_{M})
+\end{array} \right] \\
+&amp;= \frac{(\mu_{M}-\mu_{f})}{\sigma_{M}^{2}}\cdot \left[ \begin{array}{c}
+\sigma_{1,M} \\
+\vdots \\
+\sigma_{n,M}
+\end{array} \right]
 \end{aligned}
 \]</span></p>
-<p><img src="Notes/Obsidian-Attachments/7-Risk-Management-7.png" /></p>
-<p><span class="math display">\[
-\begin{aligned}
-\implies VaR_{5\%}(L_{1}+L_{2}) = 90 &gt; VaR_{5\%}(L_{1}) + VaR_{5\%}(L_{2}) = -5 -5 = 10
-\end{aligned}
-\]</span></p>
-<p>Which suggests holding both bonds is more risky than holding them separately.</p>
-<p>We can show that CVaR is sub-additive.</p>
-<p><span class="math display">\[
-\begin{aligned}
-CVaR_{5\%}(L_{1}) &amp;= \frac{1}{\alpha}\int ^{\alpha}_{0}VaR_{u}(L_{1}) \, du\\
-&amp;= \frac{1}{5\%} (95\cdot 4\% + (-5)\cdot 1\%) = 73\%\\
-CVaR_{5\%}(L_{1}+L_{2}) &amp;= \frac{1}{5\%}\int ^{5\%}_{0}VaR_{u}(L_{1}+L_{2}) \, du\\
-&amp;= \frac{1}{5\%}[190\cdot.16\%+90\cdot 4.84\%] = 93.2\\
-\\
-\implies CVaR_{5\%}(L_{1}+L_{2}) &amp;= 93.2 \leq CVaR_{5\%}(L_{1})+CVaR_{5\%}(L_{2})\\
-&amp;= 2\cdot 73 = 146
-\end{aligned}
-\]</span></p>
-</div>
-</div>
-<div id="entropic-var" class="section level2 hasAnchor" number="9.4">
-<h2><span class="header-section-number">9.4</span> Entropic VaR<a href="risk-measures.html#entropic-var" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>A coherent alternative to VaR based on the Chernoff bound for tail probability</p>
-<p>For positive RV <span class="math inline">\(X\)</span>, the Chernoff inequality gives:
+<p>This is because <span class="math inline">\(Cov(\underline{R}, R_{M}) = Cov(\underline{R},\underline{w}^{T}\cdot \underline{R}) = \underline{w}^{T}\underbrace{ Cov(\underline{R},\underline{R}) }_{ \underline{\Sigma} } = \underline{w}^{T}\underline{\Sigma}\)</span>
+<img src="Notes/Obsidian-Attachments/5-Portfolio-Theory-4.png" /></p>
+<div id="ex-find-market-portfolio-weights-and-sml-with-n-i.i.d-assets" class="section level4 hasAnchor" number="7.5.3.1">
+<h4><span class="header-section-number">7.5.3.1</span> Ex: Find market portfolio weights and SML with <span class="math inline">\(N\)</span> i.i.d assets<a href="portfolio-theory.html#ex-find-market-portfolio-weights-and-sml-with-n-i.i.d-assets" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Each asset <span class="math inline">\(\sim N(\mu,\sigma^{2})\)</span> returns and the risk-free return <span class="math inline">\(\mu_{f}&lt;\mu\)</span>.
 <span class="math display">\[
-P(X\geq c) \leq \frac{\mathbb{E}(x)}{c} \quad \forall c &gt; 0
+\left[ \begin{array}{c}
+R_{1} \\
+\vdots \\
+R_{N}
+\end{array} \right] \sim N_{N \ Dim}(\underline{\mu} = \mu \cdot  \underline{1}, \underline{\Sigma} = \sigma^{2}\cdot \underline{I})
 \]</span>
-For loss RV <span class="math inline">\(L\)</span> with mgf <span class="math inline">\(M_L(z)=E\left[e^{z L}\right]&lt;\infty, \forall z&gt;0\)</span> we have <span class="math inline">\(P(L \geq c) \Leftrightarrow P\left(e^{z L} \geq e^{z c}\right) \leq M_L(z) e^{-z c}\)</span> Limiting bound to <span class="math inline">\(M_L(z) e^{-z c} \leq \alpha\)</span> and solving for <span class="math inline">\(c\)</span> we get <span class="math inline">\(c=z^{-1} \ln \left(M_L(z) / \alpha\right)\)</span></p>
-<p>EVaR defined as: <span class="math inline">\(\mathrm{EVaR}_\alpha=\inf _{z&gt;0}\left\{z^{-1} \ln \left(M_L(z) / \alpha\right)\right\}\)</span></p>
-<blockquote>
-<p>Can define a risk measure we can use the MGF instead of the PDF or CDF which in some cases is convenient. We can just minimize the MGF</p>
-</blockquote>
+So we know:
+<span class="math display">\[
+\forall \ \underline{w} \quad s.t. \ \underline{w}^{T}\cdot  \underline{1} = 1 \implies \underline{w}^{T}\cdot\mu\cdot 1 = \mu
+\]</span>
+Which implies that the market portfolio is equal to the minimum variance portfolio.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\underline{w}^{\star} &amp;= \frac{\underline{\Sigma}^{-1}\cdot  \underline{1}}{\underline{1}^{T}\underline{\Sigma}^{-1}\cdot   \underline{1}} = \frac{\frac{1}{\sigma^{2}}\underline{I}\cdot \underline{1}}{\frac{1}{\sigma^{2}} \underline{1}^{T}\underline{I}\cdot  \underline{1}} = \frac{\underline{1}}{N}\\
+\implies \underline{w} &amp;= \frac{\underline{1}}{N} = \left[ \begin{array}{c}
+\frac{1}{N} \\
+\vdots \\
+\frac{1}{N}
+\end{array} \right] \implies w_{i} = \frac{1}{N} \ \forall i = 1,\dots,N\\
+\implies \text{min variance } &amp;= \underline{w}^{T}\underline{\Sigma}\underline{w}\\
+&amp;= \left( \frac{1}{N} \right)^{2}\cdot  \underline{1}^{T}(\sigma^{2}\cdot \underline{I})\cdot  \underline{1}\\
+&amp;= \frac{\sigma^{2}}{N}
+\end{aligned}
+\]</span></p>
+<p><img src="Notes/Obsidian-Attachments/5-Portfolio-Theory-5.png" /></p>
 </div>
-<div id="calculating-risk-measures" class="section level2 hasAnchor" number="9.5">
-<h2><span class="header-section-number">9.5</span> Calculating Risk Measures<a href="risk-measures.html#calculating-risk-measures" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<ol style="list-style-type: decimal">
-<li>Parametric Modelling
-<ul>
-<li>Not used because theres usually no closed form distribution for the losses</li>
-</ul></li>
-<li>Historical Simulation
-<ul>
-<li>Not favoured because past performance does not predict future performance</li>
-</ul></li>
-<li>Monte Carlo Simulation
-<ul>
-<li>85% of large banks use historical simulation, while the remaining use MC simulation</li>
-<li>Usually done by sampling from some estimated parametric model for individual assets</li>
-</ul></li>
-</ol>
-<p>Other ways to test are stress-testing (the worst case scenario) and use the Extreme Value Theorem</p>
+</div>
+<div id="security-characteristic-line" class="section level3 hasAnchor" number="7.5.4">
+<h3><span class="header-section-number">7.5.4</span> Security Characteristic Line<a href="portfolio-theory.html#security-characteristic-line" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <span class="math inline">\(\beta_{i}\)</span>’s are found empirically, by regressing (<span class="math inline">\(R_{i}-R_{f}\)</span>) on (<span class="math inline">\(R_{M}-R_{f}\)</span>)
+- Where <span class="math inline">\(R_{M}\)</span> is the market return (Proxy by large market index, ex S&amp;P500)
+- <span class="math inline">\(R_{f}\)</span> is the risk free rate (proxy by T-bill)</p>
+<p><span class="math display">\[
+(R_{i,t} - R_{f,t}) = \beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}, \quad \text{ where } \epsilon_{t} \sim N(0,\sigma^{2}_{\epsilon,i})
+\]</span></p>
+<p>By fitting this, we can then extract the <span class="math inline">\(\beta_{i}\)</span>’s!
+<img src="Notes/Obsidian-Attachments/4-Factor-Models.png" /></p>
+<p>However the mean expected return is much different than the actual return. Therefore the CAPM model doesn’t work very well, or hold.
+<img src="Notes/Obsidian-Attachments/4-Factor-Models-1.png" /></p>
+<p>An iteration of this model includes an intercept, <span class="math inline">\(\alpha\)</span>
+<span class="math display">\[
+(R_{i,t} - R_{f,t}) = \alpha_{i} + \beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}
+\]</span>
+Finding the mean and variance:
+<span class="math display">\[
+\begin{aligned}
+\mu_{i} = \mathbb{E}[R_{i}] &amp;= \mathbb{E}[R_{f,t}+\alpha_{i}+\beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}]\\
+&amp;= \underbrace{ \mathbb{E}[R_{f}] }_{ R_{f} } + \alpha_{i} + \beta_{i}\underbrace{ \mathbb{E}[R_{m}-R_{f}] }_{ \mu_{m - R_{f}} } + \underbrace{ \mathbb{E}[\epsilon_{t}] }_{ =0 }\\
+&amp;= R_{f} + \alpha_{i} + \beta_{i}(\mu_{m}-R_{f})\\
+\\
+\sigma^{2}_{i} = \mathbb{V}[R_{i}] &amp;= \mathbb{V}[\underbrace{ R_{f}+\alpha_{i} }_{ Var = 0 }+\beta_{i}(R_{m}-R_{f})+\epsilon_{i})]\\
+&amp;= \mathbb{V}[\beta_{i}(R_{m}-\underbrace{ R_{f} }_{ Var = 0 }] + \mathbb{V}[\epsilon_{i}]\\
+&amp;= \beta_{i}^{2} \cdot \mathbb{V}[R_{M}] + \sigma^{2}_{\epsilon, i}\\
+&amp;= \beta^{2}_{i}\cdot \sigma^{2}_{m}+\sigma^{2}_{\epsilon,i}
+\end{aligned}
+\]</span></p>
+<p>Time doesn’t matter for the risk free or market returns</p>
+<div id="alpha-beta" class="section level4 hasAnchor" number="7.5.4.1">
+<h4><span class="header-section-number">7.5.4.1</span> Alpha &amp; Beta<a href="portfolio-theory.html#alpha-beta" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>An asset’s beta <span class="math inline">\(\beta_{i}\)</span> can be seen as a measure of both risk &amp; reward
+<span class="math display">\[
+CAPM \to \mu_{f}  = \mu_{f} + \beta_{i}(\mu_{M}-\mu_{f}) \implies \mu_{i} = \mu_{f} + \beta_{i}\underbrace{ \left(\frac{\mu_{M}-\mu_{f}}{\sigma_{M}}  \right)}_{ \text{Sharpe Ratio} }\sigma_{M}
+\]</span></p>
+<p><span class="math inline">\(\beta_{i}\)</span> measures extent of the return of a given asset is related to the market</p>
 <blockquote>
-<p>Rest of the slides were not gone over in detail, just showed how the CVaR performed better than VaR (gave lower z-score -&gt; allocation more money for risk purposes), how parametric modelling can’t really be done, how time series models are independent over time but can correlate between assets and show volatility clustering, how RiskMetrics is a time series model but didnt get into it, and the fact GARCH models are used.</p>
+<p><em>If you believe in CAPM, then the bigger beta is, the more risk you will have but also the more reward you will have.</em></p>
 </blockquote>
+<p><span class="math inline">\(\alpha_{i}\)</span> measure how much the asset outperforms the market consistently, the amount returned on top of the <span class="math inline">\(\beta_{i}\)</span></p>
+</div>
+</div>
+<div id="legacy-of-capm" class="section level3 hasAnchor" number="7.5.5">
+<h3><span class="header-section-number">7.5.5</span> Legacy of CAPM<a href="portfolio-theory.html#legacy-of-capm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>CAPM is wrong. A lot of it’s assumptions do not hold in reality.</p>
+<p>However, it had immense practical impact on investing, specifically in terms of
+- Diversification: concept of decreasing risk by spreading portfolio over different assets
+- Index investing: justification for common investing strategy of tracking some broad index with mutual funds or ETF’s
+- Benchmarking: Measuring performance of investment relative to market / index</p>
+</div>
+<div id="performance-evaluation" class="section level3 hasAnchor" number="7.5.6">
+<h3><span class="header-section-number">7.5.6</span> Performance Evaluation<a href="portfolio-theory.html#performance-evaluation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>CAPM says the best portfolio you can create is the tangency/market portfolio. This implies the best you can do is get the broadest index and combine it with a T-bill.</p>
+<blockquote>
+<p>Aside: In the past, you needed to use a mutual fund because exchange traded funds didn’t exist. Thats how most people invested, even though they cost high fees as there was a lot of human involvement.</p>
+</blockquote>
+<p>There are several ways to measure an asset’s performance, based on CAPM</p>
+<p>Sharpe ratio: (excess return per unit risk)
+<span class="math display">\[
+S_i=\frac{\mu_i-\mu_f}{\sigma_i}
+\]</span></p>
+<ul>
+<li>If you combine different assets, you can reduce the <span class="math inline">\(\sigma_{i}\)</span> of the portfolio, so it’s not objective because two assets may be really risky, but negatively correlated reducing <span class="math inline">\(\sigma_{i}\)</span>.</li>
+<li>It doesn’t however measure how correlated a portfolio is to the market.</li>
+</ul>
+<p>Treynor index: (excess return per unit non-diversifiable risk)
+<span class="math display">\[
+\quad T_i=\frac{\mu_i-\mu_f}{\beta_i}
+\]</span></p>
+<ul>
+<li>You would look at this to find the best return</li>
+</ul>
+<p>Jensen’s alpha: (excess return on top of the return explained by the market)
+<span class="math display">\[
+\quad \alpha_i=\hat{\alpha}_i
+\]</span></p>
+<ul>
+<li>Usually the most important measure a portfolio manager tries to use to convince people to invest in them.</li>
+</ul>
 
+</div>
 </div>
 </div>
             </section>
@@ -652,8 +801,8 @@ For loss RV <span class="math inline">\(L\)</span> with mgf <span class="math in
           </div>
         </div>
       </div>
-<a href="factor-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="betting-strategies.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="copulas.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="factor-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -684,7 +833,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/Notes/7-Risk-Management.md",
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/Notes/5-Portfolio-Theory.md",
 "text": "Edit"
 },
 "history": {
