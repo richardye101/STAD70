@@ -435,9 +435,9 @@ N \left(
 \end{array}
 \right],
 \left[
-\begin{array}{c}
+\begin{array}{cc}
 \sigma_{1}^{2}  &amp; \sigma_{12} \\
-\sigma_{21}  &amp; \sigma_{2}^{2}
+\sigma_{21}  &amp; \sigma^{2}_{2}
 \end{array} \right]
 \right) \quad
 \text{where } R_{i} = \frac{S_{i}(t)-S_{i}(0)}{S_{i}(0)}, i = 1,2
@@ -475,7 +475,8 @@ R_{2}
 \text{ where } \underline{R} \sim N_{2D}\left( \left[ \begin{array} {l}
 \mu_{1} \\
 \mu_{2}
-\end{array} \right], \left[ \begin{array}{c}
+\end{array} \right],
+\left[ \begin{array}{cc}
 \sigma_{1}^{2} &amp; \sigma_{12} \\
 \sigma_{21} &amp; \sigma_{2}^{2}
 \end{array}\right]  \right)\\
@@ -491,11 +492,10 @@ R_{2}
 \sigma_{p}^{2} &amp;= \mathbb{V}[R_{p}] = \mathbb{V}[\underline{w}^{T}\underline{R}]\\
 &amp;= \underline{w}^{T} \mathbb{V}(\underline{R})\underline{w} = \underline{w}^{T}\Sigma \underline{w}\\
 &amp;= [ w_{1} \ w_{2}]
-\left[ \begin{array}{c}
+\left[ \begin{array}{cc}
 \sigma_{1}^{2} &amp; \sigma_{12} \\
 \sigma_{21} &amp; \sigma_{2}^{2}
-\end{array}\right]
-\left[ \begin{array}{c}
+\end{array}\right] \left[ \begin{array}{c}
 w_{1} \\
 w_{2}
 \end{array} \right] \\
@@ -638,8 +638,8 @@ O_{i} = \text{shares outstanding}
 </div>
 <div id="security-market-line" class="section level3 hasAnchor" number="7.5.3">
 <h3><span class="header-section-number">7.5.3</span> Security Market Line<a href="portfolio-theory.html#security-market-line" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>For <strong>each individual asset</strong>, CAPM implies the following risk/reward relationship (Security Market Line)
-<span class="math display">\[
+<p>For <strong>each individual asset</strong>, CAPM implies the following risk/reward relationship (Security Market Line)</p>
+<p><span class="math display">\[
 \begin{aligned}
 \mu_{i} &amp;= \mu_{f} + \beta_{i}\underbrace{ (\mu_{M}-\mu_{f}) }_{ Slope }
 \quad \text{Where } \begin{cases}
