@@ -259,7 +259,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9" data-path="betting-strategies.html"><a href="betting-strategies.html"><i class="fa fa-check"></i><b>9</b> Betting Strategies</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="betting-strategies.html"><a href="betting-strategies.html#example-3"><i class="fa fa-check"></i><b>9.1</b> Example</a>
+<li class="chapter" data-level="9.1" data-path="betting-strategies.html"><a href="betting-strategies.html#problem-setup"><i class="fa fa-check"></i><b>9.1</b> Problem Setup</a>
 <ul>
 <li class="chapter" data-level="9.1.1" data-path="betting-strategies.html"><a href="betting-strategies.html#scenario-1-bet-fixed-amount"><i class="fa fa-check"></i><b>9.1.1</b> Scenario 1: Bet fixed amount</a>
 <ul>
@@ -270,7 +270,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9.2" data-path="betting-strategies.html"><a href="betting-strategies.html#kelly-criterion"><i class="fa fa-check"></i><b>9.2</b> Kelly Criterion</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="betting-strategies.html"><a href="betting-strategies.html#example-4"><i class="fa fa-check"></i><b>9.2.1</b> Example</a></li>
+<li class="chapter" data-level="9.2.1" data-path="betting-strategies.html"><a href="betting-strategies.html#finding-the-optimal-value"><i class="fa fa-check"></i><b>9.2.1</b> Finding the Optimal Value</a></li>
+<li class="chapter" data-level="9.2.2" data-path="betting-strategies.html"><a href="betting-strategies.html#geometric-average"><i class="fa fa-check"></i><b>9.2.2</b> Geometric average</a>
+<ul>
+<li class="chapter" data-level="9.2.2.1" data-path="betting-strategies.html"><a href="betting-strategies.html#simple-example"><i class="fa fa-check"></i><b>9.2.2.1</b> Simple example</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2.3" data-path="betting-strategies.html"><a href="betting-strategies.html#kelly-criterion-in-investing"><i class="fa fa-check"></i><b>9.2.3</b> Kelly Criterion in Investing</a>
+<ul>
+<li class="chapter" data-level="9.2.3.1" data-path="betting-strategies.html"><a href="betting-strategies.html#example-in-investing"><i class="fa fa-check"></i><b>9.2.3.1</b> Example in investing</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2.4" data-path="betting-strategies.html"><a href="betting-strategies.html#theoretical-properties"><i class="fa fa-check"></i><b>9.2.4</b> Theoretical properties</a></li>
+<li class="chapter" data-level="9.2.5" data-path="betting-strategies.html"><a href="betting-strategies.html#criticisms"><i class="fa fa-check"></i><b>9.2.5</b> Criticisms</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="problem-set-1.html"><a href="problem-set-1.html"><i class="fa fa-check"></i><b>10</b> Problem Set 1</a>
@@ -502,8 +512,8 @@ VaR_{\alpha} &amp;= \mu +z_{\alpha}\cdot \sigma
 <h2><span class="header-section-number">8.3</span> Risk Measure Properties<a href="risk-measures.html#risk-measure-properties" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We now look at formal set of requirements for risk measures (5 properties)</p>
 <p>We let <span class="math inline">\(\rho(L)\)</span> represent the risk measure, which takes in a distribution of a some returns and outputs a number indicating the capital requirements (money to be kept aside) should be.
-We let <span class="math inline">\(L\)</span> is a random variable and let <span class="math inline">\(\rho\)</span> is a functional distribution of <span class="math inline">\(L\)</span>
-For this measure <span class="math inline">\(\rho\)</span> to reasonably quantify risk, it must:
+We let <span class="math inline">\(L\)</span> is a random variable and let <span class="math inline">\(\rho\)</span> is a functional distribution of <span class="math inline">\(L\)</span>.</p>
+<p>For this measure <span class="math inline">\(\rho\)</span> to reasonably quantify risk, it must:
 1. be normalized <span class="math inline">\(\rho(0)=0\)</span> (risk of holding no assets is 0)
 2. Translation invariance: <span class="math inline">\(\rho(L+c) = \rho(L) + c \ \forall c \in \mathbb{R}\)</span>
 - adding a loss <span class="math inline">\(c\)</span> to the portfolio increases risk by exactly <span class="math inline">\(c\)</span>

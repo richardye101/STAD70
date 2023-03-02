@@ -1731,7 +1731,8 @@ and for small \(\alpha\), \(\frac{\phi(z_{\alpha})}{\alpha} > z_{a}\) which impl
 We now look at formal set of requirements for risk measures (5 properties)
 
 We let \(\rho(L)\) represent the risk measure, which takes in a distribution of a some returns and outputs a number indicating the capital requirements (money to be kept aside) should be.
-We let \(L\) is a random variable and let \(\rho\) is a functional distribution of \(L\)
+We let \(L\) is a random variable and let \(\rho\) is a functional distribution of \(L\).
+
 For this measure \(\rho\) to reasonably quantify risk, it must:
 1. be normalized \(\rho(0)=0\) (risk of holding no assets is 0)
 2. Translation invariance: \(\rho(L+c) = \rho(L) + c \ \forall c \in \mathbb{R}\)
@@ -1899,8 +1900,8 @@ Consider blackjack, in the 60's, Ed Thorp, a mathematician figured out how to be
 
 Given a sequence of bets, we can use a \textbf{kelly criterion} to determine how to bet optimally.
 
-\hypertarget{example-3}{%
-\section{Example}\label{example-3}}
+\hypertarget{problem-setup}{%
+\section{Problem Setup}\label{problem-setup}}
 
 Consider a sequence of independent and identical gambles.
 \(P(win) = \frac{1}{2}<p<1 \implies P(lose) = q = 1-p\)
@@ -2052,14 +2053,18 @@ Definition: The fraction \(f\) is the amount that maximizes the expected log ret
 
 The log can be interpreted as because you are compounding your wealth, you don't just want to maximize the next step but the entire sequence of bets.
 
-By maximizing the \emph{expected log-return} \(\leftrightarrow\) maximizing expected log of \(V_{n}\) \(\leftrightarrow\) maximizing geometric avg of returns.
+\begin{quote}
+By maximizing the \emph{expected log-return} \(\leftrightarrow\)
+maximizing expected log of \(V_{n}\) \(\leftrightarrow\)
+maximizing geometric avg of returns.
+\end{quote}
 
 By jensens inequality,
 
 \(E\left[\log \left(V_n\right)\right] \neq \log \left(E\left[V_n\right]\right)\)
 
-\hypertarget{example-4}{%
-\subsection{Example}\label{example-4}}
+\hypertarget{finding-the-optimal-value}{%
+\subsection{Finding the Optimal Value}\label{finding-the-optimal-value}}
 
 Finding the optimal value of fraction \(f^{*}\) according to the Kelly criterion
 
@@ -2081,17 +2086,137 @@ We want to maximize \(G(f)\) with respect to the fraction \(f\). We can do this 
 \implies \frac{p}{1+f}&=\frac{p}{1-f}\\
 p(1-f)&=q(1+f)\\
 p-q&=f\cdot(p+q)\\
-\implies f^{*} &= p-q = 2p-1
+\end{aligned}
+\]
+\[
+\mathbf{\implies f^{*} = p-q = 2p-1}
+\]
+So the fraction you bet depends on \emph{the edge you have on this bet}.
+
+\includegraphics{Notes/Obsidian-Attachments/8-Betting-Strategies.png}
+
+\hypertarget{geometric-average}{%
+\subsection{Geometric average}\label{geometric-average}}
+
+Assuming a fixed fraction \(f\) of wealth is bet at each time step. What is the geometric avg of the returns as \(n\to \infty\)?
+
+\[
+\begin{aligned}
+\text{Let growth rate } r_{i} &\text{ be }:\\
+\text{For } i-1 \to i: r_{i} &= \frac{V_{i}}{V_{i-1}}\\
+\text{Geometric Average: }&: (r_{1} \times r_{2}\dots \times r_{n})^{1/n} = \left[ \prod^{n}_{i=1}(1+f)^{I_{i}}(1-f)^{1-I_{i}} \right] ^{1/n}\\
+&= (1+f)^{\underbrace{ \sum^{n}_{i=1}I_{i}/n }_{ W_{n} }} \times (1-f)^{1/n \sum^{n}_{i=1}(1-I_{i})}\\
+&= (1+f)^{W_{n}/n}\times (1-f)^{1-W_{n}/n} \quad \text{where } W_{n}\sim Binom(n,p)
 \end{aligned}
 \]
 
-So the fraction you bet depends on \emph{the edge you have on this bet}.
+So as \(n\to \infty\), \(\frac{W_{n}}{n}\to p\) from LLN, which implies the geometric average converges to:
+\[
+(1+f)^{p}(1-f)^{1-p}
+\]
+from the continuous mapping theorem. This is also the expression where if you take the log, you get \(\underbrace{ \log(1+f)np+\log(1-f)nq }_{ G(f) }\) from the {[}{[}\#Finding the Optimal Value{]}{]} section.
 
-\begin{quote}
-Will not go through example of geometric average, but he will post
-\end{quote}
+\hypertarget{simple-example}{%
+\subsubsection{Simple example}\label{simple-example}}
 
-\includegraphics{Notes/Obsidian-Attachments/8-Betting-Strategies.png}
+Consider general sequence of bets, where
+- \(1 bet \implies +\$a\) if win and \(−\$b\) if lose
+- For previous examples \(a = b = 1\)
+- \(P(win)=p\) and \(P(lose)=q\)
+- Bet is favorable, i.e.~\(p\cdot a> q\cdot b\)
+- Kelly criterion optimal fraction to bet is
+\[
+f^{*} = \frac{pa-qb}{ab}
+\]
+
+So
+\[
+\begin{aligned}
+\text{Given }& a = 1, b = 1\\ \\
+f^{*} = &\frac{1p-1q}{1\cdot1} = p-q = .55-.45 = .10
+\end{aligned}
+\]
+\includegraphics{Notes/Obsidian-Attachments/8-Betting-Strategies-1.png}
+
+\hypertarget{kelly-criterion-in-investing}{%
+\subsection{Kelly Criterion in Investing}\label{kelly-criterion-in-investing}}
+
+Consider a situation where you have:
+- risk free asset with return \(r_{i}\)
+- One risky asset with return \(R_{i}\), with \(\mathbb{E}(R) = \mu, \mathbb{V}(R) = \sigma^{2}\)
+
+Assume we invest fraction \(f\) in the risky asset, and \(1-f\) in the risk free asset.
+
+We first need to show that:
+\[
+\mathbb{E}\left[ \log\left( \frac{V_{n}}{V_{0}} \right) \right] \approx \log(1+r_{f}) +f\left( \frac{\mu-r_{f}}{1+r_{f}} \right)-f^{2}\left( \frac{\sigma^{2}+(\mu-r_{f})^{2}}{2(1+r_{f})^{2}} \right)
+\]
+
+\[
+\begin{aligned}
+\text{Know: }V_{1} &= V_{0}\cdot f\cdot(1+R) + V_{0}(1-f)(1+r_{f})\\
+&= V_{0}[1+fR+(1-f)r_{f}]\\
+&= V_{0}[1+r_{f}+f\underbrace{ (R-r_{f}) }_{ \text{Excess ret} }]\\
+\implies \frac{V_{1}}{V_{0}} &= \log(1+r_{f}+f(R-r_{f}))\\
+\\
+\implies \log \left( \frac{V_{n}}{V_{0}} \right) &=  \log \left( \prod^{n}_{t=1} \frac{V_{t}}{V_{t-1}} \right) \\
+&= \sum^{n}_{t=1} \log(1+r_{f}+f(R_{t}-r_{f}))\\
+\\
+\implies \mathbb{E}\left[ \log\left( \frac{V_{n}}{V_{0}} \right) \right] &= \sum^{n}_{t=1}\mathbb{E}[\log(1+r_{f}+f(R_{t}-r_{f}))]\\
+& \text{Assuming i.i.d. returns}\\
+&= n \mathbb{E}[\log(1+r_{f}+f(R-r_{f}))]
+\end{aligned}
+\]
+
+We can simplify this using a taylor approx of the function \(\log(1+r_{f}+f(R-r_{f}))\) around \(1+r_{f}\):
+\[
+\begin{aligned}
+\underbrace{ \log }_{ g } \left( \underbrace{ 1+r_{f} }_{ x_{0} }+\underbrace{ f(R_{t}-r_{f} }_{ \delta }) \right) &\approx \underbrace{ \log(1+r_{f}) }_{ g(x_{0}) } + \underbrace{ \frac{1}{1+r_{f}}f(R_{t}-r_{f}) }_{ g'(x_{0}) }+\underbrace{ \frac{1}{2}\left( \frac{f^{2}}{(1+r_{f})^{2}}\right)\delta^{2} }_{ g''(x_{0}) }
+\end{aligned}
+\]
+\[
+\begin{aligned}
+\mathbb{E}[g(x_{0}-\delta)] \approx \log(1+r_{f}) &+ \frac{1}{1+r_{f}}f\underbrace{ \mathbb{E}(R_{t}-r_{f}) }_{ \mu-r_{f} }+\frac{1}{2}\left( \frac{f^{2}}{(1+r_{f})^{2}}\right)\mathbb{E}[(R_{t}-r_{f})^{2}]\\
+\text{Where } \mathbb{E}[(R_{t}-r_{f})^{2}] &= (\sigma^{2}+\mu^{2}+r_{f}^{2}-2\mu r_{f})
+\end{aligned}
+\]
+
+We can now show that \(f^{*} \approx (1+r_{f}) \frac{(\mu-r_{f})}{\sigma^{2}}\)
+
+\[
+\begin{aligned}
+\text{Let } G(f) &= \log(1+r_{f})+\frac{f}{1+r_{f}}(\mu-r_{f})-\frac{f^{2}}{2(1+r_{f})^{2}}(\sigma^{2}+\mu^{2}+r_{f}^{2}-2\mu r_{f})
+\end{aligned}
+\]
+
+\[
+\mathbf{\implies f^{*} \approx (1+r_{f}) \frac{\mu-r_{f}}{\sigma^{2}}}
+\]
+
+\hypertarget{example-in-investing}{%
+\subsubsection{Example in investing}\label{example-in-investing}}
+
+\includegraphics{Notes/Obsidian-Attachments/8-Betting-Strategies-2.png}
+
+\hypertarget{theoretical-properties}{%
+\subsection{Theoretical properties}\label{theoretical-properties}}
+
+In the long term \(n\to \infty\), with probability 1, a strategy based on a Kelly criterion will:
+- Maximize the limiting exponential growth rate of wealth
+- Maximizes median of final wealth
+- Half of distribution is above median \& half below it
+- Minimizes the expected time required to reach a specified goal for the wealth
+
+\hypertarget{criticisms}{%
+\subsection{Criticisms}\label{criticisms}}
+
+It tends to be risky
+
+It works well if you have clear information (what exactly your edge is) and that you have an infinite sequence of gambles
+
+In practice, people will take half of the kelly criterion, as a precaution against high volatility
+
+Most people retire at some point and therefore do not have infinite gambles
 
 \hypertarget{problem-set-1}{%
 \chapter{Problem Set 1}\label{problem-set-1}}
@@ -2744,11 +2869,11 @@ Calculate daily net returns, plot the returns, sample auto-correlation plot, and
 \begin{verbatim}
 ##                  date adj_close
 ## 1 2015-01-02 14:30:00  44.17995
-## 2 2015-01-05 14:30:00  43.25632
+## 2 2015-01-05 14:30:00  43.25630
 ## 3 2015-01-06 14:30:00  42.38906
 ## 4 2015-01-07 14:30:00  42.80505
 ## 5 2015-01-08 14:30:00  42.80505
-## 6 2015-01-09 14:30:00  42.08590
+## 6 2015-01-09 14:30:00  42.08588
 \end{verbatim}
 
 \begin{Shaded}
@@ -2819,8 +2944,8 @@ This supports the stylized fact that returns follow heavy tail distributions.
 \end{Highlighting}
 \end{Shaded}
 
-We have a fitted mean \(\mu\) of \ensuremath{3.2240717\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4635454\times 10^{-4}}.
-This is compared to the sample mean \(\mu\) of \ensuremath{5.6615321\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827264\times 10^{-4}}.
+We have a fitted mean \(\mu\) of \ensuremath{3.2242702\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4635324\times 10^{-4}}.
+This is compared to the sample mean \(\mu\) of \ensuremath{5.6615321\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827254\times 10^{-4}}.
 
 These differences can occur due to the fitted t-distribution smoothing away more extreme values.
 

@@ -74,7 +74,13 @@ hidden-probability-of-ruin
 scenario-2-bet-entire-wealth
 scenario-3-exp-growth-wo-ruin
 kelly-criterion
-example-3
+finding-the-optimal-value
+geometric-average
+simple-example
+kelly-criterion-in-investing
+example-in-investing
+theoretical-properties
+criticisms
 problem-set-1
 q1
 data-prep
