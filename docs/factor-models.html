@@ -215,29 +215,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="factor-models.html"><a href="factor-models.html"><i class="fa fa-check"></i><b>7</b> Factor Models</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="factor-models.html"><a href="factor-models.html#capm"><i class="fa fa-check"></i><b>7.1</b> CAPM</a>
+<li class="chapter" data-level="7.1" data-path="factor-models.html"><a href="factor-models.html#three-factor-models"><i class="fa fa-check"></i><b>7.1</b> Three Factor models</a>
 <ul>
-<li class="chapter" data-level="7.1.1" data-path="factor-models.html"><a href="factor-models.html#security-market-line"><i class="fa fa-check"></i><b>7.1.1</b> Security Market Line</a></li>
-<li class="chapter" data-level="7.1.2" data-path="factor-models.html"><a href="factor-models.html#security-characteristic-line"><i class="fa fa-check"></i><b>7.1.2</b> Security Characteristic Line</a>
+<li class="chapter" data-level="7.1.1" data-path="factor-models.html"><a href="factor-models.html#time-series-regression-models"><i class="fa fa-check"></i><b>7.1.1</b> Time Series Regression Models</a>
 <ul>
-<li class="chapter" data-level="7.1.2.1" data-path="factor-models.html"><a href="factor-models.html#alpha-beta"><i class="fa fa-check"></i><b>7.1.2.1</b> Alpha &amp; Beta</a></li>
+<li class="chapter" data-level="7.1.1.1" data-path="factor-models.html"><a href="factor-models.html#fama-french-3-factor-model"><i class="fa fa-check"></i><b>7.1.1.1</b> Fama-French 3 Factor Model</a></li>
 </ul></li>
-<li class="chapter" data-level="7.1.3" data-path="factor-models.html"><a href="factor-models.html#legacy-of-capm"><i class="fa fa-check"></i><b>7.1.3</b> Legacy of CAPM</a></li>
-<li class="chapter" data-level="7.1.4" data-path="factor-models.html"><a href="factor-models.html#performance-evaluation"><i class="fa fa-check"></i><b>7.1.4</b> Performance Evaluation</a></li>
+<li class="chapter" data-level="7.1.2" data-path="factor-models.html"><a href="factor-models.html#statistical-factor-models"><i class="fa fa-check"></i><b>7.1.2</b> Statistical Factor Models</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="factor-models.html"><a href="factor-models.html#three-factor-models"><i class="fa fa-check"></i><b>7.2</b> Three Factor models</a>
+<li class="chapter" data-level="7.2" data-path="factor-models.html"><a href="factor-models.html#principle-component-analysis-pca"><i class="fa fa-check"></i><b>7.2</b> Principle Component Analysis (PCA)</a>
 <ul>
-<li class="chapter" data-level="7.2.1" data-path="factor-models.html"><a href="factor-models.html#time-series-regression-models"><i class="fa fa-check"></i><b>7.2.1</b> Time Series Regression Models</a>
-<ul>
-<li class="chapter" data-level="7.2.1.1" data-path="factor-models.html"><a href="factor-models.html#fama-french-3-factor-model"><i class="fa fa-check"></i><b>7.2.1.1</b> Fama-French 3 Factor Model</a></li>
+<li class="chapter" data-level="7.2.1" data-path="factor-models.html"><a href="factor-models.html#selecting-components"><i class="fa fa-check"></i><b>7.2.1</b> Selecting Components</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2.2" data-path="factor-models.html"><a href="factor-models.html#statistical-factor-models"><i class="fa fa-check"></i><b>7.2.2</b> Statistical Factor Models</a></li>
-</ul></li>
-<li class="chapter" data-level="7.3" data-path="factor-models.html"><a href="factor-models.html#principle-component-analysis-pca"><i class="fa fa-check"></i><b>7.3</b> Principle Component Analysis (PCA)</a>
-<ul>
-<li class="chapter" data-level="7.3.1" data-path="factor-models.html"><a href="factor-models.html#selecting-components"><i class="fa fa-check"></i><b>7.3.1</b> Selecting Components</a></li>
-</ul></li>
-<li class="chapter" data-level="7.4" data-path="factor-models.html"><a href="factor-models.html#factor-analysis"><i class="fa fa-check"></i><b>7.4</b> Factor Analysis</a></li>
+<li class="chapter" data-level="7.3" data-path="factor-models.html"><a href="factor-models.html#factor-analysis"><i class="fa fa-check"></i><b>7.3</b> Factor Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="risk-measures.html"><a href="risk-measures.html"><i class="fa fa-check"></i><b>8</b> Risk Measures</a>
 <ul>
@@ -391,112 +381,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="factor-models" class="section level1 hasAnchor" number="7">
 <h1><span class="header-section-number">Chapter 7</span> Factor Models<a href="factor-models.html#factor-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="capm" class="section level2 hasAnchor" number="7.1">
-<h2><span class="header-section-number">7.1</span> CAPM<a href="factor-models.html#capm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The CAPM theory suggests that all investors hold some form of the tangency/market portfolio.</p>
-<p>The slope of the tangency portfolio is also known as the Sharpe Ratio, or Market Price of Risk.</p>
-<div id="security-market-line" class="section level3 hasAnchor" number="7.1.1">
-<h3><span class="header-section-number">7.1.1</span> Security Market Line<a href="factor-models.html#security-market-line" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>For each individual asset, CAPM implies the following risk/reward relationship (Security Market Line)
-<span class="math display">\[
-\begin{aligned}
-\mu_{i} &amp;= \mu_{f} + \beta_{i}(\mu_{M}-\mu_{f})
-\quad \text{Where } \begin{cases}
-\beta_{i} = \frac{\sigma_{iM}}{\sigma^{2}_{M}} \\
-\sigma_{iM} = Cov(R_{i, R_{M}})
-\end{cases}\\
-&amp;= \mu_{f} + \left( \frac{\mu_{M}-\mu_{f}}{\sigma_{M}} \right) \cdot \sigma_{p}
-\end{aligned}
-\]</span></p>
-<ul>
-<li><span class="math inline">\(\beta_{i}\)</span> is different for each asset, it captures how related the return on the given asset is with the Market return.</li>
-<li><span class="math inline">\(\sigma_{M}\)</span> is the market risk AKA undiversifiable risk</li>
-</ul>
-</div>
-<div id="security-characteristic-line" class="section level3 hasAnchor" number="7.1.2">
-<h3><span class="header-section-number">7.1.2</span> Security Characteristic Line<a href="factor-models.html#security-characteristic-line" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The <span class="math inline">\(\beta_{i}\)</span>’s are found empirically, by regressing (<span class="math inline">\(R_{i}-R_{f}\)</span>) on (<span class="math inline">\(R_{M}-R_{f}\)</span>)
-- Where <span class="math inline">\(R_{M}\)</span> is the market return (Proxy by large market index, ex S&amp;P500)
-- <span class="math inline">\(R_{f}\)</span> is the risk free rate (proxy by T-bill)</p>
-<p><span class="math display">\[
-(R_{i,t} - R_{f,t}) = \beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}, \quad \text{ where } \epsilon_{t} \sim N(0,\sigma^{2}_{\epsilon,i})
-\]</span></p>
-<p>By fitting this, we can then extract the <span class="math inline">\(\beta_{i}\)</span>’s!
-<img src="Notes/Obsidian-Attachments/4-Factor-Models.png" /></p>
-<p>However the mean expected return is much different than the actual return. Therefore the CAPM model doesn’t work very well, or hold.
-<img src="Notes/Obsidian-Attachments/4-Factor-Models-1.png" /></p>
-<p>An iteration of this model includes an intercept, <span class="math inline">\(\alpha\)</span>
-<span class="math display">\[
-(R_{i,t} - R_{f,t}) = \alpha_{i} + \beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}
-\]</span>
-Finding the mean and variance:
-<span class="math display">\[
-\begin{aligned}
-\mu_{i} = \mathbb{E}[R_{i}] &amp;= \mathbb{E}[R_{f,t}+\alpha_{i}+\beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}]\\
-&amp;= \underbrace{ \mathbb{E}[R_{f}] }_{ R_{f} } + \alpha_{i} + \beta_{i}\underbrace{ \mathbb{E}[R_{m}-R_{f}] }_{ \mu_{m - R_{f}} } + \underbrace{ \mathbb{E}[\epsilon_{t}] }_{ =0 }\\
-&amp;= R_{f} + \alpha_{i} + \beta_{i}(\mu_{m}-R_{f})\\
-\\
-\sigma^{2}_{i} = \mathbb{V}[R_{i}] &amp;= \mathbb{V}[\underbrace{ R_{f}+\alpha_{i} }_{ Var = 0 }+\beta_{i}(R_{m}-R_{f})+\epsilon_{i})]\\
-&amp;= \mathbb{V}[\beta_{i}(R_{m}-\underbrace{ R_{f} }_{ Var = 0 }] + \mathbb{V}[\epsilon_{i}]\\
-&amp;= \beta_{i}^{2} \cdot \mathbb{V}[R_{M}] + \sigma^{2}_{\epsilon, i}\\
-&amp;= \beta^{2}_{i}\cdot \sigma^{2}_{m}+\sigma^{2}_{\epsilon,i}
-\end{aligned}
-\]</span></p>
-<p>Time doesn’t matter for the risk free or market returns</p>
-<div id="alpha-beta" class="section level4 hasAnchor" number="7.1.2.1">
-<h4><span class="header-section-number">7.1.2.1</span> Alpha &amp; Beta<a href="factor-models.html#alpha-beta" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>An asset’s beta <span class="math inline">\(\beta_{i}\)</span> can be seen as a measure of both risk &amp; reward
-<span class="math display">\[
-CAPM \to \mu_{f}  = \mu_{f} + \beta_{i}(\mu_{M}-\mu_{f}) \implies \mu_{i} = \mu_{f} + \beta_{i}\underbrace{ \left(\frac{\mu_{M}-\mu_{f}}{\sigma_{M}}  \right)}_{ \text{Sharpe Ratio} }\sigma_{M}
-\]</span></p>
-<p><span class="math inline">\(\beta_{i}\)</span> measures extent of the return of a given asset is related to the market</p>
-<blockquote>
-<p><em>If you believe in CAPM, then the bigger beta is, the more risk you will have but also the more reward you will have.</em></p>
-</blockquote>
-<p><span class="math inline">\(\alpha_{i}\)</span> measure how much the asset outperforms the market consistently, the amount returned on top of the <span class="math inline">\(\beta_{i}\)</span></p>
-</div>
-</div>
-<div id="legacy-of-capm" class="section level3 hasAnchor" number="7.1.3">
-<h3><span class="header-section-number">7.1.3</span> Legacy of CAPM<a href="factor-models.html#legacy-of-capm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>CAPM is wrong. A lot of it’s assumptions do not hold in reality.</p>
-<p>However, it had immense practical impact on investing, specifically in terms of
-- Diversification: concept of decreasing risk by spreading portfolio over different assets
-- Index investing: justification for common investing strategy of tracking some broad index with mutual funds or ETF’s
-- Benchmarking: Measuring performance of investment relative to market / index</p>
-</div>
-<div id="performance-evaluation" class="section level3 hasAnchor" number="7.1.4">
-<h3><span class="header-section-number">7.1.4</span> Performance Evaluation<a href="factor-models.html#performance-evaluation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>CAPM says the best portfolio you can create is the tangency/market portfolio. This implies the best you can do is get the broadest index and combine it with a T-bill.</p>
-<blockquote>
-<p>Aside: In the past, you needed to use a mutual fund because exchange traded funds didn’t exist. Thats how most people invested, even though they cost high fees as there was a lot of human involvement.</p>
-</blockquote>
-<p>There are several ways to measure an asset’s performance, based on CAPM</p>
-<p>Sharpe ratio: (excess return per unit risk)
-<span class="math display">\[
-S_i=\frac{\mu_i-\mu_f}{\sigma_i}
-\]</span></p>
-<ul>
-<li>If you combine different assets, you can reduce the <span class="math inline">\(\sigma_{i}\)</span> of the portfolio, so it’s not objective because two assets may be really risky, but negatively correlated reducing <span class="math inline">\(\sigma_{i}\)</span>.</li>
-<li>It doesn’t however measure how correlated a portfolio is to the market.</li>
-</ul>
-<p>Treynor index: (excess return per unit non-diversifiable risk)
-<span class="math display">\[
-\quad T_i=\frac{\mu_i-\mu_f}{\beta_i}
-\]</span></p>
-<ul>
-<li>You would look at this to find the best return</li>
-</ul>
-<p>Jensen’s alpha: (excess return on top of the return explained by the market)
-<span class="math display">\[
-\quad \alpha_i=\hat{\alpha}_i
-\]</span></p>
-<ul>
-<li>Usually the most important measure a portfolio manager tries to use to convince people to invest in them.</li>
-</ul>
-</div>
-</div>
-<div id="three-factor-models" class="section level2 hasAnchor" number="7.2">
-<h2><span class="header-section-number">7.2</span> Three Factor models<a href="factor-models.html#three-factor-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="three-factor-models" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Three Factor models<a href="factor-models.html#three-factor-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The CAPM model assumes the market is a single factor that drives asset returns.
 - In practice, CAPM does not adequately describe real-world returns</p>
 <p>We can improve this model by including more factors in the regression.</p>
@@ -577,8 +463,8 @@ R_{port} = w^{T}R \implies \begin{cases}
 \end{cases}
 \end{aligned}
 \]</span></p>
-<div id="time-series-regression-models" class="section level3 hasAnchor" number="7.2.1">
-<h3><span class="header-section-number">7.2.1</span> Time Series Regression Models<a href="factor-models.html#time-series-regression-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="time-series-regression-models" class="section level3 hasAnchor" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> Time Series Regression Models<a href="factor-models.html#time-series-regression-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Consider model for which factor values are known (e.g. macro/fundamental model)</p>
 <p>Estimate betas &amp; risks (variances) one asset at a time, using time series regression
 - For each fixed <span class="math inline">\(i=1,\dots N\)</span>, fir regression model:
@@ -587,8 +473,8 @@ R_{i}(t) = = \beta_{i,0} + \beta_{i,1}F_{1}(t)+ \dots + \beta_{i,p}F_{p}(t) + \e
 \]</span></p>
 <p>Most models will always include some proxy for the overall economy (eg the market)</p>
 <p>Instead of Fama-French, there is BARRA which uses the cross section of returns? Still regression tho</p>
-<div id="fama-french-3-factor-model" class="section level4 hasAnchor" number="7.2.1.1">
-<h4><span class="header-section-number">7.2.1.1</span> Fama-French 3 Factor Model<a href="factor-models.html#fama-french-3-factor-model" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="fama-french-3-factor-model" class="section level4 hasAnchor" number="7.1.1.1">
+<h4><span class="header-section-number">7.1.1.1</span> Fama-French 3 Factor Model<a href="factor-models.html#fama-french-3-factor-model" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Additionally to the market, they looked at two other factors that are consistent over many datasets and time periods.</p>
 <p><strong>Small Minus Big: (SMB)</strong>
 One factor tries to capture the size(market cap) of the company/stock, which empirically showed that size played a role in its return
@@ -615,8 +501,8 @@ where:
 This gives more stable estimates than sample covariance.</p>
 </div>
 </div>
-<div id="statistical-factor-models" class="section level3 hasAnchor" number="7.2.2">
-<h3><span class="header-section-number">7.2.2</span> Statistical Factor Models<a href="factor-models.html#statistical-factor-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="statistical-factor-models" class="section level3 hasAnchor" number="7.1.2">
+<h3><span class="header-section-number">7.1.2</span> Statistical Factor Models<a href="factor-models.html#statistical-factor-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In this model, the factors are <strong>unknown (latent) and unobserved</strong>. THis implies that we need to estimate both <span class="math inline">\(\beta\)</span> and <span class="math inline">\(F\)</span>.</p>
 <p>Unusual constraint: Because the factors are uncorrelated (not necessarily i.i.d.)
 <span class="math display">\[
@@ -632,8 +518,8 @@ This gives more stable estimates than sample covariance.</p>
 \]</span></p>
 </div>
 </div>
-<div id="principle-component-analysis-pca" class="section level2 hasAnchor" number="7.3">
-<h2><span class="header-section-number">7.3</span> Principle Component Analysis (PCA)<a href="factor-models.html#principle-component-analysis-pca" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="principle-component-analysis-pca" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Principle Component Analysis (PCA)<a href="factor-models.html#principle-component-analysis-pca" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This technique helps reduce the dimensionality of a problem. Consider a factor model without errors:
 <span class="math display">\[
 \mathbf{R}(t) = \boldsymbol{\beta}_{0}+\boldsymbol{\beta}^{T}\mathbf{F}(t) \implies \boldsymbol{\Sigma_{R}=\beta^{T}\Sigma_{F}\beta}
@@ -696,8 +582,8 @@ tr(\Lambda) = tr(\Sigma) &amp;\iff\\
 <span class="math display">\[
 Var(PC_{j}) =\frac{\lambda_{j}}{\lambda_{1}+\lambda_{2}+\dots+\lambda_{N}} \quad \text{Where } j=1,\dots,N
 \]</span></p>
-<div id="selecting-components" class="section level3 hasAnchor" number="7.3.1">
-<h3><span class="header-section-number">7.3.1</span> Selecting Components<a href="factor-models.html#selecting-components" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="selecting-components" class="section level3 hasAnchor" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> Selecting Components<a href="factor-models.html#selecting-components" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The important part of PCA is how many components to select to capture a suitable amount of variability.</p>
 <p><em>You don’t need many components if the data is very correlated, and a few components may represent most of the variance in the data.</em></p>
 <p>We can also use a scree plot and pick the number of components before some “elbow” point.
@@ -711,8 +597,8 @@ Var(PC_{j}) =\frac{\lambda_{j}}{\lambda_{1}+\lambda_{2}+\dots+\lambda_{N}} \quad
 <p><img src="Notes/Obsidian-Attachments/6-Factor-Models-1.png" /></p>
 </div>
 </div>
-<div id="factor-analysis" class="section level2 hasAnchor" number="7.4">
-<h2><span class="header-section-number">7.4</span> Factor Analysis<a href="factor-models.html#factor-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="factor-analysis" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Factor Analysis<a href="factor-models.html#factor-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <blockquote>
 <p>He didn’t go into much detail, just went over how the factor analysis works at a high level and how you can’t really try to interpret the factors.</p>
 </blockquote>

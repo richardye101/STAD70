@@ -1146,145 +1146,6 @@ We can then estimate the copula using MLE on the uniforms.
 \hypertarget{factor-models}{%
 \chapter{Factor Models}\label{factor-models}}
 
-\hypertarget{capm}{%
-\section{CAPM}\label{capm}}
-
-The CAPM theory suggests that all investors hold some form of the tangency/market portfolio.
-
-The slope of the tangency portfolio is also known as the Sharpe Ratio, or Market Price of Risk.
-
-\hypertarget{security-market-line}{%
-\subsection{Security Market Line}\label{security-market-line}}
-
-For each individual asset, CAPM implies the following risk/reward relationship (Security Market Line)
-\[
-\begin{aligned}
-\mu_{i} &= \mu_{f} + \beta_{i}(\mu_{M}-\mu_{f})
-\quad \text{Where } \begin{cases}
-\beta_{i} = \frac{\sigma_{iM}}{\sigma^{2}_{M}} \\
-\sigma_{iM} = Cov(R_{i, R_{M}})
-\end{cases}\\
-&= \mu_{f} + \left( \frac{\mu_{M}-\mu_{f}}{\sigma_{M}} \right) \cdot \sigma_{p}
-\end{aligned}
-\]
-
-\begin{itemize}
-\tightlist
-\item
-  \(\beta_{i}\) is different for each asset, it captures how related the return on the given asset is with the Market return.
-\item
-  \(\sigma_{M}\) is the market risk AKA undiversifiable risk
-\end{itemize}
-
-\hypertarget{security-characteristic-line}{%
-\subsection{Security Characteristic Line}\label{security-characteristic-line}}
-
-The \(\beta_{i}\)'s are found empirically, by regressing (\(R_{i}-R_{f}\)) on (\(R_{M}-R_{f}\))
-- Where \(R_{M}\) is the market return (Proxy by large market index, ex S\&P500)
-- \(R_{f}\) is the risk free rate (proxy by T-bill)
-
-\[
-(R_{i,t} - R_{f,t}) = \beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}, \quad \text{ where } \epsilon_{t} \sim N(0,\sigma^{2}_{\epsilon,i})
-\]
-
-By fitting this, we can then extract the \(\beta_{i}\)'s!
-\includegraphics{Notes/Obsidian-Attachments/4-Factor-Models.png}
-
-However the mean expected return is much different than the actual return. Therefore the CAPM model doesn't work very well, or hold.
-\includegraphics{Notes/Obsidian-Attachments/4-Factor-Models-1.png}
-
-An iteration of this model includes an intercept, \(\alpha\)
-\[
-(R_{i,t} - R_{f,t}) = \alpha_{i} + \beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}
-\]
-Finding the mean and variance:
-\[
-\begin{aligned}
-\mu_{i} = \mathbb{E}[R_{i}] &= \mathbb{E}[R_{f,t}+\alpha_{i}+\beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}]\\
-&= \underbrace{ \mathbb{E}[R_{f}] }_{ R_{f} } + \alpha_{i} + \beta_{i}\underbrace{ \mathbb{E}[R_{m}-R_{f}] }_{ \mu_{m - R_{f}} } + \underbrace{ \mathbb{E}[\epsilon_{t}] }_{ =0 }\\
-&= R_{f} + \alpha_{i} + \beta_{i}(\mu_{m}-R_{f})\\
-\\
-\sigma^{2}_{i} = \mathbb{V}[R_{i}] &= \mathbb{V}[\underbrace{ R_{f}+\alpha_{i} }_{ Var = 0 }+\beta_{i}(R_{m}-R_{f})+\epsilon_{i})]\\
-&= \mathbb{V}[\beta_{i}(R_{m}-\underbrace{ R_{f} }_{ Var = 0 }] + \mathbb{V}[\epsilon_{i}]\\
-&= \beta_{i}^{2} \cdot \mathbb{V}[R_{M}] + \sigma^{2}_{\epsilon, i}\\
-&= \beta^{2}_{i}\cdot \sigma^{2}_{m}+\sigma^{2}_{\epsilon,i}
-\end{aligned}
-\]
-
-Time doesn't matter for the risk free or market returns
-
-\hypertarget{alpha-beta}{%
-\subsubsection{Alpha \& Beta}\label{alpha-beta}}
-
-An asset's beta \(\beta_{i}\) can be seen as a measure of both risk \& reward
-\[
-CAPM \to \mu_{f}  = \mu_{f} + \beta_{i}(\mu_{M}-\mu_{f}) \implies \mu_{i} = \mu_{f} + \beta_{i}\underbrace{ \left(\frac{\mu_{M}-\mu_{f}}{\sigma_{M}}  \right)}_{ \text{Sharpe Ratio} }\sigma_{M}
-\]
-
-\(\beta_{i}\) measures extent of the return of a given asset is related to the market
-
-\begin{quote}
-\emph{If you believe in CAPM, then the bigger beta is, the more risk you will have but also the more reward you will have.}
-\end{quote}
-
-\(\alpha_{i}\) measure how much the asset outperforms the market consistently, the amount returned on top of the \(\beta_{i}\)
-
-\hypertarget{legacy-of-capm}{%
-\subsection{Legacy of CAPM}\label{legacy-of-capm}}
-
-CAPM is wrong. A lot of it's assumptions do not hold in reality.
-
-However, it had immense practical impact on investing, specifically in terms of
-- Diversification: concept of decreasing risk by spreading portfolio over different assets
-- Index investing: justification for common investing strategy of tracking some broad index with mutual funds or ETF's
-- Benchmarking: Measuring performance of investment relative to market / index
-
-\hypertarget{performance-evaluation}{%
-\subsection{Performance Evaluation}\label{performance-evaluation}}
-
-CAPM says the best portfolio you can create is the tangency/market portfolio. This implies the best you can do is get the broadest index and combine it with a T-bill.
-
-\begin{quote}
-Aside: In the past, you needed to use a mutual fund because exchange traded funds didn't exist. Thats how most people invested, even though they cost high fees as there was a lot of human involvement.
-\end{quote}
-
-There are several ways to measure an asset's performance, based on CAPM
-
-Sharpe ratio: (excess return per unit risk)
-\[
-S_i=\frac{\mu_i-\mu_f}{\sigma_i}
-\]
-
-\begin{itemize}
-\tightlist
-\item
-  If you combine different assets, you can reduce the \(\sigma_{i}\) of the portfolio, so it's not objective because two assets may be really risky, but negatively correlated reducing \(\sigma_{i}\).
-\item
-  It doesn't however measure how correlated a portfolio is to the market.
-\end{itemize}
-
-Treynor index: (excess return per unit non-diversifiable risk)
-\[
-\quad T_i=\frac{\mu_i-\mu_f}{\beta_i}
-\]
-
-\begin{itemize}
-\tightlist
-\item
-  You would look at this to find the best return
-\end{itemize}
-
-Jensen's alpha: (excess return on top of the return explained by the market)
-\[
-\quad \alpha_i=\hat{\alpha}_i
-\]
-
-\begin{itemize}
-\tightlist
-\item
-  Usually the most important measure a portfolio manager tries to use to convince people to invest in them.
-\end{itemize}
-
 \hypertarget{three-factor-models}{%
 \section{Three Factor models}\label{three-factor-models}}
 
@@ -2870,9 +2731,9 @@ Calculate daily net returns, plot the returns, sample auto-correlation plot, and
 ##                  date adj_close
 ## 1 2015-01-02 14:30:00  44.17995
 ## 2 2015-01-05 14:30:00  43.25630
-## 3 2015-01-06 14:30:00  42.38906
-## 4 2015-01-07 14:30:00  42.80505
-## 5 2015-01-08 14:30:00  42.80505
+## 3 2015-01-06 14:30:00  42.38907
+## 4 2015-01-07 14:30:00  42.80506
+## 5 2015-01-08 14:30:00  42.80506
 ## 6 2015-01-09 14:30:00  42.08588
 \end{verbatim}
 
@@ -2944,8 +2805,8 @@ This supports the stylized fact that returns follow heavy tail distributions.
 \end{Highlighting}
 \end{Shaded}
 
-We have a fitted mean \(\mu\) of \ensuremath{3.2242702\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4635324\times 10^{-4}}.
-This is compared to the sample mean \(\mu\) of \ensuremath{5.6615321\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827254\times 10^{-4}}.
+We have a fitted mean \(\mu\) of \ensuremath{3.2240402\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4635149\times 10^{-4}}.
+This is compared to the sample mean \(\mu\) of \ensuremath{5.6615331\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827267\times 10^{-4}}.
 
 These differences can occur due to the fitted t-distribution smoothing away more extreme values.
 
