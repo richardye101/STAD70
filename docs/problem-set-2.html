@@ -212,6 +212,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5" data-path="copulas.html"><a href="copulas.html#elliptical-copulas"><i class="fa fa-check"></i><b>6.5</b> Elliptical Copulas</a></li>
 <li class="chapter" data-level="6.6" data-path="copulas.html"><a href="copulas.html#archimedean-copulas"><i class="fa fa-check"></i><b>6.6</b> Archimedean Copulas</a></li>
 <li class="chapter" data-level="6.7" data-path="copulas.html"><a href="copulas.html#fitting-copulas"><i class="fa fa-check"></i><b>6.7</b> Fitting Copula’s</a></li>
+<li class="chapter" data-level="6.8" data-path="copulas.html"><a href="copulas.html#assumptions"><i class="fa fa-check"></i><b>6.8</b> Assumptions</a></li>
+<li class="chapter" data-level="6.9" data-path="copulas.html"><a href="copulas.html#dealing-with-two-assets"><i class="fa fa-check"></i><b>6.9</b> Dealing with Two Assets</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="copulas.html"><a href="copulas.html#portfolio-return"><i class="fa fa-check"></i><b>6.9.1</b> Portfolio Return</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="copulas.html"><a href="copulas.html#efficiency-frontier"><i class="fa fa-check"></i><b>6.10</b> Efficiency frontier</a></li>
+<li class="chapter" data-level="6.11" data-path="copulas.html"><a href="copulas.html#multiple-asset-portfolio"><i class="fa fa-check"></i><b>6.11</b> Multiple asset portfolio</a></li>
+<li class="chapter" data-level="6.12" data-path="copulas.html"><a href="copulas.html#capm---capital-asset-pricing-model"><i class="fa fa-check"></i><b>6.12</b> CAPM - Capital Asset Pricing Model</a>
+<ul>
+<li class="chapter" data-level="6.12.1" data-path="copulas.html"><a href="copulas.html#market-portfolio"><i class="fa fa-check"></i><b>6.12.1</b> Market Portfolio</a></li>
+<li class="chapter" data-level="6.12.2" data-path="copulas.html"><a href="copulas.html#capital-market-line"><i class="fa fa-check"></i><b>6.12.2</b> Capital Market Line</a></li>
+<li class="chapter" data-level="6.12.3" data-path="copulas.html"><a href="copulas.html#security-market-line"><i class="fa fa-check"></i><b>6.12.3</b> Security Market Line</a>
+<ul>
+<li class="chapter" data-level="6.12.3.1" data-path="copulas.html"><a href="copulas.html#ex-find-market-portfolio-weights-and-sml-with-n-i.i.d-assets"><i class="fa fa-check"></i><b>6.12.3.1</b> Ex: Find market portfolio weights and SML with <span class="math inline">\(N\)</span> i.i.d assets</a></li>
+</ul></li>
+<li class="chapter" data-level="6.12.4" data-path="copulas.html"><a href="copulas.html#security-characteristic-line"><i class="fa fa-check"></i><b>6.12.4</b> Security Characteristic Line</a>
+<ul>
+<li class="chapter" data-level="6.12.4.1" data-path="copulas.html"><a href="copulas.html#alpha-beta"><i class="fa fa-check"></i><b>6.12.4.1</b> Alpha &amp; Beta</a></li>
+</ul></li>
+<li class="chapter" data-level="6.12.5" data-path="copulas.html"><a href="copulas.html#legacy-of-capm"><i class="fa fa-check"></i><b>6.12.5</b> Legacy of CAPM</a></li>
+<li class="chapter" data-level="6.12.6" data-path="copulas.html"><a href="copulas.html#performance-evaluation"><i class="fa fa-check"></i><b>6.12.6</b> Performance Evaluation</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="factor-models.html"><a href="factor-models.html"><i class="fa fa-check"></i><b>7</b> Factor Models</a>
 <ul>
@@ -512,12 +534,12 @@ X &amp;\sim Exp(1) \quad Y \sim Exp(1)\\
 <p>Calculate daily net returns, plot the returns, sample auto-correlation plot, and Normal QQ plot.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="problem-set-2.html#cb38-1" tabindex="-1"></a><span class="fu">head</span>(lto_adj_close)</span></code></pre></div>
 <pre><code>##                  date adj_close
-## 1 2015-01-02 14:30:00  44.17996
-## 2 2015-01-05 14:30:00  43.25630
+## 1 2015-01-02 14:30:00  44.17995
+## 2 2015-01-05 14:30:00  43.25631
 ## 3 2015-01-06 14:30:00  42.38907
-## 4 2015-01-07 14:30:00  42.80506
-## 5 2015-01-08 14:30:00  42.80506
-## 6 2015-01-09 14:30:00  42.08589</code></pre>
+## 4 2015-01-07 14:30:00  42.80507
+## 5 2015-01-08 14:30:00  42.80507
+## 6 2015-01-09 14:30:00  42.08588</code></pre>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="problem-set-2.html#cb40-1" tabindex="-1"></a>net_ret <span class="ot">=</span> lto_adj_close <span class="sc">%&gt;%</span></span>
 <span id="cb40-2"><a href="problem-set-2.html#cb40-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">net_returns =</span> </span>
 <span id="cb40-3"><a href="problem-set-2.html#cb40-3" tabindex="-1"></a>           (adj_close <span class="sc">-</span> <span class="fu">lag</span>(adj_close, <span class="dv">1</span>)) <span class="sc">/</span> <span class="fu">lag</span>(adj_close, <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
@@ -554,8 +576,8 @@ X &amp;\sim Exp(1) \quad Y \sim Exp(1)\\
 <span id="cb44-8"><a href="problem-set-2.html#cb44-8" tabindex="-1"></a></span>
 <span id="cb44-9"><a href="problem-set-2.html#cb44-9" tabindex="-1"></a>sample_mu <span class="ot">=</span> <span class="fu">mean</span>(net_ret<span class="sc">$</span>net_returns)</span>
 <span id="cb44-10"><a href="problem-set-2.html#cb44-10" tabindex="-1"></a>sample_var <span class="ot">=</span> <span class="fu">var</span>(net_ret<span class="sc">$</span>net_returns)</span></code></pre></div>
-<p>We have a fitted mean <span class="math inline">\(\mu\)</span> of 3.2241414^{-4} and variance <span class="math inline">\(\sigma^{2}\)</span> of 1.4635614^{-4}.
-This is compared to the sample mean <span class="math inline">\(\mu\)</span> of 5.6615317^{-4} and variance <span class="math inline">\(\sigma^2\)</span> of 1.3827271^{-4}.</p>
+<p>We have a fitted mean <span class="math inline">\(\mu\)</span> of 3.2240306^{-4} and variance <span class="math inline">\(\sigma^{2}\)</span> of 1.4635004^{-4}.
+This is compared to the sample mean <span class="math inline">\(\mu\)</span> of 5.661533^{-4} and variance <span class="math inline">\(\sigma^2\)</span> of 1.3827264^{-4}.</p>
 <p>These differences can occur due to the fitted t-distribution smoothing away more extreme values.</p>
 </div>
 <div id="part-c-1" class="section level3 hasAnchor" number="11.4.3">

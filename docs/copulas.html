@@ -212,6 +212,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5" data-path="copulas.html"><a href="copulas.html#elliptical-copulas"><i class="fa fa-check"></i><b>6.5</b> Elliptical Copulas</a></li>
 <li class="chapter" data-level="6.6" data-path="copulas.html"><a href="copulas.html#archimedean-copulas"><i class="fa fa-check"></i><b>6.6</b> Archimedean Copulas</a></li>
 <li class="chapter" data-level="6.7" data-path="copulas.html"><a href="copulas.html#fitting-copulas"><i class="fa fa-check"></i><b>6.7</b> Fitting Copula’s</a></li>
+<li class="chapter" data-level="6.8" data-path="copulas.html"><a href="copulas.html#assumptions"><i class="fa fa-check"></i><b>6.8</b> Assumptions</a></li>
+<li class="chapter" data-level="6.9" data-path="copulas.html"><a href="copulas.html#dealing-with-two-assets"><i class="fa fa-check"></i><b>6.9</b> Dealing with Two Assets</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="copulas.html"><a href="copulas.html#portfolio-return"><i class="fa fa-check"></i><b>6.9.1</b> Portfolio Return</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="copulas.html"><a href="copulas.html#efficiency-frontier"><i class="fa fa-check"></i><b>6.10</b> Efficiency frontier</a></li>
+<li class="chapter" data-level="6.11" data-path="copulas.html"><a href="copulas.html#multiple-asset-portfolio"><i class="fa fa-check"></i><b>6.11</b> Multiple asset portfolio</a></li>
+<li class="chapter" data-level="6.12" data-path="copulas.html"><a href="copulas.html#capm---capital-asset-pricing-model"><i class="fa fa-check"></i><b>6.12</b> CAPM - Capital Asset Pricing Model</a>
+<ul>
+<li class="chapter" data-level="6.12.1" data-path="copulas.html"><a href="copulas.html#market-portfolio"><i class="fa fa-check"></i><b>6.12.1</b> Market Portfolio</a></li>
+<li class="chapter" data-level="6.12.2" data-path="copulas.html"><a href="copulas.html#capital-market-line"><i class="fa fa-check"></i><b>6.12.2</b> Capital Market Line</a></li>
+<li class="chapter" data-level="6.12.3" data-path="copulas.html"><a href="copulas.html#security-market-line"><i class="fa fa-check"></i><b>6.12.3</b> Security Market Line</a>
+<ul>
+<li class="chapter" data-level="6.12.3.1" data-path="copulas.html"><a href="copulas.html#ex-find-market-portfolio-weights-and-sml-with-n-i.i.d-assets"><i class="fa fa-check"></i><b>6.12.3.1</b> Ex: Find market portfolio weights and SML with <span class="math inline">\(N\)</span> i.i.d assets</a></li>
+</ul></li>
+<li class="chapter" data-level="6.12.4" data-path="copulas.html"><a href="copulas.html#security-characteristic-line"><i class="fa fa-check"></i><b>6.12.4</b> Security Characteristic Line</a>
+<ul>
+<li class="chapter" data-level="6.12.4.1" data-path="copulas.html"><a href="copulas.html#alpha-beta"><i class="fa fa-check"></i><b>6.12.4.1</b> Alpha &amp; Beta</a></li>
+</ul></li>
+<li class="chapter" data-level="6.12.5" data-path="copulas.html"><a href="copulas.html#legacy-of-capm"><i class="fa fa-check"></i><b>6.12.5</b> Legacy of CAPM</a></li>
+<li class="chapter" data-level="6.12.6" data-path="copulas.html"><a href="copulas.html#performance-evaluation"><i class="fa fa-check"></i><b>6.12.6</b> Performance Evaluation</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="factor-models.html"><a href="factor-models.html"><i class="fa fa-check"></i><b>7</b> Factor Models</a>
 <ul>
@@ -613,6 +635,394 @@ U_{i}^{(j)} = \hat{F}_{j}(X_{i}^{(j)}) \quad \forall \ i, \dots,n \ j = 1, \dots
 <p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-15.png" />
 &gt;The <em>pseudo-MLE</em> can give the uniform marginals used to construct/fit a t-copula.</p>
 
+<p>Portfolio theory deals with how an asset manager can form a portfolio that optimizes their goals, whether that be lowest risk, highest return, or some other measure of performance.</p>
+<p>How to pick stocks is a complicated science and there are many ways to go about it.</p>
+</div>
+<div id="assumptions" class="section level2 hasAnchor" number="6.8">
+<h2><span class="header-section-number">6.8</span> Assumptions<a href="copulas.html#assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We first make some assumptions when dealing with the theory.
+- Static multivariate return distribution determined by assets’ mean and covariance.
+- This implies a normal or elliptical distribution for returns
+- The investors have the same views on mean and variance
+- Investors also want minimum risk for maximum return
+- Investors measure risk by portfolio’s variance
+- No borrowing or short-selling restrictions
+- No transaction costs</p>
+</div>
+<div id="dealing-with-two-assets" class="section level2 hasAnchor" number="6.9">
+<h2><span class="header-section-number">6.9</span> Dealing with Two Assets<a href="copulas.html#dealing-with-two-assets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’ll start with a simple example with two risky assets, <span class="math inline">\(S_{1}, S_{2}\)</span></p>
+<p>We assume that net returns (as time <span class="math inline">\(0\to t\)</span> ) satisfy:
+<span class="math display">\[
+\begin{aligned}
+\left[\begin{array}{c}
+R_{1} \\
+R_{2}
+\end{array}\right] \sim
+N \left(
+\left[ \begin{array}{c}
+\mu_{1} \\
+\mu_{2}
+\end{array}
+\right],
+\left[
+\begin{array}{c}
+\sigma_{1}^{2}  &amp; \sigma_{12} \\
+\sigma_{21}  &amp; \sigma^{2}_{2}
+\end{array} \right]
+\right) \quad
+\text{where } R_{i} = \frac{S_{i}(t)-S_{i}(0)}{S_{i}(0)}, i = 1,2
+\end{aligned}
+\]</span></p>
+<p>We can form a portfolio with <span class="math inline">\(x_{i}\)</span> units of asset <span class="math inline">\(S_{i}\)</span>, which gives us the following equation:
+<span class="math display">\[
+\begin{aligned}
+V(t=0) &amp;= x_{1}\cdot S_{1}(0)+x_{2}\cdot S_{2}(0)\\
+\end{aligned}
+\]</span>
+We can derive the initial <em>weights</em> of each asset that we’ve invested into using:
+<span class="math display">\[
+w_{i} = \frac{x_{i}S_{i}(0)}{V(0)}
+\]</span></p>
+<div id="portfolio-return" class="section level3 hasAnchor" number="6.9.1">
+<h3><span class="header-section-number">6.9.1</span> Portfolio Return<a href="copulas.html#portfolio-return" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can calculate the return of this two asset portfolio and show that: <span class="math inline">\(R_{p} = w_{1}R_{1}+w_{2}R_{2}\)</span>
+<span class="math display">\[
+\begin{aligned}
+R_{p} &amp;= \frac{V(t)-V(0)}{V(0)} = \frac{[x_{1}S_{1}(t)+x_{2}S_{2}(t)]-[x_{1}S_{1}(0)+x_{2}S_{2}(0)]}{V(0)}\\
+&amp;= \frac{x_{1}[S_{1}(t)-S_{1}(0)]+x_{2}[S_{2}(t)-S_{2}(0)]}{V(0)}\\
+&amp;= x_{1} \underset{ \text{Introduce }S_{1}(0) \text{ to get} R_{1}}{ \frac{S_{1}(t)-S_{1}(0)}{S_{1}(0)} \frac{S_{1}(0)}{V(0)} } + x_{2} \underset{  \text{Introduce }S_{2}(0) \text{ to get} R_{2} }{ \frac{S_{2}(t)-S_{2}(0)}{S_{2}(0)} \frac{S_{2}(0)}{V(0)} }\\
+&amp;= R_{1} \underbrace{ x_{1}\frac{S_{1}(0)}{V(0)} }_{ w_{1} }+R_{2} x_{2}\underbrace{ \frac{S_{2}(0)}{V(0)} }_{ w_{2} }\\
+&amp;= R_{1}w_{1}+R_{2}w_{2}
+\end{aligned}
+\]</span>
+Which shows that the net returns of a portfolio is exactly the weight combination of the net returns of the assets within.</p>
+<p>We can also find the distribution of the portfolio returns (which may not surprise you, is just the linear combination of the individual assets returns)</p>
+<p><span class="math display">\[
+\begin{aligned}
+R_{p} &amp;= \underline{w}^{T}\underline{R} = [ w_{1} \ w_{2}] \left[ \begin{array}{c}
+R_{1} \\
+R_{2}
+\end{array} \right]  \quad \text{ where } \underline{R} \sim N_{2D}\left( \left[ \begin{array} {l}
+\mu_{1} \\
+\mu_{2}
+\end{array} \right], \left[ \begin{array}{c}
+\sigma_{1}^{2} &amp; \sigma_{12} \\
+\sigma_{21} &amp; \sigma_{2}^{2}
+\end{array}\right]  \right)\\
+&amp;\implies R_{p} \sim N_{1D}(\mu_{p},\sigma_{p}) \ \text{ where}\\
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\mu_{p} &amp;= \mathbb{E}(R_{p}) = \mathbb{\mathbf{E}}[\underline{w}^{T}\underline{R}]\\
+&amp;= \underline{w}^{T}\mathbb{E}[\underline{R}] = \underline{w}^{T}\underline{\mu}\\
+&amp;= \sum_{i}w_{i}\mu_{i}\\
+\\
+\sigma_{p}^{2} &amp;= \mathbb{V}[R_{p}] = \mathbb{V}[\underline{w}^{T}\underline{R}]\\
+&amp;= \underline{w}^{T} \mathbb{V}(\underline{R})\underline{w} = \underline{w}^{T}\Sigma \underline{w}\\
+&amp;= [ w_{1} \ w_{2}] \left[ \begin{array}{c}
+\sigma_{1}^{2} &amp; \sigma_{12} \\
+\sigma_{21} &amp; \sigma_{2}^{2}
+\end{array}\right] \left[ \begin{array}{c}
+w_{1} \\
+w_{2}
+\end{array} \right] \\
+&amp;= w_{1}^{2}\sigma_{1}^{2}+2w_{1}w_{2}\sigma_{12}+w_{2}^{2}\sigma_{2}^{2}\\
+\\
+\therefore R_{p} &amp;\sim N\left( \sum_{i}w_{i}p_{i},  \quad w_{1}^{2}\sigma_{1}^{2}+2w_{1}w_{2}\sigma_{12}+w_{2}^{2}\sigma_{2}^{2}\right)
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+<div id="efficiency-frontier" class="section level2 hasAnchor" number="6.10">
+<h2><span class="header-section-number">6.10</span> Efficiency frontier<a href="copulas.html#efficiency-frontier" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A plot of mean <span class="math inline">\(\mu\)</span> by standard deviation <span class="math inline">\(\sigma\)</span> , where you can load up entirely on <code>AAPL</code> with <span class="math inline">\(w_{1}=1, w_{2}=0\)</span> or entirely on <code>PNC</code> with the opposite.</p>
+<p><img src="Notes/Obsidian-Attachments/5-Portfolio-Theory.png" /></p>
+<p>But how do we know the optimal amount of weight to put in each asset to <strong>minimize variance</strong>? We can simply find the <span class="math inline">\(w\)</span> that minimizes the derivative of the variance w.r.t. <span class="math inline">\(w\)</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Let }w_{1} &amp;= w \quad \&amp; \ w_{2}=1-w\\
+\implies \sigma_{p}^{2} &amp;= w^{2}\sigma_{1}^{2} + 2w(1-w)\sigma_{12} + (1-w)^{2}\sigma_{2}^{2}\\
+\text{Let }\frac{\delta \sigma_{p}^{2}}{\delta w} &amp;= 0\\
+0 &amp;= 2w\sigma_{1}^{2}+2(1-w)\sigma_{12}-2w\sigma_{12}-2(1-w)\sigma_{2}^{2}\\
+0 &amp;= w(\sigma_{1}^{2}-\sigma_{12}) + (1-w)(\sigma_{12}-\sigma_{2}^{2})\\
+0 &amp;= w(\sigma_{1}^{2}+\sigma_{2}^{2}-2\sigma_{12}) + (\sigma_{12}-\sigma_{2}^{2})\\
+w &amp;= \frac{-(\sigma_{12}-\sigma_{2}^{2})}{(\sigma_{1}^{2}+\sigma_{2}^{2}-2\sigma_{12})}
+\end{aligned}
+\]</span></p>
+</div>
+<div id="multiple-asset-portfolio" class="section level2 hasAnchor" number="6.11">
+<h2><span class="header-section-number">6.11</span> Multiple asset portfolio<a href="copulas.html#multiple-asset-portfolio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Consider <span class="math inline">\(n\)</span> risky assets with returns <span class="math inline">\(R_1, \ldots, R_n\)</span> so that:
+<span class="math display">\[
+\mathbf{R}=\left[\begin{array}{c}
+R_1 \\
+\vdots \\
+R_n
+\end{array}\right] \sim N\left(\boldsymbol{\mu}=\left[\begin{array}{c}
+\mu_1 \\
+\vdots \\
+\mu_n
+\end{array}\right], \boldsymbol{\Sigma}=\left[\begin{array}{ccc}
+\sigma_1^2 &amp; \ldots &amp; \sigma_{1 n} \\
+\vdots &amp; \ddots &amp; \vdots \\
+\sigma_{n 1} &amp; \cdots &amp; \sigma_n^2
+\end{array}\right]\right)
+\]</span>
+We want to create portfolio using weights <span class="math inline">\(\mathbf{w}=\left[\begin{array}{lll}w_1 &amp; \cdots &amp; w_n\end{array}\right]^{\top}\)</span> such that: <span class="math inline">\(\sum_{i=1}^n w_i=\mathbf{w}^{\top} \mathbf{1}=1\)</span></p>
+<p>The distribution of returns for this portfolio would simply be:
+<span class="math display">\[
+\begin{aligned}
+\mathbf{R_{p}} &amp;\sim \mathbf{N_{1D}(\mu_{p}, \sigma_{p}^{2})} \ \text{where }\\
+&amp;\mathbf{\mu_{p} = \underline{w}^{T}\cdot \underline{\mu}}\\
+&amp;\mathbf{\sigma_{p}^{2}=\underline{w}^{T}\cdot\underline{\Sigma}\cdot\underline{w}}
+\end{aligned}
+\]</span></p>
+<p>When fixing an expected return <span class="math inline">\(\mu_{p}\)</span>, we can derive weights that minimize variance:
+<span class="math display">\[
+min_{w}\{\mathbf{w^{T}\Sigma w}\}\ s.t. \ \mathbf{w^{T}\mu} = \mu_{p}, \mathbf{w^{T}1} = 1
+\]</span></p>
+<p>We can use Lagrange multipliers to define the objective function:
+&gt;Lagrange formula: <span class="math inline">\(\mathcal{L}(x,\lambda) = f(x)+\lambda g(x)\)</span>
+&gt;If we want to find the max/min of the function <span class="math inline">\(f(x)\)</span> subject to the constraint <span class="math inline">\(g(x) = 0\)</span>, we can form this Lagrangian and find where it’s derivative is 0. In this case, <span class="math inline">\(x=\underline{w}\)</span> and our constraint <span class="math inline">\(\mathbf{w^{T}\cdot 1} = 1\)</span> can be represented as <span class="math inline">\(g(w) = \mathbf{w^{T}\cdot 1} -1\)</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathcal{L}(\underline{w},\lambda) &amp;= \underline{w}^{T}\underline{\Sigma}\underline{w} - \lambda(\underline{w}^{T}\cdot \underline{1}-1)\\
+\text{Let }\frac{\delta\mathcal{L}}{\delta \underline{w}}&amp;= 0\\
+0 &amp;= 2\cdot\underline{\Sigma}\cdot \underline{w}-\lambda\cdot  \underline{1} \\
+\implies \underline{w} &amp;= \frac{\lambda}{2}\underline{\Sigma}^{-1}\cdot \underline{1}
+\end{aligned}
+\]</span>
+<span class="math display">\[
+\begin{aligned}
+\text{Given } \underline{w}^{T}\cdot  \underline{1} &amp;= 1 \implies  \underline{1}^{T}\underline{w} = 1\\ \\
+\implies&amp; \frac{\lambda}{2}\cdot   \underline{1}^{T}\cdot\underline{\Sigma}^{-1}\cdot  \underline{1} = \underline{1}^{T}\underline{w}  = 1\\
+\implies&amp; \lambda = \frac{2}{\underline{1}^{T}\cdot\underline{\Sigma}^{-1}\cdot  \underline{1}}\\
+\implies &amp;\underline{w}^{*} = \frac{\frac{2}{\underline{1}^{T}\cdot\underline{\Sigma}^{-1}\cdot  \underline{1}}}{2}\underline{\Sigma}^{-1}\cdot \underline{1}\\
+&amp; \quad \ = \frac{\underline{\Sigma}^{-1}\cdot \underline{1}}{\underline{1}^{T}\cdot\underline{\Sigma}^{-1}\cdot  \underline{1}}
+\end{aligned}
+\]</span>
+&gt;<span class="math inline">\(\underline{\Sigma}^{-1}\)</span> represents the <a href="https://stephens999.github.io/fiveMinuteStats/normal_markov_chain.html">precision matrix</a>, where if there is a 0 at <span class="math inline">\((i,j)\)</span> then <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are conditionally independent (given all other assets are held constant, there is no dependence/correlation between these two assets). If it exists, then it is positive definite.</p>
+<blockquote>
+<p>The numerator is a vector containing the L1 norms of each row’s (asset) precision.
+The denominator represents the total precision of the entire Precision matrix.
+The final value is the scaled weights given to each asset <strong>depending</strong> on the total precision.</p>
+</blockquote>
+<p>Instead of only having <span class="math inline">\(n\)</span> risky assets, we can introduce a risk-free asset with constant return <span class="math inline">\(R_{f}=\mu_{f}&gt;0\)</span>, with variance <span class="math inline">\(\sigma_{f} =0\)</span>. A real life example is a government bond.</p>
+<p>With this new asset, we can determine how much to invest in the risky portfolio and the risk-free asset with weights <span class="math inline">\(w_{p}\)</span> and <span class="math inline">\((1-w_{p})\)</span>.</p>
+<ul>
+<li>Return: <span class="math inline">\(R=w_{p}R_{p}+(1-w_{p})R_{f}\)</span></li>
+<li>Mean Return: <span class="math inline">\(\mathbb{E}[R]=w_{p}\mathbb{E}[R_{p}]+(1-w_{p})\mathbb{E}[R_{f}]=w_{p}\mu_{p}+(1-w_{p})\mu_{f}\)</span></li>
+<li>Variance of returns: <span class="math inline">\(\mathbb{V}=\mathbb{V}(w_{p}R_{p}+(1-w_{p}R_{f})) = w_{p}^{2}\mathbb{V}(R_{p})=w_{p}^{2}\cdot \sigma_{p}^{2}\)</span></li>
+</ul>
+<p><img src="Notes/Obsidian-Attachments/5-Portfolio-Theory-1.png" /></p>
+<p>The best portfolio (in terms of risk and return) lie on this green line, where this line is tangent to the efficient frontier.</p>
+<blockquote>
+<p>The slope of this line is called the <strong>Sharpe</strong> ratio, which measure the excess return per unit risk (<strong>risk premium</strong>).</p>
+</blockquote>
+<p>The <strong>tangency portfolio</strong> is exactly the portfolio on the efficient frontier that also belongs to the tangent line. (It is a risky asset only portfolio with <span class="math inline">\(\mu_{T},\sigma_{T}\)</span>)</p>
+<p><img src="Notes/Obsidian-Attachments/5-Portfolio-Theory-2.png" /></p>
+<p>When you have a risk-free asset, the optimal investment strategy is to have a combination of the tangency portfolio and the risk-free asset. To find this tangency portfolio, we <em>maximize</em> the Sharpe ratio.</p>
+<p><span class="math display">\[
+max\left\{ \frac{\mu_{p}-\mu_{f}}{\sigma_{p}} \right\} = max_{w} \left\{ \frac{\mathbf{w^{T}\mu}-\mu_{f}}{\sqrt{ \mathbf{w^{T}\Sigma w} }} \right\} \quad \text{subject to } \mathbf{w^{T}1} = 1
+\]</span></p>
+<p>The tangency portfolio weights are given by:
+<span class="math display">\[
+\mathbf{w_{t}} = \frac{\mathbf{\Sigma ^{-1}(\mu}-\mu_{f}\cdot \mathbf{\underline{1}})}{\mathbf{1^{T}\Sigma ^{-1}(\mu}-\mu_{f}\cdot \mathbf{\underline{1}})}
+\]</span></p>
+</div>
+<div id="capm---capital-asset-pricing-model" class="section level2 hasAnchor" number="6.12">
+<h2><span class="header-section-number">6.12</span> CAPM - Capital Asset Pricing Model<a href="copulas.html#capm---capital-asset-pricing-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The CAPM theory suggests that all investors hold some form of the tangency/market portfolio. This model assumes the mean-variance analysis <em>stretched to it’s logical consequences</em> can explain <strong>all financial market behaviour</strong>.(Widely known to be false)</p>
+<p>The slope of the tangency portfolio is also known as the Sharpe Ratio, or <strong>Market Price of Risk</strong>.</p>
+<p>If every investor followed this mean-variance analysis, and the market is in <em>equilibrium</em>:
+&gt;idk what it means to be in equilibrium</p>
+<ul>
+<li>Every investor holds some portion of the same tangency portfolio</li>
+<li>The entire financial market will be made up of the <strong>same</strong> mix of risky assets</li>
+<li><strong>Making the tangency portfolio equal to the market value-weighted index</strong></li>
+</ul>
+<div id="market-portfolio" class="section level3 hasAnchor" number="6.12.1">
+<h3><span class="header-section-number">6.12.1</span> Market Portfolio<a href="copulas.html#market-portfolio" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Using the above assumptions, the <strong>composition of the tangency portfolio is equivalent to the market</strong> and we can find the weights for each asset as:
+<span class="math display">\[
+w_{i} = \underbrace{ \frac{S_{i}\times O_{i}}{\sum^{N}_{i=1}S_{i}\times O_{i}} }_{ \text{Market Capitalization \%} } \quad \text{where } \begin{cases}
+S_{i} = \text{price of asset i} \\
+O_{i} = \text{shares outstanding}
+\end{cases}
+\]</span></p>
+<p>Therefore the tangency portfolio is exactly a market cap weighted index, such as the S&amp;P500 or FTSE100.</p>
+</div>
+<div id="capital-market-line" class="section level3 hasAnchor" number="6.12.2">
+<h3><span class="header-section-number">6.12.2</span> Capital Market Line<a href="copulas.html#capital-market-line" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Every mean-variance efficient portfolio <span class="math inline">\((\mu_{p},\sigma_{p})\)</span> lies on a straight line, which is determined by
+<span class="math display">\[
+\mu_{p} = \mu_{f} + \frac{\mu_{M}-\mu_{f}}{\sigma_{M}}, \quad \text{where }\begin{cases}
+(\mu_{M},\sigma_{M}) = \text{market portfolio} \\
+\mu_{f} = \text{risk-free rate}
+\end{cases}
+\]</span></p>
+<p><img src="Notes/Obsidian-Attachments/5-Portfolio-Theory-3.png" /></p>
+</div>
+<div id="security-market-line" class="section level3 hasAnchor" number="6.12.3">
+<h3><span class="header-section-number">6.12.3</span> Security Market Line<a href="copulas.html#security-market-line" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For <strong>each individual asset</strong>, CAPM implies the following risk/reward relationship (Security Market Line)
+<span class="math display">\[
+\begin{aligned}
+\mu_{i} &amp;= \mu_{f} + \beta_{i}\underbrace{ (\mu_{M}-\mu_{f}) }_{ Slope }
+\quad \text{Where } \begin{cases}
+\beta_{i} = \frac{\sigma_{iM}}{\sigma^{2}_{M}} \\
+\sigma_{iM} = Cov(R_{i, R_{M}})
+\end{cases}\\
+&amp;= \mu_{f} + \left( \frac{\mu_{M}-\mu_{f}}{\sigma_{M}} \right) \cdot \sigma_{p}
+\end{aligned}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\beta_{i}\)</span> is different for each asset, it captures how related the return on the given asset is with the Market return.</li>
+<li><span class="math inline">\(\sigma_{M}\)</span> is the market risk AKA undiversifiable risk</li>
+<li>Imagine the line is in <span class="math inline">\((\mu,\beta)\)</span>-space, with slope <span class="math inline">\((\mu_{M}-\mu_{f})\)</span>.</li>
+</ul>
+<p>To derive this line, we need to find a market portfolio that maximizes the Sharpe ratio (using first order derivative)</p>
+<p><span class="math display">\[
+\begin{aligned}
+f(\underline{w}) &amp;= \frac{\underline{w}^{T}\underline{\mu}-\mu_{f}}{\sqrt{ \underline{w}^{T}\underline{\Sigma}\underline{w} }} = \frac{\underline{w}^{T}\cdot (\underline{\mu}-\underline{1}\mu_{f})}{\sqrt{ \underline{w}^{T}\underline{\Sigma}\underline{w} }} \quad \text{maximized when } \frac{\delta f}{d\underline{w}} = 0\\
+\implies 0 &amp;= \frac{(\underline{\mu}-\underline{1}\mu_{f})\cdot\sqrt{ \underline{w}^{T}\underline{\Sigma}\underline{w} } - \frac{1}{2}{(\overbrace{ \underline{w}^{T}\underline{\Sigma}\underline{w}}^{ \sigma_{m}^{2} }})^{-1/2}\cdot 2\underline{\Sigma}\underline{w}\cdot (\overbrace{ \underline{w}^{T}\cdot (\underline{\mu} }^{ \mu_{M} }-\underline{1}\mu_{f})}{\underline{w}^{T}\underline{\Sigma}\underline{w}}\\
+&amp;= \frac{(\underline{\mu}-\underline{1}\mu_{f})\sigma_{m}-\frac{1}{\sigma_{M}}\underline{\Sigma}\underline{w}(\mu_{M}-\mu_{f})}{\sigma_{M}^{2}}\\
+\implies (\underline{\mu}-\underline{1}\mu_{f}) &amp;= \frac{1}{\sigma_{M}^{2}\underline{\Sigma}\underline{w}(\mu_{M}-\mu_{f})}\\
+\implies \left[ \begin{array}{c}
+\mu_{1}-\mu_{f} \\
+\vdots \\
+\mu_{n}-\mu_{f}
+\end{array}  \right]
+&amp;= \frac{\mu_{M}-\mu_{f}}{\sigma_{M}^{2}}\cdot
+\left[ \begin{array}{c}
+Cov(R_{1},R_{M}) \\
+\vdots \\
+Cov(R_{n},R_{M})
+\end{array} \right] \\
+&amp;= \frac{(\mu_{M}-\mu_{f})}{\sigma_{M}^{2}}\cdot \left[ \begin{array}{c}
+\sigma_{1,M} \\
+\vdots \\
+\sigma_{n,M}
+\end{array} \right]
+\end{aligned}
+\]</span></p>
+<p>This is because <span class="math inline">\(Cov(\underline{R}, R_{M}) = Cov(\underline{R},\underline{w}^{T}\cdot \underline{R}) = \underline{w}^{T}\underbrace{ Cov(\underline{R},\underline{R}) }_{ \underline{\Sigma} } = \underline{w}^{T}\underline{\Sigma}\)</span>
+<img src="Notes/Obsidian-Attachments/5-Portfolio-Theory-4.png" /></p>
+<div id="ex-find-market-portfolio-weights-and-sml-with-n-i.i.d-assets" class="section level4 hasAnchor" number="6.12.3.1">
+<h4><span class="header-section-number">6.12.3.1</span> Ex: Find market portfolio weights and SML with <span class="math inline">\(N\)</span> i.i.d assets<a href="copulas.html#ex-find-market-portfolio-weights-and-sml-with-n-i.i.d-assets" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Each asset <span class="math inline">\(\sim N(\mu,\sigma^{2})\)</span> returns and the risk-free return <span class="math inline">\(\mu_{f}&lt;\mu\)</span>.
+<span class="math display">\[
+\left[ \begin{array}{c}
+R_{1} \\
+\vdots \\
+R_{N}
+\end{array} \right] \sim N_{N \ Dim}(\underline{\mu} = \mu \cdot  \underline{1}, \underline{\Sigma} = \sigma^{2}\cdot \underline{I})
+\]</span>
+So we know:
+<span class="math display">\[
+\forall \ \underline{w} \quad s.t. \ \underline{w}^{T}\cdot  \underline{1} = 1 \implies \underline{w}^{T}\cdot\mu\cdot 1 = \mu
+\]</span>
+Which implies that the market portfolio is equal to the minimum variance portfolio.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\underline{w}^{\star} &amp;= \frac{\underline{\Sigma}^{-1}\cdot  \underline{1}}{\underline{1}^{T}\underline{\Sigma}^{-1}\cdot   \underline{1}} = \frac{\frac{1}{\sigma^{2}}\underline{I}\cdot \underline{1}}{\frac{1}{\sigma^{2}} \underline{1}^{T}\underline{I}\cdot  \underline{1}} = \frac{\underline{1}}{N}\\
+\implies \underline{w} &amp;= \frac{\underline{1}}{N} = \left[ \begin{array}{c}
+\frac{1}{N} \\
+\vdots \\
+\frac{1}{N}
+\end{array} \right] \implies w_{i} = \frac{1}{N} \ \forall i = 1,\dots,N\\
+\implies \text{min variance } &amp;= \underline{w}^{T}\underline{\Sigma}\underline{w}\\
+&amp;= \left( \frac{1}{N} \right)^{2}\cdot  \underline{1}^{T}(\sigma^{2}\cdot \underline{I})\cdot  \underline{1}\\
+&amp;= \frac{\sigma^{2}}{N}
+\end{aligned}
+\]</span></p>
+<p><img src="Notes/Obsidian-Attachments/5-Portfolio-Theory-5.png" /></p>
+</div>
+</div>
+<div id="security-characteristic-line" class="section level3 hasAnchor" number="6.12.4">
+<h3><span class="header-section-number">6.12.4</span> Security Characteristic Line<a href="copulas.html#security-characteristic-line" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <span class="math inline">\(\beta_{i}\)</span>’s are found empirically, by regressing (<span class="math inline">\(R_{i}-R_{f}\)</span>) on (<span class="math inline">\(R_{M}-R_{f}\)</span>)
+- Where <span class="math inline">\(R_{M}\)</span> is the market return (Proxy by large market index, ex S&amp;P500)
+- <span class="math inline">\(R_{f}\)</span> is the risk free rate (proxy by T-bill)</p>
+<p><span class="math display">\[
+(R_{i,t} - R_{f,t}) = \beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}, \quad \text{ where } \epsilon_{t} \sim N(0,\sigma^{2}_{\epsilon,i})
+\]</span></p>
+<p>By fitting this, we can then extract the <span class="math inline">\(\beta_{i}\)</span>’s!
+<img src="Notes/Obsidian-Attachments/4-Factor-Models.png" /></p>
+<p>However the mean expected return is much different than the actual return. Therefore the CAPM model doesn’t work very well, or hold.
+<img src="Notes/Obsidian-Attachments/4-Factor-Models-1.png" /></p>
+<p>An iteration of this model includes an intercept, <span class="math inline">\(\alpha\)</span>
+<span class="math display">\[
+(R_{i,t} - R_{f,t}) = \alpha_{i} + \beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}
+\]</span>
+Finding the mean and variance:
+<span class="math display">\[
+\begin{aligned}
+\mu_{i} = \mathbb{E}[R_{i}] &amp;= \mathbb{E}[R_{f,t}+\alpha_{i}+\beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}]\\
+&amp;= \underbrace{ \mathbb{E}[R_{f}] }_{ R_{f} } + \alpha_{i} + \beta_{i}\underbrace{ \mathbb{E}[R_{m}-R_{f}] }_{ \mu_{m - R_{f}} } + \underbrace{ \mathbb{E}[\epsilon_{t}] }_{ =0 }\\
+&amp;= R_{f} + \alpha_{i} + \beta_{i}(\mu_{m}-R_{f})\\
+\\
+\sigma^{2}_{i} = \mathbb{V}[R_{i}] &amp;= \mathbb{V}[\underbrace{ R_{f}+\alpha_{i} }_{ Var = 0 }+\beta_{i}(R_{m}-R_{f})+\epsilon_{i})]\\
+&amp;= \mathbb{V}[\beta_{i}(R_{m}-\underbrace{ R_{f} }_{ Var = 0 }] + \mathbb{V}[\epsilon_{i}]\\
+&amp;= \beta_{i}^{2} \cdot \mathbb{V}[R_{M}] + \sigma^{2}_{\epsilon, i}\\
+&amp;= \beta^{2}_{i}\cdot \sigma^{2}_{m}+\sigma^{2}_{\epsilon,i}
+\end{aligned}
+\]</span></p>
+<p>Time doesn’t matter for the risk free or market returns</p>
+<div id="alpha-beta" class="section level4 hasAnchor" number="6.12.4.1">
+<h4><span class="header-section-number">6.12.4.1</span> Alpha &amp; Beta<a href="copulas.html#alpha-beta" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>An asset’s beta <span class="math inline">\(\beta_{i}\)</span> can be seen as a measure of both risk &amp; reward
+<span class="math display">\[
+CAPM \to \mu_{f}  = \mu_{f} + \beta_{i}(\mu_{M}-\mu_{f}) \implies \mu_{i} = \mu_{f} + \beta_{i}\underbrace{ \left(\frac{\mu_{M}-\mu_{f}}{\sigma_{M}}  \right)}_{ \text{Sharpe Ratio} }\sigma_{M}
+\]</span></p>
+<p><span class="math inline">\(\beta_{i}\)</span> measures extent of the return of a given asset is related to the market</p>
+<blockquote>
+<p><em>If you believe in CAPM, then the bigger beta is, the more risk you will have but also the more reward you will have.</em></p>
+</blockquote>
+<p><span class="math inline">\(\alpha_{i}\)</span> measure how much the asset outperforms the market consistently, the amount returned on top of the <span class="math inline">\(\beta_{i}\)</span></p>
+</div>
+</div>
+<div id="legacy-of-capm" class="section level3 hasAnchor" number="6.12.5">
+<h3><span class="header-section-number">6.12.5</span> Legacy of CAPM<a href="copulas.html#legacy-of-capm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>CAPM is wrong. A lot of it’s assumptions do not hold in reality.</p>
+<p>However, it had immense practical impact on investing, specifically in terms of
+- Diversification: concept of decreasing risk by spreading portfolio over different assets
+- Index investing: justification for common investing strategy of tracking some broad index with mutual funds or ETF’s
+- Benchmarking: Measuring performance of investment relative to market / index</p>
+</div>
+<div id="performance-evaluation" class="section level3 hasAnchor" number="6.12.6">
+<h3><span class="header-section-number">6.12.6</span> Performance Evaluation<a href="copulas.html#performance-evaluation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>CAPM says the best portfolio you can create is the tangency/market portfolio. This implies the best you can do is get the broadest index and combine it with a T-bill.</p>
+<blockquote>
+<p>Aside: In the past, you needed to use a mutual fund because exchange traded funds didn’t exist. Thats how most people invested, even though they cost high fees as there was a lot of human involvement.</p>
+</blockquote>
+<p>There are several ways to measure an asset’s performance, based on CAPM</p>
+<p>Sharpe ratio: (excess return per unit risk)
+<span class="math display">\[
+S_i=\frac{\mu_i-\mu_f}{\sigma_i}
+\]</span></p>
+<ul>
+<li>If you combine different assets, you can reduce the <span class="math inline">\(\sigma_{i}\)</span> of the portfolio, so it’s not objective because two assets may be really risky, but negatively correlated reducing <span class="math inline">\(\sigma_{i}\)</span>.</li>
+<li>It doesn’t however measure how correlated a portfolio is to the market.</li>
+</ul>
+<p>Treynor index: (excess return per unit non-diversifiable risk)
+<span class="math display">\[
+\quad T_i=\frac{\mu_i-\mu_f}{\beta_i}
+\]</span></p>
+<ul>
+<li>You would look at this to find the best return</li>
+</ul>
+<p>Jensen’s alpha: (excess return on top of the return explained by the market)
+<span class="math display">\[
+\quad \alpha_i=\hat{\alpha}_i
+\]</span></p>
+<ul>
+<li>Usually the most important measure a portfolio manager tries to use to convince people to invest in them.</li>
+</ul>
+
+</div>
 </div>
 </div>
             </section>
