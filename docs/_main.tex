@@ -2532,7 +2532,7 @@ Finding the optimal value of fraction \(f^{*}\) according to the Kelly criterion
 
 \[
 \begin{aligned}
-\mathbb{E}\left( \log\left( \frac{V_{n}}{V_{0}} \right) \right) &= \mathbb{E}\left( \log\left( \frac{V_{0}-(1+f)^{w}\cdot(1-f)^{w}}{V_{0}} \right) \right)\\
+\mathbb{E}\left( \log\left( \frac{V_{n}}{V_{0}} \right) \right) &= \mathbb{E}\left( \log\left( \frac{V_{0}\cdot(1+f)^{w}\cdot(1-f)^{n-w}}{V_{0}} \right) \right)\\
 &= \mathbb{E}[w\log(1+f))+(n-w)\log(1-f)]\\
 &= \log(1+f)\mathbb{E}(w) + \log(1-f)(n-\mathbb{E}(w))\\
 &= \log(1+f)np+\log(1-f)(\underbrace{ n-np }_{ n(1-p)=nq })\\
@@ -2579,17 +2579,26 @@ So as \(n\to \infty\), \(\frac{W_{n}}{n}\to p\) from LLN, which implies the geom
 from the continuous mapping theorem. This is also the expression where if you take the log, you get \(\underbrace{ \log(1+f)np+\log(1-f)nq }_{ G(f) }\) from the {[}{[}\#Finding the Optimal Value{]}{]} section.
 
 \hypertarget{simple-example}{%
-\subsubsection{Simple example}\label{simple-example}}
+\subsection{Simple example}\label{simple-example}}
 
 Consider general sequence of bets, where
-- \(1 bet \implies +\$a\) if win and \(−\$b\) if lose
-- For previous examples \(a = b = 1\)
-- \(P(win)=p\) and \(P(lose)=q\)
-- Bet is favorable, i.e.~\(p\cdot a> q\cdot b\)
-- Kelly criterion optimal fraction to bet is
-\[
-f^{*} = \frac{pa-qb}{ab}
-\]
+
+\begin{itemize}
+\tightlist
+\item
+  \(1 bet \implies +\$a\) if win and \(−\$b\) if lose
+\item
+  For previous examples \(a = b = 1\)
+\item
+  \(P(win)=p\) and \(P(lose)=q\)
+\item
+  Bet is favorable, i.e.~\(p\cdot a> q\cdot b\)
+\item
+  Kelly criterion optimal fraction to bet is
+  \[
+  f^{*} = \frac{pa-qb}{ab}
+  \]
+\end{itemize}
 
 So
 \[
@@ -3330,12 +3339,12 @@ Calculate daily net returns, plot the returns, sample auto-correlation plot, and
 
 \begin{verbatim}
 ##                  date adj_close
-## 1 2015-01-02 14:30:00  44.17994
+## 1 2015-01-02 14:30:00  44.17995
 ## 2 2015-01-05 14:30:00  43.25630
-## 3 2015-01-06 14:30:00  42.38906
-## 4 2015-01-07 14:30:00  42.80505
-## 5 2015-01-08 14:30:00  42.80505
-## 6 2015-01-09 14:30:00  42.08589
+## 3 2015-01-06 14:30:00  42.38907
+## 4 2015-01-07 14:30:00  42.80506
+## 5 2015-01-08 14:30:00  42.80506
+## 6 2015-01-09 14:30:00  42.08588
 \end{verbatim}
 
 \begin{Shaded}
@@ -3406,8 +3415,8 @@ This supports the stylized fact that returns follow heavy tail distributions.
 \end{Highlighting}
 \end{Shaded}
 
-We have a fitted mean \(\mu\) of \ensuremath{3.2240775\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4635453\times 10^{-4}}.
-This is compared to the sample mean \(\mu\) of \ensuremath{5.6615329\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827254\times 10^{-4}}.
+We have a fitted mean \(\mu\) of \ensuremath{3.2239368\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4634446\times 10^{-4}}.
+This is compared to the sample mean \(\mu\) of \ensuremath{5.6615324\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.382727\times 10^{-4}}.
 
 These differences can occur due to the fitted t-distribution smoothing away more extreme values.
 

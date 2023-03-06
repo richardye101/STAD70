@@ -289,16 +289,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.2" data-path="betting-strategies.html"><a href="betting-strategies.html#kelly-criterion"><i class="fa fa-check"></i><b>10.2</b> Kelly Criterion</a>
 <ul>
 <li class="chapter" data-level="10.2.1" data-path="betting-strategies.html"><a href="betting-strategies.html#finding-the-optimal-value"><i class="fa fa-check"></i><b>10.2.1</b> Finding the Optimal Value</a></li>
-<li class="chapter" data-level="10.2.2" data-path="betting-strategies.html"><a href="betting-strategies.html#geometric-average"><i class="fa fa-check"></i><b>10.2.2</b> Geometric average</a>
+<li class="chapter" data-level="10.2.2" data-path="betting-strategies.html"><a href="betting-strategies.html#geometric-average"><i class="fa fa-check"></i><b>10.2.2</b> Geometric average</a></li>
+<li class="chapter" data-level="10.2.3" data-path="betting-strategies.html"><a href="betting-strategies.html#simple-example"><i class="fa fa-check"></i><b>10.2.3</b> Simple example</a></li>
+<li class="chapter" data-level="10.2.4" data-path="betting-strategies.html"><a href="betting-strategies.html#kelly-criterion-in-investing"><i class="fa fa-check"></i><b>10.2.4</b> Kelly Criterion in Investing</a>
 <ul>
-<li class="chapter" data-level="10.2.2.1" data-path="betting-strategies.html"><a href="betting-strategies.html#simple-example"><i class="fa fa-check"></i><b>10.2.2.1</b> Simple example</a></li>
+<li class="chapter" data-level="10.2.4.1" data-path="betting-strategies.html"><a href="betting-strategies.html#example-in-investing"><i class="fa fa-check"></i><b>10.2.4.1</b> Example in investing</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2.3" data-path="betting-strategies.html"><a href="betting-strategies.html#kelly-criterion-in-investing"><i class="fa fa-check"></i><b>10.2.3</b> Kelly Criterion in Investing</a>
-<ul>
-<li class="chapter" data-level="10.2.3.1" data-path="betting-strategies.html"><a href="betting-strategies.html#example-in-investing"><i class="fa fa-check"></i><b>10.2.3.1</b> Example in investing</a></li>
-</ul></li>
-<li class="chapter" data-level="10.2.4" data-path="betting-strategies.html"><a href="betting-strategies.html#theoretical-properties"><i class="fa fa-check"></i><b>10.2.4</b> Theoretical properties</a></li>
-<li class="chapter" data-level="10.2.5" data-path="betting-strategies.html"><a href="betting-strategies.html#criticisms"><i class="fa fa-check"></i><b>10.2.5</b> Criticisms</a></li>
+<li class="chapter" data-level="10.2.5" data-path="betting-strategies.html"><a href="betting-strategies.html#theoretical-properties"><i class="fa fa-check"></i><b>10.2.5</b> Theoretical properties</a></li>
+<li class="chapter" data-level="10.2.6" data-path="betting-strategies.html"><a href="betting-strategies.html#criticisms"><i class="fa fa-check"></i><b>10.2.6</b> Criticisms</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="problem-set-1.html"><a href="problem-set-1.html"><i class="fa fa-check"></i><b>11</b> Problem Set 1</a>
@@ -559,7 +557,7 @@ maximizing geometric avg of returns.</p>
 <p>Finding the optimal value of fraction <span class="math inline">\(f^{*}\)</span> according to the Kelly criterion</p>
 <p><span class="math display">\[
 \begin{aligned}
-\mathbb{E}\left( \log\left( \frac{V_{n}}{V_{0}} \right) \right) &amp;= \mathbb{E}\left( \log\left( \frac{V_{0}-(1+f)^{w}\cdot(1-f)^{w}}{V_{0}} \right) \right)\\
+\mathbb{E}\left( \log\left( \frac{V_{n}}{V_{0}} \right) \right) &amp;= \mathbb{E}\left( \log\left( \frac{V_{0}\cdot(1+f)^{w}\cdot(1-f)^{n-w}}{V_{0}} \right) \right)\\
 &amp;= \mathbb{E}[w\log(1+f))+(n-w)\log(1-f)]\\
 &amp;= \log(1+f)\mathbb{E}(w) + \log(1-f)(n-\mathbb{E}(w))\\
 &amp;= \log(1+f)np+\log(1-f)(\underbrace{ n-np }_{ n(1-p)=nq })\\
@@ -599,17 +597,20 @@ So the fraction you bet depends on <em>the edge you have on this bet</em>.</p>
 (1+f)^{p}(1-f)^{1-p}
 \]</span>
 from the continuous mapping theorem. This is also the expression where if you take the log, you get <span class="math inline">\(\underbrace{ \log(1+f)np+\log(1-f)nq }_{ G(f) }\)</span> from the [[#Finding the Optimal Value]] section.</p>
-<div id="simple-example" class="section level4 hasAnchor" number="10.2.2.1">
-<h4><span class="header-section-number">10.2.2.1</span> Simple example<a href="betting-strategies.html#simple-example" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Consider general sequence of bets, where
-- <span class="math inline">\(1 bet \implies +\$a\)</span> if win and <span class="math inline">\(−\$b\)</span> if lose
-- For previous examples <span class="math inline">\(a = b = 1\)</span>
-- <span class="math inline">\(P(win)=p\)</span> and <span class="math inline">\(P(lose)=q\)</span>
-- Bet is favorable, i.e. <span class="math inline">\(p\cdot a&gt; q\cdot b\)</span>
-- Kelly criterion optimal fraction to bet is
+</div>
+<div id="simple-example" class="section level3 hasAnchor" number="10.2.3">
+<h3><span class="header-section-number">10.2.3</span> Simple example<a href="betting-strategies.html#simple-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider general sequence of bets, where</p>
+<ul>
+<li><span class="math inline">\(1 bet \implies +\$a\)</span> if win and <span class="math inline">\(−\$b\)</span> if lose</li>
+<li>For previous examples <span class="math inline">\(a = b = 1\)</span></li>
+<li><span class="math inline">\(P(win)=p\)</span> and <span class="math inline">\(P(lose)=q\)</span></li>
+<li>Bet is favorable, i.e. <span class="math inline">\(p\cdot a&gt; q\cdot b\)</span></li>
+<li>Kelly criterion optimal fraction to bet is
 <span class="math display">\[
 f^{*} = \frac{pa-qb}{ab}
-\]</span></p>
+\]</span></li>
+</ul>
 <p>So
 <span class="math display">\[
 \begin{aligned}
@@ -619,9 +620,8 @@ f^{*} = &amp;\frac{1p-1q}{1\cdot1} = p-q = .55-.45 = .10
 \]</span>
 <img src="Notes/Obsidian-Attachments/8-Betting-Strategies-1.png" /></p>
 </div>
-</div>
-<div id="kelly-criterion-in-investing" class="section level3 hasAnchor" number="10.2.3">
-<h3><span class="header-section-number">10.2.3</span> Kelly Criterion in Investing<a href="betting-strategies.html#kelly-criterion-in-investing" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="kelly-criterion-in-investing" class="section level3 hasAnchor" number="10.2.4">
+<h3><span class="header-section-number">10.2.4</span> Kelly Criterion in Investing<a href="betting-strategies.html#kelly-criterion-in-investing" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Consider a situation where you have:
 - risk free asset with return <span class="math inline">\(r_{i}\)</span>
 - One risky asset with return <span class="math inline">\(R_{i}\)</span>, with <span class="math inline">\(\mathbb{E}(R) = \mu, \mathbb{V}(R) = \sigma^{2}\)</span></p>
@@ -666,21 +666,21 @@ f^{*} = &amp;\frac{1p-1q}{1\cdot1} = p-q = .55-.45 = .10
 <p><span class="math display">\[
 \mathbf{\implies f^{*} \approx (1+r_{f}) \frac{\mu-r_{f}}{\sigma^{2}}}
 \]</span></p>
-<div id="example-in-investing" class="section level4 hasAnchor" number="10.2.3.1">
-<h4><span class="header-section-number">10.2.3.1</span> Example in investing<a href="betting-strategies.html#example-in-investing" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="example-in-investing" class="section level4 hasAnchor" number="10.2.4.1">
+<h4><span class="header-section-number">10.2.4.1</span> Example in investing<a href="betting-strategies.html#example-in-investing" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p><img src="Notes/Obsidian-Attachments/8-Betting-Strategies-2.png" /></p>
 </div>
 </div>
-<div id="theoretical-properties" class="section level3 hasAnchor" number="10.2.4">
-<h3><span class="header-section-number">10.2.4</span> Theoretical properties<a href="betting-strategies.html#theoretical-properties" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="theoretical-properties" class="section level3 hasAnchor" number="10.2.5">
+<h3><span class="header-section-number">10.2.5</span> Theoretical properties<a href="betting-strategies.html#theoretical-properties" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In the long term <span class="math inline">\(n\to \infty\)</span>, with probability 1, a strategy based on a Kelly criterion will:
 - Maximize the limiting exponential growth rate of wealth
 - Maximizes median of final wealth
 - Half of distribution is above median &amp; half below it
 - Minimizes the expected time required to reach a specified goal for the wealth</p>
 </div>
-<div id="criticisms" class="section level3 hasAnchor" number="10.2.5">
-<h3><span class="header-section-number">10.2.5</span> Criticisms<a href="betting-strategies.html#criticisms" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="criticisms" class="section level3 hasAnchor" number="10.2.6">
+<h3><span class="header-section-number">10.2.6</span> Criticisms<a href="betting-strategies.html#criticisms" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>It tends to be risky</p>
 <p>It works well if you have clear information (what exactly your edge is) and that you have an infinite sequence of gambles</p>
 <p>In practice, people will take half of the kelly criterion, as a precaution against high volatility</p>
