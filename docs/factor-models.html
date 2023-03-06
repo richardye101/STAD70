@@ -269,7 +269,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="9.3.1" data-path="risk-measures.html"><a href="risk-measures.html#example-that-var-and-cvar-satisfy-prop-2-3"><i class="fa fa-check"></i><b>9.3.1</b> Example that VAR and CVar satisfy prop 2 &amp; 3</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="risk-measures.html"><a href="risk-measures.html#entropic-var"><i class="fa fa-check"></i><b>9.4</b> Entropic VaR</a></li>
+<li class="chapter" data-level="9.4" data-path="risk-measures.html"><a href="risk-measures.html#entropic-var"><i class="fa fa-check"></i><b>9.4</b> Entropic VaR</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="risk-measures.html"><a href="risk-measures.html#evar-for-a-normal-distribution"><i class="fa fa-check"></i><b>9.4.1</b> EVaR for a Normal Distribution</a></li>
+</ul></li>
 <li class="chapter" data-level="9.5" data-path="risk-measures.html"><a href="risk-measures.html#calculating-risk-measures"><i class="fa fa-check"></i><b>9.5</b> Calculating Risk Measures</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="betting-strategies.html"><a href="betting-strategies.html"><i class="fa fa-check"></i><b>10</b> Betting Strategies</a>
@@ -372,17 +375,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="14" data-path="problem-set-4.html"><a href="problem-set-4.html"><i class="fa fa-check"></i><b>14</b> Problem Set 4</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="problem-set-4.html"><a href="problem-set-4.html#q1-3"><i class="fa fa-check"></i><b>14.1</b> Q1</a>
+<li class="chapter" data-level="14.1" data-path="problem-set-4.html"><a href="problem-set-4.html#q1.1"><i class="fa fa-check"></i><b>14.1</b> Q1.1</a>
 <ul>
 <li class="chapter" data-level="14.1.1" data-path="problem-set-4.html"><a href="problem-set-4.html#part-a-5"><i class="fa fa-check"></i><b>14.1.1</b> Part A</a></li>
 <li class="chapter" data-level="14.1.2" data-path="problem-set-4.html"><a href="problem-set-4.html#part-b-5"><i class="fa fa-check"></i><b>14.1.2</b> Part B</a></li>
 </ul></li>
-<li class="chapter" data-level="14.2" data-path="problem-set-4.html"><a href="problem-set-4.html#q2-3"><i class="fa fa-check"></i><b>14.2</b> Q2</a></li>
-<li class="chapter" data-level="14.3" data-path="problem-set-4.html"><a href="problem-set-4.html#part-a-6"><i class="fa fa-check"></i><b>14.3</b> Part A</a>
+<li class="chapter" data-level="14.2" data-path="problem-set-4.html"><a href="problem-set-4.html#q1.2"><i class="fa fa-check"></i><b>14.2</b> Q1.2</a>
 <ul>
-<li class="chapter" data-level="14.3.1" data-path="problem-set-4.html"><a href="problem-set-4.html#part-b-6"><i class="fa fa-check"></i><b>14.3.1</b> Part B</a></li>
+<li class="chapter" data-level="14.2.1" data-path="problem-set-4.html"><a href="problem-set-4.html#part-a-6"><i class="fa fa-check"></i><b>14.2.1</b> Part A</a></li>
+<li class="chapter" data-level="14.2.2" data-path="problem-set-4.html"><a href="problem-set-4.html#part-b-6"><i class="fa fa-check"></i><b>14.2.2</b> Part B</a></li>
 </ul></li>
-<li class="chapter" data-level="14.4" data-path="problem-set-4.html"><a href="problem-set-4.html#q3-3"><i class="fa fa-check"></i><b>14.4</b> Q3</a></li>
+<li class="chapter" data-level="14.3" data-path="problem-set-4.html"><a href="problem-set-4.html#q1.3"><i class="fa fa-check"></i><b>14.3</b> Q1.3</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -426,11 +429,13 @@ t \in \mathbb{R}
 \end{cases}
 \end{aligned}
 \]</span>
-where:
-- <span class="math inline">\(R_{i}(t)\)</span> is return on the <span class="math inline">\(i^{th}\)</span> asset at time t
-- <span class="math inline">\(F_{j}(t)\)</span> is the <span class="math inline">\(j^{th}\)</span> common factor at time t
-- <span class="math inline">\(\beta_{i,j}\)</span> is the factor loading/beta of <span class="math inline">\(i^{th}\)</span> asset on the <span class="math inline">\(j^{th}\)</span> factor
-- <span class="math inline">\(\epsilon_{i}(t)\)</span> is the idiosyncratic/unique return of asset <span class="math inline">\(i^{th}\)</span></p>
+where:</p>
+<ul>
+<li><span class="math inline">\(R_{i}(t)\)</span> is return on the <span class="math inline">\(i^{th}\)</span> asset at time t</li>
+<li><span class="math inline">\(F_{j}(t)\)</span> is the <span class="math inline">\(j^{th}\)</span> common factor at time t</li>
+<li><span class="math inline">\(\beta_{i,j}\)</span> is the factor loading/beta of <span class="math inline">\(i^{th}\)</span> asset on the <span class="math inline">\(j^{th}\)</span> factor</li>
+<li><span class="math inline">\(\epsilon_{i}(t)\)</span> is the idiosyncratic/unique return of asset <span class="math inline">\(i^{th}\)</span></li>
+</ul>
 <p>We want the errors to be independent from the factors,
 <span class="math display">\[
 Cov[\epsilon(t), F(t)] = 0
@@ -491,20 +496,26 @@ R_{port} = w^{T}R \implies \begin{cases}
 <div id="time-series-regression-models" class="section level3 hasAnchor" number="8.1.1">
 <h3><span class="header-section-number">8.1.1</span> Time Series Regression Models<a href="factor-models.html#time-series-regression-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Consider model for which factor values are known (e.g. macro/fundamental model)</p>
-<p>Estimate betas &amp; risks (variances) one asset at a time, using time series regression
-- For each fixed <span class="math inline">\(i=1,\dots N\)</span>, fir regression model:
+<p>Estimate betas &amp; risks (variances) one asset at a time, using time series regression</p>
+<ul>
+<li>For each fixed <span class="math inline">\(i=1,\dots N\)</span>, fit regression model:
 <span class="math display">\[
 R_{i}(t) = = \beta_{i,0} + \beta_{i,1}F_{1}(t)+ \dots + \beta_{i,p}F_{p}(t) + \epsilon_{i}(t)
-\]</span></p>
+\]</span></li>
+</ul>
 <p>Most models will always include some proxy for the overall economy (eg the market)</p>
 <p>Instead of Fama-French, there is BARRA which uses the cross section of returns? Still regression tho</p>
 <div id="fama-french-3-factor-model" class="section level4 hasAnchor" number="8.1.1.1">
 <h4><span class="header-section-number">8.1.1.1</span> Fama-French 3 Factor Model<a href="factor-models.html#fama-french-3-factor-model" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Additionally to the market, they looked at two other factors that are consistent over many datasets and time periods.</p>
 <p><strong>Small Minus Big: (SMB)</strong>
-One factor tries to capture the size(market cap) of the company/stock, which empirically showed that size played a role in its return
-- Regressed returns on how companies of a certain size/group did
-- They took the smallest and biggest companies, and looked at their avg return over some period, creating a difference to use to separate the groups of companies</p>
+One factor tries to capture the size(market cap) of the company/stock, which empirically showed that size played a role in its return</p>
+<ul>
+<li>Regressed returns on how companies of a certain size/group did
+<ul>
+<li>They took the smallest and biggest companies, and looked at their avg return over some period, creating a difference to use to separate the groups of companies</li>
+</ul></li>
+</ul>
 <p><strong>High Minus Low (HML):</strong>
 The second factor looks at whether a company is a <strong>value</strong> one or not. Measured using book-to-market ratio.</p>
 <blockquote>
@@ -528,7 +539,7 @@ This gives more stable estimates than sample covariance.</p>
 </div>
 <div id="statistical-factor-models" class="section level3 hasAnchor" number="8.1.2">
 <h3><span class="header-section-number">8.1.2</span> Statistical Factor Models<a href="factor-models.html#statistical-factor-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In this model, the factors are <strong>unknown (latent) and unobserved</strong>. THis implies that we need to estimate both <span class="math inline">\(\beta\)</span> and <span class="math inline">\(F\)</span>.</p>
+<p>In this model, the factors are <strong>unknown (latent) and unobserved</strong>. This implies that we need to estimate both <span class="math inline">\(\beta\)</span> and <span class="math inline">\(F\)</span>.</p>
 <p>Unusual constraint: Because the factors are uncorrelated (not necessarily i.i.d.)
 <span class="math display">\[
 \Sigma_{F} = Cov(F)= I \sigma_F \quad \&amp; \quad \mu_{F}=\mathbb{E}(F) = 0
@@ -536,7 +547,7 @@ This gives more stable estimates than sample covariance.</p>
 <p>This gives us the resulting moments of the returns:
 <span class="math display">\[
 \begin{aligned}
-\mu_{R} &amp;= \mathbb{E}[R] = \mathbb{E}[\beta_{0}+\beta^TF + \epsilon] = \beta_{0}+\beta^{T}\underbrace{ \mathbb{E}[F] }_{ 0 }+\underbrace{ \mathbb{E}[\epsilon] }_{ 0 } = \beta e_{0}\\
+\mu_{R} &amp;= \mathbb{E}[R] = \mathbb{E}[\beta_{0}+\beta^TF + \epsilon] = \beta_{0}+\beta^{T}\underbrace{ \mathbb{E}[F] }_{ 0 }+\underbrace{ \mathbb{E}[\epsilon] }_{ 0 } = \beta_{0}\\
 \\
 \Sigma_{R} &amp;= \mathbb{V}[R] = \mathbb{V}[\boldsymbol{\beta}_{0}+\boldsymbol{\beta}^{T}F+\boldsymbol{\epsilon}] = \boldsymbol{\beta}^{T}\mathbb{V}[F]\boldsymbol{\beta}+\boldsymbol{\Sigma_{\epsilon} = \beta^{T}(I\cdot \sigma_{F})\beta+\Sigma_{\epsilon}}
 \end{aligned}

@@ -269,7 +269,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="9.3.1" data-path="risk-measures.html"><a href="risk-measures.html#example-that-var-and-cvar-satisfy-prop-2-3"><i class="fa fa-check"></i><b>9.3.1</b> Example that VAR and CVar satisfy prop 2 &amp; 3</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="risk-measures.html"><a href="risk-measures.html#entropic-var"><i class="fa fa-check"></i><b>9.4</b> Entropic VaR</a></li>
+<li class="chapter" data-level="9.4" data-path="risk-measures.html"><a href="risk-measures.html#entropic-var"><i class="fa fa-check"></i><b>9.4</b> Entropic VaR</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="risk-measures.html"><a href="risk-measures.html#evar-for-a-normal-distribution"><i class="fa fa-check"></i><b>9.4.1</b> EVaR for a Normal Distribution</a></li>
+</ul></li>
 <li class="chapter" data-level="9.5" data-path="risk-measures.html"><a href="risk-measures.html#calculating-risk-measures"><i class="fa fa-check"></i><b>9.5</b> Calculating Risk Measures</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="betting-strategies.html"><a href="betting-strategies.html"><i class="fa fa-check"></i><b>10</b> Betting Strategies</a>
@@ -372,17 +375,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="14" data-path="problem-set-4.html"><a href="problem-set-4.html"><i class="fa fa-check"></i><b>14</b> Problem Set 4</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="problem-set-4.html"><a href="problem-set-4.html#q1-3"><i class="fa fa-check"></i><b>14.1</b> Q1</a>
+<li class="chapter" data-level="14.1" data-path="problem-set-4.html"><a href="problem-set-4.html#q1.1"><i class="fa fa-check"></i><b>14.1</b> Q1.1</a>
 <ul>
 <li class="chapter" data-level="14.1.1" data-path="problem-set-4.html"><a href="problem-set-4.html#part-a-5"><i class="fa fa-check"></i><b>14.1.1</b> Part A</a></li>
 <li class="chapter" data-level="14.1.2" data-path="problem-set-4.html"><a href="problem-set-4.html#part-b-5"><i class="fa fa-check"></i><b>14.1.2</b> Part B</a></li>
 </ul></li>
-<li class="chapter" data-level="14.2" data-path="problem-set-4.html"><a href="problem-set-4.html#q2-3"><i class="fa fa-check"></i><b>14.2</b> Q2</a></li>
-<li class="chapter" data-level="14.3" data-path="problem-set-4.html"><a href="problem-set-4.html#part-a-6"><i class="fa fa-check"></i><b>14.3</b> Part A</a>
+<li class="chapter" data-level="14.2" data-path="problem-set-4.html"><a href="problem-set-4.html#q1.2"><i class="fa fa-check"></i><b>14.2</b> Q1.2</a>
 <ul>
-<li class="chapter" data-level="14.3.1" data-path="problem-set-4.html"><a href="problem-set-4.html#part-b-6"><i class="fa fa-check"></i><b>14.3.1</b> Part B</a></li>
+<li class="chapter" data-level="14.2.1" data-path="problem-set-4.html"><a href="problem-set-4.html#part-a-6"><i class="fa fa-check"></i><b>14.2.1</b> Part A</a></li>
+<li class="chapter" data-level="14.2.2" data-path="problem-set-4.html"><a href="problem-set-4.html#part-b-6"><i class="fa fa-check"></i><b>14.2.2</b> Part B</a></li>
 </ul></li>
-<li class="chapter" data-level="14.4" data-path="problem-set-4.html"><a href="problem-set-4.html#q3-3"><i class="fa fa-check"></i><b>14.4</b> Q3</a></li>
+<li class="chapter" data-level="14.3" data-path="problem-set-4.html"><a href="problem-set-4.html#q1.3"><i class="fa fa-check"></i><b>14.3</b> Q1.3</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -407,13 +410,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="risk-measures" class="section level1 hasAnchor" number="9">
 <h1><span class="header-section-number">Chapter 9</span> Risk Measures<a href="risk-measures.html#risk-measures" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>We will primarily focus on market risk.</p>
-<p>Financial risk describes the possibility of an investment losing money. It can have several sources, the main ones being:
-- Market risk: due to changes in market prices
-- Credit risk: counterparty doesn’t honor obligations
-- Liquidity risk: lack of asset tradability
-- Operational risk: from organization’s internal activities
-- E.g., legal, fraud, or human error risk
-- Risk management is the process of identifying, measuring, and controlling risk</p>
+<p>Financial risk describes the possibility of an investment losing money. It can have several sources, the main ones being:</p>
+<ul>
+<li>Market risk: due to changes in market prices</li>
+<li>Credit risk: counterparty doesn’t honor obligations</li>
+<li>Liquidity risk: lack of asset tradability</li>
+<li>Operational risk: from organization’s internal activities
+<ul>
+<li>E.g., legal, fraud, or human error risk</li>
+</ul></li>
+<li>Risk management is the process of identifying, measuring, and controlling risk</li>
+</ul>
 <p>The first thing we want to do is quantify the risk somehow.</p>
 <p>To operationalize risk management, we use risk measures to define some capital requirement that the organization should hold in a liquid asset/cash.</p>
 <p>The first thing that comes to mind is measuring risk by the variance of returns. <strong>But it is not a good risk measure</strong>. In the following example, the variances are the same, but clearly the risk is different.</p>
@@ -426,8 +433,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="value-at-risk-var" class="section level2 hasAnchor" number="9.1">
 <h2><span class="header-section-number">9.1</span> Value At Risk (VAR)<a href="risk-measures.html#value-at-risk-var" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Was really common, although recently it has decreased in use (discredited) although there are variations still in use.</p>
-<p>Let <span class="math inline">\(\mathrm{RV}\)</span> <span class="math inline">\(L\)</span> be the loss of an investment over some time period <span class="math inline">\(T\)</span>
-- Loss is negative of gain/revenue <span class="math inline">\((R): L=-R\)</span></p>
+<p>Let <span class="math inline">\(\mathrm{RV}\)</span> <span class="math inline">\(L\)</span> be the loss of an investment over some time period <span class="math inline">\(T\)</span></p>
+<ul>
+<li>Loss is negative of gain/revenue <span class="math inline">\((R): L=-R\)</span></li>
+</ul>
 <blockquote>
 <p>We look at losses because we only capture the negative losses from this asset</p>
 </blockquote>
@@ -437,15 +446,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 \begin{aligned}
 \operatorname{VaR}(\alpha)=\inf \{x: P(L \leq x) \geq 1-\alpha\}=\inf \{x: P(L&gt;x) \leq \alpha\}
 \end{aligned}
-\]</span>
-&gt;Infimum (smallest value of x) is only used for discrete distributions such that the the probability of <span class="math inline">\(L\)</span> will not exceed some value <span class="math inline">\(x\)</span> and we want this to happen <span class="math inline">\((1-\alpha)\)</span> of the time. (Usually want it to be less than <span class="math inline">\(5\%\)</span>)</p>
+\]</span></p>
+<blockquote>
+<p>Infimum (smallest value of x) is only used for discrete distributions such that the the probability of <span class="math inline">\(L\)</span> will not exceed some value <span class="math inline">\(x\)</span> and we want this to happen <span class="math inline">\((1-\alpha)\)</span> of the time. (Usually want it to be less than <span class="math inline">\(5\%\)</span>)</p>
+</blockquote>
 <ul>
-<li><p>For continuous RV with <span class="math inline">\(\operatorname{CDF} F_L\)</span> , we don’t need the infimum anymore and can just do: <span class="math inline">\(\Rightarrow \operatorname{VaR}(\alpha)=F_L^{-1}(1-\alpha)\)</span>
-&gt;Basically the quantile of the distribution</p></li>
-<li><p>VaR represents amount that covers losses with probability <span class="math inline">\((1-\alpha)\)</span></p></li>
+<li>For continuous RV with <span class="math inline">\(\operatorname{CDF} F_L\)</span> , we don’t need the infimum anymore and can just do: <span class="math inline">\(\Rightarrow \operatorname{VaR}(\alpha)=F_L^{-1}(1-\alpha)\)</span></li>
 </ul>
-<p><img src="Notes/Obsidian-Attachments/7-Risk-Management-1.png" />
-&gt;We want the quantile at which the probability is at <span class="math inline">\((1-\alpha)\)</span></p>
+<blockquote>
+<p>Basically the quantile of the distribution</p>
+</blockquote>
+<ul>
+<li>VaR represents amount that covers losses with probability <span class="math inline">\((1-\alpha)\)</span></li>
+</ul>
+<p><img src="Notes/Obsidian-Attachments/7-Risk-Management-1.png" /></p>
+<blockquote>
+<p>We want the quantile at which the probability is at <span class="math inline">\((1-\alpha)\)</span></p>
+</blockquote>
+<blockquote>
+<p>The VaR(<span class="math inline">\(\alpha\)</span>) value indicates what value of <span class="math inline">\(x\)</span> we need to hold to cover our losses <span class="math inline">\((1-\alpha) = 95\%\)</span> of the time.</p>
+</blockquote>
 <div id="example-1" class="section level3 hasAnchor" number="9.1.1">
 <h3><span class="header-section-number">9.1.1</span> Example<a href="risk-measures.html#example-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Consider asset with <span class="math inline">\(N(\mu=.03, \sigma^{2}=.04)\)</span> annual log-returns. Find the 95% confidence level annual VaR for a <span class="math inline">\(S_{0} =\)</span>$1000 investment in this asset. Let <span class="math inline">\(R=S_{T}-S_{0}\)</span> represent revenue (-losses)</p>
@@ -495,6 +515,10 @@ P(S_{T}-S_{0} &lt; -VaR) &amp;= P(S_{T} &lt; S_{0}-VaR)\\
 <p>AKA CVar or ES
 <img src="Notes/Obsidian-Attachments/7-Risk-Management-3.png" /></p>
 <p>This gives us the expected losses that can occur given that we are beyond <span class="math inline">\(VaR_{\alpha}\)</span></p>
+<blockquote>
+<p>Imagine we cut off the loss distribution beyond the VaR(<span class="math inline">\(\alpha\)</span>)<span class="math inline">\(=x\)</span> point, and we have another little distribution of losses which are way larger/further from the bulk of the distribution.
+We take the mean/average/expected value of this distribution which tells us “hey in the 5% scenario our losses are so huge, what can we <strong>expect</strong> to lose?”</p>
+</blockquote>
 </div>
 <div id="example-2" class="section level4 hasAnchor" number="9.2.0.2">
 <h4><span class="header-section-number">9.2.0.2</span> Example<a href="risk-measures.html#example-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -528,18 +552,28 @@ VaR_{\alpha} &amp;= \mu +z_{\alpha}\cdot \sigma
 <p>We now look at formal set of requirements for risk measures (5 properties)</p>
 <p>We let <span class="math inline">\(\rho(L)\)</span> represent the risk measure, which takes in a distribution of a some returns and outputs a number indicating the capital requirements (money to be kept aside) should be.
 We let <span class="math inline">\(L\)</span> is a random variable and let <span class="math inline">\(\rho\)</span> is a functional distribution of <span class="math inline">\(L\)</span>.</p>
-<p>For this measure <span class="math inline">\(\rho\)</span> to reasonably quantify risk, it must:
-1. be normalized <span class="math inline">\(\rho(0)=0\)</span> (risk of holding no assets is 0)
-2. Translation invariance: <span class="math inline">\(\rho(L+c) = \rho(L) + c \ \forall c \in \mathbb{R}\)</span>
-- adding a loss <span class="math inline">\(c\)</span> to the portfolio increases risk by exactly <span class="math inline">\(c\)</span>
-3. Positive Homogeneity: <span class="math inline">\(\rho(bL) = b\rho(l)\)</span>
-- scaling portfolio returns also will scale risk
-4. Monotonicity: <span class="math inline">\(L_{1}\geq L_{2} \implies \rho(L_{1}) \geq \rho(L_{2})\)</span>
-- The ordering of the random variables is almost surely <span class="math inline">\(P(L_{1}\geq L_{2})=1\)</span>
-5. Sub-additivity: <span class="math inline">\(\rho(L_{1}+L_{2}) \leq \rho(L_{1}+L_{2})\)</span>
-- Only when the two losses are perfectly correlated, then equal
-- The risk of two combined portfolios cannot exceed the sum of the two portfolio risks</p>
-<p>If a risk measure has all 5 properties, then it is called a <em>coherent risk measure</em>.</p>
+<p>For this measure <span class="math inline">\(\rho\)</span> to reasonably quantify risk, it must:</p>
+<ol style="list-style-type: decimal">
+<li>be normalized <span class="math inline">\(\rho(0)=0\)</span> (risk of holding no assets is 0)</li>
+<li>Translation invariance: <span class="math inline">\(\rho(L+c) = \rho(L) + c \ \forall c \in \mathbb{R}\)</span>
+<ul>
+<li>adding a loss <span class="math inline">\(c\)</span> to the portfolio increases risk by exactly <span class="math inline">\(c\)</span></li>
+</ul></li>
+<li>Positive Homogeneity: <span class="math inline">\(\rho(bL) = b\rho(l)\)</span>
+<ul>
+<li>scaling portfolio returns also will scale risk</li>
+</ul></li>
+<li>Monotonicity: <span class="math inline">\(L_{1}\geq L_{2} \implies \rho(L_{1}) \geq \rho(L_{2})\)</span>
+<ul>
+<li>The ordering of the random variables is almost surely <span class="math inline">\(P(L_{1}\geq L_{2})=1\)</span></li>
+</ul></li>
+<li>Sub-additivity: <span class="math inline">\(\rho(L_{1}+L_{2}) \leq \rho(L_{1}+L_{2})\)</span>
+<ul>
+<li>Only when the two losses are perfectly correlated, then equal</li>
+<li>The risk of two combined portfolios cannot exceed the sum of the two portfolio risks</li>
+</ul></li>
+</ol>
+<p>If a risk measure has all 5 properties, then it is called a <strong>coherent risk measure</strong>.</p>
 <div id="example-that-var-and-cvar-satisfy-prop-2-3" class="section level3 hasAnchor" number="9.3.1">
 <h3><span class="header-section-number">9.3.1</span> Example that VAR and CVar satisfy prop 2 &amp; 3<a href="risk-measures.html#example-that-var-and-cvar-satisfy-prop-2-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We first show that VAR and CVaR satisfy the second and third property of translation invariance and positive homogeneity.</p>
@@ -622,6 +656,34 @@ For loss RV <span class="math inline">\(L\)</span> with mgf <span class="math in
 <blockquote>
 <p>Can define a risk measure we can use the MGF instead of the PDF or CDF which in some cases is convenient. We can just minimize the MGF</p>
 </blockquote>
+<div id="evar-for-a-normal-distribution" class="section level3 hasAnchor" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> EVaR for a Normal Distribution<a href="risk-measures.html#evar-for-a-normal-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Let } L \sim N(\mu, \sigma^{2})
+M_{L}(z) &amp;= e^{\mu z+1/2 \sigma^{2}z^{2}} = \mathbb{E}[e^{z\cdot L}]\quad \forall z\\
+\\
+\text{Know: }EVaR_{\alpha} &amp;= inf_{z&gt;0} \left\{ z^{-1} \ln(M_{L}(z) / \alpha) \right\}\\
+\text{Let } f(z) &amp;= z^{-1} \ln(M_{L}(z) / \alpha)\\
+&amp;= z^{-1} \ln(e^{\mu z+1/2 \sigma^{2}z^{2}} / \alpha)\\
+&amp;= \frac{1}{z}\left[ \mu z+\frac{\sigma^{2}z^{2}}{2}-\ln \alpha \right]\\
+&amp;= \mu + \frac{z\sigma^{2}}{2} - \frac{\ln(\alpha)}{z}\\
+\end{aligned}
+\]</span>
+<span class="math display">\[
+\begin{aligned}
+\text{So to find }&amp; \text{the smallest $z$, we take the derivative:}\\
+\implies f&#39;(z) &amp;= \frac{\sigma^{2}}{2}+\frac{\ln(\alpha)}{z^{2}}\\
+\implies z &amp;= \frac{\sqrt{-2\ln(\alpha)}}{\sigma}\\
+\\
+\implies EVaR_{\alpha}(L) &amp;= \mu + \frac{\sigma^{2}}{2}\cdot \frac{\sqrt{-2\ln(\alpha)}}{\sigma} - \frac{\ln(\alpha)}{\frac{\sqrt{-2\ln(\alpha)}}{\sigma}}\\
+&amp;= \mu + \sigma \cdot \sqrt{-\frac{\ln(\alpha)}{2}} + \sigma \frac{\sqrt{(-\ln(\alpha))^{2} }}{\sqrt{-2\ln(\alpha)}}\\
+&amp;= \mu + \sigma \cdot \sqrt{-\frac{\ln(\alpha)}{2}} + \sigma \underbrace{ \frac{\sqrt{(\ln(\alpha ^{-1}))^{2} }}{\sqrt{2\ln(\alpha ^{-1})}} }_{= \sqrt{ \frac{\ln(\alpha ^{-1})}{2} }  = \sqrt{ -\frac{\ln(\alpha)}{2} }}\\
+&amp;= \mu + 2\sigma \cdot \sqrt{-\frac{\ln(\alpha)}{2}}\\
+&amp;= \mu + \sigma \cdot \sqrt{-2\ln(\alpha)}\\
+\end{aligned}
+\]</span></p>
+</div>
 </div>
 <div id="calculating-risk-measures" class="section level2 hasAnchor" number="9.5">
 <h2><span class="header-section-number">9.5</span> Calculating Risk Measures<a href="risk-measures.html#calculating-risk-measures" class="anchor-section" aria-label="Anchor link to header"></a></h2>

@@ -1327,7 +1327,10 @@ We can use Lagrange multipliers to define the objective function:
 & \quad \ = \frac{\underline{\Sigma}^{-1}\cdot \underline{1}}{\underline{1}^{T}\cdot\underline{\Sigma}^{-1}\cdot  \underline{1}}
 \end{aligned}
 \]
-\textgreater{}\(\underline{\Sigma}^{-1}\) represents the \href{https://stephens999.github.io/fiveMinuteStats/normal_markov_chain.html}{precision matrix}, where if there is a 0 at \((i,j)\) then \(i\) and \(j\) are conditionally independent (given all other assets are held constant, there is no dependence/correlation between these two assets). If it exists, then it is positive definite.
+
+\begin{quote}
+\(\underline{\Sigma}^{-1}\) represents the \href{https://stephens999.github.io/fiveMinuteStats/normal_markov_chain.html}{precision matrix}, where if there is a 0 at \((i,j)\) then \(i\) and \(j\) are conditionally independent (given all other assets are held constant, there is no dependence/correlation between these two assets). If it exists, then it is positive definite.
+\end{quote}
 
 \begin{quote}
 The numerator is a vector containing the L1 norms of each row's (asset) precision.
@@ -1649,10 +1652,18 @@ t \in \mathbb{R}
 \end{aligned}
 \]
 where:
-- \(R_{i}(t)\) is return on the \(i^{th}\) asset at time t
-- \(F_{j}(t)\) is the \(j^{th}\) common factor at time t
-- \(\beta_{i,j}\) is the factor loading/beta of \(i^{th}\) asset on the \(j^{th}\) factor
-- \(\epsilon_{i}(t)\) is the idiosyncratic/unique return of asset \(i^{th}\)
+
+\begin{itemize}
+\tightlist
+\item
+  \(R_{i}(t)\) is return on the \(i^{th}\) asset at time t
+\item
+  \(F_{j}(t)\) is the \(j^{th}\) common factor at time t
+\item
+  \(\beta_{i,j}\) is the factor loading/beta of \(i^{th}\) asset on the \(j^{th}\) factor
+\item
+  \(\epsilon_{i}(t)\) is the idiosyncratic/unique return of asset \(i^{th}\)
+\end{itemize}
 
 We want the errors to be independent from the factors,
 \[
@@ -1722,10 +1733,15 @@ R_{port} = w^{T}R \implies \begin{cases}
 Consider model for which factor values are known (e.g.~macro/fundamental model)
 
 Estimate betas \& risks (variances) one asset at a time, using time series regression
-- For each fixed \(i=1,\dots N\), fir regression model:
-\[
-R_{i}(t) = = \beta_{i,0} + \beta_{i,1}F_{1}(t)+ \dots + \beta_{i,p}F_{p}(t) + \epsilon_{i}(t)
-\]
+
+\begin{itemize}
+\tightlist
+\item
+  For each fixed \(i=1,\dots N\), fit regression model:
+  \[
+  R_{i}(t) = = \beta_{i,0} + \beta_{i,1}F_{1}(t)+ \dots + \beta_{i,p}F_{p}(t) + \epsilon_{i}(t)
+  \]
+\end{itemize}
 
 Most models will always include some proxy for the overall economy (eg the market)
 
@@ -1738,8 +1754,18 @@ Additionally to the market, they looked at two other factors that are consistent
 
 \textbf{Small Minus Big: (SMB)}
 One factor tries to capture the size(market cap) of the company/stock, which empirically showed that size played a role in its return
-- Regressed returns on how companies of a certain size/group did
-- They took the smallest and biggest companies, and looked at their avg return over some period, creating a difference to use to separate the groups of companies
+
+\begin{itemize}
+\tightlist
+\item
+  Regressed returns on how companies of a certain size/group did
+
+  \begin{itemize}
+  \tightlist
+  \item
+    They took the smallest and biggest companies, and looked at their avg return over some period, creating a difference to use to separate the groups of companies
+  \end{itemize}
+\end{itemize}
 
 \textbf{High Minus Low (HML):}
 The second factor looks at whether a company is a \textbf{value} one or not. Measured using book-to-market ratio.
@@ -1767,7 +1793,7 @@ This gives more stable estimates than sample covariance.
 \hypertarget{statistical-factor-models}{%
 \subsection{Statistical Factor Models}\label{statistical-factor-models}}
 
-In this model, the factors are \textbf{unknown (latent) and unobserved}. THis implies that we need to estimate both \(\beta\) and \(F\).
+In this model, the factors are \textbf{unknown (latent) and unobserved}. This implies that we need to estimate both \(\beta\) and \(F\).
 
 Unusual constraint: Because the factors are uncorrelated (not necessarily i.i.d.)
 \[
@@ -1777,7 +1803,7 @@ Unusual constraint: Because the factors are uncorrelated (not necessarily i.i.d.
 This gives us the resulting moments of the returns:
 \[
 \begin{aligned}
-\mu_{R} &= \mathbb{E}[R] = \mathbb{E}[\beta_{0}+\beta^TF + \epsilon] = \beta_{0}+\beta^{T}\underbrace{ \mathbb{E}[F] }_{ 0 }+\underbrace{ \mathbb{E}[\epsilon] }_{ 0 } = \beta e_{0}\\
+\mu_{R} &= \mathbb{E}[R] = \mathbb{E}[\beta_{0}+\beta^TF + \epsilon] = \beta_{0}+\beta^{T}\underbrace{ \mathbb{E}[F] }_{ 0 }+\underbrace{ \mathbb{E}[\epsilon] }_{ 0 } = \beta_{0}\\
 \\
 \Sigma_{R} &= \mathbb{V}[R] = \mathbb{V}[\boldsymbol{\beta}_{0}+\boldsymbol{\beta}^{T}F+\boldsymbol{\epsilon}] = \boldsymbol{\beta}^{T}\mathbb{V}[F]\boldsymbol{\beta}+\boldsymbol{\Sigma_{\epsilon} = \beta^{T}(I\cdot \sigma_{F})\beta+\Sigma_{\epsilon}}
 \end{aligned}
@@ -1911,12 +1937,26 @@ If the variance of the factors is simply the identity matrix, the variance of th
 We will primarily focus on market risk.
 
 Financial risk describes the possibility of an investment losing money. It can have several sources, the main ones being:
-- Market risk: due to changes in market prices
-- Credit risk: counterparty doesn't honor obligations
-- Liquidity risk: lack of asset tradability
-- Operational risk: from organization's internal activities
-- E.g., legal, fraud, or human error risk
-- Risk management is the process of identifying, measuring, and controlling risk
+
+\begin{itemize}
+\tightlist
+\item
+  Market risk: due to changes in market prices
+\item
+  Credit risk: counterparty doesn't honor obligations
+\item
+  Liquidity risk: lack of asset tradability
+\item
+  Operational risk: from organization's internal activities
+
+  \begin{itemize}
+  \tightlist
+  \item
+    E.g., legal, fraud, or human error risk
+  \end{itemize}
+\item
+  Risk management is the process of identifying, measuring, and controlling risk
+\end{itemize}
 
 The first thing we want to do is quantify the risk somehow.
 
@@ -1939,7 +1979,12 @@ The point of risk mgmt: We want to know the amount of money we should set aside 
 Was really common, although recently it has decreased in use (discredited) although there are variations still in use.
 
 Let \(\mathrm{RV}\) \(L\) be the loss of an investment over some time period \(T\)
-- Loss is negative of gain/revenue \((R): L=-R\)
+
+\begin{itemize}
+\tightlist
+\item
+  Loss is negative of gain/revenue \((R): L=-R\)
+\end{itemize}
 
 \begin{quote}
 We look at losses because we only capture the negative losses from this asset
@@ -1954,18 +1999,36 @@ Value at Risk at confidence level \((1-\alpha)\) \& time horizon \(T\) is define
 \operatorname{VaR}(\alpha)=\inf \{x: P(L \leq x) \geq 1-\alpha\}=\inf \{x: P(L>x) \leq \alpha\}
 \end{aligned}
 \]
-\textgreater Infimum (smallest value of x) is only used for discrete distributions such that the the probability of \(L\) will not exceed some value \(x\) and we want this to happen \((1-\alpha)\) of the time. (Usually want it to be less than \(5\%\))
+
+\begin{quote}
+Infimum (smallest value of x) is only used for discrete distributions such that the the probability of \(L\) will not exceed some value \(x\) and we want this to happen \((1-\alpha)\) of the time. (Usually want it to be less than \(5\%\))
+\end{quote}
 
 \begin{itemize}
+\tightlist
 \item
   For continuous RV with \(\operatorname{CDF} F_L\) , we don't need the infimum anymore and can just do: \(\Rightarrow \operatorname{VaR}(\alpha)=F_L^{-1}(1-\alpha)\)
-  \textgreater Basically the quantile of the distribution
+\end{itemize}
+
+\begin{quote}
+Basically the quantile of the distribution
+\end{quote}
+
+\begin{itemize}
+\tightlist
 \item
   VaR represents amount that covers losses with probability \((1-\alpha)\)
 \end{itemize}
 
 \includegraphics{Notes/Obsidian-Attachments/7-Risk-Management-1.png}
-\textgreater We want the quantile at which the probability is at \((1-\alpha)\)
+
+\begin{quote}
+We want the quantile at which the probability is at \((1-\alpha)\)
+\end{quote}
+
+\begin{quote}
+The VaR(\(\alpha\)) value indicates what value of \(x\) we need to hold to cover our losses \((1-\alpha) = 95\%\) of the time.
+\end{quote}
 
 \hypertarget{example-1}{%
 \subsection{Example}\label{example-1}}
@@ -2029,6 +2092,11 @@ AKA CVar or ES
 
 This gives us the expected losses that can occur given that we are beyond \(VaR_{\alpha}\)
 
+\begin{quote}
+Imagine we cut off the loss distribution beyond the VaR(\(\alpha\))\(=x\) point, and we have another little distribution of losses which are way larger/further from the bulk of the distribution.
+We take the mean/average/expected value of this distribution which tells us ``hey in the 5\% scenario our losses are so huge, what can we \textbf{expect} to lose?''
+\end{quote}
+
 \hypertarget{example-2}{%
 \subsubsection{Example}\label{example-2}}
 
@@ -2068,18 +2136,49 @@ We let \(\rho(L)\) represent the risk measure, which takes in a distribution of 
 We let \(L\) is a random variable and let \(\rho\) is a functional distribution of \(L\).
 
 For this measure \(\rho\) to reasonably quantify risk, it must:
-1. be normalized \(\rho(0)=0\) (risk of holding no assets is 0)
-2. Translation invariance: \(\rho(L+c) = \rho(L) + c \ \forall c \in \mathbb{R}\)
-- adding a loss \(c\) to the portfolio increases risk by exactly \(c\)
-3. Positive Homogeneity: \(\rho(bL) = b\rho(l)\)
-- scaling portfolio returns also will scale risk
-4. Monotonicity: \(L_{1}\geq L_{2} \implies \rho(L_{1}) \geq \rho(L_{2})\)
-- The ordering of the random variables is almost surely \(P(L_{1}\geq L_{2})=1\)
-5. Sub-additivity: \(\rho(L_{1}+L_{2}) \leq \rho(L_{1}+L_{2})\)
-- Only when the two losses are perfectly correlated, then equal
-- The risk of two combined portfolios cannot exceed the sum of the two portfolio risks
 
-If a risk measure has all 5 properties, then it is called a \emph{coherent risk measure}.
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  be normalized \(\rho(0)=0\) (risk of holding no assets is 0)
+\item
+  Translation invariance: \(\rho(L+c) = \rho(L) + c \ \forall c \in \mathbb{R}\)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    adding a loss \(c\) to the portfolio increases risk by exactly \(c\)
+  \end{itemize}
+\item
+  Positive Homogeneity: \(\rho(bL) = b\rho(l)\)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    scaling portfolio returns also will scale risk
+  \end{itemize}
+\item
+  Monotonicity: \(L_{1}\geq L_{2} \implies \rho(L_{1}) \geq \rho(L_{2})\)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The ordering of the random variables is almost surely \(P(L_{1}\geq L_{2})=1\)
+  \end{itemize}
+\item
+  Sub-additivity: \(\rho(L_{1}+L_{2}) \leq \rho(L_{1}+L_{2})\)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Only when the two losses are perfectly correlated, then equal
+  \item
+    The risk of two combined portfolios cannot exceed the sum of the two portfolio risks
+  \end{itemize}
+\end{enumerate}
+
+If a risk measure has all 5 properties, then it is called a \textbf{coherent risk measure}.
 
 \hypertarget{example-that-var-and-cvar-satisfy-prop-2-3}{%
 \subsection{Example that VAR and CVar satisfy prop 2 \& 3}\label{example-that-var-and-cvar-satisfy-prop-2-3}}
@@ -2179,6 +2278,35 @@ EVaR defined as: \(\mathrm{EVaR}_\alpha=\inf _{z>0}\left\{z^{-1} \ln \left(M_L(z
 \begin{quote}
 Can define a risk measure we can use the MGF instead of the PDF or CDF which in some cases is convenient. We can just minimize the MGF
 \end{quote}
+
+\hypertarget{evar-for-a-normal-distribution}{%
+\subsection{EVaR for a Normal Distribution}\label{evar-for-a-normal-distribution}}
+
+\[
+\begin{aligned}
+\text{Let } L \sim N(\mu, \sigma^{2})
+M_{L}(z) &= e^{\mu z+1/2 \sigma^{2}z^{2}} = \mathbb{E}[e^{z\cdot L}]\quad \forall z\\
+\\
+\text{Know: }EVaR_{\alpha} &= inf_{z>0} \left\{ z^{-1} \ln(M_{L}(z) / \alpha) \right\}\\
+\text{Let } f(z) &= z^{-1} \ln(M_{L}(z) / \alpha)\\
+&= z^{-1} \ln(e^{\mu z+1/2 \sigma^{2}z^{2}} / \alpha)\\
+&= \frac{1}{z}\left[ \mu z+\frac{\sigma^{2}z^{2}}{2}-\ln \alpha \right]\\
+&= \mu + \frac{z\sigma^{2}}{2} - \frac{\ln(\alpha)}{z}\\
+\end{aligned}
+\]
+\[
+\begin{aligned}
+\text{So to find }& \text{the smallest $z$, we take the derivative:}\\
+\implies f'(z) &= \frac{\sigma^{2}}{2}+\frac{\ln(\alpha)}{z^{2}}\\
+\implies z &= \frac{\sqrt{-2\ln(\alpha)}}{\sigma}\\
+\\
+\implies EVaR_{\alpha}(L) &= \mu + \frac{\sigma^{2}}{2}\cdot \frac{\sqrt{-2\ln(\alpha)}}{\sigma} - \frac{\ln(\alpha)}{\frac{\sqrt{-2\ln(\alpha)}}{\sigma}}\\
+&= \mu + \sigma \cdot \sqrt{-\frac{\ln(\alpha)}{2}} + \sigma \frac{\sqrt{(-\ln(\alpha))^{2} }}{\sqrt{-2\ln(\alpha)}}\\
+&= \mu + \sigma \cdot \sqrt{-\frac{\ln(\alpha)}{2}} + \sigma \underbrace{ \frac{\sqrt{(\ln(\alpha ^{-1}))^{2} }}{\sqrt{2\ln(\alpha ^{-1})}} }_{= \sqrt{ \frac{\ln(\alpha ^{-1})}{2} }  = \sqrt{ -\frac{\ln(\alpha)}{2} }}\\
+&= \mu + 2\sigma \cdot \sqrt{-\frac{\ln(\alpha)}{2}}\\
+&= \mu + \sigma \cdot \sqrt{-2\ln(\alpha)}\\
+\end{aligned}
+\]
 
 \hypertarget{calculating-risk-measures}{%
 \section{Calculating Risk Measures}\label{calculating-risk-measures}}
@@ -3202,12 +3330,12 @@ Calculate daily net returns, plot the returns, sample auto-correlation plot, and
 
 \begin{verbatim}
 ##                  date adj_close
-## 1 2015-01-02 14:30:00  44.17996
-## 2 2015-01-05 14:30:00  43.25631
+## 1 2015-01-02 14:30:00  44.17994
+## 2 2015-01-05 14:30:00  43.25630
 ## 3 2015-01-06 14:30:00  42.38906
-## 4 2015-01-07 14:30:00  42.80506
-## 5 2015-01-08 14:30:00  42.80506
-## 6 2015-01-09 14:30:00  42.08588
+## 4 2015-01-07 14:30:00  42.80505
+## 5 2015-01-08 14:30:00  42.80505
+## 6 2015-01-09 14:30:00  42.08589
 \end{verbatim}
 
 \begin{Shaded}
@@ -3278,8 +3406,8 @@ This supports the stylized fact that returns follow heavy tail distributions.
 \end{Highlighting}
 \end{Shaded}
 
-We have a fitted mean \(\mu\) of \ensuremath{3.2241242\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4635495\times 10^{-4}}.
-This is compared to the sample mean \(\mu\) of \ensuremath{5.6615312\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827263\times 10^{-4}}.
+We have a fitted mean \(\mu\) of \ensuremath{3.2240775\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4635453\times 10^{-4}}.
+This is compared to the sample mean \(\mu\) of \ensuremath{5.6615329\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827254\times 10^{-4}}.
 
 These differences can occur due to the fitted t-distribution smoothing away more extreme values.
 
@@ -3645,8 +3773,11 @@ F(u) = wF_{1}(u)+(1-w)F_{2}(u) = wu+(1-w)u = u \quad \forall\ u \in [0,1]
 \hypertarget{problem-set-4}{%
 \chapter{Problem Set 4}\label{problem-set-4}}
 
-\hypertarget{q1-3}{%
-\section{Q1}\label{q1-3}}
+Q1-Q3 are from the SDAFE textbook, 16.11
+Q4-Qsmth are from 16.10
+
+\hypertarget{q1.1}{%
+\section{Q1.1}\label{q1.1}}
 
 Suppose that there are two risky assets, A and B, with expected returns equal to 2.3\% and 4.5\%, respectively. Suppose that the standard deviations of the returns are \(\sqrt{ 6 }\%\) and \(\sqrt{ 11 }\%\) and that the returns on the assets have a correlation of 0.17.
 
@@ -3691,11 +3822,11 @@ I'm wrong.
 
 \emph{Theres more from the textbook i will skip for now}
 
-\hypertarget{q2-3}{%
-\section{Q2}\label{q2-3}}
+\hypertarget{q1.2}{%
+\section{Q1.2}\label{q1.2}}
 
 \hypertarget{part-a-6}{%
-\section{Part A}\label{part-a-6}}
+\subsection{Part A}\label{part-a-6}}
 
 Suppose that stock A shares sell at \$75 and stock B shares at \$115. A portfolio has 300 shares of stock A and 100 of stock B. What are the weights w and 1−w of stocks A and B in this portfolio?
 
@@ -3718,8 +3849,8 @@ w_{j} = \frac{n_{j}\cdot P_{j}}{\sum^{N}_{i=1}n_{i}P_{i}}
 \end{aligned}
 \]
 
-\hypertarget{q3-3}{%
-\section{Q3}\label{q3-3}}
+\hypertarget{q1.3}{%
+\section{Q1.3}\label{q1.3}}
 
 Let \(R_{P}\) be a return of some type on a portfolio and let \(R_{1},\dots, R_{N}\) be the same type of returns on the assets in this portfolio. Is \(R_P = w_{1}R_{1}+ \dots + w_{N}R_{N}\) true if \(R_{P}\) is a net return? Is this equation true if \(R_{P}\) is a gross return? Is it true if \(R_{P}\) is a log return? Justify your answers.
 

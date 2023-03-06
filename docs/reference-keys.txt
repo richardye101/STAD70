@@ -75,6 +75,7 @@ example-2
 risk-measure-properties
 example-that-var-and-cvar-satisfy-prop-2-3
 entropic-var
+evar-for-a-normal-distribution
 calculating-risk-measures
 betting-strategies
 problem-setup
@@ -137,10 +138,10 @@ part-b-4
 q3-2
 q4-2
 problem-set-4
-q1-3
+q1.1
 part-a-5
 part-b-5
-q2-3
+q1.2
 part-a-6
 part-b-6
-q3-3
+q1.3

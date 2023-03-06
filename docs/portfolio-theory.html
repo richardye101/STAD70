@@ -269,7 +269,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="9.3.1" data-path="risk-measures.html"><a href="risk-measures.html#example-that-var-and-cvar-satisfy-prop-2-3"><i class="fa fa-check"></i><b>9.3.1</b> Example that VAR and CVar satisfy prop 2 &amp; 3</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="risk-measures.html"><a href="risk-measures.html#entropic-var"><i class="fa fa-check"></i><b>9.4</b> Entropic VaR</a></li>
+<li class="chapter" data-level="9.4" data-path="risk-measures.html"><a href="risk-measures.html#entropic-var"><i class="fa fa-check"></i><b>9.4</b> Entropic VaR</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="risk-measures.html"><a href="risk-measures.html#evar-for-a-normal-distribution"><i class="fa fa-check"></i><b>9.4.1</b> EVaR for a Normal Distribution</a></li>
+</ul></li>
 <li class="chapter" data-level="9.5" data-path="risk-measures.html"><a href="risk-measures.html#calculating-risk-measures"><i class="fa fa-check"></i><b>9.5</b> Calculating Risk Measures</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="betting-strategies.html"><a href="betting-strategies.html"><i class="fa fa-check"></i><b>10</b> Betting Strategies</a>
@@ -372,17 +375,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="14" data-path="problem-set-4.html"><a href="problem-set-4.html"><i class="fa fa-check"></i><b>14</b> Problem Set 4</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="problem-set-4.html"><a href="problem-set-4.html#q1-3"><i class="fa fa-check"></i><b>14.1</b> Q1</a>
+<li class="chapter" data-level="14.1" data-path="problem-set-4.html"><a href="problem-set-4.html#q1.1"><i class="fa fa-check"></i><b>14.1</b> Q1.1</a>
 <ul>
 <li class="chapter" data-level="14.1.1" data-path="problem-set-4.html"><a href="problem-set-4.html#part-a-5"><i class="fa fa-check"></i><b>14.1.1</b> Part A</a></li>
 <li class="chapter" data-level="14.1.2" data-path="problem-set-4.html"><a href="problem-set-4.html#part-b-5"><i class="fa fa-check"></i><b>14.1.2</b> Part B</a></li>
 </ul></li>
-<li class="chapter" data-level="14.2" data-path="problem-set-4.html"><a href="problem-set-4.html#q2-3"><i class="fa fa-check"></i><b>14.2</b> Q2</a></li>
-<li class="chapter" data-level="14.3" data-path="problem-set-4.html"><a href="problem-set-4.html#part-a-6"><i class="fa fa-check"></i><b>14.3</b> Part A</a>
+<li class="chapter" data-level="14.2" data-path="problem-set-4.html"><a href="problem-set-4.html#q1.2"><i class="fa fa-check"></i><b>14.2</b> Q1.2</a>
 <ul>
-<li class="chapter" data-level="14.3.1" data-path="problem-set-4.html"><a href="problem-set-4.html#part-b-6"><i class="fa fa-check"></i><b>14.3.1</b> Part B</a></li>
+<li class="chapter" data-level="14.2.1" data-path="problem-set-4.html"><a href="problem-set-4.html#part-a-6"><i class="fa fa-check"></i><b>14.2.1</b> Part A</a></li>
+<li class="chapter" data-level="14.2.2" data-path="problem-set-4.html"><a href="problem-set-4.html#part-b-6"><i class="fa fa-check"></i><b>14.2.2</b> Part B</a></li>
 </ul></li>
-<li class="chapter" data-level="14.4" data-path="problem-set-4.html"><a href="problem-set-4.html#q3-3"><i class="fa fa-check"></i><b>14.4</b> Q3</a></li>
+<li class="chapter" data-level="14.3" data-path="problem-set-4.html"><a href="problem-set-4.html#q1.3"><i class="fa fa-check"></i><b>14.3</b> Q1.3</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -573,8 +576,10 @@ min_{w}\{\mathbf{w^{T}\Sigma w}\}\ s.t. \ \mathbf{w^{T}\mu} = \mu_{p}, \mathbf{w
 \implies &amp;\underline{w}^{*} = \frac{\frac{2}{\underline{1}^{T}\cdot\underline{\Sigma}^{-1}\cdot  \underline{1}}}{2}\underline{\Sigma}^{-1}\cdot \underline{1}\\
 &amp; \quad \ = \frac{\underline{\Sigma}^{-1}\cdot \underline{1}}{\underline{1}^{T}\cdot\underline{\Sigma}^{-1}\cdot  \underline{1}}
 \end{aligned}
-\]</span>
-&gt;<span class="math inline">\(\underline{\Sigma}^{-1}\)</span> represents the <a href="https://stephens999.github.io/fiveMinuteStats/normal_markov_chain.html">precision matrix</a>, where if there is a 0 at <span class="math inline">\((i,j)\)</span> then <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are conditionally independent (given all other assets are held constant, there is no dependence/correlation between these two assets). If it exists, then it is positive definite.</p>
+\]</span></p>
+<blockquote>
+<p><span class="math inline">\(\underline{\Sigma}^{-1}\)</span> represents the <a href="https://stephens999.github.io/fiveMinuteStats/normal_markov_chain.html">precision matrix</a>, where if there is a 0 at <span class="math inline">\((i,j)\)</span> then <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are conditionally independent (given all other assets are held constant, there is no dependence/correlation between these two assets). If it exists, then it is positive definite.</p>
+</blockquote>
 <blockquote>
 <p>The numerator is a vector containing the L1 norms of each row’s (asset) precision.
 The denominator represents the total precision of the entire Precision matrix.
