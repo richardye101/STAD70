@@ -1727,8 +1727,30 @@ R_{port} = w^{T}R \implies \begin{cases}
 \end{aligned}
 \]
 
+\hypertarget{factor-model-assumptions}{%
+\section{Factor Model Assumptions}\label{factor-model-assumptions}}
+
+\begin{itemize}
+\tightlist
+\item
+  Factors \(F_j(t)\) are stationary, with moments:
+  \[
+  E[\mathbf{F}(t)]=\boldsymbol{\mu}_F \quad \& \quad \operatorname{Var}[\mathbf{F}(t)]=\boldsymbol{\Sigma}_F
+  \]
+\item
+  Asset-specific errors \(\varepsilon_i(t)\) are uncorrelated with common factors:
+  \[
+  \operatorname{Cov}[\mathbf{\varepsilon}(t), \mathbf{F}(t)]=\mathbf{0}
+  \]
+\item
+  Errors are serially \& contemporaneously uncorrelated across assets
+  \[
+  \operatorname{Var}[\boldsymbol{\varepsilon}(t)]=\operatorname{diag}\left[\left\{\sigma_{\varepsilon_i}^2\right\}_{i=1, \ldots, N}\right]=\boldsymbol{\Sigma}_{\varepsilon} \quad \& \operatorname{Cov}[\boldsymbol{\varepsilon}(t), \boldsymbol{\varepsilon}(s)]=\mathbf{0}
+  \]
+\end{itemize}
+
 \hypertarget{time-series-regression-models}{%
-\subsection{Time Series Regression Models}\label{time-series-regression-models}}
+\section{Time Series Regression Models}\label{time-series-regression-models}}
 
 Consider model for which factor values are known (e.g.~macro/fundamental model)
 
@@ -1748,7 +1770,7 @@ Most models will always include some proxy for the overall economy (eg the marke
 Instead of Fama-French, there is BARRA which uses the cross section of returns? Still regression tho
 
 \hypertarget{fama-french-3-factor-model}{%
-\subsubsection{Fama-French 3 Factor Model}\label{fama-french-3-factor-model}}
+\subsection{Fama-French 3 Factor Model}\label{fama-french-3-factor-model}}
 
 Additionally to the market, they looked at two other factors that are consistent over many datasets and time periods.
 
@@ -1791,7 +1813,7 @@ where:
 This gives more stable estimates than sample covariance.
 
 \hypertarget{statistical-factor-models}{%
-\subsection{Statistical Factor Models}\label{statistical-factor-models}}
+\section{Statistical Factor Models}\label{statistical-factor-models}}
 
 In this model, the factors are \textbf{unknown (latent) and unobserved}. This implies that we need to estimate both \(\beta\) and \(F\).
 
@@ -3341,7 +3363,7 @@ Calculate daily net returns, plot the returns, sample auto-correlation plot, and
 ##                  date adj_close
 ## 1 2015-01-02 14:30:00  44.17995
 ## 2 2015-01-05 14:30:00  43.25630
-## 3 2015-01-06 14:30:00  42.38907
+## 3 2015-01-06 14:30:00  42.38906
 ## 4 2015-01-07 14:30:00  42.80505
 ## 5 2015-01-08 14:30:00  42.80505
 ## 6 2015-01-09 14:30:00  42.08589
@@ -3415,8 +3437,8 @@ This supports the stylized fact that returns follow heavy tail distributions.
 \end{Highlighting}
 \end{Shaded}
 
-We have a fitted mean \(\mu\) of \ensuremath{3.2240868\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4634962\times 10^{-4}}.
-This is compared to the sample mean \(\mu\) of \ensuremath{5.6615321\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827263\times 10^{-4}}.
+We have a fitted mean \(\mu\) of \ensuremath{3.22413\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4634805\times 10^{-4}}.
+This is compared to the sample mean \(\mu\) of \ensuremath{5.6615324\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.382726\times 10^{-4}}.
 
 These differences can occur due to the fitted t-distribution smoothing away more extreme values.
 
@@ -4220,7 +4242,7 @@ The Sharpe ratio is 0.335, and the tangency portfolio weights are:
 \end{verbatim}
 
 \hypertarget{part-c-3}{%
-\subsection{Part c}\label{part-c-3}}
+\subsection{Part C}\label{part-c-3}}
 
 Repeat the previous part b. (i.e.~plot the efficient frontier and capital market line, and report the tangency portfolio weights) with the restriction that all weights are within the bounds \(0 \le w_i \le 0.5,\;\; \forall i = 1, \ldots, 5\).
 (Hint: adapt the code from Example 16.7 on p.~479 of SDAFE.)
@@ -4279,6 +4301,426 @@ Note that the constrained tangency portfolio weights are (approximately) the sam
 ##   ENB.TO    CP.TO RCI-A.TO    TD.TO     L.TO 
 ##    0.135    0.362    0.106    0.248    0.149
 \end{verbatim}
+
+\hypertarget{problem-set-5}{%
+\chapter{Problem Set 5}\label{problem-set-5}}
+
+\hypertarget{q1-3}{%
+\section{Q1}\label{q1-3}}
+
+Assume a market of \(N\) assets with returns following the 1-factor CAPM model
+\[
+R_i=\beta R_M+\varepsilon_i, \quad i=1, \ldots, N
+\]
+where \(R_M \sim \mathrm{N}\left(\mu_M, \sigma_M^2\right)\) and \(\varepsilon_i \sim^{i . i . d .} \mathrm{N}\left(0, \sigma_{\varepsilon}^2\right), \quad \forall i\). Therefore, the model assumes all assets have the same systematic risk \(\left(\beta^2 \sigma_M^2\right)\) and the same idiosyncratic risk \(\left(\sigma_{\varepsilon}^2\right)\).
+
+\hypertarget{part-a-8}{%
+\subsection{Part A}\label{part-a-8}}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  Find the weights of the minimum-variance portfolio.
+\end{enumerate}
+
+\[
+\begin{aligned}
+\mathbf{R} &= \left[ \begin{array}{c}
+R_{1} \\
+\vdots \\
+R_{N}
+\end{array} \right] = \left[ \begin{array}{c}
+\beta \\
+\vdots \\
+\beta
+\end{array} \right] R_{M} +
+\left[ \begin{array}{c}
+\epsilon_{1} \\
+\vdots \\
+\epsilon_{N}
+\end{array}
+\right] \\
+\\
+\Sigma = \mathbb{V}(\mathbf{R}) &= \mathbb{V}(\beta\underline{1} R_{M} + \epsilon_{i})\\
+&= \beta^{2}  \underline{1} \mathbb{V}(R_{M})  \underline{1}^{T} + \mathbb{V}(\epsilon_{i}) \mathbf{I}\\
+&= \beta^{2} \sigma_{M}^{2} \left[ \begin{array}{ccc}
+1 & \dots & 1 \\
+\vdots & \ddots{}  & \vdots \\
+1 & \dots & 1
+\end{array} \right]  + \left[ \begin{array}{cccc}
+\sigma_{\epsilon}^{2} & 0 &  \dots  & 0 \\
+0  & \sigma_{\epsilon}^{2} & \dots  & 0 \\
+\vdots &  & \ddots  & \vdots \\
+0 & 0  & \dots & \sigma_{\epsilon}^{2}
+\end{array} \right] \\
+&= \left[ \begin{array}{ccc}
+\beta^{2} \sigma_{M}^{2} + \sigma_{\epsilon}^{2} &  \dots  & \beta^{2} \sigma_{M}^{2} \\
+\vdots & \ddots  & \vdots \\
+\beta^{2} \sigma_{M}^{2}  &  \dots & \beta^{2} \sigma_{M}^{2} + \sigma_{\epsilon}^{2}
+\end{array} \right] \\
+\end{aligned}
+\]
+
+The minimum variance portfolio weights as calculated in class are:
+\[
+w^{*} = \frac{\Sigma ^{-1}  \underline{1}}{\underline{1}^{T}\Sigma ^{-1}  \underline{1}}
+\]
+
+By symmetry of the variance matrix, all the weights must be equal, implying \(w = \frac{1}{N} \underline{1}\). Each row sum of the matrix is also equivalent, as intuitively all the assets follow the same distribution and have the same systematic risk. It also means that changing the order of the assets in the vector \(\mathbf{R}\) does not change the covariance matrix.
+
+\hypertarget{lemma-for-special-inverse-covariance-matrices}{%
+\subsection{Lemma for special inverse covariance matrices}\label{lemma-for-special-inverse-covariance-matrices}}
+
+Given that \(a,b > 0\)
+\[
+\boldsymbol{\Sigma}=a \mathbf{1 1}^T+b \boldsymbol{I}=\left[\begin{array}{ccc}
+a & \ldots & a \\
+\vdots & \ddots & \vdots \\
+a & \cdots & a
+\end{array}\right]+\left[\begin{array}{ccc}
+b & \ldots & 0 \\
+\vdots & \ddots & \vdots \\
+0 & \cdots & b
+\end{array}\right]
+\]
+then
+\[
+\boldsymbol{\Sigma}^{-1}=c \mathbf{1 1}^T+d \boldsymbol{I}=\left[\begin{array}{ccc}
+c & \ldots & c \\
+\vdots & \ddots & \vdots \\
+c & \cdots & c
+\end{array}\right]+\left[\begin{array}{ccc}
+d & \ldots & 0 \\
+\vdots & \ddots & \vdots \\
+0 & \cdots & d
+\end{array}\right]
+\]
+where \(c = -\frac{1}{b} \frac{a}{Na+b}\) and \(d = \frac{1}{b}\)
+
+\hypertarget{part-b-8}{%
+\subsection{Part B}\label{part-b-8}}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Show that the minimum variance can never be smaller than \(\beta^2 \sigma_M^2\), no matter how many assets we have (i.e., no matter how large \(N\) is).
+\end{enumerate}
+
+\[
+\begin{aligned}
+\mathbb{E}\left[R_{m v}\right] & =\mathbb{E}\left[\boldsymbol{w}^T \boldsymbol{R}\right]=\boldsymbol{w}^T E[\boldsymbol{R}]=\frac{1}{N} \mathbf{1}^T\left(\beta \mu_M \mathbf{1}\right) \\
+& =\beta \mu_M \frac{\mathbf{1}^T \mathbf{1}}{N}=\beta \mu_M \quad\left(\text { since } \mathbf{1}^T \mathbf{1}=N\right) \\
+\\
+\mathbb{V}\left[R_{m v}\right] & =\mathbb{V}\left[\boldsymbol{w}^T \boldsymbol{R}\right]=\boldsymbol{w}^T \mathbb{V}[\boldsymbol{R}] \boldsymbol{w}=\frac{1}{N^2} \mathbf{1}^T\left(\beta^2 \sigma_M^2 \mathbf{1 1}^T+\sigma_{\varepsilon}^2 \boldsymbol{I}\right) \mathbf{1}= \\
+& =\frac{\beta^2 \sigma_M^2}{N^2}\left(\mathbf{1}^T \mathbf{1}\right)\left(\mathbf{1}^T \mathbf{1}\right)+\frac{\sigma_{\varepsilon}^2}{N^2}\left(\mathbf{1}^T \mathbf{1}\right)=\beta^2 \sigma_M^2+\frac{\sigma_{\varepsilon}^2}{N}>\beta^2 \sigma_M^2, \forall N \geq 1
+\end{aligned}
+\]
+
+Thus, the minimum variance portfolio will always have variance at least \(β^{2}\sigma_{M}^{2}\). This problem illustrates that you cannot ``diversify away'' systemic risk (i.e., risk from common factors) the same way you can with idiosyncratic risk.
+
+\hypertarget{q2-3}{%
+\section{Q2}\label{q2-3}}
+
+Consider the following 2 -factor model with 3 assets:
+\[
+\left[\begin{array}{l}
+R_1 \\
+R_2 \\
+R_3
+\end{array}\right]=\left[\begin{array}{ll}
+1 & 0 \\
+1 & 1 \\
+0 & 1
+\end{array}\right]\left[\begin{array}{l}
+F_1 \\
+F_2
+\end{array}\right]+\left[\begin{array}{l}
+\varepsilon_1 \\
+\varepsilon_2 \\
+\varepsilon_3
+\end{array}\right] \Leftrightarrow \boldsymbol{R}=\boldsymbol{\beta}^{\top} \boldsymbol{F}+\boldsymbol{\varepsilon}
+\]
+where
+\[
+\mathbb{V}[\boldsymbol{F}]=\left[\begin{array}{cc}
+\sigma^2 & 0 \\
+0 & \sigma^2
+\end{array}\right]=\sigma^2 \boldsymbol{I}_2, \quad \mathbb{V}[\varepsilon]=\left[\begin{array}{ccc}
+\sigma^2 & 0 & 0 \\
+0 & \sigma^2 & 0 \\
+0 & 0 & \sigma^2
+\end{array}\right]=\sigma^2 \boldsymbol{I}_3, \quad \operatorname{Cov}[\boldsymbol{\varepsilon}, \boldsymbol{F}]=0
+\]
+Find the minimum variance portfolio weights for this model. (Hint: You can use \(\mathrm{R}\) to invert the matrix.)
+
+From class,
+\[
+w^{\star} = \frac{\Sigma ^{-1} \underline{1}}{\underline{1}^{T}\Sigma^{-1}  \underline{1}}
+\]
+
+So we first need to find \(\Sigma\).
+\[
+\begin{aligned}
+\Sigma &= \mathbb{V}(\mathbf{\beta^{T}F+\epsilon})\\
+&= \mathbf{\beta}^{T}\mathbb{V}(\mathbf{F})\mathbf{\beta} + \mathbb{V}(\mathbf{\epsilon})\\
+&= \sigma^{2} \mathbf{\beta^{T}}\mathbf{I}\mathbf{\beta} + \sigma^{2}\mathbf{I_{3}}\\
+&= \sigma^{2} \left[\begin{array}{ll}
+1 & 0 \\
+1 & 1 \\
+0 & 1
+\end{array}\right]\left[\begin{array}{lll}
+1 & 1 & 0 \\
+0 & 1 & 1
+\end{array}\right] + \sigma^{2}\left[\begin{array}{lll}
+1 & 0  & 0\\
+0 & 1  & 0\\
+0 & 0 & 1
+\end{array}\right]\\
+&= \sigma^{2} \left[\begin{array}{lll}
+1 & 1 & 0 \\
+1 & 2 & 1 \\
+0 & 1 & 1
+\end{array}\right] + \sigma^{2}\left[\begin{array}{lll}
+1 & 0  & 0\\
+0 & 1  & 0\\
+0 & 0 & 1
+\end{array}\right]\\
+&= \sigma^{2}\left[\begin{array}{lll}
+2 & 1 & 0 \\
+1 & 3 & 1 \\
+0 & 1 & 2
+\end{array}\right] = \left[\begin{array}{lll}
+2\sigma^{2} & 1\sigma^{2} & 0 \\
+1\sigma^{2} & 3\sigma^{2} & 1 \sigma^{2}\\
+0 & 1\sigma^{2} & 2\sigma^{2}
+\end{array}\right]
+\end{aligned}
+\]
+Solving with R, we get \(\Sigma ^{-1}\)
+\[
+\Sigma ^{-1} = \left[ 
+\begin{array}{ccc}
+0.625 & -0.25 & 0.125 \\
+-0.250 & 0.50 & -0.250\\
+0.125 & -0.25 & 0.625
+\end{array} \right] 
+\]
+
+So the weights become:
+
+\[
+w^{\star} = \frac{\left[ \begin{array}{ccc}
+0.5 & 0.0 & 0.5
+\end{array} \right]}{1} = \left[ \begin{array}{ccc}
+0.5 & 0.0 & 0.5
+\end{array} \right]
+\]
+which means that we split our portfolio equally between the 1st and 3rd assets. Notice that the \(R_{1}\) and \(R_{3}\) are uncorrelated, so splitting (or ``diversifying'') the portfolio between these uncorrelated assets will give the highest reduction in variance.
+
+These questions encompass q5-15 on pg 489 from SDAFE 18.8
+
+\hypertarget{q3.1}{%
+\section{Q3.1}\label{q3.1}}
+
+Suppose one has a sample of monthly log returns on two stocks with sample means of 0.0032 and 0.0074, sample variances of 0.017 and 0.025, and a sample covariance of 0.0059. For purposes of resampling, consider these to be the ``true population values.'' A bootstrap resample has sample means of 0.0047 and 0.0065, sample variances of 0.0125 and 0.023, and a sample covariance of 0.0058.
+
+\hypertarget{part-a-9}{%
+\subsection{Part A}\label{part-a-9}}
+
+Using the resample, estimate the efficient portfolio of these two stocks that has an expected return of 0.005; that is, give the two portfolio weights.
+
+\[
+\begin{aligned}
+0.005 &= \mathbb{E}(wS_{1}+(1-w)S_{2}) = w\cdot 0.0047 + (1-w) \cdot 0.0065\\
+0.005-0.0065&= w(0.0047-0.0065)\\
+w &= \frac{0.005-0.0065}{(0.0047-0.0065)}\\
+&= 0.8333\\
+1-w &= 0.1667
+\end{aligned}
+\]
+
+\begin{quote}
+For some reason, the answers state:
+(0.0047)w + (0.0065)(1 − w) = 0.005 so that the estimated efficient portfolio is 57.14\% stock 1 and 42.86\% stock 2.
+\end{quote}
+
+\hypertarget{part-b-9}{%
+\subsection{Part B}\label{part-b-9}}
+
+What is the estimated variance of the return of the portfolio in part (a) using the resample variances and covariances?
+
+\[
+\begin{aligned}
+\mathbb{V}(wS_{1}+(1-w)S_{2}) &= w^{2}\mathbb{V}(S_{1})+(1-w)^{2}\mathbb{V}(S_{2})+2w(1-w)Cov(S_{1},S_{2})\\
+&= w^{2}.0125 + (1-w)^{2}\cdot 0.023 + 2w(1-w)0.0058\\
+&= 0.01092
+\end{aligned}
+\]
+
+\hypertarget{part-c-4}{%
+\subsection{Part C}\label{part-c-4}}
+
+What are the actual expected return and variance of return for the portfolio in (a) when calculated with the true population values (e.g., with using the original sample means, variances, and covariance)?
+
+\[
+\begin{aligned}
+\mathbb{E}(R_{act}) &= 0.8333 \cdot 0.0032 + .16667\cdot 0.0074 = 0.0038\\
+\mathbb{E}(R_{act}) &= .8333^2 \cdot 0.0032+0.16667^{2}\cdot 0.0074 + 2\cdot 0.8333 \cdot 0.16667 \cdot 0.0059\\
+&=0.00406
+\end{aligned}
+\]
+
+\hypertarget{q4-3}{%
+\section{Q4}\label{q4-3}}
+
+\begin{quote}
+Straight from answer key
+\end{quote}
+
+For this problem you will use regression to identify the composition of various mutual
+funds.
+
+\hypertarget{part-a-10}{%
+\subsection{Part A}\label{part-a-10}}
+
+Download the adjusted daily closing prices from Jan 1 2020 to Dec 31 2022 for the
+5 mutual funds below (use tseries::get.hist.quote() for each ticker):
+
+\begin{itemize}
+\tightlist
+\item
+  FCNTX: Fidelity Contrafund
+\item
+  PIODX: Pioneer A
+\item
+  AIVSX: American Funds Invmt Co of Amer A
+\item
+  PRBLX: Parnassus Core Equity Investor
+\item
+  VFIAX: Vanguard 500 Index Admiral
+\end{itemize}
+
+Note that each of these funds has at least 90\% of their weight in the US stocks market. You can actually check the composition of the investment over different stock sectors from Yahoo Finance, under the fund's holdings tab; e.g.~for FCNTX at \url{https://finance.yahoo.com/quote/FCNTX/holdings}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tseries)}
+\NormalTok{N }\OtherTok{=} \DecValTok{5}
+\NormalTok{funds }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"FCNTX"}\NormalTok{, }\StringTok{"PIODX"}\NormalTok{, }\StringTok{"AIVSX"}\NormalTok{, }\StringTok{"PRBLX"}\NormalTok{, }\StringTok{"VFIAX"}\NormalTok{)}
+
+\NormalTok{P }\OtherTok{=} \FunctionTok{list}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{N)\{}
+\NormalTok{  P[[i]] }\OtherTok{=}\NormalTok{ tseries}\SpecialCharTok{::}\FunctionTok{get.hist.quote}\NormalTok{(funds[i],}
+                        \AttributeTok{start =} \FunctionTok{as.Date}\NormalTok{(}\StringTok{"2020{-}01{-}01"}\NormalTok{),}
+                        \AttributeTok{end =} \FunctionTok{as.Date}\NormalTok{(}\StringTok{"2022{-}12{-}31"}\NormalTok{),}
+                        \AttributeTok{quote=}\StringTok{"AdjClose"}\NormalTok{,}
+                        \AttributeTok{compression =} \StringTok{"d"}\NormalTok{,}
+                        \AttributeTok{quiet =}\NormalTok{ T)}
+\NormalTok{\}}
+\NormalTok{R\_mut}\OtherTok{=}\FunctionTok{lapply}\NormalTok{(P, }\AttributeTok{FUN =} \ControlFlowTok{function}\NormalTok{(x)\{ }\FunctionTok{diff}\NormalTok{(x) }\SpecialCharTok{/}\NormalTok{stats}\SpecialCharTok{::}\FunctionTok{lag}\NormalTok{(x,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) \}) }\CommentTok{\# calculate MF returns}
+\NormalTok{m\_funds }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(R\_mut), }\AttributeTok{ncol=}\NormalTok{N)}
+\FunctionTok{colnames}\NormalTok{(m\_funds) }\OtherTok{=}\NormalTok{ funds}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{part-b-10}{%
+\subsection{Part B}\label{part-b-10}}
+
+Assume you do not have any information about the investment strategy of the funds. Download the daily prices and calculate returns of the following EFTs, which track different sectors of the economy:
+- XLB: Basic Materials
+- XLY: Consumer Cyclical
+- XLF: Financial Services
+- VNQ: Real Estate
+- XLP: Consumer Defensive
+- XLV: Healthcare
+- XLU: Utilities
+- XTL: Communication Services
+- XLE: Energy
+- XLI: Industrials
+- XLK: Technology
+Regress each of the mutual fund returns on the above ETF returns and create barplots of the estimated beta coefficients. Do these accurately reflect the allocation over the different sectors (as described in Yahoo Finance)?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{etfs }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"XLB"}\NormalTok{, }\StringTok{"XLY"}\NormalTok{, }\StringTok{"XLF"}\NormalTok{, }\StringTok{"VNQ"}\NormalTok{, }\StringTok{"XLP"}\NormalTok{, }\StringTok{"XLV"}\NormalTok{, }\StringTok{"XLU"}\NormalTok{, }\StringTok{"XTL"}\NormalTok{,}\StringTok{"XLE"}\NormalTok{, }\StringTok{"XLI"}\NormalTok{, }\StringTok{"XLK"}\NormalTok{)}
+\NormalTok{sectors }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"Basic Materials"}\NormalTok{,}\StringTok{"Consumer Cyclical"}\NormalTok{,}\StringTok{"Financial Services"}\NormalTok{,}
+            \StringTok{"Real Estate"}\NormalTok{,}\StringTok{"Consumer Defensive"}\NormalTok{, }\StringTok{"Healthcare"}\NormalTok{, }\StringTok{"Utilities"}\NormalTok{,}
+            \StringTok{"Communication Services"}\NormalTok{, }\StringTok{"Energy"}\NormalTok{, }\StringTok{"Industrials"}\NormalTok{, }\StringTok{"Technology"}\NormalTok{)}
+\NormalTok{M }\OtherTok{=} \FunctionTok{length}\NormalTok{(etfs)}
+\FunctionTok{length}\NormalTok{(sectors)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 11
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ETFS }\OtherTok{=} \FunctionTok{list}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{M)\{}
+\NormalTok{  ETFS[[i]] }\OtherTok{=}\NormalTok{ tseries}\SpecialCharTok{::}\FunctionTok{get.hist.quote}\NormalTok{(etfs[i],}
+                        \AttributeTok{start =} \FunctionTok{as.Date}\NormalTok{(}\StringTok{"2020{-}01{-}01"}\NormalTok{),}
+                        \AttributeTok{end =} \FunctionTok{as.Date}\NormalTok{(}\StringTok{"2022{-}12{-}31"}\NormalTok{),}
+                        \AttributeTok{quote=}\StringTok{"AdjClose"}\NormalTok{,}
+                        \AttributeTok{compression =} \StringTok{"d"}\NormalTok{,}
+                        \AttributeTok{quiet =}\NormalTok{ T)}
+\NormalTok{\}}
+\NormalTok{R\_etf }\OtherTok{=} \FunctionTok{lapply}\NormalTok{(ETFS, }\AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{ }\FunctionTok{diff}\NormalTok{(x) }\SpecialCharTok{/}\NormalTok{ stats}\SpecialCharTok{::}\FunctionTok{lag}\NormalTok{(x,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)\})}
+\NormalTok{m\_etfs }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(R\_etf), }\AttributeTok{ncol =}\NormalTok{ M)}
+\FunctionTok{colnames}\NormalTok{(m\_etfs) }\OtherTok{=}\NormalTok{ etfs}
+
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{))}
+\NormalTok{out}\OtherTok{=}\FunctionTok{list}\NormalTok{(); }
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{N)\{}
+\NormalTok{  out[[i]]}\OtherTok{=}\FunctionTok{lm}\NormalTok{(m\_funds[,i] }\SpecialCharTok{\textasciitilde{}}\NormalTok{ m\_etfs)}
+\NormalTok{  weights }\OtherTok{=}\NormalTok{ out[[i]]}\SpecialCharTok{$}\NormalTok{coef[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{] }
+  \FunctionTok{barplot}\NormalTok{( }\FunctionTok{rev}\NormalTok{(weights), }\AttributeTok{names.arg =} \FunctionTok{rev}\NormalTok{(sectors), }\AttributeTok{main =}\NormalTok{ funds[i],}
+          \AttributeTok{horiz =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{las =} \DecValTok{2}\NormalTok{, }\AttributeTok{cex.names =}\NormalTok{ .}\DecValTok{8}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-46-1.pdf}
+
+The barplots of the regression coefficients (betas) roughly follow the sector weightings for each fund. Nevertheless, they are not always close in actual value (e.g.~in some cases the betas are negative, even though weightings are positive). The differences can be due to the fact that we use ETFs as \emph{proxies} for a sector, but the actual holding of the fund within the sector might be different. Moreover, there will be estimation error in our regression model, which is only based on the last year's returns.
+
+Nevertheless, it is quite impressing that we can (approximately) identify the strategy of a fund, without knowing anything beyond its past returns. This approach works because of the linear formula for net portfolio returns:
+\[ R_p = w_1 R_1 + \cdots + w_N R_N\]
+
+Regressing portfolio returns on other assets, we can estimate the weights, assuming the portfolio composition is constant.
+
+\hypertarget{part-c-5}{%
+\subsection{Part C}\label{part-c-5}}
+
+Compare the performance of the mutual funds to that of a portfolio of ETFs by reporting the value of Jensen's alpha (based on the regressions from the previous part) and its corresponding p-value.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha}\OtherTok{=}\NormalTok{p.val}\OtherTok{=}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,N)}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{N)\{}
+\NormalTok{  alpha[i]}\OtherTok{=}\NormalTok{out[[i]]}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{*}\DecValTok{250} \CommentTok{\# annualized Jensen alpha}
+\NormalTok{  p.val[i]}\OtherTok{=}\FunctionTok{summary}\NormalTok{(out[[i]])}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{] }\CommentTok{\# first coef (alpha)\textquotesingle{}s p{-}val}
+\NormalTok{\}}
+\FunctionTok{cbind}\NormalTok{(alpha, p.val)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        alpha  p.val
+## [1,] -0.0377 0.2508
+## [2,] -0.0140 0.5575
+## [3,] -0.0297 0.1441
+## [4,] -0.0171 0.4585
+## [5,] -0.0216 0.0139
+\end{verbatim}
+
+All the funds' alphas are negative, although their p-values are not very small. A likely cause for this is that funds charge a \emph{fee} which consistently eats up some of the returns of their constituent assets. ETFs have typically lower fees than mutual funds, but our regression does not account for transaction costs (it is more costly to buy multiple assets than a single one), so the comparison is more nuanced.
+
+Note that you can find Jensen alphas and other performance measures (e.g., Sharpe \& Treynor Ratios) for assets in Yahoo! Finance under the \href{https://finance.yahoo.com/quote/FCNTX/risk?p=FCNTX}{risk tab}. These metrics are based on the CAPM/Market factor model, by regressing the asset's returns on a proxy for the market return (e.g., S\&P500).
 
   \bibliography{book.bib,packages.bib}
 
