@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="problem-set-3.html"/>
-<link rel="next" href="q2.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -385,16 +385,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.3.2" data-path="problem-set-4.html"><a href="problem-set-4.html#part-b-6"><i class="fa fa-check"></i><b>14.3.2</b> Part B</a></li>
 </ul></li>
 <li class="chapter" data-level="14.4" data-path="problem-set-4.html"><a href="problem-set-4.html#q1.4"><i class="fa fa-check"></i><b>14.4</b> Q1.4</a></li>
-</ul></li>
-<li class="chapter" data-level="15" data-path="q2.html"><a href="q2.html"><i class="fa fa-check"></i><b>15</b> Q2.1</a>
+<li class="chapter" data-level="14.5" data-path="problem-set-4.html"><a href="problem-set-4.html#q2.1"><i class="fa fa-check"></i><b>14.5</b> Q2.1</a></li>
+<li class="chapter" data-level="14.6" data-path="problem-set-4.html"><a href="problem-set-4.html#q2.2"><i class="fa fa-check"></i><b>14.6</b> Q2.2</a></li>
+<li class="chapter" data-level="14.7" data-path="problem-set-4.html"><a href="problem-set-4.html#q2.3"><i class="fa fa-check"></i><b>14.7</b> Q2.3</a></li>
+<li class="chapter" data-level="14.8" data-path="problem-set-4.html"><a href="problem-set-4.html#q3-3"><i class="fa fa-check"></i><b>14.8</b> Q3</a>
 <ul>
-<li class="chapter" data-level="15.1" data-path="q2.html"><a href="q2.html#q2.2"><i class="fa fa-check"></i><b>15.1</b> Q2.2</a></li>
-<li class="chapter" data-level="15.2" data-path="q2.html"><a href="q2.html#q2.3"><i class="fa fa-check"></i><b>15.2</b> Q2.3</a></li>
-<li class="chapter" data-level="15.3" data-path="q2.html"><a href="q2.html#q3-3"><i class="fa fa-check"></i><b>15.3</b> Q3</a>
-<ul>
-<li class="chapter" data-level="15.3.1" data-path="q2.html"><a href="q2.html#part-a-7"><i class="fa fa-check"></i><b>15.3.1</b> Part A</a></li>
-<li class="chapter" data-level="15.3.2" data-path="q2.html"><a href="q2.html#part-b-7"><i class="fa fa-check"></i><b>15.3.2</b> Part B</a></li>
-<li class="chapter" data-level="15.3.3" data-path="q2.html"><a href="q2.html#part-c-3"><i class="fa fa-check"></i><b>15.3.3</b> Part c</a></li>
+<li class="chapter" data-level="14.8.1" data-path="problem-set-4.html"><a href="problem-set-4.html#part-a-7"><i class="fa fa-check"></i><b>14.8.1</b> Part A</a></li>
+<li class="chapter" data-level="14.8.2" data-path="problem-set-4.html"><a href="problem-set-4.html#part-b-7"><i class="fa fa-check"></i><b>14.8.2</b> Part B</a></li>
+<li class="chapter" data-level="14.8.3" data-path="problem-set-4.html"><a href="problem-set-4.html#part-c-3"><i class="fa fa-check"></i><b>14.8.3</b> Part c</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -541,14 +539,251 @@ r(t) &amp;= \log(R&#39;(t)) = \log(w_{1}R&#39;_{1}(t) + \dots + w_{N}R&#39;_{N}(
 </blockquote>
 
 </div>
+<div id="q2.1" class="section level2 hasAnchor" number="14.5">
+<h2><span class="header-section-number">14.5</span> Q2.1<a href="problem-set-4.html#q2.1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Write an R program to find the efficient frontier, the tangency portfolio, and the minimum variance portfolio, and plot on “reward-risk space” the location of each of the six stocks, the efficient frontier, the tangency portfolio, and the line of efficient portfolios. Use the constraints that −0.1 ≤ wj ≤ 0.5 for each stock. The first constraint limits short sales but does not rule them out completely. The second constraint prohibits more than 50 % of the investment in any single stock. Assume that the annual risk-free rate is 3 % and convert this to a daily rate by dividing by 365, since interest is earned on trading as well as nontrading days.</p>
+<blockquote>
+<p>Taken straight from the answer key</p>
+</blockquote>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="problem-set-4.html#cb53-1" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb53-2"><a href="problem-set-4.html#cb53-2" tabindex="-1"></a>dat <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;ProblemSets/datasets/Stock_Bond.csv&quot;</span>, <span class="at">header =</span> T)</span>
+<span id="cb53-3"><a href="problem-set-4.html#cb53-3" tabindex="-1"></a>prices <span class="ot">=</span> <span class="fu">cbind</span>(dat<span class="sc">$</span>GM_AC, dat<span class="sc">$</span>F_AC, dat<span class="sc">$</span>CAT_AC, dat<span class="sc">$</span>UTX_AC,</span>
+<span id="cb53-4"><a href="problem-set-4.html#cb53-4" tabindex="-1"></a>  dat<span class="sc">$</span>MRK_AC, dat<span class="sc">$</span>IBM_AC)</span>
+<span id="cb53-5"><a href="problem-set-4.html#cb53-5" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">dim</span>(prices)[<span class="dv">1</span>]</span>
+<span id="cb53-6"><a href="problem-set-4.html#cb53-6" tabindex="-1"></a>returns <span class="ot">=</span>  <span class="dv">100</span> <span class="sc">*</span> (prices[<span class="dv">2</span><span class="sc">:</span>n, ] <span class="sc">/</span> prices[<span class="dv">1</span><span class="sc">:</span>(n<span class="dv">-1</span>), ] <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb53-7"><a href="problem-set-4.html#cb53-7" tabindex="-1"></a><span class="fu">pairs</span>(returns)</span></code></pre></div>
+<p><img src="_main_files/figure-html/eval-1.png" width="672" /></p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="problem-set-4.html#cb54-1" tabindex="-1"></a>mean_vect <span class="ot">=</span> <span class="fu">colMeans</span>(returns)</span>
+<span id="cb54-2"><a href="problem-set-4.html#cb54-2" tabindex="-1"></a>cov_mat <span class="ot">=</span> <span class="fu">cov</span>(returns)</span>
+<span id="cb54-3"><a href="problem-set-4.html#cb54-3" tabindex="-1"></a>sd_vect <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(cov_mat))</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="problem-set-4.html#cb55-1" tabindex="-1"></a>M <span class="ot">=</span> <span class="fu">length</span>(mean_vect)</span>
+<span id="cb55-2"><a href="problem-set-4.html#cb55-2" tabindex="-1"></a><span class="fu">library</span>(quadprog)</span>
+<span id="cb55-3"><a href="problem-set-4.html#cb55-3" tabindex="-1"></a>Amat <span class="ot">=</span> <span class="fu">cbind</span>(<span class="fu">rep</span>(<span class="dv">1</span>,M),mean_vect,<span class="fu">diag</span>(<span class="dv">1</span>,<span class="at">nrow=</span>M),<span class="sc">-</span><span class="fu">diag</span>(<span class="dv">1</span>,<span class="at">nrow=</span>M))</span>
+<span id="cb55-4"><a href="problem-set-4.html#cb55-4" tabindex="-1"></a>muP <span class="ot">=</span> <span class="fu">seq</span>(<span class="fu">min</span>(mean_vect)<span class="sc">+</span>.<span class="dv">02</span>,<span class="fu">max</span>(mean_vect)<span class="sc">-</span>.<span class="dv">02</span>,<span class="at">length=</span><span class="dv">10</span>)</span>
+<span id="cb55-5"><a href="problem-set-4.html#cb55-5" tabindex="-1"></a>muP <span class="ot">=</span> <span class="fu">seq</span>(.<span class="dv">05</span>,<span class="fl">0.08</span>,<span class="at">length=</span><span class="dv">300</span>)</span>
+<span id="cb55-6"><a href="problem-set-4.html#cb55-6" tabindex="-1"></a>sdP <span class="ot">=</span> muP</span>
+<span id="cb55-7"><a href="problem-set-4.html#cb55-7" tabindex="-1"></a>weights <span class="ot">=</span> <span class="fu">matrix</span>(<span class="dv">0</span>,<span class="at">nrow=</span><span class="dv">300</span>,<span class="at">ncol=</span>M)</span>
+<span id="cb55-8"><a href="problem-set-4.html#cb55-8" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(muP))</span>
+<span id="cb55-9"><a href="problem-set-4.html#cb55-9" tabindex="-1"></a>{</span>
+<span id="cb55-10"><a href="problem-set-4.html#cb55-10" tabindex="-1"></a>result <span class="ot">=</span></span>
+<span id="cb55-11"><a href="problem-set-4.html#cb55-11" tabindex="-1"></a><span class="fu">solve.QP</span>(<span class="at">Dmat=</span>cov_mat,<span class="at">dvec=</span><span class="fu">rep</span>(<span class="dv">0</span>,M), <span class="at">Amat=</span>Amat,</span>
+<span id="cb55-12"><a href="problem-set-4.html#cb55-12" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>,muP[i],<span class="fu">rep</span>(<span class="sc">-</span>.<span class="dv">1</span>,M),<span class="fu">rep</span>(<span class="sc">-</span>.<span class="dv">5</span>,M)), <span class="at">meq=</span><span class="dv">2</span>)</span>
+<span id="cb55-13"><a href="problem-set-4.html#cb55-13" tabindex="-1"></a>sdP[i] <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>result<span class="sc">$</span>value)</span>
+<span id="cb55-14"><a href="problem-set-4.html#cb55-14" tabindex="-1"></a>weights[i,] <span class="ot">=</span> result<span class="sc">$</span>solution</span>
+<span id="cb55-15"><a href="problem-set-4.html#cb55-15" tabindex="-1"></a>}</span>
+<span id="cb55-16"><a href="problem-set-4.html#cb55-16" tabindex="-1"></a><span class="fu">plot</span>(sdP,muP,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">2.5</span>),<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,.<span class="dv">1</span>))</span>
+<span id="cb55-17"><a href="problem-set-4.html#cb55-17" tabindex="-1"></a>mufree <span class="ot">=</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">365</span></span>
+<span id="cb55-18"><a href="problem-set-4.html#cb55-18" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">0</span>,mufree,<span class="at">cex=</span><span class="dv">3</span>,<span class="at">col=</span><span class="st">&quot;blue&quot;</span>,<span class="at">pch=</span><span class="st">&quot;*&quot;</span>)</span>
+<span id="cb55-19"><a href="problem-set-4.html#cb55-19" tabindex="-1"></a>sharpe <span class="ot">=</span>( muP<span class="sc">-</span>mufree)<span class="sc">/</span>sdP</span>
+<span id="cb55-20"><a href="problem-set-4.html#cb55-20" tabindex="-1"></a>ind <span class="ot">=</span> (sharpe <span class="sc">==</span> <span class="fu">max</span>(sharpe)) <span class="co"># locates the tangency portfolio</span></span>
+<span id="cb55-21"><a href="problem-set-4.html#cb55-21" tabindex="-1"></a>weights[ind,] <span class="co"># weights of the tangency portfolio</span></span></code></pre></div>
+<pre><code>## [1] -0.091181044 -0.002910879  0.335318542  0.383714329  0.319484849
+## [6]  0.055574204</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="problem-set-4.html#cb57-1" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">0</span>,sdP[ind]),<span class="fu">c</span>(mufree,muP[ind]),<span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">lwd=</span><span class="dv">3</span>)</span>
+<span id="cb57-2"><a href="problem-set-4.html#cb57-2" tabindex="-1"></a><span class="fu">points</span>(sdP[ind],muP[ind],<span class="at">col=</span><span class="st">&quot;blue&quot;</span>,<span class="at">cex=</span><span class="dv">3</span>,<span class="at">pch=</span><span class="st">&quot;*&quot;</span>)</span>
+<span id="cb57-3"><a href="problem-set-4.html#cb57-3" tabindex="-1"></a>ind2 <span class="ot">=</span> (sdP <span class="sc">==</span> <span class="fu">min</span>(sdP))</span>
+<span id="cb57-4"><a href="problem-set-4.html#cb57-4" tabindex="-1"></a><span class="fu">points</span>(sdP[ind2],muP[ind2],<span class="at">col=</span><span class="st">&quot;green&quot;</span>,<span class="at">cex=</span><span class="dv">3</span>,<span class="at">pch=</span><span class="st">&quot;*&quot;</span>)</span>
+<span id="cb57-5"><a href="problem-set-4.html#cb57-5" tabindex="-1"></a>ind3 <span class="ot">=</span> (muP <span class="sc">&gt;</span> muP[ind2])</span>
+<span id="cb57-6"><a href="problem-set-4.html#cb57-6" tabindex="-1"></a><span class="fu">lines</span>(sdP[ind3],muP[ind3],<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,.<span class="dv">25</span>),</span>
+<span id="cb57-7"><a href="problem-set-4.html#cb57-7" tabindex="-1"></a><span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,.<span class="dv">3</span>),<span class="at">col=</span><span class="st">&quot;cyan&quot;</span>,<span class="at">lwd=</span><span class="dv">3</span>)</span>
+<span id="cb57-8"><a href="problem-set-4.html#cb57-8" tabindex="-1"></a><span class="fu">text</span>(sd_vect[<span class="dv">1</span>],mean_vect[<span class="dv">1</span>],<span class="st">&quot;GM&quot;</span>)</span>
+<span id="cb57-9"><a href="problem-set-4.html#cb57-9" tabindex="-1"></a><span class="fu">text</span>(sd_vect[<span class="dv">2</span>],mean_vect[<span class="dv">2</span>],<span class="st">&quot;F&quot;</span>)</span>
+<span id="cb57-10"><a href="problem-set-4.html#cb57-10" tabindex="-1"></a><span class="fu">text</span>(sd_vect[<span class="dv">3</span>],mean_vect[<span class="dv">3</span>],<span class="st">&quot;UTX&quot;</span>)</span>
+<span id="cb57-11"><a href="problem-set-4.html#cb57-11" tabindex="-1"></a><span class="fu">text</span>(sd_vect[<span class="dv">4</span>],mean_vect[<span class="dv">4</span>],<span class="st">&quot;CAT&quot;</span>)</span>
+<span id="cb57-12"><a href="problem-set-4.html#cb57-12" tabindex="-1"></a><span class="fu">text</span>(sd_vect[<span class="dv">5</span>],mean_vect[<span class="dv">5</span>],<span class="st">&quot;MRK&quot;</span>)</span>
+<span id="cb57-13"><a href="problem-set-4.html#cb57-13" tabindex="-1"></a><span class="fu">text</span>(sd_vect[<span class="dv">6</span>],mean_vect[<span class="dv">6</span>],<span class="st">&quot;IBM&quot;</span>)</span>
+<span id="cb57-14"><a href="problem-set-4.html#cb57-14" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>,<span class="fu">c</span>(<span class="st">&quot;efficient frontier&quot;</span>,<span class="st">&quot;efficient portfolios&quot;</span>, </span>
+<span id="cb57-15"><a href="problem-set-4.html#cb57-15" tabindex="-1"></a>                   <span class="st">&quot;tangency portfolio&quot;</span>,<span class="st">&quot;min var portfolio&quot;</span>),</span>
+<span id="cb57-16"><a href="problem-set-4.html#cb57-16" tabindex="-1"></a>       <span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="cn">NA</span>,<span class="cn">NA</span>),</span>
+<span id="cb57-17"><a href="problem-set-4.html#cb57-17" tabindex="-1"></a>       <span class="at">lwd=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb57-18"><a href="problem-set-4.html#cb57-18" tabindex="-1"></a>       <span class="at">pch=</span><span class="fu">c</span>(<span class="st">&quot;&quot;</span>,<span class="st">&quot;&quot;</span>,<span class="st">&quot;*&quot;</span>,<span class="st">&quot;*&quot;</span>),</span>
+<span id="cb57-19"><a href="problem-set-4.html#cb57-19" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;cyan&quot;</span>,<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;green&quot;</span>),</span>
+<span id="cb57-20"><a href="problem-set-4.html#cb57-20" tabindex="-1"></a>       <span class="at">pt.cex=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">3</span>)</span>
+<span id="cb57-21"><a href="problem-set-4.html#cb57-21" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+</div>
+<div id="q2.2" class="section level2 hasAnchor" number="14.6">
+<h2><span class="header-section-number">14.6</span> Q2.2<a href="problem-set-4.html#q2.2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>If an investor wants an efficient portfolio with an expected daily return of 0.07%, how should the investor allocate his or her capital to the six stocks and to the risk-free asset? Assume that the investor wishes to use the tangency portfolio computed with the constraints <span class="math inline">\(−0.1 \leq w_j \leq 0.5\)</span>, not the unconstrained tangency portfolio.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="problem-set-4.html#cb58-1" tabindex="-1"></a><span class="fu">options</span>(<span class="at">digits=</span><span class="dv">3</span>)</span>
+<span id="cb58-2"><a href="problem-set-4.html#cb58-2" tabindex="-1"></a><span class="co"># it divides by the risk free rate converted to daily but theres a typo,</span></span>
+<span id="cb58-3"><a href="problem-set-4.html#cb58-3" tabindex="-1"></a><span class="co"># should be 3/365 (unless this is the amt of trading days, but that would be 252)</span></span>
+<span id="cb58-4"><a href="problem-set-4.html#cb58-4" tabindex="-1"></a><span class="co"># omega = (.07 - muP[ind]) / (3/265 - muP[ind])</span></span>
+<span id="cb58-5"><a href="problem-set-4.html#cb58-5" tabindex="-1"></a>omega <span class="ot">=</span> (.<span class="dv">07</span> <span class="sc">-</span> muP[ind]) <span class="sc">/</span> (<span class="dv">3</span><span class="sc">/</span><span class="dv">365</span> <span class="sc">-</span> muP[ind])</span>
+<span id="cb58-6"><a href="problem-set-4.html#cb58-6" tabindex="-1"></a>omega</span></code></pre></div>
+<pre><code>## [1] 0.0518</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="problem-set-4.html#cb60-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>omega</span></code></pre></div>
+<pre><code>## [1] 0.948</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="problem-set-4.html#cb62-1" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">-</span>omega)<span class="sc">*</span>weights[ind]</span></code></pre></div>
+<pre><code>## [1] -0.08645 -0.00276  0.31794  0.36382  0.30292  0.05269</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="problem-set-4.html#cb64-1" tabindex="-1"></a>omega <span class="sc">+</span> <span class="fu">sum</span>((<span class="dv">1</span><span class="sc">-</span>omega)<span class="sc">*</span>weights[ind])</span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+</div>
+<div id="q2.3" class="section level2 hasAnchor" number="14.7">
+<h2><span class="header-section-number">14.7</span> Q2.3<a href="problem-set-4.html#q2.3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Does this data set include Black Monday?</p>
+<blockquote>
+<p>Again, straight from the answer key.</p>
+</blockquote>
+<p>Yes, Black Monday was October 19, 1987 and data go from January 2, 1987 to
+Sept 1, 2006. Black Monday is the 202th day in the original data set or the
+201st day of returns.
+If you look in the spread sheet you will see huge price declines that day. The
+returns that day were:</p>
+<pre><code>returns[201,]
+[1] -21.0 -18.2 -21.7 -15.7 -13.0 -23.5</code></pre>
+</div>
+<div id="q3-3" class="section level2 hasAnchor" number="14.8">
+<h2><span class="header-section-number">14.8</span> Q3<a href="problem-set-4.html#q3-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>From answer key:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="problem-set-4.html#cb67-1" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
+<span id="cb67-2"><a href="problem-set-4.html#cb67-2" tabindex="-1"></a><span class="fu">library</span>(zoo)</span>
+<span id="cb67-3"><a href="problem-set-4.html#cb67-3" tabindex="-1"></a></span>
+<span id="cb67-4"><a href="problem-set-4.html#cb67-4" tabindex="-1"></a>tickers <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;ENB.TO&quot;</span>,<span class="st">&quot;CP.TO&quot;</span>,<span class="st">&quot;RCI-A.TO&quot;</span>,<span class="st">&quot;TD.TO&quot;</span>,<span class="st">&quot;L.TO&quot;</span>)</span>
+<span id="cb67-5"><a href="problem-set-4.html#cb67-5" tabindex="-1"></a>N <span class="ot">=</span> <span class="fu">length</span>(tickers)</span>
+<span id="cb67-6"><a href="problem-set-4.html#cb67-6" tabindex="-1"></a></span>
+<span id="cb67-7"><a href="problem-set-4.html#cb67-7" tabindex="-1"></a>P<span class="ot">=</span><span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, N) <span class="co"># list for holding prices</span></span>
+<span id="cb67-8"><a href="problem-set-4.html#cb67-8" tabindex="-1"></a></span>
+<span id="cb67-9"><a href="problem-set-4.html#cb67-9" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N) {</span>
+<span id="cb67-10"><a href="problem-set-4.html#cb67-10" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;Downloading &quot;</span>, i, <span class="st">&quot; out of &quot;</span>, N , <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb67-11"><a href="problem-set-4.html#cb67-11" tabindex="-1"></a>  P[[i]] <span class="ot">=</span> <span class="fu">get.hist.quote</span>(<span class="at">instrument =</span> tickers[i], </span>
+<span id="cb67-12"><a href="problem-set-4.html#cb67-12" tabindex="-1"></a>    <span class="at">start =</span> <span class="fu">as.Date</span>(<span class="st">&quot;2010-01-01&quot;</span>), </span>
+<span id="cb67-13"><a href="problem-set-4.html#cb67-13" tabindex="-1"></a>    <span class="at">end=</span><span class="fu">as.Date</span>(<span class="st">&quot;2020-12-01&quot;</span>), </span>
+<span id="cb67-14"><a href="problem-set-4.html#cb67-14" tabindex="-1"></a>    <span class="at">compression=</span><span class="st">&quot;m&quot;</span>, <span class="at">quote =</span> <span class="st">&quot;AdjClose&quot;</span>, </span>
+<span id="cb67-15"><a href="problem-set-4.html#cb67-15" tabindex="-1"></a>    <span class="at">retclass =</span> <span class="st">&quot;zoo&quot;</span>, <span class="at">quiet =</span> T)</span>
+<span id="cb67-16"><a href="problem-set-4.html#cb67-16" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## Downloading  1  out of  5 
+## Downloading  2  out of  5 
+## Downloading  3  out of  5 
+## Downloading  4  out of  5 
+## Downloading  5  out of  5</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="problem-set-4.html#cb69-1" tabindex="-1"></a><span class="co"># net returns</span></span>
+<span id="cb69-2"><a href="problem-set-4.html#cb69-2" tabindex="-1"></a>R <span class="ot">=</span> <span class="fu">sapply</span>(P, <span class="at">FUN=</span><span class="cf">function</span>(x){ <span class="fu">as.numeric</span>(<span class="fu">diff</span>(x) <span class="sc">/</span> stats<span class="sc">::</span><span class="fu">lag</span>(x, <span class="sc">-</span><span class="dv">1</span>)) } )</span>
+<span id="cb69-3"><a href="problem-set-4.html#cb69-3" tabindex="-1"></a><span class="fu">colnames</span>(R) <span class="ot">=</span> tickers <span class="co"># assign names</span></span></code></pre></div>
+<div id="part-a-7" class="section level3 hasAnchor" number="14.8.1">
+<h3><span class="header-section-number">14.8.1</span> Part A<a href="problem-set-4.html#part-a-7" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Use only the first two stocks (ENB.TO and CP.TO), and calculate the sample means and (individual) sample variances of their returns. Consider the following hypothetical values for their correlation : <span class="math inline">\(\rho\)</span> = −1, −0.5, 0, +0.5, +1.
+For each value of <span class="math inline">\(\rho\)</span>, calculate their corresponding 2D variance-covariance matrix and plot the risk-return profiles of portfolios combining the two assets with weights [w, (1 − w)], <span class="math inline">\(\forall w \in [−1, 2]\)</span>. Plot all profile curves on the same (<span class="math inline">\(\mu_p, \sigma_p\)</span>)-space, using a different color for each value of <span class="math inline">\(\rho\)</span>.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="problem-set-4.html#cb70-1" tabindex="-1"></a>R2<span class="ot">=</span>R[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb70-2"><a href="problem-set-4.html#cb70-2" tabindex="-1"></a>MU <span class="ot">=</span> <span class="fu">colMeans</span>(R2)</span>
+<span id="cb70-3"><a href="problem-set-4.html#cb70-3" tabindex="-1"></a>SD <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">var</span>(R2)))</span>
+<span id="cb70-4"><a href="problem-set-4.html#cb70-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>) <span class="sc">+</span> <span class="fl">0.1</span>)</span>
+<span id="cb70-5"><a href="problem-set-4.html#cb70-5" tabindex="-1"></a><span class="fu">plot</span>(SD,MU,<span class="at">pch=</span><span class="dv">16</span>,<span class="at">cex=</span><span class="dv">2</span>, <span class="at">col=</span><span class="dv">2</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,.<span class="dv">15</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="fl">0.005</span>,.<span class="dv">025</span>))</span>
+<span id="cb70-6"><a href="problem-set-4.html#cb70-6" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">2</span>); <span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">2</span>) </span>
+<span id="cb70-7"><a href="problem-set-4.html#cb70-7" tabindex="-1"></a></span>
+<span id="cb70-8"><a href="problem-set-4.html#cb70-8" tabindex="-1"></a>w <span class="ot">=</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="sc">+</span><span class="dv">3</span>,.<span class="dv">01</span>); W <span class="ot">=</span> <span class="fu">cbind</span>(w, <span class="dv">1</span><span class="sc">-</span>w) <span class="co"># weights</span></span>
+<span id="cb70-9"><a href="problem-set-4.html#cb70-9" tabindex="-1"></a>MU.p <span class="ot">=</span> W <span class="sc">%*%</span> MU    <span class="co"># portfolio means</span></span>
+<span id="cb70-10"><a href="problem-set-4.html#cb70-10" tabindex="-1"></a></span>
+<span id="cb70-11"><a href="problem-set-4.html#cb70-11" tabindex="-1"></a>rho<span class="ot">=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span>.<span class="dv">5</span>, <span class="dv">0</span>, .<span class="dv">5</span>, <span class="dv">1</span>) <span class="co"># correlations</span></span>
+<span id="cb70-12"><a href="problem-set-4.html#cb70-12" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>){</span>
+<span id="cb70-13"><a href="problem-set-4.html#cb70-13" tabindex="-1"></a>  COR<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,rho[i],rho[i],<span class="dv">1</span>),<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb70-14"><a href="problem-set-4.html#cb70-14" tabindex="-1"></a>  COV<span class="ot">=</span> COR <span class="sc">*</span> (SD<span class="sc">%*%</span><span class="fu">t</span>(SD))</span>
+<span id="cb70-15"><a href="problem-set-4.html#cb70-15" tabindex="-1"></a>  SD.p <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="fu">rowSums</span>((W <span class="sc">%*%</span> COV)<span class="sc">*</span>W)) <span class="co"># portfolio st.dev.</span></span>
+<span id="cb70-16"><a href="problem-set-4.html#cb70-16" tabindex="-1"></a>  <span class="fu">lines</span>(SD.p, MU.p, <span class="at">type=</span><span class="st">&#39;l&#39;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span>i); </span>
+<span id="cb70-17"><a href="problem-set-4.html#cb70-17" tabindex="-1"></a>}</span>
+<span id="cb70-18"><a href="problem-set-4.html#cb70-18" tabindex="-1"></a></span>
+<span id="cb70-19"><a href="problem-set-4.html#cb70-19" tabindex="-1"></a><span class="fu">points</span>(SD,MU,<span class="at">pch=</span><span class="dv">16</span>,<span class="at">cex=</span><span class="dv">2</span>, <span class="at">col=</span><span class="dv">2</span>)</span>
+<span id="cb70-20"><a href="problem-set-4.html#cb70-20" tabindex="-1"></a><span class="fu">text</span>(SD, MU, <span class="at">pch=</span><span class="dv">16</span>, <span class="fu">colnames</span>(R2), <span class="at">pos=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb70-21"><a href="problem-set-4.html#cb70-21" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&#39;topright&#39;</span>, <span class="at">lwd=</span><span class="fu">rep</span>(<span class="dv">2</span>,<span class="dv">5</span>),<span class="at">col=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, </span>
+<span id="cb70-22"><a href="problem-set-4.html#cb70-22" tabindex="-1"></a>       <span class="fu">c</span>(<span class="st">&quot;rho=-1&quot;</span>,<span class="st">&quot;rho=-.5&quot;</span>,<span class="st">&quot;rho=0&quot;</span>,<span class="st">&quot;rho=+.5&quot;</span>,<span class="st">&quot;rho=+1&quot;</span>)  )</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+</div>
+<div id="part-b-7" class="section level3 hasAnchor" number="14.8.2">
+<h3><span class="header-section-number">14.8.2</span> Part B<a href="problem-set-4.html#part-b-7" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider all 5 stocks together now, and use the sample mean and sample variance-covariance matrix of their returns. Plot the efficient frontier and the capital market line on the same (<span class="math inline">\(\mu_p,\sigma_p\)</span>)-space and report the tangency portfolio weights.
+(Hint: adapt the code from Example 16.6 on p. 476 of SDAFE.)</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="problem-set-4.html#cb71-1" tabindex="-1"></a><span class="fu">library</span>(quadprog)</span>
+<span id="cb71-2"><a href="problem-set-4.html#cb71-2" tabindex="-1"></a></span>
+<span id="cb71-3"><a href="problem-set-4.html#cb71-3" tabindex="-1"></a>COV<span class="ot">=</span><span class="fu">cov</span>(R)</span>
+<span id="cb71-4"><a href="problem-set-4.html#cb71-4" tabindex="-1"></a>MU<span class="ot">=</span><span class="fu">colMeans</span>(R)</span>
+<span id="cb71-5"><a href="problem-set-4.html#cb71-5" tabindex="-1"></a>SD<span class="ot">=</span><span class="fu">sqrt</span>(<span class="fu">diag</span>(COV))</span>
+<span id="cb71-6"><a href="problem-set-4.html#cb71-6" tabindex="-1"></a>N<span class="ot">=</span><span class="fu">dim</span>(R)[<span class="dv">2</span>] </span>
+<span id="cb71-7"><a href="problem-set-4.html#cb71-7" tabindex="-1"></a></span>
+<span id="cb71-8"><a href="problem-set-4.html#cb71-8" tabindex="-1"></a><span class="fu">plot</span>(SD, MU, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">cex=</span><span class="fl">1.2</span>, <span class="at">col=</span> <span class="dv">2</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,.<span class="dv">1</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,.<span class="dv">025</span>))</span>
+<span id="cb71-9"><a href="problem-set-4.html#cb71-9" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">2</span>); <span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">2</span>) </span>
+<span id="cb71-10"><a href="problem-set-4.html#cb71-10" tabindex="-1"></a><span class="fu">text</span>(SD, MU, tickers, <span class="at">cex=</span><span class="dv">1</span>, <span class="at">pos=</span><span class="dv">4</span>)</span>
+<span id="cb71-11"><a href="problem-set-4.html#cb71-11" tabindex="-1"></a></span>
+<span id="cb71-12"><a href="problem-set-4.html#cb71-12" tabindex="-1"></a>Amat <span class="ot">=</span> <span class="fu">cbind</span>(<span class="fu">rep</span>(<span class="dv">1</span>,N),MU)</span>
+<span id="cb71-13"><a href="problem-set-4.html#cb71-13" tabindex="-1"></a>mu.p <span class="ot">=</span> <span class="fu">seq</span>( <span class="sc">-</span>.<span class="dv">005</span>, .<span class="dv">05</span>,<span class="at">length=</span><span class="dv">100</span>)</span>
+<span id="cb71-14"><a href="problem-set-4.html#cb71-14" tabindex="-1"></a>sd.p <span class="ot">=</span> mu.p; </span>
+<span id="cb71-15"><a href="problem-set-4.html#cb71-15" tabindex="-1"></a></span>
+<span id="cb71-16"><a href="problem-set-4.html#cb71-16" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(mu.p)) </span>
+<span id="cb71-17"><a href="problem-set-4.html#cb71-17" tabindex="-1"></a>{</span>
+<span id="cb71-18"><a href="problem-set-4.html#cb71-18" tabindex="-1"></a>  bvec<span class="ot">=</span><span class="fu">c</span>(<span class="dv">1</span>,mu.p[i]) </span>
+<span id="cb71-19"><a href="problem-set-4.html#cb71-19" tabindex="-1"></a>  out<span class="ot">=</span><span class="fu">solve.QP</span>(<span class="at">Dmat=</span><span class="dv">2</span><span class="sc">*</span>COV,<span class="at">dvec=</span><span class="fu">rep</span>(<span class="dv">0</span>,N),<span class="at">Amat=</span>Amat,<span class="at">bvec=</span>bvec,<span class="at">meq=</span><span class="dv">2</span>)</span>
+<span id="cb71-20"><a href="problem-set-4.html#cb71-20" tabindex="-1"></a>  sd.p[i] <span class="ot">=</span> <span class="fu">sqrt</span>(out<span class="sc">$</span>value)</span>
+<span id="cb71-21"><a href="problem-set-4.html#cb71-21" tabindex="-1"></a>}</span>
+<span id="cb71-22"><a href="problem-set-4.html#cb71-22" tabindex="-1"></a><span class="fu">lines</span>(sd.p,mu.p,<span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="dv">2</span>) <span class="co"># plot least variance portfolios</span></span>
+<span id="cb71-23"><a href="problem-set-4.html#cb71-23" tabindex="-1"></a></span>
+<span id="cb71-24"><a href="problem-set-4.html#cb71-24" tabindex="-1"></a>mu.f <span class="ot">=</span> .<span class="dv">002</span> <span class="co"># monthly risk-free interest rate</span></span>
+<span id="cb71-25"><a href="problem-set-4.html#cb71-25" tabindex="-1"></a></span>
+<span id="cb71-26"><a href="problem-set-4.html#cb71-26" tabindex="-1"></a>COV.i<span class="ot">=</span><span class="fu">solve</span>(COV)</span>
+<span id="cb71-27"><a href="problem-set-4.html#cb71-27" tabindex="-1"></a>W.tang<span class="ot">=</span>COV.i<span class="sc">%*%</span>(MU<span class="sc">-</span>mu.f) <span class="sc">/</span> <span class="fu">sum</span>( COV.i<span class="sc">%*%</span>(MU<span class="sc">-</span>mu.f) )</span>
+<span id="cb71-28"><a href="problem-set-4.html#cb71-28" tabindex="-1"></a>mu.tang<span class="ot">=</span><span class="fu">sum</span>(W.tang<span class="sc">*</span>MU)                             </span>
+<span id="cb71-29"><a href="problem-set-4.html#cb71-29" tabindex="-1"></a>sd.tang<span class="ot">=</span><span class="fu">sqrt</span>(<span class="fu">sum</span>( (COV <span class="sc">%*%</span> W.tang) <span class="sc">*</span> W.tang ) )    </span>
+<span id="cb71-30"><a href="problem-set-4.html#cb71-30" tabindex="-1"></a><span class="fu">points</span>( sd.tang, mu.tang, <span class="at">pch=</span><span class="dv">15</span>, <span class="at">cex=</span><span class="fl">1.3</span>, <span class="at">col=</span><span class="dv">2</span>)  </span>
+<span id="cb71-31"><a href="problem-set-4.html#cb71-31" tabindex="-1"></a>sharpe<span class="ot">=</span>(mu.tang<span class="sc">-</span>mu.f)<span class="sc">/</span>sd.tang</span>
+<span id="cb71-32"><a href="problem-set-4.html#cb71-32" tabindex="-1"></a><span class="fu">abline</span>(mu.f,sharpe,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p>The Sharpe ratio is 0.335, and the tangency portfolio weights are:</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="problem-set-4.html#cb72-1" tabindex="-1"></a><span class="fu">round</span>( <span class="fu">t</span>(W.tang), <span class="dv">4</span> )</span></code></pre></div>
+<pre><code>##      ENB.TO CP.TO RCI-A.TO TD.TO  L.TO
+## [1,]  0.135 0.362    0.106 0.248 0.149</code></pre>
+</div>
+<div id="part-c-3" class="section level3 hasAnchor" number="14.8.3">
+<h3><span class="header-section-number">14.8.3</span> Part c<a href="problem-set-4.html#part-c-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Repeat the previous part b. (i.e. plot the efficient frontier and capital market line, and report the tangency portfolio weights) with the restriction that all weights are within the bounds <span class="math inline">\(0 \le w_i \le 0.5,\;\; \forall i = 1, \ldots, 5\)</span>.
+(Hint: adapt the code from Example 16.7 on p. 479 of SDAFE.)</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="problem-set-4.html#cb74-1" tabindex="-1"></a><span class="fu">plot</span>(SD, MU, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">cex=</span><span class="fl">1.2</span>, <span class="at">col=</span> <span class="dv">2</span>,  <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,.<span class="dv">1</span>), <span class="at">ylim=</span><span class="fu">c</span>(.<span class="dv">0</span>,.<span class="dv">025</span>))</span>
+<span id="cb74-2"><a href="problem-set-4.html#cb74-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">2</span>); <span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">2</span>) </span>
+<span id="cb74-3"><a href="problem-set-4.html#cb74-3" tabindex="-1"></a><span class="fu">text</span>(SD, MU, tickers, <span class="at">cex=</span><span class="dv">1</span>, <span class="at">pos=</span><span class="dv">4</span>)</span>
+<span id="cb74-4"><a href="problem-set-4.html#cb74-4" tabindex="-1"></a></span>
+<span id="cb74-5"><a href="problem-set-4.html#cb74-5" tabindex="-1"></a>Amat <span class="ot">=</span> <span class="fu">cbind</span>(<span class="fu">rep</span>(<span class="dv">1</span>,N),MU,<span class="fu">diag</span>(<span class="dv">1</span>,<span class="at">nrow=</span>N),<span class="sc">-</span><span class="fu">diag</span>(<span class="dv">1</span>,<span class="at">nrow=</span>N))</span>
+<span id="cb74-6"><a href="problem-set-4.html#cb74-6" tabindex="-1"></a>mu.pot <span class="ot">=</span> <span class="fu">seq</span>( <span class="fu">min</span>(MU), <span class="fu">max</span>(MU),<span class="at">length=</span><span class="dv">300</span>) <span class="co"># potential mean returns</span></span>
+<span id="cb74-7"><a href="problem-set-4.html#cb74-7" tabindex="-1"></a></span>
+<span id="cb74-8"><a href="problem-set-4.html#cb74-8" tabindex="-1"></a>mu.p <span class="ot">=</span> <span class="cn">NULL</span> <span class="co"># initialize portofio standard error </span></span>
+<span id="cb74-9"><a href="problem-set-4.html#cb74-9" tabindex="-1"></a>sd.p <span class="ot">=</span> <span class="cn">NULL</span> <span class="co"># initialize portofio standard error </span></span>
+<span id="cb74-10"><a href="problem-set-4.html#cb74-10" tabindex="-1"></a>W.p <span class="ot">=</span> <span class="cn">NULL</span> <span class="co"># initialize portofio weights </span></span>
+<span id="cb74-11"><a href="problem-set-4.html#cb74-11" tabindex="-1"></a></span>
+<span id="cb74-12"><a href="problem-set-4.html#cb74-12" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(mu.pot)) </span>
+<span id="cb74-13"><a href="problem-set-4.html#cb74-13" tabindex="-1"></a>{</span>
+<span id="cb74-14"><a href="problem-set-4.html#cb74-14" tabindex="-1"></a>  bvec<span class="ot">=</span><span class="fu">c</span>(<span class="dv">1</span>,mu.pot[i],<span class="fu">rep</span>(<span class="dv">0</span>,N),<span class="fu">rep</span>(<span class="sc">-</span><span class="fl">0.5</span>,N))</span>
+<span id="cb74-15"><a href="problem-set-4.html#cb74-15" tabindex="-1"></a>  <span class="co">#check whether potential mean return can be achieved with given constraints</span></span>
+<span id="cb74-16"><a href="problem-set-4.html#cb74-16" tabindex="-1"></a>  out<span class="ot">=</span><span class="fu">tryCatch</span>( <span class="fu">solve.QP</span>(<span class="at">Dmat=</span><span class="dv">2</span><span class="sc">*</span>COV,<span class="at">dvec=</span><span class="fu">rep</span>(<span class="dv">0</span>,N),<span class="at">Amat=</span>Amat,<span class="at">bvec=</span>bvec,<span class="at">meq=</span><span class="dv">2</span>), <span class="at">error=</span><span class="cf">function</span>(e) <span class="cn">NULL</span>) </span>
+<span id="cb74-17"><a href="problem-set-4.html#cb74-17" tabindex="-1"></a>  <span class="co">#if mean return is achievable, save its st.dev. &amp; portfolio weights</span></span>
+<span id="cb74-18"><a href="problem-set-4.html#cb74-18" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(out)){ <span class="co">#  if</span></span>
+<span id="cb74-19"><a href="problem-set-4.html#cb74-19" tabindex="-1"></a>    mu.p<span class="ot">=</span><span class="fu">c</span>(mu.p, mu.pot[i])</span>
+<span id="cb74-20"><a href="problem-set-4.html#cb74-20" tabindex="-1"></a>    sd.p<span class="ot">=</span><span class="fu">c</span>(sd.p, <span class="fu">sqrt</span>(out<span class="sc">$</span>value))</span>
+<span id="cb74-21"><a href="problem-set-4.html#cb74-21" tabindex="-1"></a>    W.p<span class="ot">=</span><span class="fu">rbind</span>(W.p, out<span class="sc">$</span>solution)</span>
+<span id="cb74-22"><a href="problem-set-4.html#cb74-22" tabindex="-1"></a>  }</span>
+<span id="cb74-23"><a href="problem-set-4.html#cb74-23" tabindex="-1"></a>}</span>
+<span id="cb74-24"><a href="problem-set-4.html#cb74-24" tabindex="-1"></a><span class="fu">lines</span>(sd.p,mu.p,<span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="dv">2</span>) <span class="co"># plot least variance portfolios</span></span>
+<span id="cb74-25"><a href="problem-set-4.html#cb74-25" tabindex="-1"></a><span class="fu">colnames</span>(W.p)<span class="ot">=</span>tickers</span>
+<span id="cb74-26"><a href="problem-set-4.html#cb74-26" tabindex="-1"></a></span>
+<span id="cb74-27"><a href="problem-set-4.html#cb74-27" tabindex="-1"></a>sharpe<span class="ot">=</span>( mu.p<span class="sc">-</span>mu.f)<span class="sc">/</span>sd.p</span>
+<span id="cb74-28"><a href="problem-set-4.html#cb74-28" tabindex="-1"></a>ind.tang<span class="ot">=</span><span class="fu">which.max</span>(sharpe)</span>
+<span id="cb74-29"><a href="problem-set-4.html#cb74-29" tabindex="-1"></a>W.tang<span class="ot">=</span>W.p[ind.tang,]</span>
+<span id="cb74-30"><a href="problem-set-4.html#cb74-30" tabindex="-1"></a>sd.tang <span class="ot">=</span> sd.p[ind.tang] </span>
+<span id="cb74-31"><a href="problem-set-4.html#cb74-31" tabindex="-1"></a>mu.tang <span class="ot">=</span> mu.p[ind.tang]</span>
+<span id="cb74-32"><a href="problem-set-4.html#cb74-32" tabindex="-1"></a><span class="fu">points</span>( sd.tang, mu.tang, <span class="at">pch=</span><span class="dv">15</span>, <span class="at">cex=</span><span class="fl">1.3</span>, <span class="at">col=</span><span class="dv">2</span>)  </span>
+<span id="cb74-33"><a href="problem-set-4.html#cb74-33" tabindex="-1"></a><span class="fu">abline</span>( <span class="fu">c</span>(mu.f, sharpe[ind.tang]),<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<p>The set of feasible portfolios will be a subset of that of the unconstrained problem. Note that the <em>constrained</em> efficient frontier is not a parabola any more. But the constrained tangency portfolio is the same as the unconstrained one (since the since the unconstrained tangency portfolio weights were all within [0,.5]), and have (approximately) the same Sharpe ratio 0.335.</p>
+<p>Note that the constrained tangency portfolio weights are (approximately) the same as the unconstrained ones:</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="problem-set-4.html#cb75-1" tabindex="-1"></a><span class="fu">round</span>( W.tang, <span class="dv">4</span> )</span></code></pre></div>
+<pre><code>##   ENB.TO    CP.TO RCI-A.TO    TD.TO     L.TO 
+##    0.135    0.362    0.106    0.248    0.149</code></pre>
+
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="problem-set-3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="q2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="problem-set-3.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

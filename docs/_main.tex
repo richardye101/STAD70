@@ -2048,7 +2048,7 @@ X &\sim N(0.03, \sigma^{2}=0.04)\\
 P(S_{T}-S_{0} < -VaR) &= P(S_{T} < S_{0}-VaR)\\
 &= P(S_{0}e^{X} < S_{0}\cdot VaR)\\
 &= P\left( X < \log\left( \frac{S_{0}-VaR}{S_{0}} \right)\right)\\
-&= P\left( \underbrace{ \frac{X-0.03}{.2} }_{ Z\sim N(0,1) } < \frac{\log\left( \frac{1-VaR}{S_{0}} \right)-0.03}{.2} \right) = 0.05\\
+&= P\left( \underbrace{ \frac{X-0.03}{.2} }_{ Z\sim N(0,1) } < \frac{\log\left( 1-\frac{VaR}{S_{0}} \right)-0.03}{.2} \right) = 0.05\\
 &= P\left( Z < \underbrace{ \frac{\log\left( 1-\frac{VaR}{S_{0}} \right)-0.03}{.2} }_{ z } \right) = 0.05\\
 \implies z &= -1.645\\
 \frac{\log\left( 1-\frac{VaR}{S_{0}} \right)-0.03}{.2} &= -1.645\\
@@ -2284,7 +2284,7 @@ Can define a risk measure we can use the MGF instead of the PDF or CDF which in 
 
 \[
 \begin{aligned}
-\text{Let } L \sim N(\mu, \sigma^{2})
+\text{Let } L &\sim N(\mu, \sigma^{2})\\
 M_{L}(z) &= e^{\mu z+1/2 \sigma^{2}z^{2}} = \mathbb{E}[e^{z\cdot L}]\quad \forall z\\
 \\
 \text{Know: }EVaR_{\alpha} &= inf_{z>0} \left\{ z^{-1} \ln(M_{L}(z) / \alpha) \right\}\\
@@ -3342,9 +3342,9 @@ Calculate daily net returns, plot the returns, sample auto-correlation plot, and
 ## 1 2015-01-02 14:30:00  44.17995
 ## 2 2015-01-05 14:30:00  43.25630
 ## 3 2015-01-06 14:30:00  42.38907
-## 4 2015-01-07 14:30:00  42.80506
-## 5 2015-01-08 14:30:00  42.80506
-## 6 2015-01-09 14:30:00  42.08588
+## 4 2015-01-07 14:30:00  42.80505
+## 5 2015-01-08 14:30:00  42.80505
+## 6 2015-01-09 14:30:00  42.08589
 \end{verbatim}
 
 \begin{Shaded}
@@ -3415,8 +3415,8 @@ This supports the stylized fact that returns follow heavy tail distributions.
 \end{Highlighting}
 \end{Shaded}
 
-We have a fitted mean \(\mu\) of \ensuremath{3.2239368\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4634446\times 10^{-4}}.
-This is compared to the sample mean \(\mu\) of \ensuremath{5.6615324\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.382727\times 10^{-4}}.
+We have a fitted mean \(\mu\) of \ensuremath{3.2240868\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4634962\times 10^{-4}}.
+This is compared to the sample mean \(\mu\) of \ensuremath{5.6615321\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827263\times 10^{-4}}.
 
 These differences can occur due to the fitted t-distribution smoothing away more extreme values.
 
@@ -3793,6 +3793,8 @@ Suppose that there are two risky assets, A and B, with expected returns equal to
 \hypertarget{part-a-5}{%
 \subsection{Part A}\label{part-a-5}}
 
+What portfolio of A and B achieves a 3 \% rate of expected return?
+
 \[
 \begin{aligned}
 \mathbb{E}(wA+ (1-w)B) &= 0.03\\
@@ -3809,30 +3811,50 @@ A portfolio made up of \(68\%\) of asset A and \(32\%\) of asset B will achieve 
 \hypertarget{part-b-5}{%
 \subsection{Part B}\label{part-b-5}}
 
+What portfolios of A and B achieve a 5.5\% standard deviation of return? Among these, which has the largest expected return?
 \[
 \begin{aligned}
-\sqrt{ 5.5 }\% &= \sqrt{ Var(wA + (1-w)B) }\\
-&= \sqrt{ w^{2}Var(A) + (1-w)^{2}Var(B) + 2w(1-w)Cov(A,B) }\\
-&= w\sqrt{0.06 }+(1-w)\sqrt{ 0.11 } + 2w(1-w)0.17\cdot \sqrt{  0.06}\cdot \sqrt{0.11}\\
-&= \sqrt{ 0.11 } + w(\sqrt{ 0.06 }-\sqrt{ 0.11 }+0.0276) -0.02762w^{2}\\
-\sqrt{ 0.055 } - \sqrt{ 0.11 } &= w(-0.0591) - 0.02762w^{2}\\
-0 &= - 0.02762w^{2} -0.3907w + 0.0971\\
-w &= [0.2443, -14.3898]
+\mathbb{V}(R_{p}) &= \mathbb{V}(wA + (1-w)B)\\
+&= w^{2}\mathbb{V}(A) + (1-w)^{2}\mathbb{V}(B) + 2\cdot w(1-w)Cov(A,B)\\
+&= w^{2}0.06 + (1-w)^{2}0.11 + w(1-w) 2\cdot0.17\cdot \sqrt{  0.06 \cdot 0.11}\\
+&= w^{2}0.06 + (1-2w+w^{2})0.11 + (w-w^{2}) 2\cdot 0.17\cdot \sqrt{  0.06 \cdot 0.11}\\
+&= w^{2}(6 + 11 - 2.7621) + w(2.7621 -2\cdot 11) + 11\\
+0.055 &= 14.2379w^{2} -19.2379 w + 11\\
+0 &= 14.2379w^{2} -19.2379 w + 11 - 5.5\\
+w &= 0.4108 \text{ and } 0.9404
 \end{aligned}
 \]
 
-We should invest in a portfolio made up of 24.43\% asset A, and 75.67\% asset B to achieve a \(\sqrt{ 5.5 }\%\) standard deviation of return.
-
-\begin{quote}
-I'm wrong.
-\end{quote}
-
-\includegraphics{ProblemSets/Obsidian-Attachments/PS4.png}
-
-\emph{Theres more from the textbook i will skip for now}
+\%\%(19.2379 - (19.2379\textsuperscript{2-4\emph{14.2379}(11-5.5))}0.5)/(2*14.2379) = 0.41077491441024704384
+0.9404004696000353714\%\%
 
 \hypertarget{q1.2}{%
 \section{Q1.2}\label{q1.2}}
+
+Suppose there are two risky assets, C and D, the tangency portfolio is 65\% C and 35\% D, and the expected return and standard deviation of the return on the tangency portfolio are 5\% and 7\%, respectively. Suppose also that the risk-free rate of return is 1.5\%. If you want the standard deviation of your return to be 5\%, what proportions of your capital should be in the risk-free asset, asset C, and asset D?
+
+\[
+\begin{aligned}
+\text{Let } w_{f} &= \text{weight of risk-free asset}\\
+\mathbb{V}(R_{p}) &= \mathbb{V}(\underbrace{ w_{f}r_{f} }_{ 0 } + (1-w_{f})r_{tangency})\\
+5^{2}\% &= (1-w_{f})^{2}\cdot 7\%\\
+\frac{.25\%}{7\%} &= 1-2w_{f}+w_{f}^{2}\\
+0 &= w_{f}^{2}-2w_{f}+1 - \frac{.25\%}{7\%}\\
+0 &= w_{f}^{2}-2w_{f}+ \frac{6.75\%}{7\%}\\
+\end{aligned}
+\]
+Using the quadratic formula I get:
+(2 + (2\^{}2 - 4*(0.0675/0.07))\^{}0.5)/(2) = 1.1889 and 0.8110
+
+But the solutions states:
+2/7 = 0.2857 in risk-free, 0.4643 in C, and 0.2500 in D
+
+\begin{quote}
+I have no idea how. Can't spot my mistake :\\
+\end{quote}
+
+\hypertarget{q1.3}{%
+\section{Q1.3}\label{q1.3}}
 
 \hypertarget{part-a-6}{%
 \subsection{Part A}\label{part-a-6}}
@@ -3858,8 +3880,8 @@ w_{j} = \frac{n_{j}\cdot P_{j}}{\sum^{N}_{i=1}n_{i}P_{i}}
 \end{aligned}
 \]
 
-\hypertarget{q1.3}{%
-\section{Q1.3}\label{q1.3}}
+\hypertarget{q1.4}{%
+\section{Q1.4}\label{q1.4}}
 
 Let \(R_{P}\) be a return of some type on a portfolio and let \(R_{1},\dots, R_{N}\) be the same type of returns on the assets in this portfolio. Is \(R_P = w_{1}R_{1}+ \dots + w_{N}R_{N}\) true if \(R_{P}\) is a net return? Is this equation true if \(R_{P}\) is a gross return? Is it true if \(R_{P}\) is a log return? Justify your answers.
 
@@ -3897,6 +3919,366 @@ r(t) &= \log(R'(t)) = \log(w_{1}R'_{1}(t) + \dots + w_{N}R'_{N}(t))\\
 \]
 
 So it does not hold for log returns.
+
+\begin{quote}
+The following is from 16.10 1-3
+\end{quote}
+
+\hypertarget{q2.1}{%
+\section{Q2.1}\label{q2.1}}
+
+Write an R program to find the efficient frontier, the tangency portfolio, and the minimum variance portfolio, and plot on ``reward-risk space'' the location of each of the six stocks, the efficient frontier, the tangency portfolio, and the line of efficient portfolios. Use the constraints that −0.1 ≤ wj ≤ 0.5 for each stock. The first constraint limits short sales but does not rule them out completely. The second constraint prohibits more than 50 \% of the investment in any single stock. Assume that the annual risk-free rate is 3 \% and convert this to a daily rate by dividing by 365, since interest is earned on trading as well as nontrading days.
+
+\begin{quote}
+Taken straight from the answer key
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readr)}
+\NormalTok{dat }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"ProblemSets/datasets/Stock\_Bond.csv"}\NormalTok{, }\AttributeTok{header =}\NormalTok{ T)}
+\NormalTok{prices }\OtherTok{=} \FunctionTok{cbind}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{GM\_AC, dat}\SpecialCharTok{$}\NormalTok{F\_AC, dat}\SpecialCharTok{$}\NormalTok{CAT\_AC, dat}\SpecialCharTok{$}\NormalTok{UTX\_AC,}
+\NormalTok{  dat}\SpecialCharTok{$}\NormalTok{MRK\_AC, dat}\SpecialCharTok{$}\NormalTok{IBM\_AC)}
+\NormalTok{n }\OtherTok{=} \FunctionTok{dim}\NormalTok{(prices)[}\DecValTok{1}\NormalTok{]}
+\NormalTok{returns }\OtherTok{=}  \DecValTok{100} \SpecialCharTok{*}\NormalTok{ (prices[}\DecValTok{2}\SpecialCharTok{:}\NormalTok{n, ] }\SpecialCharTok{/}\NormalTok{ prices[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(n}\DecValTok{{-}1}\NormalTok{), ] }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}
+\FunctionTok{pairs}\NormalTok{(returns)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/eval-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mean\_vect }\OtherTok{=} \FunctionTok{colMeans}\NormalTok{(returns)}
+\NormalTok{cov\_mat }\OtherTok{=} \FunctionTok{cov}\NormalTok{(returns)}
+\NormalTok{sd\_vect }\OtherTok{=} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(cov\_mat))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{M }\OtherTok{=} \FunctionTok{length}\NormalTok{(mean\_vect)}
+\FunctionTok{library}\NormalTok{(quadprog)}
+\NormalTok{Amat }\OtherTok{=} \FunctionTok{cbind}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{,M),mean\_vect,}\FunctionTok{diag}\NormalTok{(}\DecValTok{1}\NormalTok{,}\AttributeTok{nrow=}\NormalTok{M),}\SpecialCharTok{{-}}\FunctionTok{diag}\NormalTok{(}\DecValTok{1}\NormalTok{,}\AttributeTok{nrow=}\NormalTok{M))}
+\NormalTok{muP }\OtherTok{=} \FunctionTok{seq}\NormalTok{(}\FunctionTok{min}\NormalTok{(mean\_vect)}\SpecialCharTok{+}\NormalTok{.}\DecValTok{02}\NormalTok{,}\FunctionTok{max}\NormalTok{(mean\_vect)}\SpecialCharTok{{-}}\NormalTok{.}\DecValTok{02}\NormalTok{,}\AttributeTok{length=}\DecValTok{10}\NormalTok{)}
+\NormalTok{muP }\OtherTok{=} \FunctionTok{seq}\NormalTok{(.}\DecValTok{05}\NormalTok{,}\FloatTok{0.08}\NormalTok{,}\AttributeTok{length=}\DecValTok{300}\NormalTok{)}
+\NormalTok{sdP }\OtherTok{=}\NormalTok{ muP}
+\NormalTok{weights }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{,}\AttributeTok{nrow=}\DecValTok{300}\NormalTok{,}\AttributeTok{ncol=}\NormalTok{M)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(muP))}
+\NormalTok{\{}
+\NormalTok{result }\OtherTok{=}
+\FunctionTok{solve.QP}\NormalTok{(}\AttributeTok{Dmat=}\NormalTok{cov\_mat,}\AttributeTok{dvec=}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,M), }\AttributeTok{Amat=}\NormalTok{Amat,}
+\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,muP[i],}\FunctionTok{rep}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{.}\DecValTok{1}\NormalTok{,M),}\FunctionTok{rep}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{.}\DecValTok{5}\NormalTok{,M)), }\AttributeTok{meq=}\DecValTok{2}\NormalTok{)}
+\NormalTok{sdP[i] }\OtherTok{=} \FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{result}\SpecialCharTok{$}\NormalTok{value)}
+\NormalTok{weights[i,] }\OtherTok{=}\NormalTok{ result}\SpecialCharTok{$}\NormalTok{solution}
+\NormalTok{\}}
+\FunctionTok{plot}\NormalTok{(sdP,muP,}\AttributeTok{type=}\StringTok{"l"}\NormalTok{,}\AttributeTok{xlim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{2.5}\NormalTok{),}\AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,.}\DecValTok{1}\NormalTok{))}
+\NormalTok{mufree }\OtherTok{=} \DecValTok{3}\SpecialCharTok{/}\DecValTok{365}
+\FunctionTok{points}\NormalTok{(}\DecValTok{0}\NormalTok{,mufree,}\AttributeTok{cex=}\DecValTok{3}\NormalTok{,}\AttributeTok{col=}\StringTok{"blue"}\NormalTok{,}\AttributeTok{pch=}\StringTok{"*"}\NormalTok{)}
+\NormalTok{sharpe }\OtherTok{=}\NormalTok{( muP}\SpecialCharTok{{-}}\NormalTok{mufree)}\SpecialCharTok{/}\NormalTok{sdP}
+\NormalTok{ind }\OtherTok{=}\NormalTok{ (sharpe }\SpecialCharTok{==} \FunctionTok{max}\NormalTok{(sharpe)) }\CommentTok{\# locates the tangency portfolio}
+\NormalTok{weights[ind,] }\CommentTok{\# weights of the tangency portfolio}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.091181044 -0.002910879  0.335318542  0.383714329  0.319484849
+## [6]  0.055574204
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{lines}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,sdP[ind]),}\FunctionTok{c}\NormalTok{(mufree,muP[ind]),}\AttributeTok{col=}\StringTok{"red"}\NormalTok{,}\AttributeTok{lwd=}\DecValTok{3}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(sdP[ind],muP[ind],}\AttributeTok{col=}\StringTok{"blue"}\NormalTok{,}\AttributeTok{cex=}\DecValTok{3}\NormalTok{,}\AttributeTok{pch=}\StringTok{"*"}\NormalTok{)}
+\NormalTok{ind2 }\OtherTok{=}\NormalTok{ (sdP }\SpecialCharTok{==} \FunctionTok{min}\NormalTok{(sdP))}
+\FunctionTok{points}\NormalTok{(sdP[ind2],muP[ind2],}\AttributeTok{col=}\StringTok{"green"}\NormalTok{,}\AttributeTok{cex=}\DecValTok{3}\NormalTok{,}\AttributeTok{pch=}\StringTok{"*"}\NormalTok{)}
+\NormalTok{ind3 }\OtherTok{=}\NormalTok{ (muP }\SpecialCharTok{\textgreater{}}\NormalTok{ muP[ind2])}
+\FunctionTok{lines}\NormalTok{(sdP[ind3],muP[ind3],}\AttributeTok{type=}\StringTok{"l"}\NormalTok{,}\AttributeTok{xlim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,.}\DecValTok{25}\NormalTok{),}
+\AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,.}\DecValTok{3}\NormalTok{),}\AttributeTok{col=}\StringTok{"cyan"}\NormalTok{,}\AttributeTok{lwd=}\DecValTok{3}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(sd\_vect[}\DecValTok{1}\NormalTok{],mean\_vect[}\DecValTok{1}\NormalTok{],}\StringTok{"GM"}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(sd\_vect[}\DecValTok{2}\NormalTok{],mean\_vect[}\DecValTok{2}\NormalTok{],}\StringTok{"F"}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(sd\_vect[}\DecValTok{3}\NormalTok{],mean\_vect[}\DecValTok{3}\NormalTok{],}\StringTok{"UTX"}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(sd\_vect[}\DecValTok{4}\NormalTok{],mean\_vect[}\DecValTok{4}\NormalTok{],}\StringTok{"CAT"}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(sd\_vect[}\DecValTok{5}\NormalTok{],mean\_vect[}\DecValTok{5}\NormalTok{],}\StringTok{"MRK"}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(sd\_vect[}\DecValTok{6}\NormalTok{],mean\_vect[}\DecValTok{6}\NormalTok{],}\StringTok{"IBM"}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topleft"}\NormalTok{,}\FunctionTok{c}\NormalTok{(}\StringTok{"efficient frontier"}\NormalTok{,}\StringTok{"efficient portfolios"}\NormalTok{, }
+                   \StringTok{"tangency portfolio"}\NormalTok{,}\StringTok{"min var portfolio"}\NormalTok{),}
+       \AttributeTok{lty=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\ConstantTok{NA}\NormalTok{,}\ConstantTok{NA}\NormalTok{),}
+       \AttributeTok{lwd=}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{),}
+       \AttributeTok{pch=}\FunctionTok{c}\NormalTok{(}\StringTok{""}\NormalTok{,}\StringTok{""}\NormalTok{,}\StringTok{"*"}\NormalTok{,}\StringTok{"*"}\NormalTok{),}
+       \AttributeTok{col=}\FunctionTok{c}\NormalTok{(}\StringTok{"cyan"}\NormalTok{,}\StringTok{"red"}\NormalTok{,}\StringTok{"blue"}\NormalTok{,}\StringTok{"green"}\NormalTok{),}
+       \AttributeTok{pt.cex=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-37-1.pdf}
+
+\hypertarget{q2.2}{%
+\section{Q2.2}\label{q2.2}}
+
+If an investor wants an efficient portfolio with an expected daily return of 0.07\%, how should the investor allocate his or her capital to the six stocks and to the risk-free asset? Assume that the investor wishes to use the tangency portfolio computed with the constraints \(−0.1 \leq w_j \leq 0.5\), not the unconstrained tangency portfolio.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{options}\NormalTok{(}\AttributeTok{digits=}\DecValTok{3}\NormalTok{)}
+\CommentTok{\# it divides by the risk free rate converted to daily but theres a typo,}
+\CommentTok{\# should be 3/365 (unless this is the amt of trading days, but that would be 252)}
+\CommentTok{\# omega = (.07 {-} muP[ind]) / (3/265 {-} muP[ind])}
+\NormalTok{omega }\OtherTok{=}\NormalTok{ (.}\DecValTok{07} \SpecialCharTok{{-}}\NormalTok{ muP[ind]) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{3}\SpecialCharTok{/}\DecValTok{365} \SpecialCharTok{{-}}\NormalTok{ muP[ind])}
+\NormalTok{omega}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.0518
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{omega}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.948
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{omega)}\SpecialCharTok{*}\NormalTok{weights[ind]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.08645 -0.00276  0.31794  0.36382  0.30292  0.05269
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{omega }\SpecialCharTok{+} \FunctionTok{sum}\NormalTok{((}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{omega)}\SpecialCharTok{*}\NormalTok{weights[ind])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+\hypertarget{q2.3}{%
+\section{Q2.3}\label{q2.3}}
+
+Does this data set include Black Monday?
+
+\begin{quote}
+Again, straight from the answer key.
+\end{quote}
+
+Yes, Black Monday was October 19, 1987 and data go from January 2, 1987 to
+Sept 1, 2006. Black Monday is the 202th day in the original data set or the
+201st day of returns.
+If you look in the spread sheet you will see huge price declines that day. The
+returns that day were:
+
+\begin{verbatim}
+returns[201,]
+[1] -21.0 -18.2 -21.7 -15.7 -13.0 -23.5
+\end{verbatim}
+
+\hypertarget{q3-3}{%
+\section{Q3}\label{q3-3}}
+
+From answer key:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tseries)}
+\FunctionTok{library}\NormalTok{(zoo)}
+
+\NormalTok{tickers }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"ENB.TO"}\NormalTok{,}\StringTok{"CP.TO"}\NormalTok{,}\StringTok{"RCI{-}A.TO"}\NormalTok{,}\StringTok{"TD.TO"}\NormalTok{,}\StringTok{"L.TO"}\NormalTok{)}
+\NormalTok{N }\OtherTok{=} \FunctionTok{length}\NormalTok{(tickers)}
+
+\NormalTok{P}\OtherTok{=}\FunctionTok{vector}\NormalTok{(}\StringTok{"list"}\NormalTok{, N) }\CommentTok{\# list for holding prices}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{N) \{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Downloading "}\NormalTok{, i, }\StringTok{" out of "}\NormalTok{, N , }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  P[[i]] }\OtherTok{=} \FunctionTok{get.hist.quote}\NormalTok{(}\AttributeTok{instrument =}\NormalTok{ tickers[i], }
+    \AttributeTok{start =} \FunctionTok{as.Date}\NormalTok{(}\StringTok{"2010{-}01{-}01"}\NormalTok{), }
+    \AttributeTok{end=}\FunctionTok{as.Date}\NormalTok{(}\StringTok{"2020{-}12{-}01"}\NormalTok{), }
+    \AttributeTok{compression=}\StringTok{"m"}\NormalTok{, }\AttributeTok{quote =} \StringTok{"AdjClose"}\NormalTok{, }
+    \AttributeTok{retclass =} \StringTok{"zoo"}\NormalTok{, }\AttributeTok{quiet =}\NormalTok{ T)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Downloading  1  out of  5 
+## Downloading  2  out of  5 
+## Downloading  3  out of  5 
+## Downloading  4  out of  5 
+## Downloading  5  out of  5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# net returns}
+\NormalTok{R }\OtherTok{=} \FunctionTok{sapply}\NormalTok{(P, }\AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{ }\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{diff}\NormalTok{(x) }\SpecialCharTok{/}\NormalTok{ stats}\SpecialCharTok{::}\FunctionTok{lag}\NormalTok{(x, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)) \} )}
+\FunctionTok{colnames}\NormalTok{(R) }\OtherTok{=}\NormalTok{ tickers }\CommentTok{\# assign names}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{part-a-7}{%
+\subsection{Part A}\label{part-a-7}}
+
+Use only the first two stocks (ENB.TO and CP.TO), and calculate the sample means and (individual) sample variances of their returns. Consider the following hypothetical values for their correlation : \(\rho\) = −1, −0.5, 0, +0.5, +1.
+For each value of \(\rho\), calculate their corresponding 2D variance-covariance matrix and plot the risk-return profiles of portfolios combining the two assets with weights {[}w, (1 − w){]}, \(\forall w \in [−1, 2]\). Plot all profile curves on the same (\(\mu_p, \sigma_p\))-space, using a different color for each value of \(\rho\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R2}\OtherTok{=}\NormalTok{R[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{]}
+\NormalTok{MU }\OtherTok{=} \FunctionTok{colMeans}\NormalTok{(R2)}
+\NormalTok{SD }\OtherTok{=} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(}\FunctionTok{var}\NormalTok{(R2)))}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{mar=}\FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{2}\NormalTok{) }\SpecialCharTok{+} \FloatTok{0.1}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(SD,MU,}\AttributeTok{pch=}\DecValTok{16}\NormalTok{,}\AttributeTok{cex=}\DecValTok{2}\NormalTok{, }\AttributeTok{col=}\DecValTok{2}\NormalTok{, }\AttributeTok{xlim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,.}\DecValTok{15}\NormalTok{), }\AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.005}\NormalTok{,.}\DecValTok{025}\NormalTok{))}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v=}\DecValTok{0}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{); }\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{0}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{) }
+
+\NormalTok{w }\OtherTok{=} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{,}\SpecialCharTok{+}\DecValTok{3}\NormalTok{,.}\DecValTok{01}\NormalTok{); W }\OtherTok{=} \FunctionTok{cbind}\NormalTok{(w, }\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{w) }\CommentTok{\# weights}
+\NormalTok{MU.p }\OtherTok{=}\NormalTok{ W }\SpecialCharTok{\%*\%}\NormalTok{ MU    }\CommentTok{\# portfolio means}
+
+\NormalTok{rho}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{.}\DecValTok{5}\NormalTok{, }\DecValTok{0}\NormalTok{, .}\DecValTok{5}\NormalTok{, }\DecValTok{1}\NormalTok{) }\CommentTok{\# correlations}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)\{}
+\NormalTok{  COR}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,rho[i],rho[i],}\DecValTok{1}\NormalTok{),}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+\NormalTok{  COV}\OtherTok{=}\NormalTok{ COR }\SpecialCharTok{*}\NormalTok{ (SD}\SpecialCharTok{\%*\%}\FunctionTok{t}\NormalTok{(SD))}
+\NormalTok{  SD.p }\OtherTok{=} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{rowSums}\NormalTok{((W }\SpecialCharTok{\%*\%}\NormalTok{ COV)}\SpecialCharTok{*}\NormalTok{W)) }\CommentTok{\# portfolio st.dev.}
+  \FunctionTok{lines}\NormalTok{(SD.p, MU.p, }\AttributeTok{type=}\StringTok{\textquotesingle{}l\textquotesingle{}}\NormalTok{, }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{, }\AttributeTok{col=}\NormalTok{i); }
+\NormalTok{\}}
+
+\FunctionTok{points}\NormalTok{(SD,MU,}\AttributeTok{pch=}\DecValTok{16}\NormalTok{,}\AttributeTok{cex=}\DecValTok{2}\NormalTok{, }\AttributeTok{col=}\DecValTok{2}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(SD, MU, }\AttributeTok{pch=}\DecValTok{16}\NormalTok{, }\FunctionTok{colnames}\NormalTok{(R2), }\AttributeTok{pos=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{))}
+\FunctionTok{legend}\NormalTok{(}\StringTok{\textquotesingle{}topright\textquotesingle{}}\NormalTok{, }\AttributeTok{lwd=}\FunctionTok{rep}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{5}\NormalTok{),}\AttributeTok{col=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, }
+       \FunctionTok{c}\NormalTok{(}\StringTok{"rho={-}1"}\NormalTok{,}\StringTok{"rho={-}.5"}\NormalTok{,}\StringTok{"rho=0"}\NormalTok{,}\StringTok{"rho=+.5"}\NormalTok{,}\StringTok{"rho=+1"}\NormalTok{)  )}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-40-1.pdf}
+
+\hypertarget{part-b-7}{%
+\subsection{Part B}\label{part-b-7}}
+
+Consider all 5 stocks together now, and use the sample mean and sample variance-covariance matrix of their returns. Plot the efficient frontier and the capital market line on the same (\(\mu_p,\sigma_p\))-space and report the tangency portfolio weights.
+(Hint: adapt the code from Example 16.6 on p.~476 of SDAFE.)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(quadprog)}
+
+\NormalTok{COV}\OtherTok{=}\FunctionTok{cov}\NormalTok{(R)}
+\NormalTok{MU}\OtherTok{=}\FunctionTok{colMeans}\NormalTok{(R)}
+\NormalTok{SD}\OtherTok{=}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(COV))}
+\NormalTok{N}\OtherTok{=}\FunctionTok{dim}\NormalTok{(R)[}\DecValTok{2}\NormalTok{] }
+
+\FunctionTok{plot}\NormalTok{(SD, MU, }\AttributeTok{pch=}\DecValTok{16}\NormalTok{, }\AttributeTok{cex=}\FloatTok{1.2}\NormalTok{, }\AttributeTok{col=} \DecValTok{2}\NormalTok{, }\AttributeTok{xlim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,.}\DecValTok{1}\NormalTok{), }\AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,.}\DecValTok{025}\NormalTok{))}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v=}\DecValTok{0}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{); }\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{0}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{) }
+\FunctionTok{text}\NormalTok{(SD, MU, tickers, }\AttributeTok{cex=}\DecValTok{1}\NormalTok{, }\AttributeTok{pos=}\DecValTok{4}\NormalTok{)}
+
+\NormalTok{Amat }\OtherTok{=} \FunctionTok{cbind}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{,N),MU)}
+\NormalTok{mu.p }\OtherTok{=} \FunctionTok{seq}\NormalTok{( }\SpecialCharTok{{-}}\NormalTok{.}\DecValTok{005}\NormalTok{, .}\DecValTok{05}\NormalTok{,}\AttributeTok{length=}\DecValTok{100}\NormalTok{)}
+\NormalTok{sd.p }\OtherTok{=}\NormalTok{ mu.p; }
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(mu.p)) }
+\NormalTok{\{}
+\NormalTok{  bvec}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,mu.p[i]) }
+\NormalTok{  out}\OtherTok{=}\FunctionTok{solve.QP}\NormalTok{(}\AttributeTok{Dmat=}\DecValTok{2}\SpecialCharTok{*}\NormalTok{COV,}\AttributeTok{dvec=}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,N),}\AttributeTok{Amat=}\NormalTok{Amat,}\AttributeTok{bvec=}\NormalTok{bvec,}\AttributeTok{meq=}\DecValTok{2}\NormalTok{)}
+\NormalTok{  sd.p[i] }\OtherTok{=} \FunctionTok{sqrt}\NormalTok{(out}\SpecialCharTok{$}\NormalTok{value)}
+\NormalTok{\}}
+\FunctionTok{lines}\NormalTok{(sd.p,mu.p,}\AttributeTok{type=}\StringTok{"l"}\NormalTok{, }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{, }\AttributeTok{col=}\DecValTok{2}\NormalTok{) }\CommentTok{\# plot least variance portfolios}
+
+\NormalTok{mu.f }\OtherTok{=}\NormalTok{ .}\DecValTok{002} \CommentTok{\# monthly risk{-}free interest rate}
+
+\NormalTok{COV.i}\OtherTok{=}\FunctionTok{solve}\NormalTok{(COV)}
+\NormalTok{W.tang}\OtherTok{=}\NormalTok{COV.i}\SpecialCharTok{\%*\%}\NormalTok{(MU}\SpecialCharTok{{-}}\NormalTok{mu.f) }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{( COV.i}\SpecialCharTok{\%*\%}\NormalTok{(MU}\SpecialCharTok{{-}}\NormalTok{mu.f) )}
+\NormalTok{mu.tang}\OtherTok{=}\FunctionTok{sum}\NormalTok{(W.tang}\SpecialCharTok{*}\NormalTok{MU)                             }
+\NormalTok{sd.tang}\OtherTok{=}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{sum}\NormalTok{( (COV }\SpecialCharTok{\%*\%}\NormalTok{ W.tang) }\SpecialCharTok{*}\NormalTok{ W.tang ) )    }
+\FunctionTok{points}\NormalTok{( sd.tang, mu.tang, }\AttributeTok{pch=}\DecValTok{15}\NormalTok{, }\AttributeTok{cex=}\FloatTok{1.3}\NormalTok{, }\AttributeTok{col=}\DecValTok{2}\NormalTok{)  }
+\NormalTok{sharpe}\OtherTok{=}\NormalTok{(mu.tang}\SpecialCharTok{{-}}\NormalTok{mu.f)}\SpecialCharTok{/}\NormalTok{sd.tang}
+\FunctionTok{abline}\NormalTok{(mu.f,sharpe,}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{,}\AttributeTok{lty=}\DecValTok{2}\NormalTok{,}\AttributeTok{col=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-41-1.pdf}
+
+The Sharpe ratio is 0.335, and the tangency portfolio weights are:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{( }\FunctionTok{t}\NormalTok{(W.tang), }\DecValTok{4}\NormalTok{ )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      ENB.TO CP.TO RCI-A.TO TD.TO  L.TO
+## [1,]  0.135 0.362    0.106 0.248 0.149
+\end{verbatim}
+
+\hypertarget{part-c-3}{%
+\subsection{Part c}\label{part-c-3}}
+
+Repeat the previous part b. (i.e.~plot the efficient frontier and capital market line, and report the tangency portfolio weights) with the restriction that all weights are within the bounds \(0 \le w_i \le 0.5,\;\; \forall i = 1, \ldots, 5\).
+(Hint: adapt the code from Example 16.7 on p.~479 of SDAFE.)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(SD, MU, }\AttributeTok{pch=}\DecValTok{16}\NormalTok{, }\AttributeTok{cex=}\FloatTok{1.2}\NormalTok{, }\AttributeTok{col=} \DecValTok{2}\NormalTok{,  }\AttributeTok{xlim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,.}\DecValTok{1}\NormalTok{), }\AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(.}\DecValTok{0}\NormalTok{,.}\DecValTok{025}\NormalTok{))}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v=}\DecValTok{0}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{); }\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{0}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{) }
+\FunctionTok{text}\NormalTok{(SD, MU, tickers, }\AttributeTok{cex=}\DecValTok{1}\NormalTok{, }\AttributeTok{pos=}\DecValTok{4}\NormalTok{)}
+
+\NormalTok{Amat }\OtherTok{=} \FunctionTok{cbind}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{,N),MU,}\FunctionTok{diag}\NormalTok{(}\DecValTok{1}\NormalTok{,}\AttributeTok{nrow=}\NormalTok{N),}\SpecialCharTok{{-}}\FunctionTok{diag}\NormalTok{(}\DecValTok{1}\NormalTok{,}\AttributeTok{nrow=}\NormalTok{N))}
+\NormalTok{mu.pot }\OtherTok{=} \FunctionTok{seq}\NormalTok{( }\FunctionTok{min}\NormalTok{(MU), }\FunctionTok{max}\NormalTok{(MU),}\AttributeTok{length=}\DecValTok{300}\NormalTok{) }\CommentTok{\# potential mean returns}
+
+\NormalTok{mu.p }\OtherTok{=} \ConstantTok{NULL} \CommentTok{\# initialize portofio standard error }
+\NormalTok{sd.p }\OtherTok{=} \ConstantTok{NULL} \CommentTok{\# initialize portofio standard error }
+\NormalTok{W.p }\OtherTok{=} \ConstantTok{NULL} \CommentTok{\# initialize portofio weights }
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(mu.pot)) }
+\NormalTok{\{}
+\NormalTok{  bvec}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,mu.pot[i],}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,N),}\FunctionTok{rep}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{,N))}
+  \CommentTok{\#check whether potential mean return can be achieved with given constraints}
+\NormalTok{  out}\OtherTok{=}\FunctionTok{tryCatch}\NormalTok{( }\FunctionTok{solve.QP}\NormalTok{(}\AttributeTok{Dmat=}\DecValTok{2}\SpecialCharTok{*}\NormalTok{COV,}\AttributeTok{dvec=}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,N),}\AttributeTok{Amat=}\NormalTok{Amat,}\AttributeTok{bvec=}\NormalTok{bvec,}\AttributeTok{meq=}\DecValTok{2}\NormalTok{), }\AttributeTok{error=}\ControlFlowTok{function}\NormalTok{(e) }\ConstantTok{NULL}\NormalTok{) }
+  \CommentTok{\#if mean return is achievable, save its st.dev. \& portfolio weights}
+  \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.null}\NormalTok{(out))\{ }\CommentTok{\#  if}
+\NormalTok{    mu.p}\OtherTok{=}\FunctionTok{c}\NormalTok{(mu.p, mu.pot[i])}
+\NormalTok{    sd.p}\OtherTok{=}\FunctionTok{c}\NormalTok{(sd.p, }\FunctionTok{sqrt}\NormalTok{(out}\SpecialCharTok{$}\NormalTok{value))}
+\NormalTok{    W.p}\OtherTok{=}\FunctionTok{rbind}\NormalTok{(W.p, out}\SpecialCharTok{$}\NormalTok{solution)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\FunctionTok{lines}\NormalTok{(sd.p,mu.p,}\AttributeTok{type=}\StringTok{"l"}\NormalTok{, }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{, }\AttributeTok{col=}\DecValTok{2}\NormalTok{) }\CommentTok{\# plot least variance portfolios}
+\FunctionTok{colnames}\NormalTok{(W.p)}\OtherTok{=}\NormalTok{tickers}
+
+\NormalTok{sharpe}\OtherTok{=}\NormalTok{( mu.p}\SpecialCharTok{{-}}\NormalTok{mu.f)}\SpecialCharTok{/}\NormalTok{sd.p}
+\NormalTok{ind.tang}\OtherTok{=}\FunctionTok{which.max}\NormalTok{(sharpe)}
+\NormalTok{W.tang}\OtherTok{=}\NormalTok{W.p[ind.tang,]}
+\NormalTok{sd.tang }\OtherTok{=}\NormalTok{ sd.p[ind.tang] }
+\NormalTok{mu.tang }\OtherTok{=}\NormalTok{ mu.p[ind.tang]}
+\FunctionTok{points}\NormalTok{( sd.tang, mu.tang, }\AttributeTok{pch=}\DecValTok{15}\NormalTok{, }\AttributeTok{cex=}\FloatTok{1.3}\NormalTok{, }\AttributeTok{col=}\DecValTok{2}\NormalTok{)  }
+\FunctionTok{abline}\NormalTok{( }\FunctionTok{c}\NormalTok{(mu.f, sharpe[ind.tang]),}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{, }\AttributeTok{col=}\DecValTok{2}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-43-1.pdf}
+
+The set of feasible portfolios will be a subset of that of the unconstrained problem. Note that the \emph{constrained} efficient frontier is not a parabola any more. But the constrained tangency portfolio is the same as the unconstrained one (since the since the unconstrained tangency portfolio weights were all within {[}0,.5{]}), and have (approximately) the same Sharpe ratio 0.335.
+
+Note that the constrained tangency portfolio weights are (approximately) the same as the unconstrained ones:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{( W.tang, }\DecValTok{4}\NormalTok{ )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   ENB.TO    CP.TO RCI-A.TO    TD.TO     L.TO 
+##    0.135    0.362    0.106    0.248    0.149
+\end{verbatim}
 
   \bibliography{book.bib,packages.bib}
 
