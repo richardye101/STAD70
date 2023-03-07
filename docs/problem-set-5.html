@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Modelling Extreme Events | STAD70 Course Work</title>
+  <title>Chapter 15 Problem Set 5 | STAD70 Course Work</title>
   <meta name="description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Modelling Extreme Events | STAD70 Course Work" />
+  <meta property="og:title" content="Chapter 15 Problem Set 5 | STAD70 Course Work" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Modelling Extreme Events | STAD70 Course Work" />
+  <meta name="twitter:title" content="Chapter 15 Problem Set 5 | STAD70 Course Work" />
   
   <meta name="twitter:description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="return-distributions.html"/>
-<link rel="next" href="multivariate-return-modelling.html"/>
+<link rel="prev" href="problem-set-4.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -436,144 +436,349 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="modelling-extreme-events" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Modelling Extreme Events<a href="modelling-extreme-events.html#modelling-extreme-events" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="stylized-facts" class="section level2 hasAnchor" number="4.1">
-<h2><span class="header-section-number">4.1</span> Stylized Facts<a href="modelling-extreme-events.html#stylized-facts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Characteristics of typical empirical asset returns:</p>
-<ol style="list-style-type: decimal">
-<li>Absence of simple autocorrelations
-<ul>
-<li>Returns are not correlated with past time-steps of itself</li>
-</ul></li>
-<li>Volatility clustering
-<ul>
-<li>Large amounts of volatility often occur in clusters through time</li>
-</ul></li>
-<li>Heavy tails
-<ul>
-<li>Returns often have very abnormal (large) values suggesting heavy tail distributions</li>
-</ul></li>
-<li>Intermittency</li>
-<li>Aggregation changes distribution</li>
-<li>Gain/loss asymmetry
-<ul>
-<li>The market tends to go up over time</li>
-</ul></li>
+<div id="problem-set-5" class="section level1 hasAnchor" number="15">
+<h1><span class="header-section-number">Chapter 15</span> Problem Set 5<a href="problem-set-5.html#problem-set-5" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="q1-3" class="section level2 hasAnchor" number="15.1">
+<h2><span class="header-section-number">15.1</span> Q1<a href="problem-set-5.html#q1-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Assume a market of <span class="math inline">\(N\)</span> assets with returns following the 1-factor CAPM model
+<span class="math display">\[
+R_i=\beta R_M+\varepsilon_i, \quad i=1, \ldots, N
+\]</span>
+where <span class="math inline">\(R_M \sim \mathrm{N}\left(\mu_M, \sigma_M^2\right)\)</span> and <span class="math inline">\(\varepsilon_i \sim^{i . i . d .} \mathrm{N}\left(0, \sigma_{\varepsilon}^2\right), \quad \forall i\)</span>. Therefore, the model assumes all assets have the same systematic risk <span class="math inline">\(\left(\beta^2 \sigma_M^2\right)\)</span> and the same idiosyncratic risk <span class="math inline">\(\left(\sigma_{\varepsilon}^2\right)\)</span>.</p>
+<div id="part-a-8" class="section level3 hasAnchor" number="15.1.1">
+<h3><span class="header-section-number">15.1.1</span> Part A<a href="problem-set-5.html#part-a-8" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: lower-alpha">
+<li>Find the weights of the minimum-variance portfolio.</li>
 </ol>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbf{R} &amp;= \left[ \begin{array}{c}
+R_{1} \\
+\vdots \\
+R_{N}
+\end{array} \right] = \left[ \begin{array}{c}
+\beta \\
+\vdots \\
+\beta
+\end{array} \right] R_{M} +
+\left[ \begin{array}{c}
+\epsilon_{1} \\
+\vdots \\
+\epsilon_{N}
+\end{array}
+\right] \\
+\\
+\Sigma = \mathbb{V}(\mathbf{R}) &amp;= \mathbb{V}(\beta\underline{1} R_{M} + \epsilon_{i})\\
+&amp;= \beta^{2}  \underline{1} \mathbb{V}(R_{M})  \underline{1}^{T} + \mathbb{V}(\epsilon_{i}) \mathbf{I}\\
+&amp;= \beta^{2} \sigma_{M}^{2} \left[ \begin{array}{ccc}
+1 &amp; \dots &amp; 1 \\
+\vdots &amp; \ddots{}  &amp; \vdots \\
+1 &amp; \dots &amp; 1
+\end{array} \right]  + \left[ \begin{array}{cccc}
+\sigma_{\epsilon}^{2} &amp; 0 &amp;  \dots  &amp; 0 \\
+0  &amp; \sigma_{\epsilon}^{2} &amp; \dots  &amp; 0 \\
+\vdots &amp;  &amp; \ddots  &amp; \vdots \\
+0 &amp; 0  &amp; \dots &amp; \sigma_{\epsilon}^{2}
+\end{array} \right] \\
+&amp;= \left[ \begin{array}{c}
+\beta^{2} \sigma_{M}^{2} + \sigma_{\epsilon}^{2} &amp;  \dots  &amp; \beta^{2} \sigma_{M}^{2} \\
+\vdots &amp; \ddots  &amp; \vdots \\
+\beta^{2} \sigma_{M}^{2}  &amp;  \dots &amp; \beta^{2} \sigma_{M}^{2} + \sigma_{\epsilon}^{2}
+\end{array} \right] \\
+\end{aligned}
+\]</span></p>
+<p>The minimum variance portfolio weights as calculated in class are:
+<span class="math display">\[
+w^{*} = \frac{\Sigma ^{-1}  \underline{1}}{\underline{1}^{T}\Sigma ^{-1}  \underline{1}}
+\]</span></p>
+<p>By symmetry of the variance matrix, all the weights must be equal, implying <span class="math inline">\(w = \frac{1}{N} \underline{1}\)</span>. Each row sum of the matrix is also equivalent, as intuitively all the assets follow the same distribution and have the same systematic risk. It also means that changing the order of the assets in the vector <span class="math inline">\(\mathbf{R}\)</span> does not change the covariance matrix.</p>
 </div>
-<div id="extreme-value-theory" class="section level2 hasAnchor" number="4.2">
-<h2><span class="header-section-number">4.2</span> Extreme Value Theory<a href="modelling-extreme-events.html#extreme-value-theory" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>This theory helps with modelling extreme events that have small probabilities of occurring.</p>
-<div id="two-main-results" class="section level3 hasAnchor" number="4.2.1">
-<h3><span class="header-section-number">4.2.1</span> Two main results<a href="modelling-extreme-events.html#two-main-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="lemma-for-special-inverse-covariance-matrices" class="section level3 hasAnchor" number="15.1.2">
+<h3><span class="header-section-number">15.1.2</span> Lemma for special inverse covariance matrices<a href="problem-set-5.html#lemma-for-special-inverse-covariance-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Given that <span class="math inline">\(a,b &gt; 0\)</span>
+<span class="math display">\[
+\boldsymbol{\Sigma}=a \mathbf{1 1}^T+b \boldsymbol{I}=\left[\begin{array}{ccc}
+a &amp; \ldots &amp; a \\
+\vdots &amp; \ddots &amp; \vdots \\
+a &amp; \cdots &amp; a
+\end{array}\right]+\left[\begin{array}{ccc}
+b &amp; \ldots &amp; 0 \\
+\vdots &amp; \ddots &amp; \vdots \\
+0 &amp; \cdots &amp; b
+\end{array}\right]
+\]</span>
+then
+<span class="math display">\[
+\boldsymbol{\Sigma}^{-1}=c \mathbf{1 1}^T+d \boldsymbol{I}=\left[\begin{array}{ccc}
+c &amp; \ldots &amp; c \\
+\vdots &amp; \ddots &amp; \vdots \\
+c &amp; \cdots &amp; c
+\end{array}\right]+\left[\begin{array}{ccc}
+d &amp; \ldots &amp; 0 \\
+\vdots &amp; \ddots &amp; \vdots \\
+0 &amp; \cdots &amp; d
+\end{array}\right]
+\]</span>
+where <span class="math inline">\(c = -\frac{1}{b} \frac{a}{Na+b}\)</span> and <span class="math inline">\(d = \frac{1}{b}\)</span></p>
+</div>
+<div id="part-b-8" class="section level3 hasAnchor" number="15.1.3">
+<h3><span class="header-section-number">15.1.3</span> Part B<a href="problem-set-5.html#part-b-8" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Show that the minimum variance can never be smaller than <span class="math inline">\(\beta^2 \sigma_M^2\)</span>, no matter how many assets we have (i.e., no matter how large <span class="math inline">\(N\)</span> is).</li>
+</ol>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{E}\left[R_{m v}\right] &amp; =\mathbb{E}\left[\boldsymbol{w}^T \boldsymbol{R}\right]=\boldsymbol{w}^T E[\boldsymbol{R}]=\frac{1}{N} \mathbf{1}^T\left(\beta \mu_M \mathbf{1}\right) \\
+&amp; =\beta \mu_M \frac{\mathbf{1}^T \mathbf{1}}{N}=\beta \mu_M \quad\left(\text { since } \mathbf{1}^T \mathbf{1}=N\right) \\
+\\
+\mathbb{V}\left[R_{m v}\right] &amp; =\mathbb{V}\left[\boldsymbol{w}^T \boldsymbol{R}\right]=\boldsymbol{w}^T \mathbb{V}[\boldsymbol{R}] \boldsymbol{w}=\frac{1}{N^2} \mathbf{1}^T\left(\beta^2 \sigma_M^2 \mathbf{1 1}^T+\sigma_{\varepsilon}^2 \boldsymbol{I}\right) \mathbf{1}= \\
+&amp; =\frac{\beta^2 \sigma_M^2}{N^2}\left(\mathbf{1}^T \mathbf{1}\right)\left(\mathbf{1}^T \mathbf{1}\right)+\frac{\sigma_{\varepsilon}^2}{N^2}\left(\mathbf{1}^T \mathbf{1}\right)=\beta^2 \sigma_M^2+\frac{\sigma_{\varepsilon}^2}{N}&gt;\beta^2 \sigma_M^2, \forall N \geq 1
+\end{aligned}
+\]</span></p>
+<p>Thus, the minimum variance portfolio will always have variance at least <span class="math inline">\(β^{2}\sigma_{M}^{2}\)</span>. This problem illustrates that you cannot “diversify away” systemic risk (i.e., risk from common factors) the same way you can with idiosyncratic risk.</p>
+</div>
+</div>
+<div id="q2-3" class="section level2 hasAnchor" number="15.2">
+<h2><span class="header-section-number">15.2</span> Q2<a href="problem-set-5.html#q2-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Consider the following 2 -factor model with 3 assets:
+<span class="math display">\[
+\left[\begin{array}{l}
+R_1 \\
+R_2 \\
+R_3
+\end{array}\right]=\left[\begin{array}{ll}
+1 &amp; 0 \\
+1 &amp; 1 \\
+0 &amp; 1
+\end{array}\right]\left[\begin{array}{l}
+F_1 \\
+F_2
+\end{array}\right]+\left[\begin{array}{l}
+\varepsilon_1 \\
+\varepsilon_2 \\
+\varepsilon_3
+\end{array}\right] \Leftrightarrow \boldsymbol{R}=\boldsymbol{\beta}^{\top} \boldsymbol{F}+\boldsymbol{\varepsilon}
+\]</span>
+where
+<span class="math display">\[
+\mathbb{V}[\boldsymbol{F}]=\left[\begin{array}{cc}
+\sigma^2 &amp; 0 \\
+0 &amp; \sigma^2
+\end{array}\right]=\sigma^2 \boldsymbol{I}_2, \quad \mathbb{V}[\varepsilon]=\left[\begin{array}{ccc}
+\sigma^2 &amp; 0 &amp; 0 \\
+0 &amp; \sigma^2 &amp; 0 \\
+0 &amp; 0 &amp; \sigma^2
+\end{array}\right]=\sigma^2 \boldsymbol{I}_3, \quad \operatorname{Cov}[\boldsymbol{\varepsilon}, \boldsymbol{F}]=0
+\]</span>
+Find the minimum variance portfolio weights for this model. (Hint: You can use <span class="math inline">\(\mathrm{R}\)</span> to invert the matrix.)</p>
+<p>From class,
+<span class="math display">\[
+w^{\star} = \frac{\Sigma ^{-1} \underline{1}}{\underline{1}^{T}\Sigma^{-1}  \underline{1}}
+\]</span></p>
+<p>So we first need to find <span class="math inline">\(\Sigma\)</span>.
+<span class="math display">\[
+\begin{aligned}
+\Sigma &amp;= \mathbb{V}(\mathbf{\beta^{T}F+\epsilon})\\
+&amp;= \mathbf{\beta}^{T}\mathbb{V}(\mathbf{F})\mathbf{\beta} + \mathbb{V}(\mathbf{\epsilon})\\
+&amp;= \sigma^{2} \mathbf{\beta^{T}}\mathbf{I}\mathbf{\beta} + \sigma^{2}\mathbf{I_{3}}\\
+&amp;= \sigma^{2} \left[\begin{array}{ll}
+1 &amp; 0 \\
+1 &amp; 1 \\
+0 &amp; 1
+\end{array}\right]\left[\begin{array}{lll}
+1 &amp; 1 &amp; 0 \\
+0 &amp; 1 &amp; 1
+\end{array}\right] + \sigma^{2}\left[\begin{array}{ll}
+1 &amp; 0  &amp; 0\\
+0 &amp; 1  &amp; 0\\
+0 &amp; 0 &amp; 1
+\end{array}\right]\\
+&amp;= \sigma^{2} \left[\begin{array}{l\ll}
+1 &amp; 1 &amp; 0 \\
+1 &amp; 2 &amp; 1 \\
+0 &amp; 1 &amp; 1
+\end{array}\right] + \sigma^{2}\left[\begin{array}{ll}
+1 &amp; 0  &amp; 0\\
+0 &amp; 1  &amp; 0\\
+0 &amp; 0 &amp; 1
+\end{array}\right]\\
+&amp;= \sigma^{2}\left[\begin{array}{l\ll}
+2 &amp; 1 &amp; 0 \\
+1 &amp; 3 &amp; 1 \\
+0 &amp; 1 &amp; 2
+\end{array}\right] = \left[\begin{array}{l\ll}
+2\sigma^{2} &amp; 1\sigma^{2} &amp; 0 \\
+1\sigma^{2} &amp; 3\sigma^{2} &amp; 1 \sigma^{2}\\
+0 &amp; 1\sigma^{2} &amp; 2\sigma^{2}
+\end{array}\right]
+\end{aligned}
+\]</span>
+Solving with R, we get <span class="math inline">\(\Sigma ^{-1}\)</span>
+<span class="math display">\[
+\Sigma ^{-1} = \left[
+\begin{array}{ccc}
+0.625 &amp; -0.25 &amp; 0.125 \\
+-0.250 &amp; 0.50 &amp; -0.250\\
+0.125 &amp; -0.25 &amp; 0.625
+\end{array} \right]
+\]</span></p>
+<p>So the weights become:</p>
+<p><span class="math display">\[
+w^{\star} = \frac{\left[ \begin{array}{ccc}
+0.5 &amp; 0.0 &amp; 0.5
+\end{array} \right]}{1} = \left[ \begin{array}{ccc}
+0.5 &amp; 0.0 &amp; 0.5
+\end{array} \right]
+\]</span>
+which means that we split our portfolio equally between the 1st and 3rd assets. Notice that the <span class="math inline">\(R_{1}\)</span> and <span class="math inline">\(R_{3}\)</span> are uncorrelated, so splitting (or “diversifying”) the portfolio between these uncorrelated assets will give the highest reduction in variance.</p>
+<p>These questions encompass q5-15 on pg 489 from SDAFE 18.8</p>
+</div>
+<div id="q3.1" class="section level2 hasAnchor" number="15.3">
+<h2><span class="header-section-number">15.3</span> Q3.1<a href="problem-set-5.html#q3.1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose one has a sample of monthly log returns on two stocks with sample means of 0.0032 and 0.0074, sample variances of 0.017 and 0.025, and a sample covariance of 0.0059. For purposes of resampling, consider these to be the “true population values.” A bootstrap resample has sample means of 0.0047 and 0.0065, sample variances of 0.0125 and 0.023, and a sample covariance of 0.0058.</p>
+<div id="part-a-9" class="section level3 hasAnchor" number="15.3.1">
+<h3><span class="header-section-number">15.3.1</span> Part A<a href="problem-set-5.html#part-a-9" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Using the resample, estimate the efficient portfolio of these two stocks that has an expected return of 0.005; that is, give the two portfolio weights.</p>
+<p><span class="math display">\[
+\begin{aligned}
+0.005 &amp;= \mathbb{E}(wS_{1}+(1-w)S_{2}) = w\cdot 0.0047 + (1-w) \cdot 0.0065\\
+0.005-0.0065&amp;= w(0.0047-0.0065)\\
+w &amp;= \frac{0.005-0.0065}{(0.0047-0.0065)}\\
+&amp;= 0.8333\\
+1-w &amp;= 0.1667
+\end{aligned}
+\]</span></p>
+<blockquote>
+<p>For some reason, the answers state:
+(0.0047)w + (0.0065)(1 − w) = 0.005 so that the estimated efficient portfolio is 57.14% stock 1 and 42.86% stock 2.</p>
+</blockquote>
+</div>
+<div id="part-b-9" class="section level3 hasAnchor" number="15.3.2">
+<h3><span class="header-section-number">15.3.2</span> Part B<a href="problem-set-5.html#part-b-9" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>What is the estimated variance of the return of the portfolio in part (a) using the resample variances and covariances?</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{V}(wS_{1}+(1-w)S_{2}) &amp;= w^{2}\mathbb{V}(S_{1})+(1-w)^{2}\mathbb{V}(S_{2})+2w(1-w)Cov(S_{1},S_{2})\\
+&amp;= w^{2}.0125 + (1-w)^{2}\cdot 0.023 + 2w(1-w)0.0058\\
+&amp;= 0.01092
+\end{aligned}
+\]</span></p>
+</div>
+<div id="part-c-4" class="section level3 hasAnchor" number="15.3.3">
+<h3><span class="header-section-number">15.3.3</span> Part C<a href="problem-set-5.html#part-c-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>What are the actual expected return and variance of return for the portfolio in (a) when calculated with the true population values (e.g., with using the original sample means, variances, and covariance)?</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{E}(R_{act}) &amp;= 0.8333 \cdot 0.0032 + .16667\cdot 0.0074 = 0.0038\\
+\mathbb{E}(R_{act}) &amp;= .8333^2 \cdot 0.0032+0.16667^{2}\cdot 0.0074 + 2\cdot 0.8333 \cdot 0.16667 \cdot 0.0059\\
+&amp;=0.00406
+\end{aligned}
+\]</span></p>
+
+</div>
+</div>
+<div id="q4-3" class="section level2 hasAnchor" number="15.4">
+<h2><span class="header-section-number">15.4</span> Q4<a href="problem-set-5.html#q4-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<blockquote>
+<p>Straight from answer key</p>
+</blockquote>
+<p>For this problem you will use regression to identify the composition of various mutual
+funds.</p>
+<div id="part-a-10" class="section level3 hasAnchor" number="15.4.1">
+<h3><span class="header-section-number">15.4.1</span> Part A<a href="problem-set-5.html#part-a-10" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Download the adjusted daily closing prices from Jan 1 2020 to Dec 31 2022 for the
+5 mutual funds below (use tseries::get.hist.quote() for each ticker):</p>
 <ul>
-<li>Maxima of i.i.d. sequences</li>
-<li>Values exceeding threshold</li>
+<li>FCNTX: Fidelity Contrafund</li>
+<li>PIODX: Pioneer A</li>
+<li>AIVSX: American Funds Invmt Co of Amer A</li>
+<li>PRBLX: Parnassus Core Equity Investor</li>
+<li>VFIAX: Vanguard 500 Index Admiral</li>
 </ul>
+<p>Note that each of these funds has at least 90% of their weight in the US stocks market. You can actually check the composition of the investment over different stock sectors from Yahoo Finance, under the fund’s holdings tab; e.g. for FCNTX at <a href="https://finance.yahoo.com/quote/FCNTX/holdings" class="uri">https://finance.yahoo.com/quote/FCNTX/holdings</a>.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="problem-set-5.html#cb77-1" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
+<span id="cb77-2"><a href="problem-set-5.html#cb77-2" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">5</span></span>
+<span id="cb77-3"><a href="problem-set-5.html#cb77-3" tabindex="-1"></a>funds <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;FCNTX&quot;</span>, <span class="st">&quot;PIODX&quot;</span>, <span class="st">&quot;AIVSX&quot;</span>, <span class="st">&quot;PRBLX&quot;</span>, <span class="st">&quot;VFIAX&quot;</span>)</span>
+<span id="cb77-4"><a href="problem-set-5.html#cb77-4" tabindex="-1"></a></span>
+<span id="cb77-5"><a href="problem-set-5.html#cb77-5" tabindex="-1"></a>P <span class="ot">=</span> <span class="fu">list</span>()</span>
+<span id="cb77-6"><a href="problem-set-5.html#cb77-6" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N){</span>
+<span id="cb77-7"><a href="problem-set-5.html#cb77-7" tabindex="-1"></a>  P[[i]] <span class="ot">=</span> tseries<span class="sc">::</span><span class="fu">get.hist.quote</span>(funds[i],</span>
+<span id="cb77-8"><a href="problem-set-5.html#cb77-8" tabindex="-1"></a>                        <span class="at">start =</span> <span class="fu">as.Date</span>(<span class="st">&quot;2020-01-01&quot;</span>),</span>
+<span id="cb77-9"><a href="problem-set-5.html#cb77-9" tabindex="-1"></a>                        <span class="at">end =</span> <span class="fu">as.Date</span>(<span class="st">&quot;2022-12-31&quot;</span>),</span>
+<span id="cb77-10"><a href="problem-set-5.html#cb77-10" tabindex="-1"></a>                        <span class="at">quote=</span><span class="st">&quot;AdjClose&quot;</span>,</span>
+<span id="cb77-11"><a href="problem-set-5.html#cb77-11" tabindex="-1"></a>                        <span class="at">compression =</span> <span class="st">&quot;d&quot;</span>,</span>
+<span id="cb77-12"><a href="problem-set-5.html#cb77-12" tabindex="-1"></a>                        <span class="at">quiet =</span> T)</span>
+<span id="cb77-13"><a href="problem-set-5.html#cb77-13" tabindex="-1"></a>}</span>
+<span id="cb77-14"><a href="problem-set-5.html#cb77-14" tabindex="-1"></a>R_mut<span class="ot">=</span><span class="fu">lapply</span>(P, <span class="at">FUN =</span> <span class="cf">function</span>(x){ <span class="fu">diff</span>(x) <span class="sc">/</span>stats<span class="sc">::</span><span class="fu">lag</span>(x,<span class="sc">-</span><span class="dv">1</span>) }) <span class="co"># calculate MF returns</span></span>
+<span id="cb77-15"><a href="problem-set-5.html#cb77-15" tabindex="-1"></a>m_funds <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">unlist</span>(R_mut), <span class="at">ncol=</span>N)</span>
+<span id="cb77-16"><a href="problem-set-5.html#cb77-16" tabindex="-1"></a><span class="fu">colnames</span>(m_funds) <span class="ot">=</span> funds</span></code></pre></div>
 </div>
-<div id="st-theorem-fisher-tippet-gnedenko" class="section level3 hasAnchor" number="4.2.2">
-<h3><span class="header-section-number">4.2.2</span> 1st Theorem: Fisher-Tippet-Gnedenko<a href="modelling-extreme-events.html#st-theorem-fisher-tippet-gnedenko" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><em>Theres no need to prove any results</em></p>
-<p>If <span class="math inline">\(X_{1}, X_{2}, \dots\)</span> are i.i.d. RVs, we can create a RV that simply takes the maximum of <span class="math inline">\(n\)</span> RVs called <span class="math inline">\(M_{n} = max(X_{1}, X_{2}, \dots X_{n})\)</span>.</p>
-<p><strong>In certain cases</strong>, we can find normalizing constants <span class="math inline">\(a_{n}&gt;0, b_{n}\)</span> such that they can be transformed into one of the three distributions (identified by <span class="math inline">\(H(x)\)</span>) which can be much easier to work with.</p>
-<p><span class="math display">\[
-\begin{aligned}
-P\left( \frac{M_{n}-b_{n}}{a_{n}} \leq x\right) &amp;= [F(a_{n}x+b_{n})]^{n} \to H(x)\\
-F(a_{n}x+b_{n}) &amp;= \text{Single RV}
-\end{aligned}
-\]</span>
-This is just saying that the normalized max RV is less than some value <span class="math inline">\(x\)</span> is just the probability of each individual RV being less than the transformed value of <span class="math inline">\(x\)</span>.</p>
-<p><span class="math display">\[
-\begin{aligned}
-H(x) &amp;= \begin{cases}
-Gumbel &amp; \exp\{-e^{-x}\} \quad\quad x \in \mathbb{R}\\
-Frechet &amp; \begin{cases}
-0 &amp; x &lt; 0 \\
-\exp\{-x^{-\alpha}\}  &amp; x &gt;0
-\end{cases}\\
-Weibull  &amp; \begin{cases}
-\exp\{-|x|^{\alpha}\}  &amp; x&lt;0 \\
-1 &amp; x &gt; 0
-\end{cases}
-\end{cases}
-\end{aligned}
-\]</span>
-Where <span class="math inline">\(\alpha &gt; 0\)</span> for the Frechet and Weibull distributions.</p>
-<p><img src="Notes/Obsidian-Attachments/3-Modelling-Extreme-Events.png" /></p>
+<div id="part-b-10" class="section level3 hasAnchor" number="15.4.2">
+<h3><span class="header-section-number">15.4.2</span> Part B<a href="problem-set-5.html#part-b-10" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Assume you do not have any information about the investment strategy of the funds. Download the daily prices and calculate returns of the following EFTs, which track different sectors of the economy:
+- XLB: Basic Materials
+- XLY: Consumer Cyclical
+- XLF: Financial Services
+- VNQ: Real Estate
+- XLP: Consumer Defensive
+- XLV: Healthcare
+- XLU: Utilities
+- XTL: Communication Services
+- XLE: Energy
+- XLI: Industrials
+- XLK: Technology
+Regress each of the mutual fund returns on the above ETF returns and create barplots of the estimated beta coefficients. Do these accurately reflect the allocation over the different sectors (as described in Yahoo Finance)?</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="problem-set-5.html#cb78-1" tabindex="-1"></a>etfs <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;XLB&quot;</span>, <span class="st">&quot;XLY&quot;</span>, <span class="st">&quot;XLF&quot;</span>, <span class="st">&quot;VNQ&quot;</span>, <span class="st">&quot;XLP&quot;</span>, <span class="st">&quot;XLV&quot;</span>, <span class="st">&quot;XLU&quot;</span>, <span class="st">&quot;XTL&quot;</span>,<span class="st">&quot;XLE&quot;</span>, <span class="st">&quot;XLI&quot;</span>, <span class="st">&quot;XLK&quot;</span>)</span>
+<span id="cb78-2"><a href="problem-set-5.html#cb78-2" tabindex="-1"></a>sectors <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Basic Materials&quot;</span>,<span class="st">&quot;Consumer Cyclical&quot;</span>,<span class="st">&quot;Financial Services&quot;</span>,</span>
+<span id="cb78-3"><a href="problem-set-5.html#cb78-3" tabindex="-1"></a>            <span class="st">&quot;Real Estate&quot;</span>,<span class="st">&quot;Consumer Defensive&quot;</span>, <span class="st">&quot;Healthcare&quot;</span>, <span class="st">&quot;Utilities&quot;</span>,</span>
+<span id="cb78-4"><a href="problem-set-5.html#cb78-4" tabindex="-1"></a>            <span class="st">&quot;Communication Services&quot;</span>, <span class="st">&quot;Energy&quot;</span>, <span class="st">&quot;Industrials&quot;</span>, <span class="st">&quot;Technology&quot;</span>)</span>
+<span id="cb78-5"><a href="problem-set-5.html#cb78-5" tabindex="-1"></a>M <span class="ot">=</span> <span class="fu">length</span>(etfs)</span>
+<span id="cb78-6"><a href="problem-set-5.html#cb78-6" tabindex="-1"></a><span class="fu">length</span>(sectors)</span></code></pre></div>
+<pre><code>## [1] 11</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="problem-set-5.html#cb80-1" tabindex="-1"></a>ETFS <span class="ot">=</span> <span class="fu">list</span>()</span>
+<span id="cb80-2"><a href="problem-set-5.html#cb80-2" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>M){</span>
+<span id="cb80-3"><a href="problem-set-5.html#cb80-3" tabindex="-1"></a>  ETFS[[i]] <span class="ot">=</span> tseries<span class="sc">::</span><span class="fu">get.hist.quote</span>(etfs[i],</span>
+<span id="cb80-4"><a href="problem-set-5.html#cb80-4" tabindex="-1"></a>                        <span class="at">start =</span> <span class="fu">as.Date</span>(<span class="st">&quot;2020-01-01&quot;</span>),</span>
+<span id="cb80-5"><a href="problem-set-5.html#cb80-5" tabindex="-1"></a>                        <span class="at">end =</span> <span class="fu">as.Date</span>(<span class="st">&quot;2022-12-31&quot;</span>),</span>
+<span id="cb80-6"><a href="problem-set-5.html#cb80-6" tabindex="-1"></a>                        <span class="at">quote=</span><span class="st">&quot;AdjClose&quot;</span>,</span>
+<span id="cb80-7"><a href="problem-set-5.html#cb80-7" tabindex="-1"></a>                        <span class="at">compression =</span> <span class="st">&quot;d&quot;</span>,</span>
+<span id="cb80-8"><a href="problem-set-5.html#cb80-8" tabindex="-1"></a>                        <span class="at">quiet =</span> T)</span>
+<span id="cb80-9"><a href="problem-set-5.html#cb80-9" tabindex="-1"></a>}</span>
+<span id="cb80-10"><a href="problem-set-5.html#cb80-10" tabindex="-1"></a>R_etf <span class="ot">=</span> <span class="fu">lapply</span>(ETFS, <span class="at">FUN=</span><span class="cf">function</span>(x){ <span class="fu">diff</span>(x) <span class="sc">/</span> stats<span class="sc">::</span><span class="fu">lag</span>(x,<span class="sc">-</span><span class="dv">1</span>)})</span>
+<span id="cb80-11"><a href="problem-set-5.html#cb80-11" tabindex="-1"></a>m_etfs <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">unlist</span>(R_etf), <span class="at">ncol =</span> M)</span>
+<span id="cb80-12"><a href="problem-set-5.html#cb80-12" tabindex="-1"></a><span class="fu">colnames</span>(m_etfs) <span class="ot">=</span> etfs</span>
+<span id="cb80-13"><a href="problem-set-5.html#cb80-13" tabindex="-1"></a></span>
+<span id="cb80-14"><a href="problem-set-5.html#cb80-14" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb80-15"><a href="problem-set-5.html#cb80-15" tabindex="-1"></a>out<span class="ot">=</span><span class="fu">list</span>(); </span>
+<span id="cb80-16"><a href="problem-set-5.html#cb80-16" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N){</span>
+<span id="cb80-17"><a href="problem-set-5.html#cb80-17" tabindex="-1"></a>  out[[i]]<span class="ot">=</span><span class="fu">lm</span>(m_funds[,i] <span class="sc">~</span> m_etfs)</span>
+<span id="cb80-18"><a href="problem-set-5.html#cb80-18" tabindex="-1"></a>  weights <span class="ot">=</span> out[[i]]<span class="sc">$</span>coef[<span class="sc">-</span><span class="dv">1</span>] </span>
+<span id="cb80-19"><a href="problem-set-5.html#cb80-19" tabindex="-1"></a>  <span class="fu">barplot</span>( <span class="fu">rev</span>(weights), <span class="at">names.arg =</span> <span class="fu">rev</span>(sectors), <span class="at">main =</span> funds[i],</span>
+<span id="cb80-20"><a href="problem-set-5.html#cb80-20" tabindex="-1"></a>          <span class="at">horiz =</span> <span class="cn">TRUE</span>, <span class="at">las =</span> <span class="dv">2</span>, <span class="at">cex.names =</span> .<span class="dv">8</span>)</span>
+<span id="cb80-21"><a href="problem-set-5.html#cb80-21" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<p>The barplots of the regression coefficients (betas) roughly follow the sector weightings for each fund. Nevertheless, they are not always close in actual value (e.g. in some cases the betas are negative, even though weightings are positive). The differences can be due to the fact that we use ETFs as <em>proxies</em> for a sector, but the actual holding of the fund within the sector might be different. Moreover, there will be estimation error in our regression model, which is only based on the last year’s returns.</p>
+<p>Nevertheless, it is quite impressing that we can (approximately) identify the strategy of a fund, without knowing anything beyond its past returns. This approach works because of the linear formula for net portfolio returns:
+<span class="math display">\[ R_p = w_1 R_1 + \cdots + w_N R_N\]</span></p>
+<p>Regressing portfolio returns on other assets, we can estimate the weights, assuming the portfolio composition is constant.</p>
 </div>
-<div id="generalized-extreme-value-gev-distribution" class="section level3 hasAnchor" number="4.2.3">
-<h3><span class="header-section-number">4.2.3</span> Generalized Extreme Value (GEV) Distribution<a href="modelling-extreme-events.html#generalized-extreme-value-gev-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The three types of distributions can be represented using:
-<span class="math display">\[
-\begin{aligned}
-H(x) &amp;= \exp\left\{ -\left( 1+\xi\frac{x-\mu}{\sigma} \right)^{-1/\xi}_{+} \right\}\\
-\text{Where } \mu &amp;= \text{location}\\
-\sigma &amp;= \text{scale}\\
-\xi &amp;= \text{shape parameters} \begin{cases}
-\xi&gt;0 &amp; \text{heavy tails (Frechet)} \\
-\xi=0 &amp; \text{exponential tails (Gumbel)} \\
-\xi &lt; 0  &amp; \text{short/light tails (Weibull)}
-\end{cases}
-\end{aligned}
-\]</span>
-Where the <span class="math inline">\(\xi\)</span> value describes the tail behaviour</p>
-<p>The log-transformation of the Frechet(<span class="math inline">\(\alpha=1\)</span>) is the Gumbel distribution!
-<span class="math display">\[
-\begin{aligned}
-\ln(H_{F}(x)) &amp;= \ln\left[ \exp\{-x^{-1}\}\right]\\
-&amp;= -\left( 1+\frac{x-\mu}{\sigma} \right)^{-1}\\
-\\
-&amp;= H_{G} = \exp \left\{ -\left( 1+0\cdot \frac{x-\mu}{\sigma} \right)^{-1/0} \right\}
-\end{aligned}
-\]</span></p>
-<p>As an example, we’ll show that the normalized maximum of i.i.d. Uniform(0,1) aka <span class="math inline">\(F_{n}(x) = x\)</span> with <span class="math inline">\(a_{n}=1/n, b_{n}=1\)</span> converges to the Weibull distribution.
-<span class="math display">\[
-\begin{aligned}
-P\left( \frac{M_{n}-b_{n}}{a_{n}} \leq x\right) &amp;= P\left( \frac{M_{n}-1}{1/n} \leq x\right)\\
-&amp; b_{n}\text{ shifts the Uniform from (0,1) to (-1,0)}\\
-&amp;= P\left( M_{n} \leq \frac{x}{n}+1 \right)\\
-&amp;= P\left( \max(U_{1}, U_{2}, \dots U_{n}) \leq 1+\frac{x}{n} \right)\\
-&amp;= \prod^{n}_{i=1} \underbrace{ P\left( U_{i}\leq 1+\frac{x}{n} \right) }_{ \left( 1+\frac{x}{n} \right) }\\
-&amp;= \left( 1+\frac{x}{n} \right)^{n}\\
-&amp; \text{because } x&lt;0, \quad 1+ (-.4) = 1-|-.4|\\
-&amp;=\left( 1-\frac{|x|}{n} \right)^{n}\\
-\\
-\lim_{ n \to \infty } \left( 1-\frac{|x|}{n} \right)^{n} &amp;\to \exp\{((-1)|x|)^{-1/-1}\}\\
-&amp;= \exp\{-|x|^{1}\} \implies Weibull(\alpha=1)\\
-\end{aligned}
-\]</span></p>
-</div>
-<div id="nd-theorem-pickands-balkema-de-haan" class="section level3 hasAnchor" number="4.2.4">
-<h3><span class="header-section-number">4.2.4</span> 2nd Theorem: Pickands-Balkema-De Haan<a href="modelling-extreme-events.html#nd-theorem-pickands-balkema-de-haan" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>For any RV <span class="math inline">\(X\)</span> with CDF <span class="math inline">\(F(\cdot)\)</span>, it’s conditional distribution when exceeding a certain threshold <span class="math inline">\(u\)</span> is:
-<span class="math display">\[
-\begin{aligned}
-F_{u}(y) &amp;= \frac{F(u+y)-F(u)}{1-F(u)}, \quad 0\leq y\leq x_{F}-u\\
-\text{Where } x_{F} &amp;= sup\{x \in \mathbb{R}:F(x) &lt; 1\} \text{ is the right endpoint of } F
-\end{aligned}
-\]</span></p>
-<p><span class="math inline">\(x_{F}\)</span> could be finite, or <span class="math inline">\(\infty\)</span>. As <span class="math inline">\(u\to x_{F}\)</span>, the conditional distribution converges to something belonging to the <strong>Generalized Pareto Distribution (GPD).</strong>
-<span class="math display">\[
-F_{u}(y) \to G_{\xi, \sigma}(y)
-\]</span>
-The <strong>Generalized Pareto Distribution (GPD)</strong> is given by:
-<span class="math display">\[
-\begin{aligned}
-G_{\xi,\sigma}(y) &amp;= 1 - \left( 1+\xi \frac{y}{\sigma} \right)^{-1/\xi}_{+} = \begin{cases}
-G_{\xi, \sigma}(y) = 1-\left( 1+\xi  \frac{y}{\sigma} \right)^{-1/\xi}  &amp; \xi \ne 0\\
-G_{\xi, \sigma}(y) = 1-\exp\left\{ -\frac{y}{\sigma} \right\}  &amp; \xi = 0
-\end{cases}\\
-\text{Where } &amp; \sigma &gt; 0, y\geq 0, \quad y\leq-\frac{\sigma}{\xi} \text{ when } \xi &lt; 0
-\end{aligned}
-\]</span></p>
-<p><span class="math inline">\(f(x) = \lambda e^{-\lambda x}, \lambda&gt;0\)</span></p>
-<pre class="desmos-graph"><code>bottom=-1; left=-0.5; right=1.5;
----
-y=2 \exp(-2x)
-x=.9|dashed</code></pre>
-<p><img src="Notes/Obsidian-Attachments/3-Modelling-Extreme-Events-1.png" /></p>
-<p>The exponential distribution is used to model waiting times, no matter how much time has passed. The conditional distribution</p>
+<div id="part-c-5" class="section level3 hasAnchor" number="15.4.3">
+<h3><span class="header-section-number">15.4.3</span> Part C<a href="problem-set-5.html#part-c-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Compare the performance of the mutual funds to that of a portfolio of ETFs by reporting the value of Jensen’s alpha (based on the regressions from the previous part) and its corresponding p-value.</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="problem-set-5.html#cb81-1" tabindex="-1"></a>alpha<span class="ot">=</span>p.val<span class="ot">=</span><span class="fu">rep</span>(<span class="dv">0</span>,N)</span>
+<span id="cb81-2"><a href="problem-set-5.html#cb81-2" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N){</span>
+<span id="cb81-3"><a href="problem-set-5.html#cb81-3" tabindex="-1"></a>  alpha[i]<span class="ot">=</span>out[[i]]<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">*</span><span class="dv">250</span> <span class="co"># annualized Jensen alpha</span></span>
+<span id="cb81-4"><a href="problem-set-5.html#cb81-4" tabindex="-1"></a>  p.val[i]<span class="ot">=</span><span class="fu">summary</span>(out[[i]])<span class="sc">$</span>coefficients[<span class="dv">1</span>,<span class="dv">4</span>] <span class="co"># first coef (alpha)&#39;s p-val</span></span>
+<span id="cb81-5"><a href="problem-set-5.html#cb81-5" tabindex="-1"></a>}</span>
+<span id="cb81-6"><a href="problem-set-5.html#cb81-6" tabindex="-1"></a><span class="fu">cbind</span>(alpha, p.val)</span></code></pre></div>
+<pre><code>##        alpha  p.val
+## [1,] -0.0377 0.2508
+## [2,] -0.0140 0.5574
+## [3,] -0.0297 0.1441
+## [4,] -0.0171 0.4585
+## [5,] -0.0216 0.0139</code></pre>
+<p>All the funds’ alphas are negative, although their p-values are not very small. A likely cause for this is that funds charge a <em>fee</em> which consistently eats up some of the returns of their constituent assets. ETFs have typically lower fees than mutual funds, but our regression does not account for transaction costs (it is more costly to buy multiple assets than a single one), so the comparison is more nuanced.</p>
+<p>Note that you can find Jensen alphas and other performance measures (e.g., Sharpe &amp; Treynor Ratios) for assets in Yahoo! Finance under the <a href="https://finance.yahoo.com/quote/FCNTX/risk?p=FCNTX">risk tab</a>. These metrics are based on the CAPM/Market factor model, by regressing the asset’s returns on a proxy for the market return (e.g., S&amp;P500).</p>
 
 </div>
 </div>
@@ -583,8 +788,8 @@ x=.9|dashed</code></pre>
           </div>
         </div>
       </div>
-<a href="return-distributions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="multivariate-return-modelling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="problem-set-4.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -615,7 +820,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/Notes/3-Modelling-Extreme-Events.md",
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/ProblemSets/PS5.md",
 "text": "Edit"
 },
 "history": {
