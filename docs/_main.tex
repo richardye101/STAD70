@@ -1070,16 +1070,41 @@ Where \(\phi\):
 \item
   \(\phi(0)=\infty, \phi(1)=0\)
   \includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-10.png}
-  \textgreater This is just an example of a possible \(\phi\)
 \end{itemize}
 
+\begin{quote}
+This is just an example of a possible \(\phi\)
+\end{quote}
+
 There are infinitely many \(\phi\) but some popular choices for \(\phi\) are:
-\textbar{} Name \textbar{} Generator \(\phi(t)\) \textbar{} Generator Inverse \(\phi ^{-1}(t)\) \textbar{} Parameter \textbar{}
-\textbar{} ------- \textbar{} ------------------------------------------------- \textbar{} ----------------------------------------------- \textbar{} -------------- \textbar{}
-\textbar{} Clayton \textbar{} \(t^{-\theta}-1\) \textbar{} \((1+s)^{-1/\theta}\) \textbar{} \(\theta\geq 0\) \textbar{}
-\textbar{} Frank \textbar{} \(-\ln \frac{e^{-\theta t}-1}{\theta^{-\theta}-1}\) \textbar{} \(-\frac{1}{\alpha}\ln(1+e^{-s}(e^{-\theta}-1))\) \textbar{} \(\theta\geq 0\) \textbar{}
-\textbar{} Gumbel \textbar{} \((-\ln t)^{\theta}\) \textbar{} \(\exp\{-s ^{-1/\theta}\}\) \textbar{} \(\theta\geq 1\) \textbar{}
-\textgreater{}\(\theta\) seems to represent how extreme the function varies between its domain, with larger \(\theta\)'s implying larger values throughout the domain.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.0598}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4188}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4017}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1197}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Name
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Generator \(\phi(t)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Generator Inverse \(\phi ^{-1}(t)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Parameter
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Clayton & \(t^{-\theta}-1\) & \((1+s)^{-1/\theta}\) & \(\theta\geq 0\) \\
+Frank & \(-\ln \frac{e^{-\theta t}-1}{\theta^{-\theta}-1}\) & \(-\frac{1}{\alpha}\ln(1+e^{-s}(e^{-\theta}-1))\) & \(\theta\geq 0\) \\
+Gumbel & \((-\ln t)^{\theta}\) & \(\exp\{-s ^{-1/\theta}\}\) & \(\theta\geq 1\) \\
+\end{longtable}
+
+\begin{quote}
+\(\theta\) seems to represent how extreme the function varies between its domain, with larger \(\theta\)'s implying larger values throughout the domain.
+\end{quote}
 
 For example, the Clayton generator with \(\theta=0.25\) in blue, and \(\theta=3\) in red.
 
@@ -1127,15 +1152,24 @@ Instead, \emph{pseudo-MLE} could be used to break down the problem into the marg
 U_{i}^{(j)} = \hat{F}_{j}(X_{i}^{(j)}) \quad \forall \ i, \dots,n \ j = 1, \dots, d
 \end{aligned}
 \]
-\textgreater Each \(n\) uniforms in \(d\) dimensions of the copula can be created from the actual multivariate distribution. Alternatively, the empirical CDF could be used to obtain the uniforms.
+
+\begin{quote}
+Each \(n\) uniforms in \(d\) dimensions of the copula can be created from the actual multivariate distribution. Alternatively, the empirical CDF could be used to obtain the uniforms.
+\end{quote}
 
 We can then estimate the copula using MLE on the uniforms.
 
 \includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-14.png}
-\textgreater Guess: The uniforms are created by plugging in each asset return into their own marginal CDF.
+
+\begin{quote}
+Guess: The uniforms are created by plugging in each asset return into their own marginal CDF.
+\end{quote}
 
 \includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-15.png}
-\textgreater The \emph{pseudo-MLE} can give the uniform marginals used to construct/fit a t-copula.
+
+\begin{quote}
+The \emph{pseudo-MLE} can give the uniform marginals used to construct/fit a t-copula.
+\end{quote}
 
 \hypertarget{portfolio-theory}{%
 \chapter{Portfolio Theory}\label{portfolio-theory}}
@@ -3373,12 +3407,12 @@ Calculate daily net returns, plot the returns, sample auto-correlation plot, and
 
 \begin{verbatim}
 ##                  date adj_close
-## 1 2015-01-02 14:30:00  44.17995
-## 2 2015-01-05 14:30:00  43.25632
+## 1 2015-01-02 14:30:00  44.17997
+## 2 2015-01-05 14:30:00  43.25630
 ## 3 2015-01-06 14:30:00  42.38906
 ## 4 2015-01-07 14:30:00  42.80506
 ## 5 2015-01-08 14:30:00  42.80506
-## 6 2015-01-09 14:30:00  42.08589
+## 6 2015-01-09 14:30:00  42.08588
 \end{verbatim}
 
 \begin{Shaded}
@@ -3449,8 +3483,8 @@ This supports the stylized fact that returns follow heavy tail distributions.
 \end{Highlighting}
 \end{Shaded}
 
-We have a fitted mean \(\mu\) of \ensuremath{3.2240458\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4635079\times 10^{-4}}.
-This is compared to the sample mean \(\mu\) of \ensuremath{5.6615339\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827282\times 10^{-4}}.
+We have a fitted mean \(\mu\) of \ensuremath{3.2240305\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4635072\times 10^{-4}}.
+This is compared to the sample mean \(\mu\) of \ensuremath{5.661531\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827268\times 10^{-4}}.
 
 These differences can occur due to the fitted t-distribution smoothing away more extreme values.
 
@@ -5188,7 +5222,7 @@ one step forecasts.
 ## 4    50     41.55       0.7662
 ## 
 ## 
-## Elapsed time : 0.569
+## Elapsed time : 0.486
 \end{verbatim}
 
 \begin{Shaded}

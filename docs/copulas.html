@@ -639,16 +639,51 @@ Where <span class="math inline">\(\phi\)</span>:</p>
 <li>is a <strong>continuous convex</strong> generator function</li>
 <li>maps from <span class="math inline">\([0,1] \to [0,\infty]\)</span></li>
 <li><span class="math inline">\(\phi(0)=\infty, \phi(1)=0\)</span>
-<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-10.png" />
-&gt;This is just an example of a possible <span class="math inline">\(\phi\)</span></li>
+<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-10.png" /></li>
 </ul>
-<p>There are infinitely many <span class="math inline">\(\phi\)</span> but some popular choices for <span class="math inline">\(\phi\)</span> are:
-| Name | Generator <span class="math inline">\(\phi(t)\)</span> | Generator Inverse <span class="math inline">\(\phi ^{-1}(t)\)</span> | Parameter |
-| ——- | ————————————————- | ———————————————– | ————– |
-| Clayton | <span class="math inline">\(t^{-\theta}-1\)</span> | <span class="math inline">\((1+s)^{-1/\theta}\)</span> | <span class="math inline">\(\theta\geq 0\)</span> |
-| Frank | <span class="math inline">\(-\ln \frac{e^{-\theta t}-1}{\theta^{-\theta}-1}\)</span> | <span class="math inline">\(-\frac{1}{\alpha}\ln(1+e^{-s}(e^{-\theta}-1))\)</span> | <span class="math inline">\(\theta\geq 0\)</span> |
-| Gumbel | <span class="math inline">\((-\ln t)^{\theta}\)</span> | <span class="math inline">\(\exp\{-s ^{-1/\theta}\}\)</span> | <span class="math inline">\(\theta\geq 1\)</span> |
-&gt;<span class="math inline">\(\theta\)</span> seems to represent how extreme the function varies between its domain, with larger <span class="math inline">\(\theta\)</span>’s implying larger values throughout the domain.</p>
+<blockquote>
+<p>This is just an example of a possible <span class="math inline">\(\phi\)</span></p>
+</blockquote>
+<p>There are infinitely many <span class="math inline">\(\phi\)</span> but some popular choices for <span class="math inline">\(\phi\)</span> are:</p>
+<table>
+<colgroup>
+<col width="5%" />
+<col width="41%" />
+<col width="40%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Generator <span class="math inline">\(\phi(t)\)</span></th>
+<th>Generator Inverse <span class="math inline">\(\phi ^{-1}(t)\)</span></th>
+<th>Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Clayton</td>
+<td><span class="math inline">\(t^{-\theta}-1\)</span></td>
+<td><span class="math inline">\((1+s)^{-1/\theta}\)</span></td>
+<td><span class="math inline">\(\theta\geq 0\)</span></td>
+</tr>
+<tr class="even">
+<td>Frank</td>
+<td><span class="math inline">\(-\ln \frac{e^{-\theta t}-1}{\theta^{-\theta}-1}\)</span></td>
+<td><span class="math inline">\(-\frac{1}{\alpha}\ln(1+e^{-s}(e^{-\theta}-1))\)</span></td>
+<td><span class="math inline">\(\theta\geq 0\)</span></td>
+</tr>
+<tr class="odd">
+<td>Gumbel</td>
+<td><span class="math inline">\((-\ln t)^{\theta}\)</span></td>
+<td><span class="math inline">\(\exp\{-s ^{-1/\theta}\}\)</span></td>
+<td><span class="math inline">\(\theta\geq 1\)</span></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><span class="math inline">\(\theta\)</span> seems to represent how extreme the function varies between its domain, with larger <span class="math inline">\(\theta\)</span>’s implying larger values throughout the domain.</p>
+</blockquote>
 <p>For example, the Clayton generator with <span class="math inline">\(\theta=0.25\)</span> in blue, and <span class="math inline">\(\theta=3\)</span> in red.</p>
 <pre class="desmos-graph"><code>bottom=-0.2;top=4;
 right=1.2;left=-0.2;
@@ -681,13 +716,19 @@ C(u_{1}, u_{2}, \dots, u_{d}) &amp;= \phi ^{-1}(\phi(u_{1})+\phi(u_{\mathbf{2}})
 \begin{aligned}
 U_{i}^{(j)} = \hat{F}_{j}(X_{i}^{(j)}) \quad \forall \ i, \dots,n \ j = 1, \dots, d
 \end{aligned}
-\]</span>
-&gt;Each <span class="math inline">\(n\)</span> uniforms in <span class="math inline">\(d\)</span> dimensions of the copula can be created from the actual multivariate distribution. Alternatively, the empirical CDF could be used to obtain the uniforms.</p>
+\]</span></p>
+<blockquote>
+<p>Each <span class="math inline">\(n\)</span> uniforms in <span class="math inline">\(d\)</span> dimensions of the copula can be created from the actual multivariate distribution. Alternatively, the empirical CDF could be used to obtain the uniforms.</p>
+</blockquote>
 <p>We can then estimate the copula using MLE on the uniforms.</p>
-<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-14.png" />
-&gt;Guess: The uniforms are created by plugging in each asset return into their own marginal CDF.</p>
-<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-15.png" />
-&gt;The <em>pseudo-MLE</em> can give the uniform marginals used to construct/fit a t-copula.</p>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-14.png" /></p>
+<blockquote>
+<p>Guess: The uniforms are created by plugging in each asset return into their own marginal CDF.</p>
+</blockquote>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-15.png" /></p>
+<blockquote>
+<p>The <em>pseudo-MLE</em> can give the uniform marginals used to construct/fit a t-copula.</p>
+</blockquote>
 
 </div>
 </div>
