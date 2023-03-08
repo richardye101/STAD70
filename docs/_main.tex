@@ -1995,6 +1995,18 @@ For the right distribution, the average return is negative although there is no 
 The point of risk mgmt: We want to know the amount of money we should set aside to cover expected losses.
 \end{quote}
 
+\hypertarget{formulas}{%
+\section{Formulas}\label{formulas}}
+
+Assuming \(Port \sim N(\mu, \sigma^{2})\)
+\[
+\begin{aligned}
+VaR_{\alpha} &= \mu +z_{\alpha}\cdot \sigma\\
+ES_{\alpha} &= \mu + \frac{\phi(z_{\alpha})}{\alpha} \cdot \sigma\\
+EVaR_{\alpha} &= \mu + \sigma \cdot \sqrt{-2\ln(\alpha)}
+\end{aligned}
+\]
+
 \hypertarget{value-at-risk-var}{%
 \section{Value At Risk (VAR)}\label{value-at-risk-var}}
 
@@ -3361,11 +3373,11 @@ Calculate daily net returns, plot the returns, sample auto-correlation plot, and
 
 \begin{verbatim}
 ##                  date adj_close
-## 1 2015-01-02 14:30:00  44.17995
-## 2 2015-01-05 14:30:00  43.25631
-## 3 2015-01-06 14:30:00  42.38906
-## 4 2015-01-07 14:30:00  42.80506
-## 5 2015-01-08 14:30:00  42.80506
+## 1 2015-01-02 14:30:00  44.17994
+## 2 2015-01-05 14:30:00  43.25630
+## 3 2015-01-06 14:30:00  42.38907
+## 4 2015-01-07 14:30:00  42.80505
+## 5 2015-01-08 14:30:00  42.80505
 ## 6 2015-01-09 14:30:00  42.08588
 \end{verbatim}
 
@@ -3437,8 +3449,8 @@ This supports the stylized fact that returns follow heavy tail distributions.
 \end{Highlighting}
 \end{Shaded}
 
-We have a fitted mean \(\mu\) of \ensuremath{3.2239722\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4635071\times 10^{-4}}.
-This is compared to the sample mean \(\mu\) of \ensuremath{5.6615324\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.382726\times 10^{-4}}.
+We have a fitted mean \(\mu\) of \ensuremath{3.224037\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4634975\times 10^{-4}}.
+This is compared to the sample mean \(\mu\) of \ensuremath{5.6615334\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827262\times 10^{-4}}.
 
 These differences can occur due to the fitted t-distribution smoothing away more extreme values.
 
@@ -4522,8 +4534,8 @@ which means that we split our portfolio equally between the 1st and 3rd assets. 
 
 These questions encompass q5-15 on pg 489 from SDAFE 18.8
 
-\hypertarget{q3.1}{%
-\section{Q3.1}\label{q3.1}}
+\hypertarget{q3-4}{%
+\section{Q3}\label{q3-4}}
 
 Suppose one has a sample of monthly log returns on two stocks with sample means of 0.0032 and 0.0074, sample variances of 0.017 and 0.025, and a sample covariance of 0.0059. For purposes of resampling, consider these to be the ``true population values.'' A bootstrap resample has sample means of 0.0047 and 0.0065, sample variances of 0.0125 and 0.023, and a sample covariance of 0.0058.
 
@@ -4721,6 +4733,695 @@ Compare the performance of the mutual funds to that of a portfolio of ETFs by re
 All the funds' alphas are negative, although their p-values are not very small. A likely cause for this is that funds charge a \emph{fee} which consistently eats up some of the returns of their constituent assets. ETFs have typically lower fees than mutual funds, but our regression does not account for transaction costs (it is more costly to buy multiple assets than a single one), so the comparison is more nuanced.
 
 Note that you can find Jensen alphas and other performance measures (e.g., Sharpe \& Treynor Ratios) for assets in Yahoo! Finance under the \href{https://finance.yahoo.com/quote/FCNTX/risk?p=FCNTX}{risk tab}. These metrics are based on the CAPM/Market factor model, by regressing the asset's returns on a proxy for the market return (e.g., S\&P500).
+
+\hypertarget{problem-set-6}{%
+\chapter{Problem Set 6}\label{problem-set-6}}
+
+\hypertarget{q1-4}{%
+\section{Q1}\label{q1-4}}
+
+Find a closed form expression for the VaR at confidence level \((1-\alpha)\) of the following continuous loss distributions.
+
+\hypertarget{part-a-11}{%
+\subsection{Part A}\label{part-a-11}}
+
+Pareto distribution with \(\mathrm{CDF} F_L(x)=1-(x / m)^{-\beta}, x>m\), with shape parameter (tail index) \(\beta>0\).
+
+\[
+\begin{aligned}
+\mathbb{P}(L \leq VaR_{\alpha}) &= 1-\alpha\\
+1-\left( \frac{VaR_{\alpha}}{m} \right)^{-\beta} &= 1-\alpha\\
+\alpha^{-1/\beta}m &= VaR_{\alpha}
+\end{aligned}
+\]
+\#\#\# Part B
+Gumbel distribution with \(\operatorname{CDF} F_L(x)=\exp \left\{-\exp \left\{-\frac{x-\mu}{\sigma}\right\}\right\}, \quad \forall x \in \mathbb{R}\), with mean parameter \(\mu \in \mathbb{R}\) and scale parameter \(\sigma>0\).
+
+\[
+\begin{aligned}
+\mathbb{P}(L \leq VaR_{\alpha}) &= 1-\alpha\\
+\exp \left\{ -\exp \left\{ - \frac{VaR_{\alpha}-\mu}{\sigma} \right\}  \right\}  &= 1-\alpha\\
+VaR_{\alpha} &= -\ln(\ln((1-\alpha)^{-1}))\cdot \sigma+\mu\\
+&= \mu + \sigma\ln\left( \frac{1}{\ln\left( \frac{1}{1-\alpha} \right)} \right)
+\end{aligned}
+\]
+\#\#\# Part C
+Fréchet distribution with \(\operatorname{CDF} F_L(x)=\exp \left\{-(x / \sigma)^{-\beta}\right\}, \quad \forall x>0\), with shape parameter \(\beta>0\) and scale parameter \(\sigma>0\).
+
+\[
+\begin{aligned}
+\mathbb{P}(L \leq VaR_{\alpha}) &= 1-\alpha\\
+\exp \left\{ -\left( \frac{VaR_{\alpha}}{\sigma} \right)^{-\beta} \right\}  &= 1-\alpha\\
+VaR_{\alpha} &= \sigma\ln\left( \frac{1}{1-\alpha} \right)^{-1/\beta}
+\end{aligned}
+\]
+
+\hypertarget{q2-4}{%
+\section{Q2}\label{q2-4}}
+
+For a loss RV \(L\) with continuous distribution, show that the integral definition of Conditional Value-at-Risk (CVaR), a.k.a. Expected Shortfall (ES), is equivalent to the conditional expectation:
+\[
+\frac{1}{\alpha} \int_0^\alpha \operatorname{VaR}_u d u=\mathbb{E}\left[L \mid L \geq \operatorname{VaR}_\alpha\right]
+\]
+(Hint: Recall that for absolutely continuous \(L\) with CDF \(F(\cdot)\), the VaR is given by the inverse CDF: \(\operatorname{VaR}_\alpha=F^{-1}(1-\alpha)\). Perform the change of variable \(x=F^{-1}(1-u)\), using the fact that the derivative of the inverse of \(F\) is \(\left[F^{-1}(x)\right]^{\prime}=1 / F^{\prime}\left(F^{-1}(x)\right)=\) \(1 / f\left(F^{-1}(x)\right)\), where \(f=F^{\prime}\) is the PDF.)
+
+\[
+\begin{aligned}
+\text{Let } x &= F^{-1}(1-u), \implies VaR_{u} = 1-x\\
+\frac{d}{du} x &= [F^{-1}(1-u)]' = \underbrace{ -\frac{1}{F'(F^{-1}(1-u))} = -\frac{1}{f(x)} }_{ \text{by definition} } \\
+du &= f(x)dx\\
+\frac{1}{\alpha} \int ^{\alpha}_{0}VaR_{u} \, du &=  \frac{1}{\alpha} \int ^{\alpha}_{0} F^{-1}(1-u) \, du\\
+&= \frac{1}{\alpha} \int ^{F^{-1}(1-\alpha)}_{F^{-1}(1-0)} xf(x)\, dx\\
+&= \int ^{VaR_{\alpha}}_{\infty}x \frac{f(x)}{\alpha} \, dx \\
+&= \int ^{VaR_{\alpha}}_{\infty}x \frac{f(x)}{\underbrace{ \mathbb{P}(L \geq VaR_{\alpha}) }_{ = \text{cond. PDF } f_{L|L\geq VaR_{\alpha}}}} \, dx \\
+\end{aligned}
+\]
+
+\begin{quote}
+Since we are now integrating from \(VaR_{\alpha}\) to \(\infty\), f(x) is still some pdf spanning \([-\infty,\infty]\), so we need to scale it appropriately by the total probability we are in the space we're integrating, ie \([VaR_{\alpha}, \infty]\).
+\end{quote}
+
+\[
+\begin{aligned}
+CVaR_{\alpha} &=\int ^{\infty}_{VaR_{\alpha}} x f_{L|L\geq VaR_{\alpha}}(x) \, dx\\
+&= \mathbb{E}(L|L\geq VaR_{\alpha})
+\end{aligned}
+\]
+
+\hypertarget{q3-5}{%
+\section{Q3}\label{q3-5}}
+
+(Exercise 2 from 19.13 of SDAFE) Assume that the loss distribution has a polynomial tail with tail index \(α = 3.1\). If \(VaR_{5\%} = 252\), what is \(VaR(0.005)\)? (Hint: Read section 19.6)
+
+We need to use the complementary CDF of returns to obtain the CDF of losses.
+
+A loss distribution with polynomial tail would look something like:
+
+\[
+\bar{F}(x) = P(X>x) \propto \int ^{\infty}_{x} s^{-(\alpha+1)} \, ds \propto [-s^{-\alpha}]^{\infty}_{s=x} = x^{-\alpha}
+\]
+If we plug in \(x = VaR_{5\%} = 5\%\) then we would have
+\[
+P(X > VaR_{5\%}) = 5\% \implies 5\% \propto (VaR_{5\%})^{-\alpha} \implies VaR_{5\%} \propto \frac{1}{0.05^{1/\alpha}}
+\]
+
+Given that \(VaR_{5\%} = 252\), then
+
+By definition,
+\[
+P(R \leq y) \sim \int^{y}_{-\infty} f(u) \, du = \frac{A}{a}y^{-a} \text{ as } y \to -\infty
+\]
+Which somehow means that:
+\[
+\begin{aligned}
+\frac{P(R < y_{0})}{P(R< -y_{1})} &\approx \left( \frac{y_{0}}{y_{1}} \right)^{-a}\\
+\end{aligned}
+\]
+\[
+\frac{VaR_{p}}{VaR_{q}} = \left( \frac{P(L \geq p)}{P(L\geq q)} \right)^{-1/a} = \left( \frac{P(L \geq q)}{P(L\geq p)} \right)^{1/a}
+\]
+
+Using this definition, we have:
+
+\[
+\begin{aligned}
+\frac{P(L \geq VaR_{0.005})}{P(L \geq VaR_{0.05})} &= \left(  \frac{VaR_{0.005}}{VaR_{0.05}}\right) ^{-a}\\
+\left( \frac{0.005}{0.05} \right)^{-1/a} &= \frac{VaR_{0.005}}{252}\\
+\left( \frac{0.05}{0.005} \right)^{1/a} &= \frac{VaR_{0.005}}{252}\\
+\\
+VaR_{0.005} = 10^{1/a}\cdot 252 &= 10^{1/3.1}\cdot 252
+\end{aligned}
+\]
+
+\hypertarget{q4-4}{%
+\section{Q4}\label{q4-4}}
+
+Consider the example with the two risky zero-coupon bonds priced at \$95 per \$100 face value, where each has 4\% default probability independently of the other.
+
+\hypertarget{part-a-12}{%
+\subsection{Part A}\label{part-a-12}}
+
+Calculate the \(\alpha = 5\%\) Entropic Value-at-Risk (EVaR) for one of these bonds. Note that you will need to use numeric minimization, e.g.~optimize() in R, to find EVaR.
+
+\[
+\begin{aligned}
+EVaR = inf_{z > 0}\left\{ \ln\left( \frac{M_{L}(z)}{\alpha} \right)/z \right\}
+\end{aligned}
+\]
+
+The (marginal) loss distribution of each bond \(\left(L_{1 \ or\ 2}\right)\) is given by the PMF
+\[
+p_L(\ell)=\mathbb{P}(L=\ell)= \begin{cases}0.04, & \ell=95-0=95 \\ 0.96, & \ell=95-100=-5\end{cases}
+\]
+with MGF (not series expansion, simply expected formula as we have a simple PMF)
+\[
+M_L(z)=\mathbb{E}\left[e^{z L}\right]=0.04 e^{95 z}+0.96 e^{-5 z}
+\]
+The \(\mathrm{EVaR}\) at \(\alpha\) is given by
+\[
+\begin{aligned}
+E V a R_\alpha & =\inf _{z>0}\left\{\ln \left(M_L(z) / \alpha\right) / z\right\} \\
+& =\inf _{z>0}\left\{\ln \left\{\left(0.04 e^{95 z}+0.96 e^{-5 z}\right) / 0.05\right\} / z\right\}
+\end{aligned}
+\]
+Running this minimization w.r.t. \(z\) in \(\mathrm{R}\),
+
+\begin{verbatim}
+fn = function(z){ log( ( 0.04 * exp( 95*z ) + 0.96 * exp(-5*z) )
+               / 0.05 ) / z }
+optimise(fn, c(0,1) )
+\end{verbatim}
+
+\begin{quote}
+z must lie between \([0,1]\), as the MGF of any value greater than 1 results in \(\mathbb{E}[e^{zL}] \to \infty\) since \(e^{zL}\) would become an increasing function.
+\end{quote}
+
+gives
+
+\begin{verbatim}
+$minimum
+[1] 0.06690106
+
+$objective
+[1] 92.10402
+\end{verbatim}
+
+Which leaves us with \(EVaR_{0.05}(L) = 92.10402\).
+
+\hypertarget{part-b-11}{%
+\subsection{Part B}\label{part-b-11}}
+
+Calculate the EVaR of a portfolio of two of these bonds, and show that it is sub-additive.
+
+The loss distribution for the sum of the two bonds \(\left(L_1+L_2\right)\) is
+\[
+p_{L_1+L_2} L(\ell)=\mathbb{P}\left(L_1+L_2=\ell\right)= \begin{cases}(0.04)^2=0.0016, & \ell=95+95=190 \\ 2(0.96)(0.04)=.0768, & \ell=95-5=90 \\ (0.96)^2=.9216, & \ell=-5-5=-10\end{cases}
+\]
+with MGF
+\[
+M_{L_1+L_2}(z)=\mathbb{E}\left[e^{z\left(L_1+L_2\right)}\right]=0.0016 e^{190 z}+0.0768 e^{90 z}+0.09216 e^{-10}
+\]
+Running this minimization w.r.t. \(z\) in \(\mathrm{R}\)
+
+\begin{verbatim}
+fn = function(z){ log( ( 0.0016 * exp( 190*z ) +
+       0.0768 * exp(90*z) + 0.9216 * exp(-10*z)) / 0.05 ) / z }
+optimise(fn, c(0,1) )
+\end{verbatim}
+
+\begin{verbatim}
+$minimum
+[1] 0.03841828
+$objective
+[1] 122.0294
+\end{verbatim}
+
+This shows that
+\[
+EVaR_{0.05}(L_{1}+L_{2}) \leq EVaR_{0.05}(L_{1}) + EVaR_{0.05}(L_{2})
+\]
+\[
+122.0294 \leq 2 \times 92.10402 = 184.208
+\]
+
+\hypertarget{q5-1}{%
+\section{Q5}\label{q5-1}}
+
+Consider a loss distribution with fat upper tail and some tail index \(\beta > 0\).
+
+\hypertarget{part-a-13}{%
+\subsection{Part A}\label{part-a-13}}
+
+Can you find an EVaR for such distributions? Justify your answer.
+
+\begin{quote}
+You cannot, as to calculate EVaR you need the MGF, and the MGF is not defined for fat tailed distributions. Specifically, moment \(i\), where \(i\geq\beta\) are infinite.
+\end{quote}
+
+\hypertarget{part-b-12}{%
+\subsection{Part B}\label{part-b-12}}
+
+If the tail index is \(\beta = 1\) (e.g., a Cauchy distribution), can you find CVaR/ES for such distributions? Justify your answer.
+
+\begin{quote}
+Because \(\beta=1\), that means the first moment and beyond are infinite. As CVaR calculates the expected value of the distribution given our losses are already larger than some number, this calculation will not be possible with tail index 1.
+\end{quote}
+
+\begin{quote}
+We also know that conditional distributions like the one used in CVaR are proportional to the original distribution, which means that the mean is also proportional to infinite.
+\end{quote}
+
+\hypertarget{q6}{%
+\section{Q6}\label{q6}}
+
+(Exercise 5 from \(\S 19.13\) of SDAFE) Suppose the risk measure is VaR for some \(\alpha\). Let \(P_1, P_2\) be two portfolios whose returns have a joint (2D) normal distribution with means \(\mu_1, \mu_2\), standard deviations \(\sigma_1, \sigma_2\), and correlation \(\rho\). Suppose the initially investments are \(S_1, S_2\). Show that \(\operatorname{VaR}\left(P_1+P_2\right) \leq \operatorname{VaR}_\alpha\left(P_1\right)+\operatorname{VaR}_\alpha\left(P_2\right), \forall \alpha<1 / 2\), i.e.~that \(\operatorname{VaR}\) is sub-additive in this case, for \(\alpha<1 / 2\).
+
+\begin{quote}
+Copied all this cuz no way i'd figure this out myself\ldots{}
+\end{quote}
+
+Solution: Since \(P_i \sim N\left(\mu_i, \sigma_i^2\right)\) with initial investment amounts \(S_i\) for \(i=1,2\), we have that \(\operatorname{VaR}_\alpha\left(P_i\right)=-S_i \times\left(\mu_i+\sigma_i z_\alpha\right)=-S_i \mu_i-S_i \sigma_i z_\alpha, \forall i=1,2\), where \(z_\alpha=\Phi^{-1}(\alpha)\) is the standard Normal quantile function (i.e., \(\Phi(\cdot)\) is the standard Normal CDF). Thus,
+\[
+\operatorname{VaR}_\alpha\left(P_1\right)+\operatorname{VaR}_\alpha\left(P_2\right)=-\left(S_1 \mu_1+S_2 \mu_2\right)-\left(S_1 \sigma_1+S_2 \sigma_2\right) z_\alpha
+\]
+
+\begin{quote}
+Just from the VaR definition, now we look at the portfolio
+\end{quote}
+
+Looking at the combined portfolio, with weights \(w_i=\frac{S_i}{S_1+S_2}, \quad i=1,2\) proportional to the investment amounts in each stock, we have:
+\[
+w_1 P_1+w_2 P_2 \sim N\left(w_1 \mu_1+w_2 \mu_2, w_1^2 \sigma_1^2+w_2^2 \sigma_2^2+2 w_1 w_2 \sigma_1 \sigma_2 \rho\right)
+\]
+
+\begin{quote}
+The portfolio distribution by statistics
+\end{quote}
+
+The resulting VaR is
+\[
+\begin{gathered}
+\operatorname{VaR}_\alpha\left(P_1+P_2\right)= \\
+=-\left(S_1+S_2\right) \times\left(\left(w_1 \mu_1+w_2 \mu_2\right)+\sqrt{w_1^2 \sigma_1^2+w_2^2 \sigma_2^2+2 w_1 w_2 \sigma_1 \sigma_2 \rho} \times z_\alpha\right) \\
+=-\left(S_1 \mu_1+S_2 \mu_2\right)-\sqrt{S_1^2 \sigma_1^2+S_2^2 \sigma_2^2+2 S_1 S_2 \sigma_1 \sigma_2 \rho} \times z_\alpha
+\end{gathered}
+\]
+
+\begin{quote}
+Again using the definition of VaR
+\end{quote}
+
+But for any \(\rho \in[-1,+1]\), we have:
+\[
+\begin{aligned}
+S_1^2 \sigma_1^2+S_2^2 \sigma_2^2+2 S_1 S_2 \sigma_1 \sigma_2 \rho 
+&\leqslant S_1^2 \sigma_1^2+S_2^2 \sigma_2^2+2 S_1 S_2 \sigma_1 \sigma_2\\
+&=\left(S_1 \sigma_1+S_2 \sigma_2\right)^2 \\
+\Rightarrow \sqrt{S_1^2 \sigma_1^2+S_2^2 \sigma_2^2+2 S_1 S_2 \sigma_1 \sigma_2 \rho} 
+&\leqslant S_1 \sigma_1+S_2 \sigma_2 \quad\left(\text { for } \alpha<.5 \rightarrow z_\alpha<0\right) \\
+\Rightarrow-\sqrt{S_1^2 \sigma_1^2+S_2^2 \sigma_2^2+2 S_1 S_2 \sigma_1 \sigma_2 \rho} \times z_\alpha 
+&\leqslant-\left(S_1 \sigma_1+S_2 \sigma_2\right) \times z_\alpha\\
+\\
+\Rightarrow-\left(S_1 \mu_1+S_2 \mu_2\right) z_\alpha- &\sqrt{S_1^2 \sigma_1^2+S_2^2 \sigma_2^2+2 S_1 S_2 \sigma_1 \sigma_2 \rho} \times z_\alpha \leqslant\\
+&-\left(S_1 \mu_1+S_2 \mu_2\right) \times z_\alpha-\left(S_1 \sigma_1+S_2 \sigma_2\right) \times z_\alpha \\
+\\
+\Rightarrow \operatorname{VaR}_\alpha\left(P_1+P_2\right)
+&\leqslant \operatorname{VaR}_\alpha\left(P_1\right)+\operatorname{VaR}_\alpha\left(P_2\right)
+\end{aligned}
+\]
+
+\hypertarget{q6-1}{%
+\section{Q6}\label{q6-1}}
+
+For an investment of \$4,000, what are estimates of \(VaR^t(0.05)\) and \(ES^t(0.05)\)?
+
+Now, fit a ARMA(0,0)+GARCH(1,1) model to the returns and calculate
+one step forecasts.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CokePepsi }\OtherTok{=} \FunctionTok{read.table}\NormalTok{(}\StringTok{"ProblemSets/datasets/CokePepsi.csv"}\NormalTok{, }\AttributeTok{header=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{price }\OtherTok{=}\NormalTok{ CokePepsi[,}\DecValTok{1}\NormalTok{]}
+\NormalTok{returns }\OtherTok{=} \FunctionTok{diff}\NormalTok{(price)}\SpecialCharTok{/}\FunctionTok{lag}\NormalTok{(price)[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\FunctionTok{ts.plot}\NormalTok{(returns)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-49-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{S}\OtherTok{=}\DecValTok{4000}
+\NormalTok{alpha }\OtherTok{=} \FloatTok{0.05}
+\FunctionTok{library}\NormalTok{(MASS)}
+\NormalTok{res }\OtherTok{=} \FunctionTok{fitdistr}\NormalTok{(returns,}\StringTok{\textquotesingle{}t\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in dt((x - m)/s, df, log = TRUE): NaNs produced
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in log(s): NaNs produced
+
+## Warning in log(s): NaNs produced
+
+## Warning in log(s): NaNs produced
+
+## Warning in log(s): NaNs produced
+
+## Warning in log(s): NaNs produced
+
+## Warning in log(s): NaNs produced
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in dt((x - m)/s, df, log = TRUE): NaNs produced
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mu }\OtherTok{=}\NormalTok{ res}\SpecialCharTok{$}\NormalTok{estimate[}\StringTok{\textquotesingle{}m\textquotesingle{}}\NormalTok{]}
+\NormalTok{lambda }\OtherTok{=}\NormalTok{ res}\SpecialCharTok{$}\NormalTok{estimate[}\StringTok{\textquotesingle{}s\textquotesingle{}}\NormalTok{]}
+\NormalTok{nu }\OtherTok{=}\NormalTok{ res}\SpecialCharTok{$}\NormalTok{estimate[}\StringTok{\textquotesingle{}df\textquotesingle{}}\NormalTok{]}
+\FunctionTok{qt}\NormalTok{(alpha, }\AttributeTok{df=}\NormalTok{nu)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -2.33
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dt}\NormalTok{(}\FunctionTok{qt}\NormalTok{(alpha, }\AttributeTok{df=}\NormalTok{nu), }\AttributeTok{df=}\NormalTok{nu)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.0465
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(fGarch) }\CommentTok{\# for qstd() function}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## NOTE: Packages 'fBasics', 'timeDate', and 'timeSeries' are no longer
+## attached to the search() path when 'fGarch' is attached.
+## 
+## If needed attach them yourself in your R script by e.g.,
+##         require("timeSeries")
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rugarch)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: parallel
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'rugarch'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     reduce
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:stats':
+## 
+##     sigma
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{garch.t }\OtherTok{=} \FunctionTok{ugarchspec}\NormalTok{(}\AttributeTok{mean.model=}\FunctionTok{list}\NormalTok{(}\AttributeTok{armaOrder=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{)),}
+\AttributeTok{variance.model=}\FunctionTok{list}\NormalTok{(}\AttributeTok{garchOrder=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)),}
+\AttributeTok{distribution.model =} \StringTok{"std"}\NormalTok{)}
+\NormalTok{KO.garch.t }\OtherTok{=} \FunctionTok{ugarchfit}\NormalTok{(}\AttributeTok{data=}\NormalTok{returns, }\AttributeTok{spec=}\NormalTok{garch.t)}
+\FunctionTok{show}\NormalTok{(KO.garch.t)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## *---------------------------------*
+## *          GARCH Model Fit        *
+## *---------------------------------*
+## 
+## Conditional Variance Dynamics    
+## -----------------------------------
+## GARCH Model  : sGARCH(1,1)
+## Mean Model   : ARFIMA(0,0,0)
+## Distribution : std 
+## 
+## Optimal Parameters
+## ------------------------------------
+##         Estimate  Std. Error  t value Pr(>|t|)
+## mu      0.000675    0.000240  2.81396 0.004894
+## omega   0.000003    0.000004  0.79633 0.425839
+## alpha1  0.093766    0.035130  2.66910 0.007606
+## beta1   0.892222    0.038780 23.00727 0.000000
+## shape   5.890859    1.097148  5.36925 0.000000
+## 
+## Robust Standard Errors:
+##         Estimate  Std. Error  t value Pr(>|t|)
+## mu      0.000675    0.000257   2.6235 0.008704
+## omega   0.000003    0.000016   0.1717 0.863675
+## alpha1  0.093766    0.149882   0.6256 0.531575
+## beta1   0.892222    0.171120   5.2140 0.000000
+## shape   5.890859    2.499085   2.3572 0.018413
+## 
+## LogLikelihood : 4596 
+## 
+## Information Criteria
+## ------------------------------------
+##                     
+## Akaike       -6.2209
+## Bayes        -6.2030
+## Shibata      -6.2210
+## Hannan-Quinn -6.2143
+## 
+## Weighted Ljung-Box Test on Standardized Residuals
+## ------------------------------------
+##                         statistic p-value
+## Lag[1]                     0.8041  0.3699
+## Lag[2*(p+q)+(p+q)-1][2]    0.8718  0.5417
+## Lag[4*(p+q)+(p+q)-1][5]    2.1466  0.5842
+## d.o.f=0
+## H0 : No serial correlation
+## 
+## Weighted Ljung-Box Test on Standardized Squared Residuals
+## ------------------------------------
+##                         statistic p-value
+## Lag[1]                     0.9099  0.3401
+## Lag[2*(p+q)+(p+q)-1][5]    5.1826  0.1391
+## Lag[4*(p+q)+(p+q)-1][9]    6.7262  0.2232
+## d.o.f=2
+## 
+## Weighted ARCH LM Tests
+## ------------------------------------
+##             Statistic Shape Scale P-Value
+## ARCH Lag[3]    0.1194 0.500 2.000  0.7297
+## ARCH Lag[5]    0.8386 1.440 1.667  0.7814
+## ARCH Lag[7]    1.9592 2.315 1.543  0.7260
+## 
+## Nyblom stability test
+## ------------------------------------
+## Joint Statistic:  15.8
+## Individual Statistics:              
+## mu     0.05684
+## omega  2.24878
+## alpha1 0.28907
+## beta1  0.12949
+## shape  0.14088
+## 
+## Asymptotic Critical Values (10% 5% 1%)
+## Joint Statistic:          1.28 1.47 1.88
+## Individual Statistic:     0.35 0.47 0.75
+## 
+## Sign Bias Test
+## ------------------------------------
+##                    t-value    prob sig
+## Sign Bias            1.040 0.29849    
+## Negative Sign Bias   1.760 0.07857   *
+## Positive Sign Bias   1.041 0.29825    
+## Joint Effect         4.374 0.22380    
+## 
+## 
+## Adjusted Pearson Goodness-of-Fit Test:
+## ------------------------------------
+##   group statistic p-value(g-1)
+## 1    20     20.23       0.3807
+## 2    30     26.52       0.5976
+## 3    40     35.17       0.6455
+## 4    50     41.55       0.7662
+## 
+## 
+## Elapsed time : 0.537
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(KO.garch.t, }\AttributeTok{which =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## please wait...calculating quantiles...
+\end{verbatim}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-49-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pred }\OtherTok{=} \FunctionTok{ugarchforecast}\NormalTok{(KO.garch.t, }\AttributeTok{data=}\NormalTok{returns, }\AttributeTok{n.ahead=}\DecValTok{1}\NormalTok{) ; pred}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## *------------------------------------*
+## *       GARCH Model Forecast         *
+## *------------------------------------*
+## Model: sGARCH
+## Horizon: 1
+## Roll Steps: 0
+## Out of Sample: 0
+## 
+## 0-roll forecast [T0=1974-01-15 19:00:00]:
+##        Series   Sigma
+## T+1 0.0006751 0.01038
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fitted}\NormalTok{(pred) ; }\FunctionTok{sigma}\NormalTok{(pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     1974-01-15 19:00:00
+## T+1            0.000675
+\end{verbatim}
+
+\begin{verbatim}
+##     1974-01-15 19:00:00
+## T+1              0.0104
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nu }\OtherTok{=} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{coef}\NormalTok{(KO.garch.t)[}\DecValTok{5}\NormalTok{])}
+\NormalTok{q }\OtherTok{=} \FunctionTok{qstd}\NormalTok{(alpha, }\AttributeTok{mean =} \FunctionTok{fitted}\NormalTok{(pred), }\AttributeTok{sd =} \FunctionTok{sigma}\NormalTok{(pred), }\AttributeTok{nu =}\NormalTok{ nu) ; q}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     1974-01-15 19:00:00
+## T+1             -0.0158
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sigma}\NormalTok{(pred)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{( (nu)}\SpecialCharTok{/}\NormalTok{(nu}\DecValTok{{-}2}\NormalTok{) )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     1974-01-15 19:00:00
+## T+1             0.00844
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qt}\NormalTok{(alpha, }\AttributeTok{df=}\NormalTok{nu)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -1.95
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dt}\NormalTok{(}\FunctionTok{qt}\NormalTok{(alpha, }\AttributeTok{df=}\NormalTok{nu), }\AttributeTok{df=}\NormalTok{nu)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.0688
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mu }\OtherTok{=} \FunctionTok{as.numeric}\NormalTok{(res}\SpecialCharTok{$}\NormalTok{estimate[}\StringTok{\textquotesingle{}m\textquotesingle{}}\NormalTok{])}
+\NormalTok{lambda }\OtherTok{=} \FunctionTok{as.numeric}\NormalTok{(res}\SpecialCharTok{$}\NormalTok{estimate[}\StringTok{\textquotesingle{}s\textquotesingle{}}\NormalTok{])}
+\NormalTok{nu }\OtherTok{=} \FunctionTok{as.numeric}\NormalTok{(res}\SpecialCharTok{$}\NormalTok{estimate[}\StringTok{\textquotesingle{}df\textquotesingle{}}\NormalTok{])}
+\FunctionTok{qt}\NormalTok{(alpha, }\AttributeTok{df=}\NormalTok{nu)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -2.33
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# [1] {-}2.292}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dt}\NormalTok{(}\FunctionTok{qt}\NormalTok{(alpha, }\AttributeTok{df=}\NormalTok{nu), }\AttributeTok{df=}\NormalTok{nu)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.0465
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# [1] 0.048}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Finv }\OtherTok{=}\NormalTok{ mu }\SpecialCharTok{+}\NormalTok{ lambda }\SpecialCharTok{*} \FunctionTok{qt}\NormalTok{(alpha, }\AttributeTok{df=}\NormalTok{nu)}
+\NormalTok{VaR }\OtherTok{=} \SpecialCharTok{{-}}\NormalTok{S }\SpecialCharTok{*}\NormalTok{ Finv}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{digits=}\DecValTok{4}\NormalTok{)}
+\NormalTok{VaR}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 75.32
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# [1] 75.31}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{den }\OtherTok{=} \FunctionTok{dt}\NormalTok{(}\FunctionTok{qt}\NormalTok{(alpha, }\AttributeTok{df=}\NormalTok{nu), }\AttributeTok{df=}\NormalTok{nu)}
+\NormalTok{ES }\OtherTok{=}\NormalTok{ S }\SpecialCharTok{*}\NormalTok{ (}\SpecialCharTok{{-}}\NormalTok{mu }\SpecialCharTok{+}\NormalTok{ lambda}\SpecialCharTok{*}\NormalTok{(den}\SpecialCharTok{/}\NormalTok{alpha) }\SpecialCharTok{*}\NormalTok{ (nu}\SpecialCharTok{+}\FunctionTok{qt}\NormalTok{(alpha, }\AttributeTok{df=}\NormalTok{nu)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{ )}\SpecialCharTok{/}\NormalTok{(nu}\DecValTok{{-}1}\NormalTok{))}
+\NormalTok{ES}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 124
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# [1] 122.1}
+\end{Highlighting}
+\end{Shaded}
+
 
   \bibliography{book.bib,packages.bib}
 
