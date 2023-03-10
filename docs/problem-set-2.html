@@ -167,7 +167,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.1" data-path="return-distributions.html"><a href="return-distributions.html#common-heavy-tail-distributions"><i class="fa fa-check"></i><b>3.4.1</b> Common Heavy Tail Distributions</a>
 <ul>
 <li class="chapter" data-level="3.4.1.1" data-path="return-distributions.html"><a href="return-distributions.html#pareto"><i class="fa fa-check"></i><b>3.4.1.1</b> Pareto</a></li>
-<li class="chapter" data-level="3.4.1.2" data-path="return-distributions.html"><a href="return-distributions.html#cauchy"><i class="fa fa-check"></i><b>3.4.1.2</b> Cauchy</a></li>
+<li class="chapter" data-level="3.4.1.2" data-path="return-distributions.html"><a href="return-distributions.html#standard-cauchy"><i class="fa fa-check"></i><b>3.4.1.2</b> Standard Cauchy</a></li>
 <li class="chapter" data-level="3.4.1.3" data-path="return-distributions.html"><a href="return-distributions.html#students-t"><i class="fa fa-check"></i><b>3.4.1.3</b> Students t</a></li>
 </ul></li>
 <li class="chapter" data-level="3.4.2" data-path="return-distributions.html"><a href="return-distributions.html#stable-distributions"><i class="fa fa-check"></i><b>3.4.2</b> Stable Distributions</a>
@@ -438,6 +438,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="16.6" data-path="problem-set-6.html"><a href="problem-set-6.html#q6"><i class="fa fa-check"></i><b>16.6</b> Q6</a></li>
 <li class="chapter" data-level="16.7" data-path="problem-set-6.html"><a href="problem-set-6.html#q7"><i class="fa fa-check"></i><b>16.7</b> Q7</a></li>
 </ul></li>
+<li class="chapter" data-level="17" data-path="w2021-midterm.html"><a href="w2021-midterm.html"><i class="fa fa-check"></i><b>17</b> W2021 Midterm</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="w2021-midterm.html"><a href="w2021-midterm.html#q2-5"><i class="fa fa-check"></i><b>17.1</b> Q2</a>
+<ul>
+<li class="chapter" data-level="17.1.1" data-path="w2021-midterm.html"><a href="w2021-midterm.html#part-a-14"><i class="fa fa-check"></i><b>17.1.1</b> Part A</a></li>
+<li class="chapter" data-level="17.1.2" data-path="w2021-midterm.html"><a href="w2021-midterm.html#part-b-13"><i class="fa fa-check"></i><b>17.1.2</b> Part B</a></li>
+<li class="chapter" data-level="17.1.3" data-path="w2021-midterm.html"><a href="w2021-midterm.html#part-c-6"><i class="fa fa-check"></i><b>17.1.3</b> Part C</a></li>
+<li class="chapter" data-level="17.1.4" data-path="w2021-midterm.html"><a href="w2021-midterm.html#part-d-1"><i class="fa fa-check"></i><b>17.1.4</b> Part D</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="w2020-midterm.html"><a href="w2020-midterm.html"><i class="fa fa-check"></i><b>18</b> W2020 Midterm</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="w2020-midterm.html"><a href="w2020-midterm.html#q3-6"><i class="fa fa-check"></i><b>18.1</b> Q3</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="w2020-midterm.html"><a href="w2020-midterm.html#part-a-15"><i class="fa fa-check"></i><b>18.1.1</b> Part A</a></li>
+<li class="chapter" data-level="18.1.2" data-path="w2020-midterm.html"><a href="w2020-midterm.html#part-b-14"><i class="fa fa-check"></i><b>18.1.2</b> Part B</a></li>
+<li class="chapter" data-level="18.1.3" data-path="w2020-midterm.html"><a href="w2020-midterm.html#part-c-7"><i class="fa fa-check"></i><b>18.1.3</b> Part C</a></li>
+<li class="chapter" data-level="18.1.4" data-path="w2020-midterm.html"><a href="w2020-midterm.html#question-4"><i class="fa fa-check"></i><b>18.1.4</b> Question 4</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -591,11 +611,11 @@ X &amp;\sim Exp(1) \quad Y \sim Exp(1)\\
 <p>Calculate daily net returns, plot the returns, sample auto-correlation plot, and Normal QQ plot.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="problem-set-2.html#cb38-1" tabindex="-1"></a><span class="fu">head</span>(lto_adj_close)</span></code></pre></div>
 <pre><code>##                  date adj_close
-## 1 2015-01-02 14:30:00  44.17996
+## 1 2015-01-02 14:30:00  44.17995
 ## 2 2015-01-05 14:30:00  43.25631
 ## 3 2015-01-06 14:30:00  42.38907
-## 4 2015-01-07 14:30:00  42.80505
-## 5 2015-01-08 14:30:00  42.80505
+## 4 2015-01-07 14:30:00  42.80506
+## 5 2015-01-08 14:30:00  42.80506
 ## 6 2015-01-09 14:30:00  42.08588</code></pre>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="problem-set-2.html#cb40-1" tabindex="-1"></a>net_ret <span class="ot">=</span> lto_adj_close <span class="sc">%&gt;%</span></span>
 <span id="cb40-2"><a href="problem-set-2.html#cb40-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">net_returns =</span> </span>
@@ -633,8 +653,8 @@ X &amp;\sim Exp(1) \quad Y \sim Exp(1)\\
 <span id="cb44-8"><a href="problem-set-2.html#cb44-8" tabindex="-1"></a></span>
 <span id="cb44-9"><a href="problem-set-2.html#cb44-9" tabindex="-1"></a>sample_mu <span class="ot">=</span> <span class="fu">mean</span>(net_ret<span class="sc">$</span>net_returns)</span>
 <span id="cb44-10"><a href="problem-set-2.html#cb44-10" tabindex="-1"></a>sample_var <span class="ot">=</span> <span class="fu">var</span>(net_ret<span class="sc">$</span>net_returns)</span></code></pre></div>
-<p>We have a fitted mean <span class="math inline">\(\mu\)</span> of 3.2240414^{-4} and variance <span class="math inline">\(\sigma^{2}\)</span> of 1.4634842^{-4}.
-This is compared to the sample mean <span class="math inline">\(\mu\)</span> of 5.6615317^{-4} and variance <span class="math inline">\(\sigma^2\)</span> of 1.3827264^{-4}.</p>
+<p>We have a fitted mean <span class="math inline">\(\mu\)</span> of 3.2240306^{-4} and variance <span class="math inline">\(\sigma^{2}\)</span> of 1.4635428^{-4}.
+This is compared to the sample mean <span class="math inline">\(\mu\)</span> of 5.6615323^{-4} and variance <span class="math inline">\(\sigma^2\)</span> of 1.3827258^{-4}.</p>
 <p>These differences can occur due to the fitted t-distribution smoothing away more extreme values.</p>
 </div>
 <div id="part-c-1" class="section level3 hasAnchor" number="12.4.3">

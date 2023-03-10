@@ -468,17 +468,17 @@ l'(\alpha) &= \sum^{n}_{i=1} f'(x) = 0
 
 \[
 \begin{aligned}
-f(x) &= \frac{c\ x^{-(1+\alpha)}}{l^{\alpha}}, \ x \geq l\\
+f(x) &= \frac{a\ x^{-(1+\alpha)}}{l^{-\alpha}}, \ x \geq l\\
 \end{aligned}
 \]
 
 Can be used to model \textbf{absolute} returns above a cutoff \(r_{min}\)
 \[
-\bar{F}(r) = \left( \frac{r}{r_{min}} \right)^{\alpha} \quad \forall\ r > r_{min}
+\bar{F}(r) = \left( \frac{r_{min}}{r} \right)^{\alpha} \quad \forall\ r > r_{min}
 \]
 
-\hypertarget{cauchy}{%
-\subsubsection{Cauchy}\label{cauchy}}
+\hypertarget{standard-cauchy}{%
+\subsubsection{Standard Cauchy}\label{standard-cauchy}}
 
 \[
 \begin{aligned}
@@ -3407,9 +3407,9 @@ Calculate daily net returns, plot the returns, sample auto-correlation plot, and
 
 \begin{verbatim}
 ##                  date adj_close
-## 1 2015-01-02 14:30:00  44.17997
+## 1 2015-01-02 14:30:00  44.17995
 ## 2 2015-01-05 14:30:00  43.25630
-## 3 2015-01-06 14:30:00  42.38906
+## 3 2015-01-06 14:30:00  42.38907
 ## 4 2015-01-07 14:30:00  42.80506
 ## 5 2015-01-08 14:30:00  42.80506
 ## 6 2015-01-09 14:30:00  42.08588
@@ -3483,8 +3483,8 @@ This supports the stylized fact that returns follow heavy tail distributions.
 \end{Highlighting}
 \end{Shaded}
 
-We have a fitted mean \(\mu\) of \ensuremath{3.2240305\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4635072\times 10^{-4}}.
-This is compared to the sample mean \(\mu\) of \ensuremath{5.661531\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827268\times 10^{-4}}.
+We have a fitted mean \(\mu\) of \ensuremath{3.2240769\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4634737\times 10^{-4}}.
+This is compared to the sample mean \(\mu\) of \ensuremath{5.6615322\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827248\times 10^{-4}}.
 
 These differences can occur due to the fitted t-distribution smoothing away more extreme values.
 
@@ -3905,20 +3905,20 @@ Suppose there are two risky assets, C and D, the tangency portfolio is 65\% C an
 \begin{aligned}
 \text{Let } w_{f} &= \text{weight of risk-free asset}\\
 \mathbb{V}(R_{p}) &= \mathbb{V}(\underbrace{ w_{f}r_{f} }_{ 0 } + (1-w_{f})r_{tangency})\\
-5^{2}\% &= (1-w_{f})^{2}\cdot 7\%\\
-\frac{.25\%}{7\%} &= 1-2w_{f}+w_{f}^{2}\\
-0 &= w_{f}^{2}-2w_{f}+1 - \frac{.25\%}{7\%}\\
-0 &= w_{f}^{2}-2w_{f}+ \frac{6.75\%}{7\%}\\
+5^{2}\% &= (1-w_{f})^{2}\cdot 7\%^{2}\\
+\frac{5\%}{7\%} &= 1-w_{f}\\
+0.7142 &= 1-w_{f}\\
+\implies w_{c} &= .7142\cdot .65 = 0.4642\\
+w_{d} &= .7142\cdot .35 = 0.25\\
+w_{f} &= 0.2857\\
 \end{aligned}
 \]
-Using the quadratic formula I get:
-(2 + (2\^{}2 - 4*(0.0675/0.07))\^{}0.5)/(2) = 1.1889 and 0.8110
 
 But the solutions states:
 2/7 = 0.2857 in risk-free, 0.4643 in C, and 0.2500 in D
 
 \begin{quote}
-I have no idea how. Can't spot my mistake :\\
+I have no idea how. Can't spot my mistake :~I'm an idiot, remember to square std dev to get variance and double check your work 🥴
 \end{quote}
 
 \hypertarget{q1.3}{%
@@ -5222,7 +5222,7 @@ one step forecasts.
 ## 4    50     41.55       0.7662
 ## 
 ## 
-## Elapsed time : 0.486
+## Elapsed time : 0.511
 \end{verbatim}
 
 \begin{Shaded}
@@ -5390,6 +5390,260 @@ one step forecasts.
 \end{Highlighting}
 \end{Shaded}
 
+\hypertarget{w2021-midterm}{%
+\chapter{W2021 Midterm}\label{w2021-midterm}}
+
+\hypertarget{q2-5}{%
+\section{Q2}\label{q2-5}}
+
+For this question you will generate GPD random variates and verify that their conditional excess distribution is also GPD.
+
+\hypertarget{part-a-14}{%
+\subsection{Part A}\label{part-a-14}}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  \([10\) points \(]\) Simulate \(n=10,000\) random variates from a \(\operatorname{GPD}(\gamma=.5, \sigma=1)\) distribution using the inverse CDF method from Q1.(d), and plot the histogram of their log-values.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{u }\OtherTok{=} \FunctionTok{runif}\NormalTok{(}\DecValTok{10000}\NormalTok{)}
+\NormalTok{fx }\OtherTok{=} \DecValTok{1}\SpecialCharTok{/}\FloatTok{0.5}\SpecialCharTok{*}\NormalTok{((}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{u)}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{)}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{log}\NormalTok{(fx))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-54-1.pdf}
+
+\hypertarget{part-b-13}{%
+\subsection{Part B}\label{part-b-13}}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  {[}15 points \(]\) Simulate another 10,000 random variates from \(\operatorname{GPD}(\gamma=.5, \sigma=1)\), but now use the mixture method from Q1.(e). Create a QQ-plot of the two sets of variates (from this and the previous part0), and comment whether they seem to come from the same distribution?
+  (Hint: Use qqplot \((\mathrm{X}, \mathrm{Y})\), where \(\mathrm{X}, \mathrm{Y}\) are the values you generated.)
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rg }\OtherTok{=} \FunctionTok{rgamma}\NormalTok{(}\DecValTok{10000}\NormalTok{,}\AttributeTok{shape=}\DecValTok{2}\NormalTok{, }\AttributeTok{rate =} \DecValTok{2}\NormalTok{)}
+\NormalTok{Y }\OtherTok{=} \FunctionTok{rexp}\NormalTok{(}\DecValTok{10000}\NormalTok{, }\AttributeTok{rate=}\NormalTok{rg)}
+\FunctionTok{qqplot}\NormalTok{(fx, Y)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{a=}\DecValTok{0}\NormalTok{,}\AttributeTok{b=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-55-1.pdf}
+
+\hypertarget{part-c-6}{%
+\subsection{Part C}\label{part-c-6}}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  {[}15 points{]} Take the values from Q2.(a) and calculate their excedances above 10, i.e.~\(Z=X-10\) for values of \(X\) that are greater than 10. From Q1.(b), we know that \(Z\) must follow \(G P D(\gamma, \sigma+10 \gamma)\). Verify that the exceedances follow this distribution, by creating a QQ-plot of \(Z\)-values versus their theoretical quantiles.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sigma }\OtherTok{=} \DecValTok{1}
+\NormalTok{gamma }\OtherTok{=} \FloatTok{0.5}
+\NormalTok{u }\OtherTok{=} \DecValTok{10}
+\NormalTok{Z }\OtherTok{=}\NormalTok{ (fx }\SpecialCharTok{{-}}\NormalTok{ u)[fx}\SpecialCharTok{{-}}\NormalTok{u}\SpecialCharTok{\textgreater{}}\DecValTok{0}\NormalTok{]}
+
+\NormalTok{Zs }\OtherTok{=} \FunctionTok{sort}\NormalTok{(Z) }\CommentTok{\#need sorting for qqplot}
+\NormalTok{nZ}\OtherTok{=} \FunctionTok{length}\NormalTok{(Zs)}
+\NormalTok{sigma\_u }\OtherTok{=}\NormalTok{ sigma }\SpecialCharTok{+}\NormalTok{ gamma }\SpecialCharTok{*}\NormalTok{ u}
+\NormalTok{Q }\OtherTok{=}\NormalTok{ sigma\_u }\SpecialCharTok{/}\NormalTok{gamma }\SpecialCharTok{*}\NormalTok{ ( (}\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{ppoints}\NormalTok{(nZ) )}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{gamma) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{ ) }
+\FunctionTok{plot}\NormalTok{( Zs, Q ); }\FunctionTok{abline}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-56-1.pdf}
+
+\hypertarget{part-d-1}{%
+\subsection{Part D}\label{part-d-1}}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  {[}10 points \(]\) Finally, verify through simulation that conditional exceedances of fattail distributions with tail index \(\alpha\) approach a GPD with \(\gamma=1 / \alpha\). Generate \(n=10,000\) values from a \(t(d f=4)\) distribution (i.e.~\(\alpha=4)\) and take their absolute value (to avoid wasting values by symmetry). Calculate the exceedances above 10 again, and create their QQ-plot versus quantiles from a \(\operatorname{GPD}(\gamma=1 / \alpha, \sigma=1)\). (Note: the points in your QQ-plot should lie close to a straight line, but the slope does not need to be equal to 1 because of the arbitrary GPD scale \(\sigma=1\) ).
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# t = abs(rt(10000,4))}
+
+\NormalTok{W }\OtherTok{=} \FunctionTok{abs}\NormalTok{( }\FunctionTok{rt}\NormalTok{( }\DecValTok{100000}\NormalTok{, }\DecValTok{2}\NormalTok{ ) ) }\CommentTok{\# why 2?}
+
+\NormalTok{Ws }\OtherTok{=}\NormalTok{ (W }\SpecialCharTok{{-}}\NormalTok{ u)[W}\SpecialCharTok{{-}}\NormalTok{u}\SpecialCharTok{\textgreater{}}\DecValTok{0}\NormalTok{]}
+
+\NormalTok{Ws }\OtherTok{=} \FunctionTok{sort}\NormalTok{(Ws)}
+\NormalTok{nW}\OtherTok{=} \FunctionTok{length}\NormalTok{(Ws)}
+\NormalTok{Q }\OtherTok{=}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{+}\NormalTok{u) }\SpecialCharTok{*}\NormalTok{ ( (}\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{ppoints}\NormalTok{(nW) )}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{gamma) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{ ) }
+\FunctionTok{qqplot}\NormalTok{( Ws, Q )}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-57-1.pdf}
+
+\hypertarget{w2020-midterm}{%
+\chapter{W2020 Midterm}\label{w2020-midterm}}
+
+\hypertarget{q3-6}{%
+\section{Q3}\label{q3-6}}
+
+You have to perform a simulation experiment to confirm that the t(1) or Cauchy distribution is stable, but not all heavy-tailed distributions are.
+
+\hypertarget{part-a-15}{%
+\subsection{Part A}\label{part-a-15}}
+
+{[}4 points{]} Simulate 10, 000 Cauchy random variates and plot their cumulative mean versus the sample size, as in the plot below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{=} \DecValTok{10000}
+\NormalTok{s }\OtherTok{=} \DecValTok{1}\SpecialCharTok{:}\NormalTok{n}
+\NormalTok{X }\OtherTok{=} \FunctionTok{rcauchy}\NormalTok{(n)}
+\NormalTok{cum\_m }\OtherTok{=} \FunctionTok{cumsum}\NormalTok{(X)}\SpecialCharTok{/}\NormalTok{s}
+\FunctionTok{plot}\NormalTok{(}\AttributeTok{x=}\NormalTok{s, }\AttributeTok{y =}\NormalTok{ cum\_m, }\AttributeTok{type=}\StringTok{"l"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-58-1.pdf}
+
+\hypertarget{part-b-14}{%
+\subsection{Part B}\label{part-b-14}}
+
+{[}8 points{]} Repeat the following experiment N = 1, 000 times: simulate n = 100 Cauchy variates and calculate their mean (in the end you should have 1,000). From question 1, we know these means should be also Cauchy distributed. Verify this by creating a QQ-plot of the simulated values versus their theoretical quantiles, and comment on the fit. Hint: Use qcauchy and ppoints() to generate theoretical quantiles from the Cauchy distribution.)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\NormalTok{N}\OtherTok{=}\DecValTok{1000}
+\NormalTok{n }\OtherTok{=} \DecValTok{100}
+\NormalTok{C }\OtherTok{=} \FunctionTok{rcauchy}\NormalTok{(n}\SpecialCharTok{*}\NormalTok{N) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{matrix}\NormalTok{(}\AttributeTok{ncol=}\NormalTok{N) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{colSums}\NormalTok{()}\SpecialCharTok{/}\NormalTok{n }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{sort}\NormalTok{()}
+\NormalTok{Th }\OtherTok{=} \FunctionTok{qcauchy}\NormalTok{(}\FunctionTok{ppoints}\NormalTok{(N))}
+\FunctionTok{qqplot}\NormalTok{(C, Th); }\FunctionTok{abline}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-59-1.pdf}
+
+\hypertarget{part-c-7}{%
+\subsection{Part C}\label{part-c-7}}
+
+{[}8 points{]} Now consider the Pareto distribution, with CDF FX(x) \(= 1 − (1/x)^\alpha, \forall x > 1\). Use the inverse CDF method to generate 10,000 Pareto random variates with tail index \(\alpha\) = 3, and plot their cumulative mean vs sample size, as in part (a).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{u }\OtherTok{=} \FunctionTok{runif}\NormalTok{(}\DecValTok{10000}\NormalTok{)}
+\NormalTok{y }\OtherTok{=}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ u)}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\SpecialCharTok{/}\DecValTok{3}\NormalTok{)}
+\NormalTok{my }\OtherTok{=} \FunctionTok{cumsum}\NormalTok{(y)}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10000}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(my, }\AttributeTok{type =} \StringTok{\textquotesingle{}l\textquotesingle{}}\NormalTok{ )}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\FloatTok{1.5}\NormalTok{, }\AttributeTok{col =} \DecValTok{2}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-60-1.pdf}
+
+\hypertarget{question-4}{%
+\subsection{Question 4}\label{question-4}}
+
+\hypertarget{part-a-16}{%
+\paragraph{part (a)}\label{part-a-16}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{beta }\OtherTok{=} \FunctionTok{matrix}\NormalTok{( }\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\DecValTok{10}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{ )}
+\NormalTok{S\_e }\OtherTok{=} \FunctionTok{diag}\NormalTok{( }\FunctionTok{c}\NormalTok{(.}\DecValTok{1}\NormalTok{,.}\DecValTok{2}\NormalTok{) )}
+\NormalTok{(}\AttributeTok{S\_R =}\NormalTok{ beta }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(beta) }\SpecialCharTok{+}\NormalTok{ S\_e)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2]
+## [1,] 0.24 0.10
+## [2,] 0.10 0.34
+\end{verbatim}
+
+\hypertarget{part-b-15}{%
+\paragraph{part (b)}\label{part-b-15}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Si }\OtherTok{=} \FunctionTok{solve}\NormalTok{(S\_R)}
+\NormalTok{w }\OtherTok{=} \FunctionTok{rowSums}\NormalTok{(Si)}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(Si)}
+\NormalTok{mu }\OtherTok{=} \FunctionTok{c}\NormalTok{(.}\DecValTok{03}\NormalTok{, .}\DecValTok{04}\NormalTok{)}
+
+\NormalTok{mvp\_mu }\OtherTok{=} \FunctionTok{sum}\NormalTok{(w}\SpecialCharTok{*}\NormalTok{mu)}
+\NormalTok{(}\AttributeTok{mvp\_s =}  \FunctionTok{t}\NormalTok{(w) }\SpecialCharTok{\%*\%}\NormalTok{ S\_R }\SpecialCharTok{\%*\%}\NormalTok{ w) }\CommentTok{\# also equal to 1/sum(Si)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        [,1]
+## [1,] 0.1884
+\end{verbatim}
+
+\hypertarget{part-c-8}{%
+\paragraph{part (c)}\label{part-c-8}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rf }\OtherTok{=}\NormalTok{ .}\DecValTok{015}
+\NormalTok{w\_tp }\OtherTok{=}\NormalTok{ Si }\SpecialCharTok{\%*\%}\NormalTok{ (mu }\SpecialCharTok{{-}}\NormalTok{ rf) }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{( Si }\SpecialCharTok{\%*\%}\NormalTok{ (mu }\SpecialCharTok{{-}}\NormalTok{ rf) )}
+
+\FunctionTok{sum}\NormalTok{( w\_tp }\SpecialCharTok{*}\NormalTok{ mu ) }\CommentTok{\# tangency portfolio mean }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.03634
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t}\NormalTok{(w\_tp) }\SpecialCharTok{\%*\%}\NormalTok{ S\_R }\SpecialCharTok{\%*\%}\NormalTok{ w\_tp }\CommentTok{\# tangency portfolio variance }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        [,1]
+## [1,] 0.2152
+\end{verbatim}
+
+\hypertarget{part-d-2}{%
+\paragraph{part (d)}\label{part-d-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mvp\_vars }\OtherTok{=} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)\{}
+\NormalTok{  beta\_t }\OtherTok{=}\NormalTok{ beta[,}\SpecialCharTok{{-}}\NormalTok{i]}
+\NormalTok{  S\_t }\OtherTok{=}\NormalTok{ beta\_t }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(beta\_t) }\SpecialCharTok{+}\NormalTok{ S\_e}
+\NormalTok{  Si\_t }\OtherTok{=} \FunctionTok{solve}\NormalTok{(S\_t)}
+\NormalTok{  mvp\_vars[i] }\OtherTok{=} \DecValTok{1}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(Si\_t)}
+\NormalTok{\}}
+
+\FunctionTok{which.min}\NormalTok{(mvp\_vars)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
 
   \bibliography{book.bib,packages.bib}
 
