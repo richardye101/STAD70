@@ -3408,8 +3408,8 @@ Calculate daily net returns, plot the returns, sample auto-correlation plot, and
 \begin{verbatim}
 ##                  date adj_close
 ## 1 2015-01-02 14:30:00  44.17995
-## 2 2015-01-05 14:30:00  43.25630
-## 3 2015-01-06 14:30:00  42.38907
+## 2 2015-01-05 14:30:00  43.25631
+## 3 2015-01-06 14:30:00  42.38906
 ## 4 2015-01-07 14:30:00  42.80506
 ## 5 2015-01-08 14:30:00  42.80506
 ## 6 2015-01-09 14:30:00  42.08588
@@ -3483,8 +3483,8 @@ This supports the stylized fact that returns follow heavy tail distributions.
 \end{Highlighting}
 \end{Shaded}
 
-We have a fitted mean \(\mu\) of \ensuremath{3.2240769\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4634737\times 10^{-4}}.
-This is compared to the sample mean \(\mu\) of \ensuremath{5.6615322\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827248\times 10^{-4}}.
+We have a fitted mean \(\mu\) of \ensuremath{3.2240655\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4635962\times 10^{-4}}.
+This is compared to the sample mean \(\mu\) of \ensuremath{5.661532\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827261\times 10^{-4}}.
 
 These differences can occur due to the fitted t-distribution smoothing away more extreme values.
 
@@ -5222,7 +5222,7 @@ one step forecasts.
 ## 4    50     41.55       0.7662
 ## 
 ## 
-## Elapsed time : 0.511
+## Elapsed time : 0.569
 \end{verbatim}
 
 \begin{Shaded}
@@ -5644,6 +5644,70 @@ You have to perform a simulation experiment to confirm that the t(1) or Cauchy d
 \begin{verbatim}
 ## [1] 3
 \end{verbatim}
+
+\hypertarget{cheatsheet}{%
+\chapter{Cheatsheet}\label{cheatsheet}}
+
+Gamma distribution:
+\[
+\begin{gathered}
+{\displaystyle f(x)={\frac {\beta ^{\alpha }}{\Gamma (\alpha )}}x^{\alpha -1}e^{-\beta x}}\\
+{\displaystyle F(x)={\frac {1}{\Gamma (\alpha )}}\gamma (\alpha ,\beta x)}\\
+\mathbb{E}(x) = {\frac  {\alpha }{\beta }} \quad \mathbb{V}(x) = {\displaystyle {\frac {\alpha }{\beta ^{2}}}}\\
+\int_0^{\infty} \lambda^{\alpha-1} e^{-(\beta+x) \lambda} d \lambda = \frac{\Gamma(\alpha)}{(\beta+x)^\alpha}
+\end{gathered}
+\]
+
+Exponential distribution:
+\[
+\begin{gathered}
+f(x) = \lambda e^{{-\lambda x}}\\
+F(x) = {\displaystyle 1-e^{-\lambda x}}\\
+\mathbb{E}(x) = \frac{1}{\lambda} \quad \mathbb{V}(x) = \frac{1}{\lambda^{2}}
+\end{gathered}
+\]
+Integral of a mixture model:
+\[
+\begin{gathered}
+F_{X}(x) = P(X\leq x) = \int_{domain \ Y} \overbrace{ P(X<x| Y = y) }^{ \sim Exp(\lambda) = F_{X}(x) }f_{Y}(y) \, dy 
+\end{gathered}
+\]
+
+Brownian motion:
+\[
+\begin{gathered}
+Cov(W_{s},W_{t}) = min(s,t)\\
+(W_{s}-W_{t}) \sim N(0, (s-t)) \quad \forall t<s
+\end{gathered}
+\]
+Using the inverse CDF method to generate random variates:
+\[
+\begin{gathered}
+X \sim Pareto \implies F(x) = 1-\left( \frac{1}{x} \right)^{\alpha} = u \in [0,1]\\
+P(X \leq x) = P(1-\left( \frac{1}{U} \right)^{\alpha} \leq x)=P(U \leq (1-x)^{-1/\alpha})\\
+\implies F^{-1}(u) = (1-u)^{-1/\alpha} = x
+\end{gathered}
+\]
+
+\begin{verbatim}
+u = runif(n)
+y = (1 - u)^(-1/3)
+\end{verbatim}
+
+W21 Midterm Part e, integrating gamma:
+
+\[
+\begin{aligned}
+\bar{F}_X(x) & =P(X>x)(\text { Law of Total Prob. }) \\
+& =\int_0^{\infty} \overbrace{P(X>x \mid \Lambda=\lambda)}^{\sim \operatorname{Exp}(\lambda)} \overbrace{f_{\Lambda}(\lambda)}^{\sim \operatorname{Gamma}(\alpha, \beta)} d \lambda \\
+& =\int_0^{\infty} e^{-\lambda x} \frac{\beta^\alpha}{\Gamma(\alpha)} \lambda^{\alpha-1} e^{-\beta \lambda} d \lambda \\
+& =\frac{\beta^\alpha}{\Gamma(\alpha)} \int_0^{\infty} \lambda^{\alpha-1} e^{-(\beta+x) \lambda} d \lambda \\
+& =\frac{\beta^\alpha}{\Gamma(\alpha)} \frac{\Gamma(\alpha)}{(\beta+x)^\alpha} \\
+& =\left(\frac{\beta}{\beta+x}\right)^\alpha \\
+& =1-1+\left(\frac{\beta+x}{\beta}\right)^{-\alpha} \\
+& =1-\overbrace{\left[1-(1+x / \beta)^{-\alpha}\right]}^{\operatorname{CDF} \text { or GPD }(\gamma=1 / \alpha, \sigma=\beta / \alpha)}
+\end{aligned}
+\]
 
   \bibliography{book.bib,packages.bib}
 
