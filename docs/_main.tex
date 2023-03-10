@@ -3407,8 +3407,8 @@ Calculate daily net returns, plot the returns, sample auto-correlation plot, and
 
 \begin{verbatim}
 ##                  date adj_close
-## 1 2015-01-02 14:30:00  44.17995
-## 2 2015-01-05 14:30:00  43.25631
+## 1 2015-01-02 14:30:00  44.17996
+## 2 2015-01-05 14:30:00  43.25630
 ## 3 2015-01-06 14:30:00  42.38906
 ## 4 2015-01-07 14:30:00  42.80506
 ## 5 2015-01-08 14:30:00  42.80506
@@ -3483,8 +3483,8 @@ This supports the stylized fact that returns follow heavy tail distributions.
 \end{Highlighting}
 \end{Shaded}
 
-We have a fitted mean \(\mu\) of \ensuremath{3.2240655\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4635962\times 10^{-4}}.
-This is compared to the sample mean \(\mu\) of \ensuremath{5.661532\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827261\times 10^{-4}}.
+We have a fitted mean \(\mu\) of \ensuremath{3.223997\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4636026\times 10^{-4}}.
+This is compared to the sample mean \(\mu\) of \ensuremath{5.6615317\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827263\times 10^{-4}}.
 
 These differences can occur due to the fitted t-distribution smoothing away more extreme values.
 
@@ -3887,14 +3887,13 @@ What portfolios of A and B achieve a 5.5\% standard deviation of return? Among t
 &= w^{2}0.06 + (1-w)^{2}0.11 + w(1-w) 2\cdot0.17\cdot \sqrt{  0.06 \cdot 0.11}\\
 &= w^{2}0.06 + (1-2w+w^{2})0.11 + (w-w^{2}) 2\cdot 0.17\cdot \sqrt{  0.06 \cdot 0.11}\\
 &= w^{2}(6 + 11 - 2.7621) + w(2.7621 -2\cdot 11) + 11\\
-0.055 &= 14.2379w^{2} -19.2379 w + 11\\
+0.055^{2} &= 14.2379w^{2} -19.2379 w + 11\\
 0 &= 14.2379w^{2} -19.2379 w + 11 - 5.5\\
 w &= 0.4108 \text{ and } 0.9404
 \end{aligned}
 \]
 
-\%\%(19.2379 - (19.2379\textsuperscript{2-4\emph{14.2379}(11-5.5))}0.5)/(2*14.2379) = 0.41077491441024704384
-0.9404004696000353714\%\%
+As the portfolio with weight 41\% in A will give asset B more weight, and because asset B has a higher expected return, this portfolio will have the largest expected return.
 
 \hypertarget{q1.2}{%
 \section{Q1.2}\label{q1.2}}
@@ -5222,7 +5221,7 @@ one step forecasts.
 ## 4    50     41.55       0.7662
 ## 
 ## 
-## Elapsed time : 0.569
+## Elapsed time : 0.522
 \end{verbatim}
 
 \begin{Shaded}
@@ -5557,11 +5556,36 @@ You have to perform a simulation experiment to confirm that the t(1) or Cauchy d
 
 \includegraphics{_main_files/figure-latex/unnamed-chunk-60-1.pdf}
 
-\hypertarget{question-4}{%
-\subsection{Question 4}\label{question-4}}
+\hypertarget{q4-5}{%
+\section{Q4}\label{q4-5}}
+
+Consider the 3 -factor model for the returns of two assets:
+\[
+\left[\begin{array}{l}
+R_1 \\
+R_2
+\end{array}\right]=\left[\begin{array}{l}
+.03 \\
+.04
+\end{array}\right]+\left[\begin{array}{ccc}
+.1 & .2 & .3 \\
+.3 & .2 & .1
+\end{array}\right]\left[\begin{array}{c}
+F_1 \\
+F_2 \\
+F_3
+\end{array}\right]+\left[\begin{array}{l}
+e_1 \\
+e_2
+\end{array}\right] \Leftrightarrow \boldsymbol{R}=\boldsymbol{\mu}+\boldsymbol{\beta}^{\top} \boldsymbol{F}+\boldsymbol{e}
+\]
+
+where \(\boldsymbol{F} \sim N_3(\mathbf{0}, \boldsymbol{I})\) and \(\boldsymbol{e} \sim N_2\left(\mathbf{0}, \boldsymbol{\Sigma}_e\right)\) with \(\boldsymbol{\Sigma}_e=\left[\begin{array}{cc}.1 & 0 \\ 0 & .2\end{array}\right]\) and \(\boldsymbol{F} \perp \boldsymbol{e}\)
 
 \hypertarget{part-a-16}{%
-\paragraph{part (a)}\label{part-a-16}}
+\subsection{Part A}\label{part-a-16}}
+
+{[}5 points{]} Calculate the variance-covariance matrix of the returns \(\Sigma_R = \mathbb{V}[R]\).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5578,7 +5602,9 @@ You have to perform a simulation experiment to confirm that the t(1) or Cauchy d
 \end{verbatim}
 
 \hypertarget{part-b-15}{%
-\paragraph{part (b)}\label{part-b-15}}
+\subsubsection{Part B}\label{part-b-15}}
+
+{[}5 points{]} Calculate the mean and variance of the return of the minimum-variance portfolio.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5597,7 +5623,9 @@ You have to perform a simulation experiment to confirm that the t(1) or Cauchy d
 \end{verbatim}
 
 \hypertarget{part-c-8}{%
-\paragraph{part (c)}\label{part-c-8}}
+\subsection{Part C}\label{part-c-8}}
+
+{[}10 points{]} Assume the risk-free rate is .015, and find the mean and variance of the tangency portfolio.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5624,7 +5652,9 @@ You have to perform a simulation experiment to confirm that the t(1) or Cauchy d
 \end{verbatim}
 
 \hypertarget{part-d-2}{%
-\paragraph{part (d)}\label{part-d-2}}
+\subsection{Part D}\label{part-d-2}}
+
+{[}10 points{]} Assume you could eliminate one of the factors (i.e.~set \(\mathbb{V}[F_i] = 0\)). Which factor would you choose to eliminate in order to further reduce the variance of the minimum- variance portfolio? (justify your answer with a calculation \& comparison)
 
 \begin{Shaded}
 \begin{Highlighting}[]
