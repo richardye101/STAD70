@@ -620,8 +620,8 @@ X &amp;\sim Exp(1) \quad Y \sim Exp(1)\\
 <p>Calculate daily net returns, plot the returns, sample auto-correlation plot, and Normal QQ plot.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="problem-set-2.html#cb38-1" tabindex="-1"></a><span class="fu">head</span>(lto_adj_close)</span></code></pre></div>
 <pre><code>##                  date adj_close
-## 1 2015-01-02 14:30:00  44.17995
-## 2 2015-01-05 14:30:00  43.25630
+## 1 2015-01-02 14:30:00  44.17994
+## 2 2015-01-05 14:30:00  43.25631
 ## 3 2015-01-06 14:30:00  42.38906
 ## 4 2015-01-07 14:30:00  42.80505
 ## 5 2015-01-08 14:30:00  42.80505
@@ -662,8 +662,8 @@ X &amp;\sim Exp(1) \quad Y \sim Exp(1)\\
 <span id="cb44-8"><a href="problem-set-2.html#cb44-8" tabindex="-1"></a></span>
 <span id="cb44-9"><a href="problem-set-2.html#cb44-9" tabindex="-1"></a>sample_mu <span class="ot">=</span> <span class="fu">mean</span>(net_ret<span class="sc">$</span>net_returns)</span>
 <span id="cb44-10"><a href="problem-set-2.html#cb44-10" tabindex="-1"></a>sample_var <span class="ot">=</span> <span class="fu">var</span>(net_ret<span class="sc">$</span>net_returns)</span></code></pre></div>
-<p>We have a fitted mean <span class="math inline">\(\mu\)</span> of 3.2239746^{-4} and variance <span class="math inline">\(\sigma^{2}\)</span> of 1.4636488^{-4}.
-This is compared to the sample mean <span class="math inline">\(\mu\)</span> of 5.6615325^{-4} and variance <span class="math inline">\(\sigma^2\)</span> of 1.3827253^{-4}.</p>
+<p>We have a fitted mean <span class="math inline">\(\mu\)</span> of 3.2240993^{-4} and variance <span class="math inline">\(\sigma^{2}\)</span> of 1.4634313^{-4}.
+This is compared to the sample mean <span class="math inline">\(\mu\)</span> of 5.6615327^{-4} and variance <span class="math inline">\(\sigma^2\)</span> of 1.3827249^{-4}.</p>
 <p>These differences can occur due to the fitted t-distribution smoothing away more extreme values.</p>
 </div>
 <div id="part-c-1" class="section level3 hasAnchor" number="12.4.3">

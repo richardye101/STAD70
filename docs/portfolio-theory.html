@@ -637,9 +637,11 @@ We want to create portfolio using weights <span class="math inline">\(\mathbf{w}
 <span class="math display">\[
 min_{w}\{\mathbf{w^{T}\Sigma w}\}\ s.t. \ \mathbf{w^{T}\mu} = \mu_{p}, \mathbf{w^{T}1} = 1
 \]</span></p>
-<p>We can use Lagrange multipliers to define the objective function:
-&gt;Lagrange formula: <span class="math inline">\(\mathcal{L}(x,\lambda) = f(x)+\lambda g(x)\)</span>
-&gt;If we want to find the max/min of the function <span class="math inline">\(f(x)\)</span> subject to the constraint <span class="math inline">\(g(x) = 0\)</span>, we can form this Lagrangian and find where it’s derivative is 0. In this case, <span class="math inline">\(x=\underline{w}\)</span> and our constraint <span class="math inline">\(\mathbf{w^{T}\cdot 1} = 1\)</span> can be represented as <span class="math inline">\(g(w) = \mathbf{w^{T}\cdot 1} -1\)</span></p>
+<p>We can use Lagrange multipliers to define the objective function:</p>
+<blockquote>
+<p>Lagrange formula: <span class="math inline">\(\mathcal{L}(x,\lambda) = f(x)+\lambda g(x)\)</span>
+If we want to find the max/min of the function <span class="math inline">\(f(x)\)</span> subject to the constraint <span class="math inline">\(g(x) = 0\)</span>, we can form this Lagrangian and find where it’s derivative is 0. In this case, <span class="math inline">\(x=\underline{w}\)</span> and our constraint <span class="math inline">\(\mathbf{w^{T}\cdot 1} = 1\)</span> can be represented as <span class="math inline">\(g(w) = \mathbf{w^{T}\cdot 1} -1\)</span></p>
+</blockquote>
 <p><span class="math display">\[
 \begin{aligned}
 \mathcal{L}(\underline{w},\lambda) &amp;= \underline{w}^{T}\underline{\Sigma}\underline{w} - \lambda(\underline{w}^{T}\cdot \underline{1}-1)\\
