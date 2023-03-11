@@ -734,29 +734,29 @@ S_1^2 \sigma_1^2+S_2^2 \sigma_2^2+2 S_1 S_2 \sigma_1 \sigma_2 \rho
 <p>For an investment of $4,000, what are estimates of <span class="math inline">\(VaR^t(0.05)\)</span> and <span class="math inline">\(ES^t(0.05)\)</span>?</p>
 <p>Now, fit a ARMA(0,0)+GARCH(1,1) model to the returns and calculate
 one step forecasts.</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="problem-set-6.html#cb87-1" tabindex="-1"></a>CokePepsi <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">&quot;ProblemSets/datasets/CokePepsi.csv&quot;</span>, <span class="at">header=</span>T)</span></code></pre></div>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="problem-set-6.html#cb88-1" tabindex="-1"></a>price <span class="ot">=</span> CokePepsi[,<span class="dv">1</span>]</span>
-<span id="cb88-2"><a href="problem-set-6.html#cb88-2" tabindex="-1"></a>returns <span class="ot">=</span> <span class="fu">diff</span>(price)<span class="sc">/</span><span class="fu">lag</span>(price)[<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb88-3"><a href="problem-set-6.html#cb88-3" tabindex="-1"></a><span class="fu">ts.plot</span>(returns)</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="problem-set-6.html#cb89-1" tabindex="-1"></a>CokePepsi <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">&quot;ProblemSets/datasets/CokePepsi.csv&quot;</span>, <span class="at">header=</span>T)</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="problem-set-6.html#cb90-1" tabindex="-1"></a>price <span class="ot">=</span> CokePepsi[,<span class="dv">1</span>]</span>
+<span id="cb90-2"><a href="problem-set-6.html#cb90-2" tabindex="-1"></a>returns <span class="ot">=</span> <span class="fu">diff</span>(price)<span class="sc">/</span><span class="fu">lag</span>(price)[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb90-3"><a href="problem-set-6.html#cb90-3" tabindex="-1"></a><span class="fu">ts.plot</span>(returns)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="problem-set-6.html#cb89-1" tabindex="-1"></a>S<span class="ot">=</span><span class="dv">4000</span></span>
-<span id="cb89-2"><a href="problem-set-6.html#cb89-2" tabindex="-1"></a>alpha <span class="ot">=</span> <span class="fl">0.05</span></span>
-<span id="cb89-3"><a href="problem-set-6.html#cb89-3" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb89-4"><a href="problem-set-6.html#cb89-4" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">fitdistr</span>(returns,<span class="st">&#39;t&#39;</span>)</span>
-<span id="cb89-5"><a href="problem-set-6.html#cb89-5" tabindex="-1"></a>mu <span class="ot">=</span> res<span class="sc">$</span>estimate[<span class="st">&#39;m&#39;</span>]</span>
-<span id="cb89-6"><a href="problem-set-6.html#cb89-6" tabindex="-1"></a>lambda <span class="ot">=</span> res<span class="sc">$</span>estimate[<span class="st">&#39;s&#39;</span>]</span>
-<span id="cb89-7"><a href="problem-set-6.html#cb89-7" tabindex="-1"></a>nu <span class="ot">=</span> res<span class="sc">$</span>estimate[<span class="st">&#39;df&#39;</span>]</span>
-<span id="cb89-8"><a href="problem-set-6.html#cb89-8" tabindex="-1"></a><span class="fu">qt</span>(alpha, <span class="at">df=</span>nu)</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="problem-set-6.html#cb91-1" tabindex="-1"></a>S<span class="ot">=</span><span class="dv">4000</span></span>
+<span id="cb91-2"><a href="problem-set-6.html#cb91-2" tabindex="-1"></a>alpha <span class="ot">=</span> <span class="fl">0.05</span></span>
+<span id="cb91-3"><a href="problem-set-6.html#cb91-3" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb91-4"><a href="problem-set-6.html#cb91-4" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">fitdistr</span>(returns,<span class="st">&#39;t&#39;</span>)</span>
+<span id="cb91-5"><a href="problem-set-6.html#cb91-5" tabindex="-1"></a>mu <span class="ot">=</span> res<span class="sc">$</span>estimate[<span class="st">&#39;m&#39;</span>]</span>
+<span id="cb91-6"><a href="problem-set-6.html#cb91-6" tabindex="-1"></a>lambda <span class="ot">=</span> res<span class="sc">$</span>estimate[<span class="st">&#39;s&#39;</span>]</span>
+<span id="cb91-7"><a href="problem-set-6.html#cb91-7" tabindex="-1"></a>nu <span class="ot">=</span> res<span class="sc">$</span>estimate[<span class="st">&#39;df&#39;</span>]</span>
+<span id="cb91-8"><a href="problem-set-6.html#cb91-8" tabindex="-1"></a><span class="fu">qt</span>(alpha, <span class="at">df=</span>nu)</span></code></pre></div>
 <pre><code>## [1] -2.33</code></pre>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="problem-set-6.html#cb91-1" tabindex="-1"></a><span class="fu">dt</span>(<span class="fu">qt</span>(alpha, <span class="at">df=</span>nu), <span class="at">df=</span>nu)</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="problem-set-6.html#cb93-1" tabindex="-1"></a><span class="fu">dt</span>(<span class="fu">qt</span>(alpha, <span class="at">df=</span>nu), <span class="at">df=</span>nu)</span></code></pre></div>
 <pre><code>## [1] 0.0465</code></pre>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="problem-set-6.html#cb93-1" tabindex="-1"></a><span class="fu">library</span>(fGarch) <span class="co"># for qstd() function</span></span>
-<span id="cb93-2"><a href="problem-set-6.html#cb93-2" tabindex="-1"></a><span class="fu">library</span>(rugarch)</span>
-<span id="cb93-3"><a href="problem-set-6.html#cb93-3" tabindex="-1"></a>garch.t <span class="ot">=</span> <span class="fu">ugarchspec</span>(<span class="at">mean.model=</span><span class="fu">list</span>(<span class="at">armaOrder=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)),</span>
-<span id="cb93-4"><a href="problem-set-6.html#cb93-4" tabindex="-1"></a><span class="at">variance.model=</span><span class="fu">list</span>(<span class="at">garchOrder=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)),</span>
-<span id="cb93-5"><a href="problem-set-6.html#cb93-5" tabindex="-1"></a><span class="at">distribution.model =</span> <span class="st">&quot;std&quot;</span>)</span>
-<span id="cb93-6"><a href="problem-set-6.html#cb93-6" tabindex="-1"></a>KO.garch.t <span class="ot">=</span> <span class="fu">ugarchfit</span>(<span class="at">data=</span>returns, <span class="at">spec=</span>garch.t)</span>
-<span id="cb93-7"><a href="problem-set-6.html#cb93-7" tabindex="-1"></a><span class="fu">show</span>(KO.garch.t)</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="problem-set-6.html#cb95-1" tabindex="-1"></a><span class="fu">library</span>(fGarch) <span class="co"># for qstd() function</span></span>
+<span id="cb95-2"><a href="problem-set-6.html#cb95-2" tabindex="-1"></a><span class="fu">library</span>(rugarch)</span>
+<span id="cb95-3"><a href="problem-set-6.html#cb95-3" tabindex="-1"></a>garch.t <span class="ot">=</span> <span class="fu">ugarchspec</span>(<span class="at">mean.model=</span><span class="fu">list</span>(<span class="at">armaOrder=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)),</span>
+<span id="cb95-4"><a href="problem-set-6.html#cb95-4" tabindex="-1"></a><span class="at">variance.model=</span><span class="fu">list</span>(<span class="at">garchOrder=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)),</span>
+<span id="cb95-5"><a href="problem-set-6.html#cb95-5" tabindex="-1"></a><span class="at">distribution.model =</span> <span class="st">&quot;std&quot;</span>)</span>
+<span id="cb95-6"><a href="problem-set-6.html#cb95-6" tabindex="-1"></a>KO.garch.t <span class="ot">=</span> <span class="fu">ugarchfit</span>(<span class="at">data=</span>returns, <span class="at">spec=</span>garch.t)</span>
+<span id="cb95-7"><a href="problem-set-6.html#cb95-7" tabindex="-1"></a><span class="fu">show</span>(KO.garch.t)</span></code></pre></div>
 <pre><code>## 
 ## *---------------------------------*
 ## *          GARCH Model Fit        *
@@ -851,12 +851,12 @@ one step forecasts.</p>
 ## 4    50     41.55       0.7662
 ## 
 ## 
-## Elapsed time : 0.512</code></pre>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="problem-set-6.html#cb95-1" tabindex="-1"></a><span class="fu">plot</span>(KO.garch.t, <span class="at">which =</span> <span class="dv">2</span>)</span></code></pre></div>
+## Elapsed time : 0.194</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="problem-set-6.html#cb97-1" tabindex="-1"></a><span class="fu">plot</span>(KO.garch.t, <span class="at">which =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## 
 ## please wait...calculating quantiles...</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-49-2.png" width="672" /></p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="problem-set-6.html#cb97-1" tabindex="-1"></a>pred <span class="ot">=</span> <span class="fu">ugarchforecast</span>(KO.garch.t, <span class="at">data=</span>returns, <span class="at">n.ahead=</span><span class="dv">1</span>) ; pred</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="problem-set-6.html#cb99-1" tabindex="-1"></a>pred <span class="ot">=</span> <span class="fu">ugarchforecast</span>(KO.garch.t, <span class="at">data=</span>returns, <span class="at">n.ahead=</span><span class="dv">1</span>) ; pred</span></code></pre></div>
 <pre><code>## 
 ## *------------------------------------*
 ## *       GARCH Model Forecast         *
@@ -869,42 +869,42 @@ one step forecasts.</p>
 ## 0-roll forecast [T0=1974-01-15 19:00:00]:
 ##        Series   Sigma
 ## T+1 0.0006751 0.01038</code></pre>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="problem-set-6.html#cb99-1" tabindex="-1"></a><span class="fu">fitted</span>(pred) ; <span class="fu">sigma</span>(pred)</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="problem-set-6.html#cb101-1" tabindex="-1"></a><span class="fu">fitted</span>(pred) ; <span class="fu">sigma</span>(pred)</span></code></pre></div>
 <pre><code>##     1974-01-15 19:00:00
 ## T+1            0.000675</code></pre>
 <pre><code>##     1974-01-15 19:00:00
 ## T+1              0.0104</code></pre>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="problem-set-6.html#cb102-1" tabindex="-1"></a>nu <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">coef</span>(KO.garch.t)[<span class="dv">5</span>])</span>
-<span id="cb102-2"><a href="problem-set-6.html#cb102-2" tabindex="-1"></a>q <span class="ot">=</span> <span class="fu">qstd</span>(alpha, <span class="at">mean =</span> <span class="fu">fitted</span>(pred), <span class="at">sd =</span> <span class="fu">sigma</span>(pred), <span class="at">nu =</span> nu) ; q</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="problem-set-6.html#cb104-1" tabindex="-1"></a>nu <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">coef</span>(KO.garch.t)[<span class="dv">5</span>])</span>
+<span id="cb104-2"><a href="problem-set-6.html#cb104-2" tabindex="-1"></a>q <span class="ot">=</span> <span class="fu">qstd</span>(alpha, <span class="at">mean =</span> <span class="fu">fitted</span>(pred), <span class="at">sd =</span> <span class="fu">sigma</span>(pred), <span class="at">nu =</span> nu) ; q</span></code></pre></div>
 <pre><code>##     1974-01-15 19:00:00
 ## T+1             -0.0158</code></pre>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="problem-set-6.html#cb104-1" tabindex="-1"></a><span class="fu">sigma</span>(pred)<span class="sc">/</span><span class="fu">sqrt</span>( (nu)<span class="sc">/</span>(nu<span class="dv">-2</span>) )</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="problem-set-6.html#cb106-1" tabindex="-1"></a><span class="fu">sigma</span>(pred)<span class="sc">/</span><span class="fu">sqrt</span>( (nu)<span class="sc">/</span>(nu<span class="dv">-2</span>) )</span></code></pre></div>
 <pre><code>##     1974-01-15 19:00:00
 ## T+1             0.00844</code></pre>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="problem-set-6.html#cb106-1" tabindex="-1"></a><span class="fu">qt</span>(alpha, <span class="at">df=</span>nu)</span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="problem-set-6.html#cb108-1" tabindex="-1"></a><span class="fu">qt</span>(alpha, <span class="at">df=</span>nu)</span></code></pre></div>
 <pre><code>## [1] -1.95</code></pre>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="problem-set-6.html#cb108-1" tabindex="-1"></a><span class="fu">dt</span>(<span class="fu">qt</span>(alpha, <span class="at">df=</span>nu), <span class="at">df=</span>nu)</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="problem-set-6.html#cb110-1" tabindex="-1"></a><span class="fu">dt</span>(<span class="fu">qt</span>(alpha, <span class="at">df=</span>nu), <span class="at">df=</span>nu)</span></code></pre></div>
 <pre><code>## [1] 0.0688</code></pre>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="problem-set-6.html#cb110-1" tabindex="-1"></a>mu <span class="ot">=</span> <span class="fu">as.numeric</span>(res<span class="sc">$</span>estimate[<span class="st">&#39;m&#39;</span>])</span>
-<span id="cb110-2"><a href="problem-set-6.html#cb110-2" tabindex="-1"></a>lambda <span class="ot">=</span> <span class="fu">as.numeric</span>(res<span class="sc">$</span>estimate[<span class="st">&#39;s&#39;</span>])</span>
-<span id="cb110-3"><a href="problem-set-6.html#cb110-3" tabindex="-1"></a>nu <span class="ot">=</span> <span class="fu">as.numeric</span>(res<span class="sc">$</span>estimate[<span class="st">&#39;df&#39;</span>])</span>
-<span id="cb110-4"><a href="problem-set-6.html#cb110-4" tabindex="-1"></a><span class="fu">qt</span>(alpha, <span class="at">df=</span>nu)</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="problem-set-6.html#cb112-1" tabindex="-1"></a>mu <span class="ot">=</span> <span class="fu">as.numeric</span>(res<span class="sc">$</span>estimate[<span class="st">&#39;m&#39;</span>])</span>
+<span id="cb112-2"><a href="problem-set-6.html#cb112-2" tabindex="-1"></a>lambda <span class="ot">=</span> <span class="fu">as.numeric</span>(res<span class="sc">$</span>estimate[<span class="st">&#39;s&#39;</span>])</span>
+<span id="cb112-3"><a href="problem-set-6.html#cb112-3" tabindex="-1"></a>nu <span class="ot">=</span> <span class="fu">as.numeric</span>(res<span class="sc">$</span>estimate[<span class="st">&#39;df&#39;</span>])</span>
+<span id="cb112-4"><a href="problem-set-6.html#cb112-4" tabindex="-1"></a><span class="fu">qt</span>(alpha, <span class="at">df=</span>nu)</span></code></pre></div>
 <pre><code>## [1] -2.33</code></pre>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="problem-set-6.html#cb112-1" tabindex="-1"></a><span class="co"># [1] -2.292</span></span></code></pre></div>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="problem-set-6.html#cb113-1" tabindex="-1"></a><span class="fu">dt</span>(<span class="fu">qt</span>(alpha, <span class="at">df=</span>nu), <span class="at">df=</span>nu)</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="problem-set-6.html#cb114-1" tabindex="-1"></a><span class="co"># [1] -2.292</span></span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="problem-set-6.html#cb115-1" tabindex="-1"></a><span class="fu">dt</span>(<span class="fu">qt</span>(alpha, <span class="at">df=</span>nu), <span class="at">df=</span>nu)</span></code></pre></div>
 <pre><code>## [1] 0.0465</code></pre>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="problem-set-6.html#cb115-1" tabindex="-1"></a><span class="co"># [1] 0.048</span></span></code></pre></div>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="problem-set-6.html#cb116-1" tabindex="-1"></a>Finv <span class="ot">=</span> mu <span class="sc">+</span> lambda <span class="sc">*</span> <span class="fu">qt</span>(alpha, <span class="at">df=</span>nu)</span>
-<span id="cb116-2"><a href="problem-set-6.html#cb116-2" tabindex="-1"></a>VaR <span class="ot">=</span> <span class="sc">-</span>S <span class="sc">*</span> Finv</span>
-<span id="cb116-3"><a href="problem-set-6.html#cb116-3" tabindex="-1"></a><span class="fu">options</span>(<span class="at">digits=</span><span class="dv">4</span>)</span>
-<span id="cb116-4"><a href="problem-set-6.html#cb116-4" tabindex="-1"></a>VaR</span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="problem-set-6.html#cb117-1" tabindex="-1"></a><span class="co"># [1] 0.048</span></span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="problem-set-6.html#cb118-1" tabindex="-1"></a>Finv <span class="ot">=</span> mu <span class="sc">+</span> lambda <span class="sc">*</span> <span class="fu">qt</span>(alpha, <span class="at">df=</span>nu)</span>
+<span id="cb118-2"><a href="problem-set-6.html#cb118-2" tabindex="-1"></a>VaR <span class="ot">=</span> <span class="sc">-</span>S <span class="sc">*</span> Finv</span>
+<span id="cb118-3"><a href="problem-set-6.html#cb118-3" tabindex="-1"></a><span class="fu">options</span>(<span class="at">digits=</span><span class="dv">4</span>)</span>
+<span id="cb118-4"><a href="problem-set-6.html#cb118-4" tabindex="-1"></a>VaR</span></code></pre></div>
 <pre><code>## [1] 75.32</code></pre>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="problem-set-6.html#cb118-1" tabindex="-1"></a><span class="co"># [1] 75.31</span></span></code></pre></div>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="problem-set-6.html#cb119-1" tabindex="-1"></a>den <span class="ot">=</span> <span class="fu">dt</span>(<span class="fu">qt</span>(alpha, <span class="at">df=</span>nu), <span class="at">df=</span>nu)</span>
-<span id="cb119-2"><a href="problem-set-6.html#cb119-2" tabindex="-1"></a>ES <span class="ot">=</span> S <span class="sc">*</span> (<span class="sc">-</span>mu <span class="sc">+</span> lambda<span class="sc">*</span>(den<span class="sc">/</span>alpha) <span class="sc">*</span> (nu<span class="sc">+</span><span class="fu">qt</span>(alpha, <span class="at">df=</span>nu)<span class="sc">^</span><span class="dv">2</span> )<span class="sc">/</span>(nu<span class="dv">-1</span>))</span>
-<span id="cb119-3"><a href="problem-set-6.html#cb119-3" tabindex="-1"></a>ES</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="problem-set-6.html#cb120-1" tabindex="-1"></a><span class="co"># [1] 75.31</span></span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="problem-set-6.html#cb121-1" tabindex="-1"></a>den <span class="ot">=</span> <span class="fu">dt</span>(<span class="fu">qt</span>(alpha, <span class="at">df=</span>nu), <span class="at">df=</span>nu)</span>
+<span id="cb121-2"><a href="problem-set-6.html#cb121-2" tabindex="-1"></a>ES <span class="ot">=</span> S <span class="sc">*</span> (<span class="sc">-</span>mu <span class="sc">+</span> lambda<span class="sc">*</span>(den<span class="sc">/</span>alpha) <span class="sc">*</span> (nu<span class="sc">+</span><span class="fu">qt</span>(alpha, <span class="at">df=</span>nu)<span class="sc">^</span><span class="dv">2</span> )<span class="sc">/</span>(nu<span class="dv">-1</span>))</span>
+<span id="cb121-3"><a href="problem-set-6.html#cb121-3" tabindex="-1"></a>ES</span></code></pre></div>
 <pre><code>## [1] 124</code></pre>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="problem-set-6.html#cb121-1" tabindex="-1"></a><span class="co"># [1] 122.1</span></span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="problem-set-6.html#cb123-1" tabindex="-1"></a><span class="co"># [1] 122.1</span></span></code></pre></div>
 
 </div>
 </div>

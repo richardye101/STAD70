@@ -497,9 +497,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol style="list-style-type: lower-alpha">
 <li><span class="math inline">\([10\)</span> points <span class="math inline">\(]\)</span> Simulate <span class="math inline">\(n=10,000\)</span> random variates from a <span class="math inline">\(\operatorname{GPD}(\gamma=.5, \sigma=1)\)</span> distribution using the inverse CDF method from Q1.(d), and plot the histogram of their log-values.</li>
 </ol>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="w2021-midterm.html#cb122-1" tabindex="-1"></a>u <span class="ot">=</span> <span class="fu">runif</span>(<span class="dv">10000</span>)</span>
-<span id="cb122-2"><a href="w2021-midterm.html#cb122-2" tabindex="-1"></a>fx <span class="ot">=</span> <span class="dv">1</span><span class="sc">/</span><span class="fl">0.5</span><span class="sc">*</span>((<span class="dv">1</span><span class="sc">-</span>u)<span class="sc">^</span>(<span class="sc">-</span><span class="fl">0.5</span>)<span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb122-3"><a href="w2021-midterm.html#cb122-3" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(fx))</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="w2021-midterm.html#cb124-1" tabindex="-1"></a>u <span class="ot">=</span> <span class="fu">runif</span>(<span class="dv">10000</span>)</span>
+<span id="cb124-2"><a href="w2021-midterm.html#cb124-2" tabindex="-1"></a>fx <span class="ot">=</span> <span class="dv">1</span><span class="sc">/</span><span class="fl">0.5</span><span class="sc">*</span>((<span class="dv">1</span><span class="sc">-</span>u)<span class="sc">^</span>(<span class="sc">-</span><span class="fl">0.5</span>)<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb124-3"><a href="w2021-midterm.html#cb124-3" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(fx))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
 </div>
 <div id="part-b-13" class="section level3 hasAnchor" number="17.1.2">
@@ -508,10 +508,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>[15 points <span class="math inline">\(]\)</span> Simulate another 10,000 random variates from <span class="math inline">\(\operatorname{GPD}(\gamma=.5, \sigma=1)\)</span>, but now use the mixture method from Q1.(e). Create a QQ-plot of the two sets of variates (from this and the previous part0), and comment whether they seem to come from the same distribution?
 (Hint: Use qqplot <span class="math inline">\((\mathrm{X}, \mathrm{Y})\)</span>, where <span class="math inline">\(\mathrm{X}, \mathrm{Y}\)</span> are the values you generated.)</li>
 </ol>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="w2021-midterm.html#cb123-1" tabindex="-1"></a>rg <span class="ot">=</span> <span class="fu">rgamma</span>(<span class="dv">10000</span>,<span class="at">shape=</span><span class="dv">2</span>, <span class="at">rate =</span> <span class="dv">2</span>)</span>
-<span id="cb123-2"><a href="w2021-midterm.html#cb123-2" tabindex="-1"></a>Y <span class="ot">=</span> <span class="fu">rexp</span>(<span class="dv">10000</span>, <span class="at">rate=</span>rg)</span>
-<span id="cb123-3"><a href="w2021-midterm.html#cb123-3" tabindex="-1"></a><span class="fu">qqplot</span>(fx, Y)</span>
-<span id="cb123-4"><a href="w2021-midterm.html#cb123-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="dv">0</span>,<span class="at">b=</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="w2021-midterm.html#cb125-1" tabindex="-1"></a>rg <span class="ot">=</span> <span class="fu">rgamma</span>(<span class="dv">10000</span>,<span class="at">shape=</span><span class="dv">2</span>, <span class="at">rate =</span> <span class="dv">2</span>)</span>
+<span id="cb125-2"><a href="w2021-midterm.html#cb125-2" tabindex="-1"></a>Y <span class="ot">=</span> <span class="fu">rexp</span>(<span class="dv">10000</span>, <span class="at">rate=</span>rg)</span>
+<span id="cb125-3"><a href="w2021-midterm.html#cb125-3" tabindex="-1"></a><span class="fu">qqplot</span>(fx, Y)</span>
+<span id="cb125-4"><a href="w2021-midterm.html#cb125-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="dv">0</span>,<span class="at">b=</span><span class="dv">1</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
 </div>
 <div id="part-c-6" class="section level3 hasAnchor" number="17.1.3">
@@ -519,16 +519,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol start="3" style="list-style-type: lower-alpha">
 <li>[15 points] Take the values from Q2.(a) and calculate their excedances above 10, i.e. <span class="math inline">\(Z=X-10\)</span> for values of <span class="math inline">\(X\)</span> that are greater than 10. From Q1.(b), we know that <span class="math inline">\(Z\)</span> must follow <span class="math inline">\(G P D(\gamma, \sigma+10 \gamma)\)</span>. Verify that the exceedances follow this distribution, by creating a QQ-plot of <span class="math inline">\(Z\)</span>-values versus their theoretical quantiles.</li>
 </ol>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="w2021-midterm.html#cb124-1" tabindex="-1"></a>sigma <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb124-2"><a href="w2021-midterm.html#cb124-2" tabindex="-1"></a>gamma <span class="ot">=</span> <span class="fl">0.5</span></span>
-<span id="cb124-3"><a href="w2021-midterm.html#cb124-3" tabindex="-1"></a>u <span class="ot">=</span> <span class="dv">10</span></span>
-<span id="cb124-4"><a href="w2021-midterm.html#cb124-4" tabindex="-1"></a>Z <span class="ot">=</span> (fx <span class="sc">-</span> u)[fx<span class="sc">-</span>u<span class="sc">&gt;</span><span class="dv">0</span>]</span>
-<span id="cb124-5"><a href="w2021-midterm.html#cb124-5" tabindex="-1"></a></span>
-<span id="cb124-6"><a href="w2021-midterm.html#cb124-6" tabindex="-1"></a>Zs <span class="ot">=</span> <span class="fu">sort</span>(Z) <span class="co">#need sorting for qqplot</span></span>
-<span id="cb124-7"><a href="w2021-midterm.html#cb124-7" tabindex="-1"></a>nZ<span class="ot">=</span> <span class="fu">length</span>(Zs)</span>
-<span id="cb124-8"><a href="w2021-midterm.html#cb124-8" tabindex="-1"></a>sigma_u <span class="ot">=</span> sigma <span class="sc">+</span> gamma <span class="sc">*</span> u</span>
-<span id="cb124-9"><a href="w2021-midterm.html#cb124-9" tabindex="-1"></a>Q <span class="ot">=</span> sigma_u <span class="sc">/</span>gamma <span class="sc">*</span> ( (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppoints</span>(nZ) )<span class="sc">^</span>(<span class="sc">-</span>gamma) <span class="sc">-</span> <span class="dv">1</span> ) </span>
-<span id="cb124-10"><a href="w2021-midterm.html#cb124-10" tabindex="-1"></a><span class="fu">plot</span>( Zs, Q ); <span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="w2021-midterm.html#cb126-1" tabindex="-1"></a>sigma <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb126-2"><a href="w2021-midterm.html#cb126-2" tabindex="-1"></a>gamma <span class="ot">=</span> <span class="fl">0.5</span></span>
+<span id="cb126-3"><a href="w2021-midterm.html#cb126-3" tabindex="-1"></a>u <span class="ot">=</span> <span class="dv">10</span></span>
+<span id="cb126-4"><a href="w2021-midterm.html#cb126-4" tabindex="-1"></a>Z <span class="ot">=</span> (fx <span class="sc">-</span> u)[fx<span class="sc">-</span>u<span class="sc">&gt;</span><span class="dv">0</span>]</span>
+<span id="cb126-5"><a href="w2021-midterm.html#cb126-5" tabindex="-1"></a></span>
+<span id="cb126-6"><a href="w2021-midterm.html#cb126-6" tabindex="-1"></a>Zs <span class="ot">=</span> <span class="fu">sort</span>(Z) <span class="co">#need sorting for qqplot</span></span>
+<span id="cb126-7"><a href="w2021-midterm.html#cb126-7" tabindex="-1"></a>nZ<span class="ot">=</span> <span class="fu">length</span>(Zs)</span>
+<span id="cb126-8"><a href="w2021-midterm.html#cb126-8" tabindex="-1"></a>sigma_u <span class="ot">=</span> sigma <span class="sc">+</span> gamma <span class="sc">*</span> u</span>
+<span id="cb126-9"><a href="w2021-midterm.html#cb126-9" tabindex="-1"></a>Q <span class="ot">=</span> sigma_u <span class="sc">/</span>gamma <span class="sc">*</span> ( (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppoints</span>(nZ) )<span class="sc">^</span>(<span class="sc">-</span>gamma) <span class="sc">-</span> <span class="dv">1</span> ) </span>
+<span id="cb126-10"><a href="w2021-midterm.html#cb126-10" tabindex="-1"></a><span class="fu">plot</span>( Zs, Q ); <span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
 </div>
 <div id="part-d-1" class="section level3 hasAnchor" number="17.1.4">
@@ -536,16 +536,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol start="4" style="list-style-type: lower-alpha">
 <li>[10 points <span class="math inline">\(]\)</span> Finally, verify through simulation that conditional exceedances of fattail distributions with tail index <span class="math inline">\(\alpha\)</span> approach a GPD with <span class="math inline">\(\gamma=1 / \alpha\)</span>. Generate <span class="math inline">\(n=10,000\)</span> values from a <span class="math inline">\(t(d f=4)\)</span> distribution (i.e. <span class="math inline">\(\alpha=4)\)</span> and take their absolute value (to avoid wasting values by symmetry). Calculate the exceedances above 10 again, and create their QQ-plot versus quantiles from a <span class="math inline">\(\operatorname{GPD}(\gamma=1 / \alpha, \sigma=1)\)</span>. (Note: the points in your QQ-plot should lie close to a straight line, but the slope does not need to be equal to 1 because of the arbitrary GPD scale <span class="math inline">\(\sigma=1\)</span> ).</li>
 </ol>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="w2021-midterm.html#cb125-1" tabindex="-1"></a><span class="co"># t = abs(rt(10000,4))</span></span>
-<span id="cb125-2"><a href="w2021-midterm.html#cb125-2" tabindex="-1"></a></span>
-<span id="cb125-3"><a href="w2021-midterm.html#cb125-3" tabindex="-1"></a>W <span class="ot">=</span> <span class="fu">abs</span>( <span class="fu">rt</span>( <span class="dv">100000</span>, <span class="dv">2</span> ) ) <span class="co"># why 2?</span></span>
-<span id="cb125-4"><a href="w2021-midterm.html#cb125-4" tabindex="-1"></a></span>
-<span id="cb125-5"><a href="w2021-midterm.html#cb125-5" tabindex="-1"></a>Ws <span class="ot">=</span> (W <span class="sc">-</span> u)[W<span class="sc">-</span>u<span class="sc">&gt;</span><span class="dv">0</span>]</span>
-<span id="cb125-6"><a href="w2021-midterm.html#cb125-6" tabindex="-1"></a></span>
-<span id="cb125-7"><a href="w2021-midterm.html#cb125-7" tabindex="-1"></a>Ws <span class="ot">=</span> <span class="fu">sort</span>(Ws)</span>
-<span id="cb125-8"><a href="w2021-midterm.html#cb125-8" tabindex="-1"></a>nW<span class="ot">=</span> <span class="fu">length</span>(Ws)</span>
-<span id="cb125-9"><a href="w2021-midterm.html#cb125-9" tabindex="-1"></a>Q <span class="ot">=</span> (<span class="dv">1</span><span class="sc">+</span>u) <span class="sc">*</span> ( (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppoints</span>(nW) )<span class="sc">^</span>(<span class="sc">-</span>gamma) <span class="sc">-</span> <span class="dv">1</span> ) </span>
-<span id="cb125-10"><a href="w2021-midterm.html#cb125-10" tabindex="-1"></a><span class="fu">qqplot</span>( Ws, Q )</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="w2021-midterm.html#cb127-1" tabindex="-1"></a><span class="co"># t = abs(rt(10000,4))</span></span>
+<span id="cb127-2"><a href="w2021-midterm.html#cb127-2" tabindex="-1"></a></span>
+<span id="cb127-3"><a href="w2021-midterm.html#cb127-3" tabindex="-1"></a>W <span class="ot">=</span> <span class="fu">abs</span>( <span class="fu">rt</span>( <span class="dv">100000</span>, <span class="dv">2</span> ) ) <span class="co"># why 2?</span></span>
+<span id="cb127-4"><a href="w2021-midterm.html#cb127-4" tabindex="-1"></a></span>
+<span id="cb127-5"><a href="w2021-midterm.html#cb127-5" tabindex="-1"></a>Ws <span class="ot">=</span> (W <span class="sc">-</span> u)[W<span class="sc">-</span>u<span class="sc">&gt;</span><span class="dv">0</span>]</span>
+<span id="cb127-6"><a href="w2021-midterm.html#cb127-6" tabindex="-1"></a></span>
+<span id="cb127-7"><a href="w2021-midterm.html#cb127-7" tabindex="-1"></a>Ws <span class="ot">=</span> <span class="fu">sort</span>(Ws)</span>
+<span id="cb127-8"><a href="w2021-midterm.html#cb127-8" tabindex="-1"></a>nW<span class="ot">=</span> <span class="fu">length</span>(Ws)</span>
+<span id="cb127-9"><a href="w2021-midterm.html#cb127-9" tabindex="-1"></a>Q <span class="ot">=</span> (<span class="dv">1</span><span class="sc">+</span>u) <span class="sc">*</span> ( (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppoints</span>(nW) )<span class="sc">^</span>(<span class="sc">-</span>gamma) <span class="sc">-</span> <span class="dv">1</span> ) </span>
+<span id="cb127-10"><a href="w2021-midterm.html#cb127-10" tabindex="-1"></a><span class="fu">qqplot</span>( Ws, Q )</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
 
 </div>
