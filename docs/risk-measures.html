@@ -505,8 +505,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>To operationalize risk management, we use risk measures to define some capital requirement that the organization should hold in a liquid asset/cash.</p>
 <p>The first thing that comes to mind is measuring risk by the variance of returns. <strong>But it is not a good risk measure</strong>. In the following example, the variances are the same, but clearly the risk is different.</p>
 <p>WIth the left distribution, the long tail goes to the left which means your returns could become large negative values. (Reasonable to assume it is “more risky”)</p>
-<p>For the right distribution, the average return is negative although there is no chance of very large negative returns. (Implies that it is “less risky”)
-<img src="Notes/Obsidian-Attachments/7-Risk-Management.png" /></p>
+<p>For the right distribution, the average return is negative although there is no chance of very large negative returns. (Implies that it is “less risky”)</p>
+<p><img src="Notes/Obsidian-Attachments/7-Risk-Management.png" /></p>
 <blockquote>
 <p>The point of risk mgmt: We want to know the amount of money we should set aside to cover expected losses.</p>
 </blockquote>
@@ -603,8 +603,8 @@ P(S_{T}-S_{0} &lt; -VaR) &amp;= P(S_{T} &lt; S_{0}-VaR)\\
 <p>Var doesn’t care what happens beyond the cut off, just the actual z-score (or whatever score from some distribution). If we push some density of losses very far (hiding a small probability of really bad events), we can actually concentrate the density of profits higher.</p>
 <div id="mitigation-cond-var-or-expected-shortfall" class="section level4 hasAnchor" number="9.3.0.1">
 <h4><span class="header-section-number">9.3.0.1</span> Mitigation: Cond VaR or Expected Shortfall<a href="risk-measures.html#mitigation-cond-var-or-expected-shortfall" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>AKA CVar or ES
-<img src="Notes/Obsidian-Attachments/7-Risk-Management-3.png" /></p>
+<p>AKA CVar or ES</p>
+<p><img src="Notes/Obsidian-Attachments/7-Risk-Management-3.png" /></p>
 <p>This gives us the expected losses that can occur given that we are beyond <span class="math inline">\(VaR_{\alpha}\)</span></p>
 <blockquote>
 <p>Imagine we cut off the loss distribution beyond the VaR(<span class="math inline">\(\alpha\)</span>)<span class="math inline">\(=x\)</span> point, and we have another little distribution of losses which are way larger/further from the bulk of the distribution.

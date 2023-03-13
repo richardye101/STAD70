@@ -143,6 +143,7 @@ Work from the STAD70 course taken Winter 2023.
 \item
   Prices of financial instruments (stocks, bonds, futures, options, etc)
 \item
+\item
   LIBOR: London Inter-Bank Offered Rate
 
   \begin{itemize}
@@ -204,14 +205,38 @@ Data that is identified using time:
 \section{Trading}\label{trading}}
 
 There are two types:
-- \textbf{OTC (Over the counter)}
-- Negotiated and traded directly between parties, not for the public to bid on
-- \textbf{Through an Exchange}
-- The TSX, NYSE, LSE (London)
-- Uses an \textbf{auction} system where there are many potential buyers and sellers
-- Uses a \textbf{continuous double auction (CDA)}, where the bids and asks are matched in real-time to determine which trades to execute.
-- A matching order (bid \(\geq\) ask) is executed right away
-- Outstanding orders are maintained in an \textbf{order book}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{OTC (Over the counter)}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Negotiated and traded directly between parties, not for the public to bid on
+  \end{itemize}
+\item
+  \textbf{Through an Exchange}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The TSX, NYSE, LSE (London)
+  \item
+    Uses an \textbf{auction} system where there are many potential buyers and sellers
+  \item
+    Uses a \textbf{continuous double auction (CDA)}, where the bids and asks are matched in real-time to determine which trades to execute.
+
+    \begin{itemize}
+    \tightlist
+    \item
+      A matching order (bid \(\geq\) ask) is executed right away
+    \item
+      Outstanding orders are maintained in an \textbf{order book}
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
 
 \hypertarget{order-types}{%
 \section{Order Types}\label{order-types}}
@@ -376,12 +401,18 @@ Random walks are not a good description of reality, but they are useful for mode
 \section{Skewness}\label{skewness}}
 
 Skewness measures symmetry.
-- Positive skew \(\to\) right skewed
-- Negative skew \(\to\) left skewed
-\[
-Sk = \mathbb{E}\left[ \left( \frac{X-\mu}{\sigma} \right)^{3} \right]
-\]
-\includegraphics{Notes/Obsidian-Attachments/2-Return-Distributions.png}
+
+\begin{itemize}
+\tightlist
+\item
+  Positive skew \(\to\) right skewed
+\item
+  Negative skew \(\to\) left skewed
+  \[
+  Sk = \mathbb{E}\left[ \left( \frac{X-\mu}{\sigma} \right)^{3} \right]
+  \]
+  \includegraphics{Notes/Obsidian-Attachments/2-Return-Distributions.png}
+\end{itemize}
 
 \hypertarget{kurtosis}{%
 \section{Kurtosis}\label{kurtosis}}
@@ -1019,17 +1050,20 @@ Simulating from just the 2D Multivariate normal with a correlation of 75\% compa
 \includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-3.png}
 
 We can use two different marginals (\(\chi^{2}\) in this case), which are meta-Gaussian as they have a gaussian copula.
+
 \includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-4.png}
 
 \begin{quote}
 Here we see the simulated copula values for different correlation values.
-\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-5.png}
 \end{quote}
+
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-5.png}
 
 \begin{quote}
 We can also see the differences between a Copula created using Normal and t distributions
-\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-6.png}
 \end{quote}
+
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-6.png}
 
 \begin{quote}
 The Normal copula shows \(u_{1},u_{2}\) are independent with 0 correlation as there is equal probability any value is sampled from \(u_{1}\) and any value of \(u_{2}\).
@@ -1037,8 +1071,9 @@ The Normal copula shows \(u_{1},u_{2}\) are independent with 0 correlation as th
 On the right, the t copula shows that values on the borders (\(u_{1}=0 \mid\mid u_{2} =0\)) drop to probability 0, and at the extreme values, jump very high.
 
 Peaks at extreme combinations \(\to\) manifestation of tail dependence.
-\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-7.png}
 \end{quote}
+
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-7.png}
 
 \hypertarget{elliptical-copulas}{%
 \section{Elliptical Copulas}\label{elliptical-copulas}}
@@ -1046,6 +1081,7 @@ Peaks at extreme combinations \(\to\) manifestation of tail dependence.
 The Normal and t distributions have a specific type of dependence: \textbf{elliptical dependence}.
 
 The ellipses describe the contours of the multivariate Normal and t distributions:
+
 \includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-8.png}
 
 \includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-9.png}
@@ -1069,8 +1105,9 @@ Where \(\phi\):
   maps from \([0,1] \to [0,\infty]\)
 \item
   \(\phi(0)=\infty, \phi(1)=0\)
-  \includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-10.png}
 \end{itemize}
+
+\includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-10.png}
 
 \begin{quote}
 This is just an example of a possible \(\phi\)
@@ -1121,10 +1158,13 @@ For example, the Clayton generator with \(\theta=0.25\) in blue, and \(\theta=3\
 \includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-12.png}
 
 Samples from the Archimedean copula's:
+
 \includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-11.png}
 
 The dependency contours of each type of archimedean copula's base distribution covariance
+
 \includegraphics{Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-13.png}
+
 This plot shows that we can use Archimedean copula's to model \textbf{asymmetric dependencies}, but suffer limitation in \(\geq\) 3 dimensions.
 
 The Archimedean Copula's value is constant for any permutation of coordinates \(u_{1}, \dots, u_{d}\)
@@ -1512,6 +1552,7 @@ Cov(R_{n},R_{M})
 \]
 
 This is because \(Cov(\underline{R}, R_{M}) = Cov(\underline{R},\underline{w}^{T}\cdot \underline{R}) = \underline{w}^{T}\underbrace{ Cov(\underline{R},\underline{R}) }_{ \underline{\Sigma} } = \underline{w}^{T}\underline{\Sigma}\)
+
 \includegraphics{Notes/Obsidian-Attachments/5-Portfolio-Theory-4.png}
 
 \hypertarget{ex-find-market-portfolio-weights-and-sml-with-n-i.i.d-assets}{%
@@ -1559,9 +1600,11 @@ The \(\beta_{i}\)'s are found empirically, by regressing (\(R_{i}-R_{f}\)) on (\
 \]
 
 By fitting this, we can then extract the \(\beta_{i}\)'s!
+
 \includegraphics{Notes/Obsidian-Attachments/4-Factor-Models.png}
 
 However the mean expected return is much different than the actual return. Therefore the CAPM model doesn't work very well, or hold.
+
 \includegraphics{Notes/Obsidian-Attachments/4-Factor-Models-1.png}
 
 An iteration of this model includes an intercept, \(\alpha\)
@@ -1959,14 +2002,17 @@ The important part of PCA is how many components to select to capture a suitable
 \emph{You don't need many components if the data is very correlated, and a few components may represent most of the variance in the data.}
 
 We can also use a scree plot and pick the number of components before some ``elbow'' point.
+
 \includegraphics{Notes/Obsidian-Attachments/5-Factor-Models-1.png}
 
 \includegraphics{Notes/Obsidian-Attachments/5-Factor-Models-2.png}
 
 PCA run on the correlation matrix (which is the standardized covariance matrix, which is preferred when there is very large range of variances between variables)
+
 \includegraphics{Notes/Obsidian-Attachments/5-Factor-Models-3.png}
 
 When we look at the first component, we can see it is almost an equal weighting of all the assets.
+
 \includegraphics{Notes/Obsidian-Attachments/6-Factor-Models.png}
 
 We can use PCA to identify components that explain overall variation of the data, although it is not guaranteed to give meaning components. For a proper data-generating model, we must use Factor Analysis.
@@ -2026,6 +2072,7 @@ The first thing that comes to mind is measuring risk by the variance of returns.
 WIth the left distribution, the long tail goes to the left which means your returns could become large negative values. (Reasonable to assume it is ``more risky'')
 
 For the right distribution, the average return is negative although there is no chance of very large negative returns. (Implies that it is ``less risky'')
+
 \includegraphics{Notes/Obsidian-Attachments/7-Risk-Management.png}
 
 \begin{quote}
@@ -2159,6 +2206,7 @@ Var doesn't care what happens beyond the cut off, just the actual z-score (or wh
 \subsubsection{Mitigation: Cond VaR or Expected Shortfall}\label{mitigation-cond-var-or-expected-shortfall}}
 
 AKA CVar or ES
+
 \includegraphics{Notes/Obsidian-Attachments/7-Risk-Management-3.png}
 
 This gives us the expected losses that can occur given that we are beyond \(VaR_{\alpha}\)
@@ -2678,6 +2726,7 @@ So
 f^{*} = &\frac{1p-1q}{1\cdot1} = p-q = .55-.45 = .10
 \end{aligned}
 \]
+
 \includegraphics{Notes/Obsidian-Attachments/8-Betting-Strategies-1.png}
 
 \hypertarget{kelly-criterion-in-investing}{%
@@ -3412,10 +3461,10 @@ Calculate daily net returns, plot the returns, sample auto-correlation plot, and
 ##                  date adj_close
 ## 1 2015-01-02 14:30:00  44.17995
 ## 2 2015-01-05 14:30:00  43.25630
-## 3 2015-01-06 14:30:00  42.38906
-## 4 2015-01-07 14:30:00  42.80507
-## 5 2015-01-08 14:30:00  42.80507
-## 6 2015-01-09 14:30:00  42.08588
+## 3 2015-01-06 14:30:00  42.38907
+## 4 2015-01-07 14:30:00  42.80506
+## 5 2015-01-08 14:30:00  42.80506
+## 6 2015-01-09 14:30:00  42.08590
 \end{verbatim}
 
 \begin{Shaded}
@@ -3486,8 +3535,8 @@ This supports the stylized fact that returns follow heavy tail distributions.
 \end{Highlighting}
 \end{Shaded}
 
-We have a fitted mean \(\mu\) of \ensuremath{3.2240301\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4634851\times 10^{-4}}.
-This is compared to the sample mean \(\mu\) of \ensuremath{5.6615321\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827254\times 10^{-4}}.
+We have a fitted mean \(\mu\) of \ensuremath{3.2241203\times 10^{-4}} and variance \(\sigma^{2}\) of \ensuremath{1.4634992\times 10^{-4}}.
+This is compared to the sample mean \(\mu\) of \ensuremath{5.6615334\times 10^{-4}} and variance \(\sigma^2\) of \ensuremath{1.3827281\times 10^{-4}}.
 
 These differences can occur due to the fitted t-distribution smoothing away more extreme values.
 
@@ -5224,7 +5273,7 @@ one step forecasts.
 ## 4    50     41.55       0.7662
 ## 
 ## 
-## Elapsed time : 0.181
+## Elapsed time : 0.475
 \end{verbatim}
 
 \begin{Shaded}

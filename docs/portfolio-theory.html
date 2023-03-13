@@ -766,8 +766,8 @@ Cov(R_{n},R_{M})
 \end{array} \right]
 \end{aligned}
 \]</span></p>
-<p>This is because <span class="math inline">\(Cov(\underline{R}, R_{M}) = Cov(\underline{R},\underline{w}^{T}\cdot \underline{R}) = \underline{w}^{T}\underbrace{ Cov(\underline{R},\underline{R}) }_{ \underline{\Sigma} } = \underline{w}^{T}\underline{\Sigma}\)</span>
-<img src="Notes/Obsidian-Attachments/5-Portfolio-Theory-4.png" /></p>
+<p>This is because <span class="math inline">\(Cov(\underline{R}, R_{M}) = Cov(\underline{R},\underline{w}^{T}\cdot \underline{R}) = \underline{w}^{T}\underbrace{ Cov(\underline{R},\underline{R}) }_{ \underline{\Sigma} } = \underline{w}^{T}\underline{\Sigma}\)</span></p>
+<p><img src="Notes/Obsidian-Attachments/5-Portfolio-Theory-4.png" /></p>
 <div id="ex-find-market-portfolio-weights-and-sml-with-n-i.i.d-assets" class="section level4 hasAnchor" number="7.5.3.1">
 <h4><span class="header-section-number">7.5.3.1</span> Ex: Find market portfolio weights and SML with <span class="math inline">\(N\)</span> i.i.d assets<a href="portfolio-theory.html#ex-find-market-portfolio-weights-and-sml-with-n-i.i.d-assets" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Each asset <span class="math inline">\(\sim N(\mu,\sigma^{2})\)</span> returns and the risk-free return <span class="math inline">\(\mu_{f}&lt;\mu\)</span>.
@@ -807,10 +807,10 @@ Which implies that the market portfolio is equal to the minimum variance portfol
 <p><span class="math display">\[
 (R_{i,t} - R_{f,t}) = \beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}, \quad \text{ where } \epsilon_{t} \sim N(0,\sigma^{2}_{\epsilon,i})
 \]</span></p>
-<p>By fitting this, we can then extract the <span class="math inline">\(\beta_{i}\)</span>’s!
-<img src="Notes/Obsidian-Attachments/4-Factor-Models.png" /></p>
-<p>However the mean expected return is much different than the actual return. Therefore the CAPM model doesn’t work very well, or hold.
-<img src="Notes/Obsidian-Attachments/4-Factor-Models-1.png" /></p>
+<p>By fitting this, we can then extract the <span class="math inline">\(\beta_{i}\)</span>’s!</p>
+<p><img src="Notes/Obsidian-Attachments/4-Factor-Models.png" /></p>
+<p>However the mean expected return is much different than the actual return. Therefore the CAPM model doesn’t work very well, or hold.</p>
+<p><img src="Notes/Obsidian-Attachments/4-Factor-Models-1.png" /></p>
 <p>An iteration of this model includes an intercept, <span class="math inline">\(\alpha\)</span>
 <span class="math display">\[
 (R_{i,t} - R_{f,t}) = \alpha_{i} + \beta_{i}(R_{M,t}-R_{f,t})+\epsilon_{t}

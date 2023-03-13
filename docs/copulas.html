@@ -631,29 +631,29 @@ X_{i} = F_{i}^{-1}(U_{i}) \ \forall \ i
 <div id="copula-example-plots" class="section level3 hasAnchor" number="6.4.1">
 <h3><span class="header-section-number">6.4.1</span> Copula example plots<a href="copulas.html#copula-example-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-3.png" /></p>
-<p>We can use two different marginals (<span class="math inline">\(\chi^{2}\)</span> in this case), which are meta-Gaussian as they have a gaussian copula.
-<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-4.png" /></p>
+<p>We can use two different marginals (<span class="math inline">\(\chi^{2}\)</span> in this case), which are meta-Gaussian as they have a gaussian copula.</p>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-4.png" /></p>
 <blockquote>
-<p>Here we see the simulated copula values for different correlation values.
-<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-5.png" /></p>
+<p>Here we see the simulated copula values for different correlation values.</p>
 </blockquote>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-5.png" /></p>
 <blockquote>
-<p>We can also see the differences between a Copula created using Normal and t distributions
-<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-6.png" /></p>
+<p>We can also see the differences between a Copula created using Normal and t distributions</p>
 </blockquote>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-6.png" /></p>
 <blockquote>
 <p>The Normal copula shows <span class="math inline">\(u_{1},u_{2}\)</span> are independent with 0 correlation as there is equal probability any value is sampled from <span class="math inline">\(u_{1}\)</span> and any value of <span class="math inline">\(u_{2}\)</span>.</p>
 <p>On the right, the t copula shows that values on the borders (<span class="math inline">\(u_{1}=0 \mid\mid u_{2} =0\)</span>) drop to probability 0, and at the extreme values, jump very high.</p>
-<p>Peaks at extreme combinations <span class="math inline">\(\to\)</span> manifestation of tail dependence.
-<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-7.png" /></p>
+<p>Peaks at extreme combinations <span class="math inline">\(\to\)</span> manifestation of tail dependence.</p>
 </blockquote>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-7.png" /></p>
 </div>
 </div>
 <div id="elliptical-copulas" class="section level2 hasAnchor" number="6.5">
 <h2><span class="header-section-number">6.5</span> Elliptical Copulas<a href="copulas.html#elliptical-copulas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The Normal and t distributions have a specific type of dependence: <strong>elliptical dependence</strong>.</p>
-<p>The ellipses describe the contours of the multivariate Normal and t distributions:
-<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-8.png" /></p>
+<p>The ellipses describe the contours of the multivariate Normal and t distributions:</p>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-8.png" /></p>
 <p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-9.png" /></p>
 <p>The ellipses are determined by the covariance matrix of the distributions. This implies a symmetry in the dependency structure, where <strong>the strength</strong> is the same for positively and negatively correlated variables.</p>
 </div>
@@ -667,9 +667,9 @@ Where <span class="math inline">\(\phi\)</span>:</p>
 <ul>
 <li>is a <strong>continuous convex</strong> generator function</li>
 <li>maps from <span class="math inline">\([0,1] \to [0,\infty]\)</span></li>
-<li><span class="math inline">\(\phi(0)=\infty, \phi(1)=0\)</span>
-<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-10.png" /></li>
+<li><span class="math inline">\(\phi(0)=\infty, \phi(1)=0\)</span></li>
 </ul>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-10.png" /></p>
 <blockquote>
 <p>This is just an example of a possible <span class="math inline">\(\phi\)</span></p>
 </blockquote>
@@ -720,11 +720,11 @@ right=1.2;left=-0.2;
 y=1/x^{0.25}-1|0&lt;=x&lt;=1|blue
 y=1/x^{3}-1|0&lt;=x&lt;=1|red</code></pre>
 <p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-12.png" /></p>
-<p>Samples from the Archimedean copula’s:
-<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-11.png" /></p>
-<p>The dependency contours of each type of archimedean copula’s base distribution covariance
-<img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-13.png" />
-This plot shows that we can use Archimedean copula’s to model <strong>asymmetric dependencies</strong>, but suffer limitation in <span class="math inline">\(\geq\)</span> 3 dimensions.</p>
+<p>Samples from the Archimedean copula’s:</p>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-11.png" /></p>
+<p>The dependency contours of each type of archimedean copula’s base distribution covariance</p>
+<p><img src="Notes/Obsidian-Attachments/4-Multivariate-Return-Modelling-13.png" /></p>
+<p>This plot shows that we can use Archimedean copula’s to model <strong>asymmetric dependencies</strong>, but suffer limitation in <span class="math inline">\(\geq\)</span> 3 dimensions.</p>
 <p>The Archimedean Copula’s value is constant for any permutation of coordinates <span class="math inline">\(u_{1}, \dots, u_{d}\)</span>
 <span class="math display">\[
 \begin{aligned}
