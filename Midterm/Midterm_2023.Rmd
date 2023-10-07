@@ -1,0 +1,163 @@
+---
+title: "Midterm_2023"
+author: "Richard Ye"
+output: html_document
+date: "2023-03-11"
+---
+
+# Q4
+
+```{r}
+a = 0.05
+z = seq(0,100,0.01)
+evar = 1/z * ( log(exp(z)-1) - log(z) - log(0.05))
+
+which.min(evar)
+
+plot(z[4000:7000], evar[4000:7000], type="l")
+
+z[which.min(evar)]
+```
+
+By way of calculating the evar for z from 0 to 100 (I tested up to 1000) we can see that a value of `z=54.37` minimizes EVaR.Of course, we can make `z` more granular to get a more precise value for the optimal z.
+
+# Q5
+
+```{r}
+library(tseries)
+library(zoo)
+
+tickers = c("^GSPC", "AAPL", "MSFT", "AMZN", "NVDA", "GOOGL", "BRK-B", "GOOG", "TSLA", "XOM", "UNH")
+N = length(tickers)
+
+P = list() # list for holding prices
+
+for (i in 1:N) {
+  # cat("Downloading ", i, " out of ", N , "\n")
+  P[[i]] = get.hist.quote(instrument = tickers[i], 
+    start = as.Date("2015-01-01"), 
+    end=as.Date("2020-12-31"), 
+    compression="d", quote = "AdjClose", 
+    retclass = "zoo", quiet = T)
+}
+```
+
+
+## Part A
+
+```{r}
+R_mut=lapply(P, FUN = function(x){ diff(x) /stats::lag(x,-1) }) # calculate MF returns
+net_r = matrix(unlist(R_mut), ncol=N)
+colnames(net_r) = tickers
+head(net_r)
+```
+
+## Part B
+
+```{r}
+S0 = 1000
+
+A2 = P[[2]]["2018-11-08"]
+A1 = P[[2]]["2016-10-31"]
+
+St = (A2[[1]]-A1[[1]]) * S0
+St
+```
+
+## Part C
+
+```{r, warning=FALSE}
+# By our in class theory, we now the that the weighted sum of net returns are 
+# still net returns (here I just divide by 2 as they are equally weighted)
+aapl_xom = net_r[,c(2,10)]
+rp = rowSums(aapl_xom) / 2
+
+c_fitted = MASS::fitdistr(rp, "t")
+c_fitted
+```
+
+The fitted distribution has 3.0318 degrees of freedom.
+
+## Part D
+
+```{r, warning=FALSE}
+d_fitted = MASS::fitdistr(aapl_xom , "t")
+d_fitted
+
+sigma = d_fitted$estimate[[2]]
+v = d_fitted$estimate[[3]]
+var = sigma^2 * (v / (v-2))
+var
+```
+
+The distribution of an equally weighted portfolio of the two stocks has mean `r d_fitted[[1]]` and variance `r var`.
+
+## Part E
+
+```{r}
+library(quadprog)
+mkt = net_r[,1]
+net_r = net_r[,2:11]
+COV=cov(net_r)
+MU=colMeans(net_r)
+SD=sqrt(diag(COV))
+N=dim(net_r)[2] 
+
+plot(SD, MU, pch=16, cex=1.2, col= 2, xlim=c(0,.1), ylim=c(-0.001,.004))
+abline(v=0, lty=2); abline(h=0, lty=2) 
+text(SD, MU, tickers, cex=1, pos=4)
+
+Amat = cbind(rep(1,N),MU)
+mu.p = seq( -.001, .006,length=100)
+sd.p = mu.p; 
+
+for (i in 1:length(mu.p)) {
+  bvec=c(1,mu.p[i]) 
+  out=quadprog::solve.QP(Dmat=2*COV,dvec=rep(0,N),Amat=Amat,bvec=bvec,meq=2)
+  sd.p[i] = sqrt(out$value)
+}
+lines(sd.p,mu.p,type="l", lwd=2, col=2) # plot least variance portfolios
+
+```
+
+## Part F
+
+```{r}
+xom = net_r[,10]
+mu = mean(xom)
+sharpe =(mu)/sd(xom)
+sharpe 
+
+model = lm(xom ~ mkt)
+beta = model$coefficients[[2]]
+treynor = mu/beta
+treynor
+
+jensens = model$coefficients[[1]]
+jensens
+```
+
+# Q6
+
+## Part A
+
+```{r}
+x = runif(1000)
+theta = 2
+cly1 = 1/x^(theta)-1
+
+y = runif(1000)
+cly2 = 1/y^(theta)-1
+plot(x, y)
+```
+
+## Part B
+
+```{r}
+x2 = qt(x, 2)
+y2 = qt(y, 4)
+plot(x2, y2)
+```
+
+
+

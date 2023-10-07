@@ -1,0 +1,142 @@
+---
+title: "STAD70 W21 Final Solution"
+author: "Sotirios Damouras"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Q1.(c)
+```{r}
+EVaR = function(z, alpha = .05, a=-2, b=1 ){
+  return( 1/z * log( ( exp(b*z) - exp(a*z) ) / (z*(b-a)* alpha) )  )
+}
+optimize( EVaR, c(1,100) )
+```
+
+
+### Q3
+
+#### (a)
+```{r}
+E_log_wealth = function(x){
+  return( (2+1/x)*log(1+2*x) - (1/x-1)*log(1-x) - 1 ) 
+}
+f_ = optimize(E_log_wealth, c(0, 1), tol = 0.0001, maximum = T)$maximum
+
+x = seq(0,1,.01)
+plot(x, E_log_wealth(x), type ="l" )
+points( f_, E_log_wealth(f_), pch = 16)
+```
+
+#### (b)
+```{r}
+set.seed(123)
+n=30; m=1000
+R = matrix( runif(n*m, -1,2), n, m)
+V = apply( 1+f_*R, 2, cumprod )
+
+Vavg = apply( V, 1, mean )
+Vlo = apply( V, 1, quantile, prob = .05 )
+Vhi = apply( V, 1, quantile, prob = .95 )
+plot( Vavg, type = "l", ylim = c(.001,25000) )
+lines( Vlo, col=2 ); lines( Vhi, col = 2 )
+
+# in log-scale
+plot( Vavg, type = "l", log = "y", ylim = c(.001,25000) )
+lines( Vlo, col=2 ); lines( Vhi, col = 2 )
+```
+
+#### (c)
+```{r}
+
+T_Kelly = T_all_in = integer(1000)
+
+set.seed(123)
+for( i in 1:1000 ){
+  # for Kelly 
+  V = 1; j = 0
+  while( V < 10000 ){
+    V = V * (1 + f_ * runif(1,-1,2) )
+    j = j + 1
+  }
+  T_Kelly[i] = j
+  
+  # for all-in
+  V = 1; j = 0
+  while( V < 10000 ){
+    V = V * (1 + runif(1,-1,2) )
+    j = j + 1
+  }
+  T_all_in[i] = j
+}
+
+mean(T_Kelly)
+mean(T_all_in)
+```
+
+The Kelly criterion takes a shorter time, on average, to reach the goal
+
+
+### Q4
+
+```{r}
+load("STAD70_W21_Final.RData")
+
+b = model.matrix( object = ~ sectors - 1 )
+f = matrix( 0, nrow = nrow(R), ncol = nlevels(sectors) )
+e = matrix(0, nrow = nrow(R), ncol = ncol(R) )
+
+for( i in 1:nrow(R)){
+  tmp = lm( R[i,] ~ b - 1 )  
+  f[i,] = tmp$coefficients
+  e[i,] = tmp$residuals
+}
+```
+
+#### (a)
+
+```{r}
+plot( f[,1], f[,2] )
+```
+
+The two factors are positively correlated. This is expected, since we know that all asset returns have positive correlation, through their dependence on the overall "market" behavior.
+
+
+#### (b)
+```{r}
+S = var(R)
+Si = solve(S)
+w_mv_sample = rowSums(Si)/sum(Si)
+```
+
+
+#### (c)
+```{r}
+S_e = diag( apply( e, 2, var ) )
+S_f = cov(f) 
+
+S_model = S_e + b %*% S_f %*% t(b)
+Si = solve( S_model )
+w_mv_model = rowSums(Si)/sum(Si)
+```
+
+#### (d)
+```{r}
+R_mv_sample = R %*% w_mv_sample
+R_mv_model = R %*% w_mv_model
+
+(Sharpe_mv_sample = mean( R_mv_sample ) / sd( R_mv_sample ))
+(Sharpe_mv_model = mean( R_mv_model ) / sd( R_mv_model ))
+```
+
+#### (e)
+```{r}
+plot( cumprod( 1 + R_mv_model ), type ="l", col = 2 , 
+      ylab = "gross return", xlab = "day")
+lines( cumprod( 1 + R_mv_sample ), col = 1  )
+legend( "topleft", col=c(1,2), lwd=2, legend = c("Sample covariance", "Industry factor model covariance"))
+```
+

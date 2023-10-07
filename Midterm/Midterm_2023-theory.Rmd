@@ -1,0 +1,38 @@
+---
+title: "Untitled"
+output: html_document
+date: "2023-03-11"
+---
+
+
+```{r}
+rho = -0.2
+cov = rho * sqrt(0.04)^2
+v = diag(0.04, nrow = 5)
+v_mat = matrix(cov, nrow=5, ncol=5) - diag(cov, nrow=5) + v
+v_mat
+```
+
+```{r}
+v_inv = solve(v_mat)
+ones = matrix(1,ncol=5) 
+w = rowSums(v_inv) / sum(v_inv)
+t(w) %*% v_mat %*% w
+```
+```{r}
+c(-0.2, 0.04, 0.04) %*% t(c(-0.2, 0.04, 0.04))
+
+```
+
+
+# Q
+
+```{r}
+b = sqrt(matrix(c(1,5,5,2), nrow=2, ncol=2))
+b %*% t(b)
+```
+
+
+```{r}
+
+```

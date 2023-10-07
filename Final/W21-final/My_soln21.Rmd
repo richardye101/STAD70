@@ -1,0 +1,147 @@
+---
+title: "W21-Final"
+author: "Richard Ye"
+date: "2023-04-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# Q3
+
+## Part A
+
+Finding kelly criterion based on EVaR
+```{r}
+EVaR_opt = function(x){
+  return( (2+1/x)*log(1+2*x)-(1/x-1)*log(1-x)-1)
+  }
+
+f_ = optimize(EVaR_opt, c(0,1), maximum=T)$maximum
+f_
+```
+
+## Part B
+Simulate 1000 wealth paths consisting of 30 investments steps each using the Kelly fraction from the previous part (or, if you didn’t get it, just f = .7). On the same axes, plot the mean simulated wealth, and the 5% and 95% quantiles of the simulated wealth at each step.
+
+```{r}
+set.seed(123)
+n=1000; m=30
+r_i = runif(n*m, -1, 2) %>% matrix(nrow=n,ncol=m)
+
+# 1+f_*r_i is the amount of wealth at time i after betting f_ of wealth
+
+# applies the function cumprod over columns for each row, where every value has 
+# been augmented to 1+f_*r_i
+V = apply(1+f_*r_i, 1, cumprod)
+
+#Avg value of each path
+V_avg = apply(V, 1, mean)
+V_95 = apply(V, 1, quantile, prob=.95)
+V_05 = apply(V, 1, quantile, prob=.05)
+
+plot( V_avg, type = "l", ylim = c(.001,10000) )
+lines( V_05, col=2 ); lines( V_95, col = 2 )
+
+plot( V_avg, type = "l", log="y", ylim = c(.001,25000) )
+lines( V_05, col=2 ); lines( V_95, col = 2 )
+```
+
+## Part C
+
+In class, we mentioned that the Kelly criterion strategy reaches any wealth level faster than other strategies. You will test this claim with a simulation experiment. Fix a target wealth of 10,000 and simulate 1,000 paths with as many steps necessary to reach or exceed this level, under both the Kelly strategy (f∗) and the all-in strategy (f = 1). Report the average number of steps required to reach or exceed the target wealth under each strategy. Does it confirm the claim?
+
+```{r}
+targ = 10000
+T_kelly = T_allin = integer(1000)
+
+set.seed(123)
+for(i in 1:1000){
+  #kelly
+  V = 1; j = 0
+  while(V<targ){
+    V = V * ( 1+f_*runif(1,-1,2) )
+    j = j + 1
+  }
+  T_kelly[i] = j
+  #all-in
+  V = 1; j = 0
+  while(V<targ){
+    V = V * ( 1+ runif(1,-1,2) )
+    j = j + 1
+  }
+  T_allin[i] = j
+}
+
+mean(T_kelly)
+mean(T_allin)
+```
+
+# Q4
+
+## Part A
+
+```{r}
+load("STAD70_W21_Final.RData")
+b = model.matrix( object = ~ sectors - 1 )
+f = matrix( 0, nrow = nrow(R), ncol = nlevels(sectors) )
+e = matrix(0, nrow = nrow(R), ncol = ncol(R) )
+for( i in 1:nrow(R) ){
+tmp = lm( R[i,] ~ b - 1 )
+f[i,] = tmp$coefficients
+e[i,] = tmp$residuals
+}
+```
+
+```{r}
+plot(f[,1], f[,2])
+```
+
+## Part B
+```{r}
+v = var(R)
+sig_inv = solve(v)
+weights = rowSums(sig_inv) / sum(sig_inv)
+weights
+```
+
+## Part C
+Use the industry factor model to estimate the return covariance matrix (from βΣF β⊤ + Σe), and use that to calculate the minimum-variance-portfolio weights.
+
+```{r}
+# Error variance, removes covariances
+S_e = diag( apply( e, 2, var ) )
+
+# Variance of factors
+S_f = cov(f)
+
+S_model = S_e + b %*% S_f %*% t(b)
+Si = solve( S_model )
+w_mv_model = rowSums(Si)/sum(Si)
+w_mv_model
+```
+
+## Part D
+Creating the portfolio returns by multiplying the returns by the weights
+
+sharpe ratio is the mean portfolio return minus risk free return divided by the std dev of the port returns, but risk free return is 0
+```{r}
+R_mv_sample = R %*% weights
+R_mv_model = R %*% w_mv_model
+
+(Sharpe_mv_sample = mean( R_mv_sample ) / sd( R_mv_sample ))
+(Sharpe_mv_model = mean( R_mv_model ) / sd( R_mv_model ))
+```
+
+## Part E
+```{r}
+C_sample = (1+R_mv_sample) %>% cumprod()
+C_model = (1+R_mv_model) %>% cumprod()
+plot(C_sample, type = "l", ylim=c(1, max(C_sample, C_model)),
+     ylab = "gross return", xlab = "day")
+lines(C_model, col = 2)
+legend( "topleft", col=c(1,2), lwd=2, legend = c("Sample covariance", "Industry factor model covariance"))
+```

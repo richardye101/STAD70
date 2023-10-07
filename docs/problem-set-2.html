@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 17 Problem Set 2 | STAD70 Course Work</title>
+  <meta name="description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 17 Problem Set 2 | STAD70 Course Work" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 17 Problem Set 2 | STAD70 Course Work" />
+  
+  <meta name="twitter:description" content="A collection of homework and assignments from the STAD70 course at UTSC" />
+  
+
+<meta name="author" content="Richard Ye" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="problem-set-1.html"/>
+<link rel="next" href="problem-set-3.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.0/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">STAD70 Work</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html"><i class="fa fa-check"></i><b>2</b> Financial Data and Returns</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html#trading"><i class="fa fa-check"></i><b>2.1</b> Trading</a></li>
+<li class="chapter" data-level="2.2" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html#order-types"><i class="fa fa-check"></i><b>2.2</b> Order Types</a></li>
+<li class="chapter" data-level="2.3" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html#returns"><i class="fa fa-check"></i><b>2.3</b> Returns</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html#net-returns"><i class="fa fa-check"></i><b>2.3.1</b> Net Returns</a></li>
+<li class="chapter" data-level="2.3.2" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html#log-returns"><i class="fa fa-check"></i><b>2.3.2</b> Log Returns</a></li>
+<li class="chapter" data-level="2.3.3" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html#returns-accounting-for-dividends"><i class="fa fa-check"></i><b>2.3.3</b> Returns accounting for dividends</a></li>
+<li class="chapter" data-level="2.3.4" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html#returns-accounting-for-splits"><i class="fa fa-check"></i><b>2.3.4</b> Returns accounting for splits</a></li>
+<li class="chapter" data-level="2.3.5" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html#adjusted-returns"><i class="fa fa-check"></i><b>2.3.5</b> Adjusted returns</a></li>
+<li class="chapter" data-level="2.3.6" data-path="financial-data-and-returns.html"><a href="financial-data-and-returns.html#random-walk-model"><i class="fa fa-check"></i><b>2.3.6</b> Random Walk Model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="return-distributions.html"><a href="return-distributions.html"><i class="fa fa-check"></i><b>3</b> Return Distributions</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="return-distributions.html"><a href="return-distributions.html#skewness"><i class="fa fa-check"></i><b>3.1</b> Skewness</a></li>
+<li class="chapter" data-level="3.2" data-path="return-distributions.html"><a href="return-distributions.html#kurtosis"><i class="fa fa-check"></i><b>3.2</b> Kurtosis</a></li>
+<li class="chapter" data-level="3.3" data-path="return-distributions.html"><a href="return-distributions.html#qq-plot"><i class="fa fa-check"></i><b>3.3</b> QQ Plot</a></li>
+<li class="chapter" data-level="3.4" data-path="return-distributions.html"><a href="return-distributions.html#heavy-tail-distributions"><i class="fa fa-check"></i><b>3.4</b> Heavy Tail Distributions</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="return-distributions.html"><a href="return-distributions.html#common-heavy-tail-distributions"><i class="fa fa-check"></i><b>3.4.1</b> Common Heavy Tail Distributions</a>
+<ul>
+<li class="chapter" data-level="3.4.1.1" data-path="return-distributions.html"><a href="return-distributions.html#pareto"><i class="fa fa-check"></i><b>3.4.1.1</b> Pareto</a></li>
+<li class="chapter" data-level="3.4.1.2" data-path="return-distributions.html"><a href="return-distributions.html#standard-cauchy"><i class="fa fa-check"></i><b>3.4.1.2</b> Standard Cauchy</a></li>
+<li class="chapter" data-level="3.4.1.3" data-path="return-distributions.html"><a href="return-distributions.html#students-t"><i class="fa fa-check"></i><b>3.4.1.3</b> Students t</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4.2" data-path="return-distributions.html"><a href="return-distributions.html#stable-distributions"><i class="fa fa-check"></i><b>3.4.2</b> Stable Distributions</a>
+<ul>
+<li class="chapter" data-level="3.4.2.1" data-path="return-distributions.html"><a href="return-distributions.html#generalized-central-limit-theorem"><i class="fa fa-check"></i><b>3.4.2.1</b> Generalized Central Limit Theorem</a></li>
+<li class="chapter" data-level="3.4.2.2" data-path="return-distributions.html"><a href="return-distributions.html#measuring-tail-behaviour"><i class="fa fa-check"></i><b>3.4.2.2</b> Measuring tail behaviour</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="return-distributions.html"><a href="return-distributions.html#mixture-distributions"><i class="fa fa-check"></i><b>3.5</b> Mixture Distributions</a>
+<ul>
+<li class="chapter" data-level="3.5.0.1" data-path="return-distributions.html"><a href="return-distributions.html#normal-scale-mixture"><i class="fa fa-check"></i><b>3.5.0.1</b> Normal scale mixture</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="modelling-extreme-events.html"><a href="modelling-extreme-events.html"><i class="fa fa-check"></i><b>4</b> Modelling Extreme Events</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="modelling-extreme-events.html"><a href="modelling-extreme-events.html#stylized-facts"><i class="fa fa-check"></i><b>4.1</b> Stylized Facts</a></li>
+<li class="chapter" data-level="4.2" data-path="modelling-extreme-events.html"><a href="modelling-extreme-events.html#extreme-value-theory"><i class="fa fa-check"></i><b>4.2</b> Extreme Value Theory</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="modelling-extreme-events.html"><a href="modelling-extreme-events.html#two-main-results"><i class="fa fa-check"></i><b>4.2.1</b> Two main results</a></li>
+<li class="chapter" data-level="4.2.2" data-path="modelling-extreme-events.html"><a href="modelling-extreme-events.html#st-theorem-fisher-tippet-gnedenko"><i class="fa fa-check"></i><b>4.2.2</b> 1st Theorem: Fisher-Tippet-Gnedenko</a></li>
+<li class="chapter" data-level="4.2.3" data-path="modelling-extreme-events.html"><a href="modelling-extreme-events.html#generalized-extreme-value-gev-distribution"><i class="fa fa-check"></i><b>4.2.3</b> Generalized Extreme Value (GEV) Distribution</a></li>
+<li class="chapter" data-level="4.2.4" data-path="modelling-extreme-events.html"><a href="modelling-extreme-events.html#nd-theorem-pickands-balkema-de-haan"><i class="fa fa-check"></i><b>4.2.4</b> 2nd Theorem: Pickands-Balkema-De Haan</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="multivariate-return-modelling.html"><a href="multivariate-return-modelling.html"><i class="fa fa-check"></i><b>5</b> Multivariate Return Modelling</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="multivariate-return-modelling.html"><a href="multivariate-return-modelling.html#covariance-correlation-matrix"><i class="fa fa-check"></i><b>5.1</b> Covariance &amp; Correlation Matrix</a></li>
+<li class="chapter" data-level="5.2" data-path="multivariate-return-modelling.html"><a href="multivariate-return-modelling.html#multivariate-students-t-distribution"><i class="fa fa-check"></i><b>5.2</b> Multivariate Student’s t Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="copulas.html"><a href="copulas.html"><i class="fa fa-check"></i><b>6</b> Copulas</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="copulas.html"><a href="copulas.html#the-independence-copula"><i class="fa fa-check"></i><b>6.1</b> The independence copula</a></li>
+<li class="chapter" data-level="6.2" data-path="copulas.html"><a href="copulas.html#sklars-theorem"><i class="fa fa-check"></i><b>6.2</b> Sklar’s Theorem</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="copulas.html"><a href="copulas.html#example"><i class="fa fa-check"></i><b>6.2.1</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="copulas.html"><a href="copulas.html#gaussian-copula"><i class="fa fa-check"></i><b>6.3</b> Gaussian Copula</a></li>
+<li class="chapter" data-level="6.4" data-path="copulas.html"><a href="copulas.html#creating-copulas-from-multivariate-distributions"><i class="fa fa-check"></i><b>6.4</b> Creating Copula’s from Multivariate Distributions</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="copulas.html"><a href="copulas.html#copula-example-plots"><i class="fa fa-check"></i><b>6.4.1</b> Copula example plots</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="copulas.html"><a href="copulas.html#elliptical-copulas"><i class="fa fa-check"></i><b>6.5</b> Elliptical Copulas</a></li>
+<li class="chapter" data-level="6.6" data-path="copulas.html"><a href="copulas.html#archimedean-copulas"><i class="fa fa-check"></i><b>6.6</b> Archimedean Copulas</a></li>
+<li class="chapter" data-level="6.7" data-path="copulas.html"><a href="copulas.html#fitting-copulas"><i class="fa fa-check"></i><b>6.7</b> Fitting Copula’s</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="portfolio-theory.html"><a href="portfolio-theory.html"><i class="fa fa-check"></i><b>7</b> Portfolio Theory</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="portfolio-theory.html"><a href="portfolio-theory.html#assumptions"><i class="fa fa-check"></i><b>7.1</b> Assumptions</a></li>
+<li class="chapter" data-level="7.2" data-path="portfolio-theory.html"><a href="portfolio-theory.html#dealing-with-two-assets"><i class="fa fa-check"></i><b>7.2</b> Dealing with Two Assets</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="portfolio-theory.html"><a href="portfolio-theory.html#portfolio-return"><i class="fa fa-check"></i><b>7.2.1</b> Portfolio Return</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="portfolio-theory.html"><a href="portfolio-theory.html#efficiency-frontier"><i class="fa fa-check"></i><b>7.3</b> Efficiency frontier</a></li>
+<li class="chapter" data-level="7.4" data-path="portfolio-theory.html"><a href="portfolio-theory.html#multiple-asset-portfolio"><i class="fa fa-check"></i><b>7.4</b> Multiple asset portfolio</a></li>
+<li class="chapter" data-level="7.5" data-path="portfolio-theory.html"><a href="portfolio-theory.html#capm---capital-asset-pricing-model"><i class="fa fa-check"></i><b>7.5</b> CAPM - Capital Asset Pricing Model</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="portfolio-theory.html"><a href="portfolio-theory.html#market-portfolio"><i class="fa fa-check"></i><b>7.5.1</b> Market Portfolio</a></li>
+<li class="chapter" data-level="7.5.2" data-path="portfolio-theory.html"><a href="portfolio-theory.html#capital-market-line"><i class="fa fa-check"></i><b>7.5.2</b> Capital Market Line</a></li>
+<li class="chapter" data-level="7.5.3" data-path="portfolio-theory.html"><a href="portfolio-theory.html#security-market-line"><i class="fa fa-check"></i><b>7.5.3</b> Security Market Line</a>
+<ul>
+<li class="chapter" data-level="7.5.3.1" data-path="portfolio-theory.html"><a href="portfolio-theory.html#ex-find-market-portfolio-weights-and-sml-with-n-i.i.d-assets"><i class="fa fa-check"></i><b>7.5.3.1</b> Ex: Find market portfolio weights and SML with <span class="math inline">\(N\)</span> i.i.d assets</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5.4" data-path="portfolio-theory.html"><a href="portfolio-theory.html#security-characteristic-line"><i class="fa fa-check"></i><b>7.5.4</b> Security Characteristic Line</a>
+<ul>
+<li class="chapter" data-level="7.5.4.1" data-path="portfolio-theory.html"><a href="portfolio-theory.html#alpha-beta"><i class="fa fa-check"></i><b>7.5.4.1</b> Alpha &amp; Beta</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5.5" data-path="portfolio-theory.html"><a href="portfolio-theory.html#legacy-of-capm"><i class="fa fa-check"></i><b>7.5.5</b> Legacy of CAPM</a></li>
+<li class="chapter" data-level="7.5.6" data-path="portfolio-theory.html"><a href="portfolio-theory.html#performance-evaluation"><i class="fa fa-check"></i><b>7.5.6</b> Performance Evaluation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="factor-models.html"><a href="factor-models.html"><i class="fa fa-check"></i><b>8</b> Factor Models</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="factor-models.html"><a href="factor-models.html#three-factor-models"><i class="fa fa-check"></i><b>8.1</b> Three Factor models</a></li>
+<li class="chapter" data-level="8.2" data-path="factor-models.html"><a href="factor-models.html#factor-model-assumptions"><i class="fa fa-check"></i><b>8.2</b> Factor Model Assumptions</a></li>
+<li class="chapter" data-level="8.3" data-path="factor-models.html"><a href="factor-models.html#time-series-regression-models"><i class="fa fa-check"></i><b>8.3</b> Time Series Regression Models</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="factor-models.html"><a href="factor-models.html#fama-french-3-factor-model"><i class="fa fa-check"></i><b>8.3.1</b> Fama-French 3 Factor Model</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="factor-models.html"><a href="factor-models.html#statistical-factor-models"><i class="fa fa-check"></i><b>8.4</b> Statistical Factor Models</a></li>
+<li class="chapter" data-level="8.5" data-path="factor-models.html"><a href="factor-models.html#principle-component-analysis-pca"><i class="fa fa-check"></i><b>8.5</b> Principle Component Analysis (PCA)</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="factor-models.html"><a href="factor-models.html#selecting-components"><i class="fa fa-check"></i><b>8.5.1</b> Selecting Components</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="factor-models.html"><a href="factor-models.html#factor-analysis"><i class="fa fa-check"></i><b>8.6</b> Factor Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="risk-measures.html"><a href="risk-measures.html"><i class="fa fa-check"></i><b>9</b> Risk Measures</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="risk-measures.html"><a href="risk-measures.html#formulas"><i class="fa fa-check"></i><b>9.1</b> Formulas</a></li>
+<li class="chapter" data-level="9.2" data-path="risk-measures.html"><a href="risk-measures.html#value-at-risk-var"><i class="fa fa-check"></i><b>9.2</b> Value At Risk (VAR)</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="risk-measures.html"><a href="risk-measures.html#example-1"><i class="fa fa-check"></i><b>9.2.1</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="risk-measures.html"><a href="risk-measures.html#var-hides-tail-risk"><i class="fa fa-check"></i><b>9.3</b> VaR hides tail risk</a>
+<ul>
+<li class="chapter" data-level="9.3.0.1" data-path="risk-measures.html"><a href="risk-measures.html#mitigation-cond-var-or-expected-shortfall"><i class="fa fa-check"></i><b>9.3.0.1</b> Mitigation: Cond VaR or Expected Shortfall</a></li>
+<li class="chapter" data-level="9.3.0.2" data-path="risk-measures.html"><a href="risk-measures.html#example-2"><i class="fa fa-check"></i><b>9.3.0.2</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="risk-measures.html"><a href="risk-measures.html#risk-measure-properties"><i class="fa fa-check"></i><b>9.4</b> Risk Measure Properties</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="risk-measures.html"><a href="risk-measures.html#example-that-var-and-cvar-satisfy-prop-2-3"><i class="fa fa-check"></i><b>9.4.1</b> Example that VAR and CVar satisfy prop 2 &amp; 3</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="risk-measures.html"><a href="risk-measures.html#entropic-var"><i class="fa fa-check"></i><b>9.5</b> Entropic VaR</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="risk-measures.html"><a href="risk-measures.html#evar-for-a-normal-distribution"><i class="fa fa-check"></i><b>9.5.1</b> EVaR for a Normal Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="risk-measures.html"><a href="risk-measures.html#calculating-risk-measures"><i class="fa fa-check"></i><b>9.6</b> Calculating Risk Measures</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="betting-strategies.html"><a href="betting-strategies.html"><i class="fa fa-check"></i><b>10</b> Betting Strategies</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="betting-strategies.html"><a href="betting-strategies.html#problem-setup"><i class="fa fa-check"></i><b>10.1</b> Problem Setup</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="betting-strategies.html"><a href="betting-strategies.html#scenario-1-bet-fixed-amount"><i class="fa fa-check"></i><b>10.1.1</b> Scenario 1: Bet fixed amount</a>
+<ul>
+<li class="chapter" data-level="10.1.1.1" data-path="betting-strategies.html"><a href="betting-strategies.html#hidden-probability-of-ruin"><i class="fa fa-check"></i><b>10.1.1.1</b> Hidden probability of ruin</a></li>
+</ul></li>
+<li class="chapter" data-level="10.1.2" data-path="betting-strategies.html"><a href="betting-strategies.html#scenario-2-bet-entire-wealth"><i class="fa fa-check"></i><b>10.1.2</b> Scenario 2: Bet entire wealth</a></li>
+<li class="chapter" data-level="10.1.3" data-path="betting-strategies.html"><a href="betting-strategies.html#scenario-3-exp-growth-wo-ruin"><i class="fa fa-check"></i><b>10.1.3</b> Scenario 3: Exp growth w/o ruin</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="betting-strategies.html"><a href="betting-strategies.html#kelly-criterion"><i class="fa fa-check"></i><b>10.2</b> Kelly Criterion</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="betting-strategies.html"><a href="betting-strategies.html#finding-the-optimal-value"><i class="fa fa-check"></i><b>10.2.1</b> Finding the Optimal Value</a></li>
+<li class="chapter" data-level="10.2.2" data-path="betting-strategies.html"><a href="betting-strategies.html#geometric-average"><i class="fa fa-check"></i><b>10.2.2</b> Geometric average</a></li>
+<li class="chapter" data-level="10.2.3" data-path="betting-strategies.html"><a href="betting-strategies.html#simple-example"><i class="fa fa-check"></i><b>10.2.3</b> Simple example</a></li>
+<li class="chapter" data-level="10.2.4" data-path="betting-strategies.html"><a href="betting-strategies.html#kelly-criterion-in-investing"><i class="fa fa-check"></i><b>10.2.4</b> Kelly Criterion in Investing</a>
+<ul>
+<li class="chapter" data-level="10.2.4.1" data-path="betting-strategies.html"><a href="betting-strategies.html#example-in-investing"><i class="fa fa-check"></i><b>10.2.4.1</b> Example in investing</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2.5" data-path="betting-strategies.html"><a href="betting-strategies.html#theoretical-properties"><i class="fa fa-check"></i><b>10.2.5</b> Theoretical properties</a></li>
+<li class="chapter" data-level="10.2.6" data-path="betting-strategies.html"><a href="betting-strategies.html#criticisms"><i class="fa fa-check"></i><b>10.2.6</b> Criticisms</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html"><i class="fa fa-check"></i><b>11</b> Statistical Arbitrage</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#pairs-trading"><i class="fa fa-check"></i><b>11.1</b> Pairs Trading</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#what-could-go-wrong"><i class="fa fa-check"></i><b>11.1.1</b> What could go wrong</a></li>
+<li class="chapter" data-level="11.1.2" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#other-things-to-consider"><i class="fa fa-check"></i><b>11.1.2</b> Other things to consider</a>
+<ul>
+<li class="chapter" data-level="11.1.2.1" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#determining-which-pairs-to-trade"><i class="fa fa-check"></i><b>11.1.2.1</b> 1. Determining which pairs to trade</a></li>
+<li class="chapter" data-level="11.1.2.2" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#example-1-log"><i class="fa fa-check"></i><b>11.1.2.2</b> Example 1: Log</a></li>
+<li class="chapter" data-level="11.1.2.3" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#example-2-bm"><i class="fa fa-check"></i><b>11.1.2.3</b> Example 2: BM</a></li>
+</ul></li>
+<li class="chapter" data-level="11.1.3" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#mean-reversion"><i class="fa fa-check"></i><b>11.1.3</b> Mean Reversion</a></li>
+<li class="chapter" data-level="11.1.4" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#integrated-series"><i class="fa fa-check"></i><b>11.1.4</b> Integrated Series</a></li>
+<li class="chapter" data-level="11.1.5" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#cointegration"><i class="fa fa-check"></i><b>11.1.5</b> Cointegration</a>
+<ul>
+<li class="chapter" data-level="11.1.5.1" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#ex-yield-rate"><i class="fa fa-check"></i><b>11.1.5.1</b> Ex: Yield Rate</a></li>
+<li class="chapter" data-level="11.1.5.2" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#ex-math"><i class="fa fa-check"></i><b>11.1.5.2</b> Ex: Math</a></li>
+</ul></li>
+<li class="chapter" data-level="11.1.6" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#stationarity"><i class="fa fa-check"></i><b>11.1.6</b> Stationarity</a>
+<ul>
+<li class="chapter" data-level="11.1.6.1" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#tests"><i class="fa fa-check"></i><b>11.1.6.1</b> Tests</a></li>
+<li class="chapter" data-level="11.1.6.2" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#two-step-method-example"><i class="fa fa-check"></i><b>11.1.6.2</b> Two step method example</a></li>
+</ul></li>
+<li class="chapter" data-level="11.1.7" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#spurious-regression"><i class="fa fa-check"></i><b>11.1.7</b> Spurious regression</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#financial-indices"><i class="fa fa-check"></i><b>11.2</b> Financial Indices</a></li>
+<li class="chapter" data-level="11.3" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#index-arbitrage"><i class="fa fa-check"></i><b>11.3</b> Index Arbitrage</a></li>
+<li class="chapter" data-level="11.4" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#volatility-arbitrage"><i class="fa fa-check"></i><b>11.4</b> Volatility Arbitrage</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#e.g.-delta-hedged-long-call"><i class="fa fa-check"></i><b>11.4.1</b> E.g. Delta-hedged long call</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="statistical-arbitrage.html"><a href="statistical-arbitrage.html#high-frequency-trading"><i class="fa fa-check"></i><b>11.5</b> High Frequency Trading</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html"><i class="fa fa-check"></i><b>12</b> Monte-Carlo Simulation</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html#brownian-motion"><i class="fa fa-check"></i><b>12.1</b> Brownian Motion</a></li>
+<li class="chapter" data-level="12.2" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html#properties-of-the-multivariate-normal"><i class="fa fa-check"></i><b>12.2</b> Properties of the Multivariate Normal</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html#ex-distribution-given-x_s"><i class="fa fa-check"></i><b>12.2.1</b> Ex: Distribution given X_s</a></li>
+<li class="chapter" data-level="12.2.2" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html#ex-brownian-bridge-distribution-given-x_t"><i class="fa fa-check"></i><b>12.2.2</b> Ex: Brownian Bridge (Distribution given X_t)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html#geometric-brownian-motion"><i class="fa fa-check"></i><b>12.3</b> Geometric Brownian Motion</a></li>
+<li class="chapter" data-level="12.4" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html#risk-neutral-pricing"><i class="fa fa-check"></i><b>12.4</b> Risk-Neutral Pricing</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html#ex-rn-pricing"><i class="fa fa-check"></i><b>12.4.1</b> Ex: RN Pricing</a></li>
+<li class="chapter" data-level="12.4.2" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html#ex-find-price-of-forward-contract-no-dividends"><i class="fa fa-check"></i><b>12.4.2</b> Ex: Find price of forward contract (no dividends)</a></li>
+<li class="chapter" data-level="12.4.3" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html#estimating-expectations"><i class="fa fa-check"></i><b>12.4.3</b> Estimating Expectations</a></li>
+<li class="chapter" data-level="12.4.4" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html#ex-show-estimator-is-consistent"><i class="fa fa-check"></i><b>12.4.4</b> Ex: Show estimator is consistent</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html#european-call"><i class="fa fa-check"></i><b>12.5</b> European Call</a></li>
+<li class="chapter" data-level="12.6" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html#multiple-assets"><i class="fa fa-check"></i><b>12.6</b> Multiple Assets</a>
+<ul>
+<li class="chapter" data-level="12.6.1" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html#multivariate-brownian-motion"><i class="fa fa-check"></i><b>12.6.1</b> Multivariate Brownian Motion</a></li>
+<li class="chapter" data-level="12.6.2" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html#multivariate-arithmetic-bm"><i class="fa fa-check"></i><b>12.6.2</b> Multivariate Arithmetic BM</a></li>
+</ul></li>
+<li class="chapter" data-level="12.7" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html#cholesky-factorization"><i class="fa fa-check"></i><b>12.7</b> Cholesky Factorization</a>
+<ul>
+<li class="chapter" data-level="12.7.1" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html#example-3"><i class="fa fa-check"></i><b>12.7.1</b> Example</a></li>
+<li class="chapter" data-level="12.7.2" data-path="monte-carlo-simulation.html"><a href="monte-carlo-simulation.html#multivariate-geometric-bm"><i class="fa fa-check"></i><b>12.7.2</b> Multivariate Geometric BM</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="pricing-derivatives.html"><a href="pricing-derivatives.html"><i class="fa fa-check"></i><b>13</b> Pricing Derivatives</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="pricing-derivatives.html"><a href="pricing-derivatives.html#path-dependent-options"><i class="fa fa-check"></i><b>13.1</b> Path Dependent Options</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="pricing-derivatives.html"><a href="pricing-derivatives.html#barrier-options"><i class="fa fa-check"></i><b>13.1.1</b> Barrier Options</a>
+<ul>
+<li class="chapter" data-level="13.1.1.1" data-path="pricing-derivatives.html"><a href="pricing-derivatives.html#example-4"><i class="fa fa-check"></i><b>13.1.1.1</b> Example</a></li>
+<li class="chapter" data-level="13.1.1.2" data-path="pricing-derivatives.html"><a href="pricing-derivatives.html#barrier-options-only-depend-on-minmax"><i class="fa fa-check"></i><b>13.1.1.2</b> Barrier options only depend on min/max</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="pricing-derivatives.html"><a href="pricing-derivatives.html#simulating-geometric-brownian-motion-gbm-paths"><i class="fa fa-check"></i><b>13.2</b> Simulating Geometric Brownian Motion (GBM) Paths</a></li>
+<li class="chapter" data-level="13.3" data-path="pricing-derivatives.html"><a href="pricing-derivatives.html#monte-carlo-for-barrier-options"><i class="fa fa-check"></i><b>13.3</b> Monte Carlo for Barrier Options</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="pricing-derivatives.html"><a href="pricing-derivatives.html#example-find-maximum-by-time-t"><i class="fa fa-check"></i><b>13.3.1</b> Example: Find maximum by time T</a></li>
+<li class="chapter" data-level="13.3.2" data-path="pricing-derivatives.html"><a href="pricing-derivatives.html#example-find-prob-of-w_t-hitting-barrier-b-by-time-t"><i class="fa fa-check"></i><b>13.3.2</b> Example: Find Prob of W_T hitting barrier B by time T</a>
+<ul>
+<li class="chapter" data-level="13.3.2.1" data-path="pricing-derivatives.html"><a href="pricing-derivatives.html#by-simulation"><i class="fa fa-check"></i><b>13.3.2.1</b> By simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3.3" data-path="pricing-derivatives.html"><a href="pricing-derivatives.html#example-mc-simulation-wo-bias"><i class="fa fa-check"></i><b>13.3.3</b> Example: MC Simulation w/o bias</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="pricing-derivatives.html"><a href="pricing-derivatives.html#extrema-of-brownian-motion"><i class="fa fa-check"></i><b>13.4</b> Extrema of Brownian Motion</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="pricing-derivatives.html"><a href="pricing-derivatives.html#procedure-to-generate-maxima"><i class="fa fa-check"></i><b>13.4.1</b> Procedure to generate maxima</a></li>
+<li class="chapter" data-level="13.4.2" data-path="pricing-derivatives.html"><a href="pricing-derivatives.html#example-uo-call"><i class="fa fa-check"></i><b>13.4.2</b> Example: U&amp;O Call</a></li>
+<li class="chapter" data-level="13.4.3" data-path="pricing-derivatives.html"><a href="pricing-derivatives.html#example-simulate-minimum-of-arithmetic-bm-based-on-max"><i class="fa fa-check"></i><b>13.4.3</b> Example: Simulate minimum of arithmetic BM based on max</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="pricing-derivatives.html"><a href="pricing-derivatives.html#time-discretization"><i class="fa fa-check"></i><b>13.5</b> Time Discretization</a>
+<ul>
+<li class="chapter" data-level="13.5.1" data-path="pricing-derivatives.html"><a href="pricing-derivatives.html#euler-discretization"><i class="fa fa-check"></i><b>13.5.1</b> Euler Discretization</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="variance-reduction.html"><a href="variance-reduction.html"><i class="fa fa-check"></i><b>14</b> Variance Reduction</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="variance-reduction.html"><a href="variance-reduction.html#techniques"><i class="fa fa-check"></i><b>14.1</b> Techniques</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="variance-reduction.html"><a href="variance-reduction.html#antithetic-variables"><i class="fa fa-check"></i><b>14.1.1</b> Antithetic Variables</a></li>
+<li class="chapter" data-level="14.1.2" data-path="variance-reduction.html"><a href="variance-reduction.html#stratification"><i class="fa fa-check"></i><b>14.1.2</b> Stratification</a></li>
+<li class="chapter" data-level="14.1.3" data-path="variance-reduction.html"><a href="variance-reduction.html#control-variates"><i class="fa fa-check"></i><b>14.1.3</b> Control Variates</a>
+<ul>
+<li class="chapter" data-level="14.1.3.1" data-path="variance-reduction.html"><a href="variance-reduction.html#example-5"><i class="fa fa-check"></i><b>14.1.3.1</b> Example</a></li>
+<li class="chapter" data-level="14.1.3.2" data-path="variance-reduction.html"><a href="variance-reduction.html#example-6"><i class="fa fa-check"></i><b>14.1.3.2</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="14.1.4" data-path="variance-reduction.html"><a href="variance-reduction.html#importance-sampling"><i class="fa fa-check"></i><b>14.1.4</b> Importance Sampling</a>
+<ul>
+<li class="chapter" data-level="14.1.4.1" data-path="variance-reduction.html"><a href="variance-reduction.html#importance-sampling-is-unbiased"><i class="fa fa-check"></i><b>14.1.4.1</b> Importance Sampling is unbiased</a></li>
+<li class="chapter" data-level="14.1.4.2" data-path="variance-reduction.html"><a href="variance-reduction.html#extending-to-paths"><i class="fa fa-check"></i><b>14.1.4.2</b> Extending to paths</a></li>
+</ul></li>
+<li class="chapter" data-level="14.1.5" data-path="variance-reduction.html"><a href="variance-reduction.html#ex.-deep-ootm-european-call"><i class="fa fa-check"></i><b>14.1.5</b> Ex. Deep OOTM European Call</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="optimization.html"><a href="optimization.html"><i class="fa fa-check"></i><b>15</b> Optimization</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="optimization.html"><a href="optimization.html#role-optimization"><i class="fa fa-check"></i><b>15.1</b> Role Optimization</a></li>
+<li class="chapter" data-level="15.2" data-path="optimization.html"><a href="optimization.html#types-of-optimization"><i class="fa fa-check"></i><b>15.2</b> Types of Optimization</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="optimization.html"><a href="optimization.html#example-7"><i class="fa fa-check"></i><b>15.2.1</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="optimization.html"><a href="optimization.html#stochastic-optimization"><i class="fa fa-check"></i><b>15.3</b> Stochastic Optimization</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="optimization.html"><a href="optimization.html#example-8"><i class="fa fa-check"></i><b>15.3.1</b> Example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="problem-set-1.html"><a href="problem-set-1.html"><i class="fa fa-check"></i><b>16</b> Problem Set 1</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="problem-set-1.html"><a href="problem-set-1.html#q1"><i class="fa fa-check"></i><b>16.1</b> Q1</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="problem-set-1.html"><a href="problem-set-1.html#data-prep"><i class="fa fa-check"></i><b>16.1.1</b> Data Prep</a></li>
+<li class="chapter" data-level="16.1.2" data-path="problem-set-1.html"><a href="problem-set-1.html#plot"><i class="fa fa-check"></i><b>16.1.2</b> Plot</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="problem-set-1.html"><a href="problem-set-1.html#q2"><i class="fa fa-check"></i><b>16.2</b> Q2</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="problem-set-1.html"><a href="problem-set-1.html#a"><i class="fa fa-check"></i><b>16.2.1</b> 2.a</a></li>
+<li class="chapter" data-level="16.2.2" data-path="problem-set-1.html"><a href="problem-set-1.html#b"><i class="fa fa-check"></i><b>16.2.2</b> 2.b</a></li>
+<li class="chapter" data-level="16.2.3" data-path="problem-set-1.html"><a href="problem-set-1.html#c"><i class="fa fa-check"></i><b>16.2.3</b> 2.c</a></li>
+<li class="chapter" data-level="16.2.4" data-path="problem-set-1.html"><a href="problem-set-1.html#d"><i class="fa fa-check"></i><b>16.2.4</b> 2.d</a></li>
+<li class="chapter" data-level="16.2.5" data-path="problem-set-1.html"><a href="problem-set-1.html#e"><i class="fa fa-check"></i><b>16.2.5</b> 2.e</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="problem-set-1.html"><a href="problem-set-1.html#q3"><i class="fa fa-check"></i><b>16.3</b> Q3</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="problem-set-1.html"><a href="problem-set-1.html#mean-of-daily-log-return"><i class="fa fa-check"></i><b>16.3.1</b> Mean of daily log-return</a></li>
+<li class="chapter" data-level="16.3.2" data-path="problem-set-1.html"><a href="problem-set-1.html#volatility-of-daily-log-return"><i class="fa fa-check"></i><b>16.3.2</b> Volatility of daily log-return</a></li>
+<li class="chapter" data-level="16.3.3" data-path="problem-set-1.html"><a href="problem-set-1.html#plot-1"><i class="fa fa-check"></i><b>16.3.3</b> Plot</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="problem-set-1.html"><a href="problem-set-1.html#q4"><i class="fa fa-check"></i><b>16.4</b> Q4</a>
+<ul>
+<li class="chapter" data-level="16.4.1" data-path="problem-set-1.html"><a href="problem-set-1.html#a-1"><i class="fa fa-check"></i><b>16.4.1</b> 4.a</a></li>
+<li class="chapter" data-level="16.4.2" data-path="problem-set-1.html"><a href="problem-set-1.html#b-1"><i class="fa fa-check"></i><b>16.4.2</b> 4.b</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="problem-set-2.html"><a href="problem-set-2.html"><i class="fa fa-check"></i><b>17</b> Problem Set 2</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="problem-set-2.html"><a href="problem-set-2.html#q1-1"><i class="fa fa-check"></i><b>17.1</b> Q1</a></li>
+<li class="chapter" data-level="17.2" data-path="problem-set-2.html"><a href="problem-set-2.html#q2-1"><i class="fa fa-check"></i><b>17.2</b> Q2</a>
+<ul>
+<li class="chapter" data-level="17.2.1" data-path="problem-set-2.html"><a href="problem-set-2.html#part-a"><i class="fa fa-check"></i><b>17.2.1</b> Part A</a></li>
+<li class="chapter" data-level="17.2.2" data-path="problem-set-2.html"><a href="problem-set-2.html#part-b"><i class="fa fa-check"></i><b>17.2.2</b> Part B</a></li>
+<li class="chapter" data-level="17.2.3" data-path="problem-set-2.html"><a href="problem-set-2.html#part-c"><i class="fa fa-check"></i><b>17.2.3</b> Part C</a></li>
+<li class="chapter" data-level="17.2.4" data-path="problem-set-2.html"><a href="problem-set-2.html#part-d"><i class="fa fa-check"></i><b>17.2.4</b> Part D</a></li>
+<li class="chapter" data-level="17.2.5" data-path="problem-set-2.html"><a href="problem-set-2.html#part-e"><i class="fa fa-check"></i><b>17.2.5</b> Part E</a></li>
+</ul></li>
+<li class="chapter" data-level="17.3" data-path="problem-set-2.html"><a href="problem-set-2.html#q3-1"><i class="fa fa-check"></i><b>17.3</b> Q3</a></li>
+<li class="chapter" data-level="17.4" data-path="problem-set-2.html"><a href="problem-set-2.html#q4-1"><i class="fa fa-check"></i><b>17.4</b> Q4</a>
+<ul>
+<li class="chapter" data-level="17.4.1" data-path="problem-set-2.html"><a href="problem-set-2.html#part-a-1"><i class="fa fa-check"></i><b>17.4.1</b> Part A</a></li>
+<li class="chapter" data-level="17.4.2" data-path="problem-set-2.html"><a href="problem-set-2.html#part-b-1"><i class="fa fa-check"></i><b>17.4.2</b> Part B</a></li>
+<li class="chapter" data-level="17.4.3" data-path="problem-set-2.html"><a href="problem-set-2.html#part-c-1"><i class="fa fa-check"></i><b>17.4.3</b> Part C</a>
+<ul>
+<li class="chapter" data-level="17.4.3.1" data-path="problem-set-2.html"><a href="problem-set-2.html#part-i"><i class="fa fa-check"></i><b>17.4.3.1</b> Part i</a></li>
+<li class="chapter" data-level="17.4.3.2" data-path="problem-set-2.html"><a href="problem-set-2.html#part-ii"><i class="fa fa-check"></i><b>17.4.3.2</b> Part ii</a></li>
+<li class="chapter" data-level="17.4.3.3" data-path="problem-set-2.html"><a href="problem-set-2.html#part-iii"><i class="fa fa-check"></i><b>17.4.3.3</b> Part iii</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="problem-set-2.html"><a href="problem-set-2.html#q5"><i class="fa fa-check"></i><b>17.5</b> Q5</a>
+<ul>
+<li class="chapter" data-level="17.5.1" data-path="problem-set-2.html"><a href="problem-set-2.html#part-a-2"><i class="fa fa-check"></i><b>17.5.1</b> Part A</a></li>
+<li class="chapter" data-level="17.5.2" data-path="problem-set-2.html"><a href="problem-set-2.html#part-b-2"><i class="fa fa-check"></i><b>17.5.2</b> Part B</a></li>
+<li class="chapter" data-level="17.5.3" data-path="problem-set-2.html"><a href="problem-set-2.html#part-c-2"><i class="fa fa-check"></i><b>17.5.3</b> Part C</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="problem-set-3.html"><a href="problem-set-3.html"><i class="fa fa-check"></i><b>18</b> Problem Set 3</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="problem-set-3.html"><a href="problem-set-3.html#q1-2"><i class="fa fa-check"></i><b>18.1</b> Q1</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="problem-set-3.html"><a href="problem-set-3.html#part-a-3"><i class="fa fa-check"></i><b>18.1.1</b> Part A</a></li>
+<li class="chapter" data-level="18.1.2" data-path="problem-set-3.html"><a href="problem-set-3.html#part-b-3"><i class="fa fa-check"></i><b>18.1.2</b> Part B</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="problem-set-3.html"><a href="problem-set-3.html#q2-2"><i class="fa fa-check"></i><b>18.2</b> Q2</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="problem-set-3.html"><a href="problem-set-3.html#part-a-4"><i class="fa fa-check"></i><b>18.2.1</b> Part A</a></li>
+<li class="chapter" data-level="18.2.2" data-path="problem-set-3.html"><a href="problem-set-3.html#part-b-4"><i class="fa fa-check"></i><b>18.2.2</b> Part B</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="problem-set-3.html"><a href="problem-set-3.html#q3-2"><i class="fa fa-check"></i><b>18.3</b> Q3</a></li>
+<li class="chapter" data-level="18.4" data-path="problem-set-3.html"><a href="problem-set-3.html#q4-2"><i class="fa fa-check"></i><b>18.4</b> Q4</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="problem-set-4.html"><a href="problem-set-4.html"><i class="fa fa-check"></i><b>19</b> Problem Set 4</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="problem-set-4.html"><a href="problem-set-4.html#q1.1"><i class="fa fa-check"></i><b>19.1</b> Q1.1</a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="problem-set-4.html"><a href="problem-set-4.html#part-a-5"><i class="fa fa-check"></i><b>19.1.1</b> Part A</a></li>
+<li class="chapter" data-level="19.1.2" data-path="problem-set-4.html"><a href="problem-set-4.html#part-b-5"><i class="fa fa-check"></i><b>19.1.2</b> Part B</a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="problem-set-4.html"><a href="problem-set-4.html#q1.2"><i class="fa fa-check"></i><b>19.2</b> Q1.2</a></li>
+<li class="chapter" data-level="19.3" data-path="problem-set-4.html"><a href="problem-set-4.html#q1.3"><i class="fa fa-check"></i><b>19.3</b> Q1.3</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="problem-set-4.html"><a href="problem-set-4.html#part-a-6"><i class="fa fa-check"></i><b>19.3.1</b> Part A</a></li>
+<li class="chapter" data-level="19.3.2" data-path="problem-set-4.html"><a href="problem-set-4.html#part-b-6"><i class="fa fa-check"></i><b>19.3.2</b> Part B</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="problem-set-4.html"><a href="problem-set-4.html#q1.4"><i class="fa fa-check"></i><b>19.4</b> Q1.4</a></li>
+<li class="chapter" data-level="19.5" data-path="problem-set-4.html"><a href="problem-set-4.html#q2.1"><i class="fa fa-check"></i><b>19.5</b> Q2.1</a></li>
+<li class="chapter" data-level="19.6" data-path="problem-set-4.html"><a href="problem-set-4.html#q2.2"><i class="fa fa-check"></i><b>19.6</b> Q2.2</a></li>
+<li class="chapter" data-level="19.7" data-path="problem-set-4.html"><a href="problem-set-4.html#q2.3"><i class="fa fa-check"></i><b>19.7</b> Q2.3</a></li>
+<li class="chapter" data-level="19.8" data-path="problem-set-4.html"><a href="problem-set-4.html#q3-3"><i class="fa fa-check"></i><b>19.8</b> Q3</a>
+<ul>
+<li class="chapter" data-level="19.8.1" data-path="problem-set-4.html"><a href="problem-set-4.html#part-a-7"><i class="fa fa-check"></i><b>19.8.1</b> Part A</a></li>
+<li class="chapter" data-level="19.8.2" data-path="problem-set-4.html"><a href="problem-set-4.html#part-b-7"><i class="fa fa-check"></i><b>19.8.2</b> Part B</a></li>
+<li class="chapter" data-level="19.8.3" data-path="problem-set-4.html"><a href="problem-set-4.html#part-c-3"><i class="fa fa-check"></i><b>19.8.3</b> Part C</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="problem-set-5.html"><a href="problem-set-5.html"><i class="fa fa-check"></i><b>20</b> Problem Set 5</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="problem-set-5.html"><a href="problem-set-5.html#q1-3"><i class="fa fa-check"></i><b>20.1</b> Q1</a>
+<ul>
+<li class="chapter" data-level="20.1.1" data-path="problem-set-5.html"><a href="problem-set-5.html#part-a-8"><i class="fa fa-check"></i><b>20.1.1</b> Part A</a></li>
+<li class="chapter" data-level="20.1.2" data-path="problem-set-5.html"><a href="problem-set-5.html#lemma-for-special-inverse-covariance-matrices"><i class="fa fa-check"></i><b>20.1.2</b> Lemma for special inverse covariance matrices</a></li>
+<li class="chapter" data-level="20.1.3" data-path="problem-set-5.html"><a href="problem-set-5.html#part-b-8"><i class="fa fa-check"></i><b>20.1.3</b> Part B</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="problem-set-5.html"><a href="problem-set-5.html#q2-3"><i class="fa fa-check"></i><b>20.2</b> Q2</a></li>
+<li class="chapter" data-level="20.3" data-path="problem-set-5.html"><a href="problem-set-5.html#q3-4"><i class="fa fa-check"></i><b>20.3</b> Q3</a>
+<ul>
+<li class="chapter" data-level="20.3.1" data-path="problem-set-5.html"><a href="problem-set-5.html#part-a-9"><i class="fa fa-check"></i><b>20.3.1</b> Part A</a></li>
+<li class="chapter" data-level="20.3.2" data-path="problem-set-5.html"><a href="problem-set-5.html#part-b-9"><i class="fa fa-check"></i><b>20.3.2</b> Part B</a></li>
+<li class="chapter" data-level="20.3.3" data-path="problem-set-5.html"><a href="problem-set-5.html#part-c-4"><i class="fa fa-check"></i><b>20.3.3</b> Part C</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="problem-set-5.html"><a href="problem-set-5.html#q4-3"><i class="fa fa-check"></i><b>20.4</b> Q4</a>
+<ul>
+<li class="chapter" data-level="20.4.1" data-path="problem-set-5.html"><a href="problem-set-5.html#part-a-10"><i class="fa fa-check"></i><b>20.4.1</b> Part A</a></li>
+<li class="chapter" data-level="20.4.2" data-path="problem-set-5.html"><a href="problem-set-5.html#part-b-10"><i class="fa fa-check"></i><b>20.4.2</b> Part B</a></li>
+<li class="chapter" data-level="20.4.3" data-path="problem-set-5.html"><a href="problem-set-5.html#part-c-5"><i class="fa fa-check"></i><b>20.4.3</b> Part C</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="problem-set-6.html"><a href="problem-set-6.html"><i class="fa fa-check"></i><b>21</b> Problem Set 6</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="problem-set-6.html"><a href="problem-set-6.html#q1-4"><i class="fa fa-check"></i><b>21.1</b> Q1</a>
+<ul>
+<li class="chapter" data-level="21.1.1" data-path="problem-set-6.html"><a href="problem-set-6.html#part-a-11"><i class="fa fa-check"></i><b>21.1.1</b> Part A</a></li>
+</ul></li>
+<li class="chapter" data-level="21.2" data-path="problem-set-6.html"><a href="problem-set-6.html#q2-4"><i class="fa fa-check"></i><b>21.2</b> Q2</a></li>
+<li class="chapter" data-level="21.3" data-path="problem-set-6.html"><a href="problem-set-6.html#q3-5"><i class="fa fa-check"></i><b>21.3</b> Q3</a></li>
+<li class="chapter" data-level="21.4" data-path="problem-set-6.html"><a href="problem-set-6.html#q4-4"><i class="fa fa-check"></i><b>21.4</b> Q4</a>
+<ul>
+<li class="chapter" data-level="21.4.1" data-path="problem-set-6.html"><a href="problem-set-6.html#part-a-12"><i class="fa fa-check"></i><b>21.4.1</b> Part A</a></li>
+<li class="chapter" data-level="21.4.2" data-path="problem-set-6.html"><a href="problem-set-6.html#part-b-11"><i class="fa fa-check"></i><b>21.4.2</b> Part B</a></li>
+</ul></li>
+<li class="chapter" data-level="21.5" data-path="problem-set-6.html"><a href="problem-set-6.html#q5-1"><i class="fa fa-check"></i><b>21.5</b> Q5</a>
+<ul>
+<li class="chapter" data-level="21.5.1" data-path="problem-set-6.html"><a href="problem-set-6.html#part-a-13"><i class="fa fa-check"></i><b>21.5.1</b> Part A</a></li>
+<li class="chapter" data-level="21.5.2" data-path="problem-set-6.html"><a href="problem-set-6.html#part-b-12"><i class="fa fa-check"></i><b>21.5.2</b> Part B</a></li>
+</ul></li>
+<li class="chapter" data-level="21.6" data-path="problem-set-6.html"><a href="problem-set-6.html#q6"><i class="fa fa-check"></i><b>21.6</b> Q6</a></li>
+<li class="chapter" data-level="21.7" data-path="problem-set-6.html"><a href="problem-set-6.html#q7"><i class="fa fa-check"></i><b>21.7</b> Q7</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="w2021-midterm.html"><a href="w2021-midterm.html"><i class="fa fa-check"></i><b>22</b> W2021 Midterm</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="w2021-midterm.html"><a href="w2021-midterm.html#q2-5"><i class="fa fa-check"></i><b>22.1</b> Q2</a>
+<ul>
+<li class="chapter" data-level="22.1.1" data-path="w2021-midterm.html"><a href="w2021-midterm.html#part-a-14"><i class="fa fa-check"></i><b>22.1.1</b> Part A</a></li>
+<li class="chapter" data-level="22.1.2" data-path="w2021-midterm.html"><a href="w2021-midterm.html#part-b-13"><i class="fa fa-check"></i><b>22.1.2</b> Part B</a></li>
+<li class="chapter" data-level="22.1.3" data-path="w2021-midterm.html"><a href="w2021-midterm.html#part-c-6"><i class="fa fa-check"></i><b>22.1.3</b> Part C</a></li>
+<li class="chapter" data-level="22.1.4" data-path="w2021-midterm.html"><a href="w2021-midterm.html#part-d-1"><i class="fa fa-check"></i><b>22.1.4</b> Part D</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="w2020-midterm.html"><a href="w2020-midterm.html"><i class="fa fa-check"></i><b>23</b> W2020 Midterm</a>
+<ul>
+<li class="chapter" data-level="23.1" data-path="w2020-midterm.html"><a href="w2020-midterm.html#q3-6"><i class="fa fa-check"></i><b>23.1</b> Q3</a>
+<ul>
+<li class="chapter" data-level="23.1.1" data-path="w2020-midterm.html"><a href="w2020-midterm.html#part-a-15"><i class="fa fa-check"></i><b>23.1.1</b> Part A</a></li>
+<li class="chapter" data-level="23.1.2" data-path="w2020-midterm.html"><a href="w2020-midterm.html#part-b-14"><i class="fa fa-check"></i><b>23.1.2</b> Part B</a></li>
+<li class="chapter" data-level="23.1.3" data-path="w2020-midterm.html"><a href="w2020-midterm.html#part-c-7"><i class="fa fa-check"></i><b>23.1.3</b> Part C</a></li>
+</ul></li>
+<li class="chapter" data-level="23.2" data-path="w2020-midterm.html"><a href="w2020-midterm.html#q4-5"><i class="fa fa-check"></i><b>23.2</b> Q4</a>
+<ul>
+<li class="chapter" data-level="23.2.1" data-path="w2020-midterm.html"><a href="w2020-midterm.html#part-a-16"><i class="fa fa-check"></i><b>23.2.1</b> Part A</a>
+<ul>
+<li class="chapter" data-level="23.2.1.1" data-path="w2020-midterm.html"><a href="w2020-midterm.html#part-b-15"><i class="fa fa-check"></i><b>23.2.1.1</b> Part B</a></li>
+</ul></li>
+<li class="chapter" data-level="23.2.2" data-path="w2020-midterm.html"><a href="w2020-midterm.html#part-c-8"><i class="fa fa-check"></i><b>23.2.2</b> Part C</a></li>
+<li class="chapter" data-level="23.2.3" data-path="w2020-midterm.html"><a href="w2020-midterm.html#part-d-2"><i class="fa fa-check"></i><b>23.2.3</b> Part D</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="cheatsheet.html"><a href="cheatsheet.html"><i class="fa fa-check"></i><b>24</b> Cheatsheet</a>
+<ul>
+<li class="chapter" data-level="24.1" data-path="cheatsheet.html"><a href="cheatsheet.html#probability"><i class="fa fa-check"></i><b>24.1</b> Probability</a></li>
+<li class="chapter" data-level="24.2" data-path="cheatsheet.html"><a href="cheatsheet.html#math"><i class="fa fa-check"></i><b>24.2</b> Math</a></li>
+<li class="chapter" data-level="24.3" data-path="cheatsheet.html"><a href="cheatsheet.html#series"><i class="fa fa-check"></i><b>24.3</b> Series</a>
+<ul>
+<li class="chapter" data-level="24.3.1" data-path="cheatsheet.html"><a href="cheatsheet.html#integrated-series-1"><i class="fa fa-check"></i><b>24.3.1</b> Integrated series</a></li>
+<li class="chapter" data-level="24.3.2" data-path="cheatsheet.html"><a href="cheatsheet.html#cointegration-1"><i class="fa fa-check"></i><b>24.3.2</b> Cointegration</a></li>
+<li class="chapter" data-level="24.3.3" data-path="cheatsheet.html"><a href="cheatsheet.html#brownian-motion-1"><i class="fa fa-check"></i><b>24.3.3</b> Brownian Motion</a></li>
+<li class="chapter" data-level="24.3.4" data-path="cheatsheet.html"><a href="cheatsheet.html#arithmetic-bmrw"><i class="fa fa-check"></i><b>24.3.4</b> Arithmetic BM/RW</a></li>
+<li class="chapter" data-level="24.3.5" data-path="cheatsheet.html"><a href="cheatsheet.html#geometric-brownian-motion-1"><i class="fa fa-check"></i><b>24.3.5</b> Geometric Brownian Motion</a></li>
+</ul></li>
+<li class="chapter" data-level="24.4" data-path="cheatsheet.html"><a href="cheatsheet.html#distributions"><i class="fa fa-check"></i><b>24.4</b> Distributions</a>
+<ul>
+<li class="chapter" data-level="24.4.1" data-path="cheatsheet.html"><a href="cheatsheet.html#multivariate-normal"><i class="fa fa-check"></i><b>24.4.1</b> Multivariate Normal</a></li>
+<li class="chapter" data-level="24.4.2" data-path="cheatsheet.html"><a href="cheatsheet.html#heavy-tailed-distribution"><i class="fa fa-check"></i><b>24.4.2</b> Heavy-tailed distribution:</a></li>
+<li class="chapter" data-level="24.4.3" data-path="cheatsheet.html"><a href="cheatsheet.html#stable-distribution"><i class="fa fa-check"></i><b>24.4.3</b> Stable Distribution:</a></li>
+<li class="chapter" data-level="24.4.4" data-path="cheatsheet.html"><a href="cheatsheet.html#cauchy-distribution-t-distribution-with-1-df"><i class="fa fa-check"></i><b>24.4.4</b> Cauchy distribution (t distribution with 1 df):</a></li>
+<li class="chapter" data-level="24.4.5" data-path="cheatsheet.html"><a href="cheatsheet.html#gamma-distribution"><i class="fa fa-check"></i><b>24.4.5</b> Gamma distribution:</a></li>
+<li class="chapter" data-level="24.4.6" data-path="cheatsheet.html"><a href="cheatsheet.html#exponential-distribution"><i class="fa fa-check"></i><b>24.4.6</b> Exponential distribution:</a></li>
+<li class="chapter" data-level="24.4.7" data-path="cheatsheet.html"><a href="cheatsheet.html#st-theorem-fisher-tippet-gnedenko-1"><i class="fa fa-check"></i><b>24.4.7</b> 1st Theorem: Fisher-Tippet-Gnedenko</a></li>
+<li class="chapter" data-level="24.4.8" data-path="cheatsheet.html"><a href="cheatsheet.html#generalized-extreme-value-gev-distribution-1"><i class="fa fa-check"></i><b>24.4.8</b> Generalized Extreme Value (GEV) Distribution</a></li>
+<li class="chapter" data-level="24.4.9" data-path="cheatsheet.html"><a href="cheatsheet.html#normal-scale-mixture-1"><i class="fa fa-check"></i><b>24.4.9</b> Normal scale mixture</a></li>
+</ul></li>
+<li class="chapter" data-level="24.5" data-path="cheatsheet.html"><a href="cheatsheet.html#copula"><i class="fa fa-check"></i><b>24.5</b> Copula</a></li>
+<li class="chapter" data-level="24.6" data-path="cheatsheet.html"><a href="cheatsheet.html#portfolio-theory-1"><i class="fa fa-check"></i><b>24.6</b> Portfolio Theory</a>
+<ul>
+<li class="chapter" data-level="24.6.1" data-path="cheatsheet.html"><a href="cheatsheet.html#sharpe-ratio"><i class="fa fa-check"></i><b>24.6.1</b> Sharpe Ratio</a></li>
+</ul></li>
+<li class="chapter" data-level="24.7" data-path="cheatsheet.html"><a href="cheatsheet.html#factor-model"><i class="fa fa-check"></i><b>24.7</b> Factor Model</a>
+<ul>
+<li class="chapter" data-level="24.7.1" data-path="cheatsheet.html"><a href="cheatsheet.html#assumptions-1"><i class="fa fa-check"></i><b>24.7.1</b> Assumptions</a></li>
+<li class="chapter" data-level="24.7.2" data-path="cheatsheet.html"><a href="cheatsheet.html#in-r"><i class="fa fa-check"></i><b>24.7.2</b> In R</a></li>
+</ul></li>
+<li class="chapter" data-level="24.8" data-path="cheatsheet.html"><a href="cheatsheet.html#risk-mgmt"><i class="fa fa-check"></i><b>24.8</b> Risk Mgmt</a>
+<ul>
+<li class="chapter" data-level="24.8.1" data-path="cheatsheet.html"><a href="cheatsheet.html#var"><i class="fa fa-check"></i><b>24.8.1</b> VaR</a></li>
+<li class="chapter" data-level="24.8.2" data-path="cheatsheet.html"><a href="cheatsheet.html#conditional-var-cvar"><i class="fa fa-check"></i><b>24.8.2</b> Conditional VaR (CVaR)</a></li>
+<li class="chapter" data-level="24.8.3" data-path="cheatsheet.html"><a href="cheatsheet.html#entropic-var-evar"><i class="fa fa-check"></i><b>24.8.3</b> Entropic VaR (EVaR)</a></li>
+<li class="chapter" data-level="24.8.4" data-path="cheatsheet.html"><a href="cheatsheet.html#risk-measure-properties-1"><i class="fa fa-check"></i><b>24.8.4</b> Risk Measure Properties</a></li>
+</ul></li>
+<li class="chapter" data-level="24.9" data-path="cheatsheet.html"><a href="cheatsheet.html#betting-measures"><i class="fa fa-check"></i><b>24.9</b> Betting measures</a></li>
+<li class="chapter" data-level="24.10" data-path="cheatsheet.html"><a href="cheatsheet.html#arbitrage"><i class="fa fa-check"></i><b>24.10</b> Arbitrage</a>
+<ul>
+<li class="chapter" data-level="24.10.1" data-path="cheatsheet.html"><a href="cheatsheet.html#pairs-trading-1"><i class="fa fa-check"></i><b>24.10.1</b> Pairs Trading</a></li>
+</ul></li>
+<li class="chapter" data-level="24.11" data-path="cheatsheet.html"><a href="cheatsheet.html#simulation"><i class="fa fa-check"></i><b>24.11</b> Simulation</a>
+<ul>
+<li class="chapter" data-level="24.11.1" data-path="cheatsheet.html"><a href="cheatsheet.html#simple-monte-carlo-estimator"><i class="fa fa-check"></i><b>24.11.1</b> Simple Monte Carlo estimator</a></li>
+<li class="chapter" data-level="24.11.2" data-path="cheatsheet.html"><a href="cheatsheet.html#procedure-to-generate-maxima-1"><i class="fa fa-check"></i><b>24.11.2</b> Procedure to generate maxima</a></li>
+<li class="chapter" data-level="24.11.3" data-path="cheatsheet.html"><a href="cheatsheet.html#risk-neutral-pricing-1"><i class="fa fa-check"></i><b>24.11.3</b> Risk Neutral Pricing</a></li>
+<li class="chapter" data-level="24.11.4" data-path="cheatsheet.html"><a href="cheatsheet.html#black-scholes-european-call"><i class="fa fa-check"></i><b>24.11.4</b> Black Scholes European Call</a></li>
+</ul></li>
+<li class="chapter" data-level="24.12" data-path="cheatsheet.html"><a href="cheatsheet.html#variance-reduction-1"><i class="fa fa-check"></i><b>24.12</b> Variance Reduction</a>
+<ul>
+<li class="chapter" data-level="24.12.1" data-path="cheatsheet.html"><a href="cheatsheet.html#anti-thetic-variable"><i class="fa fa-check"></i><b>24.12.1</b> Anti-thetic Variable</a></li>
+<li class="chapter" data-level="24.12.2" data-path="cheatsheet.html"><a href="cheatsheet.html#stratification-1"><i class="fa fa-check"></i><b>24.12.2</b> Stratification</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STAD70 Course Work</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="problem-set-2" class="section level1 hasAnchor" number="17">
+<h1><span class="header-section-number">Chapter 17</span> Problem Set 2<a href="problem-set-2.html#problem-set-2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="q1-1" class="section level2 hasAnchor" number="17.1">
+<h2><span class="header-section-number">17.1</span> Q1<a href="problem-set-2.html#q1-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>An MLE can be derived from finding the derivative of the log <span class="math inline">\(L(\alpha)\)</span>, <span class="math inline">\(l(\alpha)\)</span> function, where<br />
+<span class="math display">\[
+\begin{aligned}
+L(\alpha) &amp;= \prod^{n}_{i=1} \left[ \frac{\alpha x_{i}^{-(\alpha+1)}}{\ell^{-\alpha}} \right]\\
+\log L(\alpha) = l(\alpha) &amp;= \sum^{n}_{i=1} \left[ \log(\alpha) - (\alpha+1)\log(x_{i}) +\alpha\log(\ell) \right]\\
+\\
+l^{&#39;}(\alpha) &amp;= \sum^{n}_{i=1} \left( \frac{1}{\alpha} - [\log (x_{i}) + \log(\ell)]\right) = 0\\
+0 &amp;= \frac{n}{\alpha} - \sum^{n}_{i=1} \left( \log(x_{i}) -\log(\ell) \right)\\
+\frac{n}{\alpha} &amp;= \sum^{n}_{i=1} \left( \log(x_{i}) -\log(\ell) \right)\\
+\frac{1}{\alpha} &amp;= \frac{1}{n} \left[ \sum^{n}_{i=1}\log\left( \frac{x_{i}}{\ell} \right) \right]\\
+\\
+\therefore \hat{\alpha} &amp;= \left(  \frac{1}{n} \left[ \sum^{n}_{i=1}\log\left( \frac{x_{i}}{\ell} \right) \right] \right)^{-1}
+\end{aligned}
+\]</span></p>
+</div>
+<div id="q2-1" class="section level2 hasAnchor" number="17.2">
+<h2><span class="header-section-number">17.2</span> Q2<a href="problem-set-2.html#q2-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="part-a" class="section level3 hasAnchor" number="17.2.1">
+<h3><span class="header-section-number">17.2.1</span> Part A<a href="problem-set-2.html#part-a" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Heavy tail distributions are those with polynomial tails which follow by
+<span class="math display">\[f(x) \propto x^{-(1+\alpha)}\]</span>
+where smaller <span class="math inline">\(\alpha \to\)</span> heavier tails</p>
+<p>We say that distribution <span class="math inline">\(F\)</span> is heavy tailed if the integral on the positive half of <span class="math inline">\(\mathbb{R}^{+}\)</span> is infinite for some t</p>
+<p><span class="math display">\[
+\begin{aligned}
+m_{X}(t) &amp;= \mathbb{E}(e^{tX})\\
+&amp;= \sum^{\infty}_{k=1}\frac{t^{k}}{k!}\mathbb{E}[X^{k}]\\
+&amp;= \left[ 1 + t\mathbb{E}(X) + \frac{t^2\mathbb{E}(X^2)}{2!} + \frac{t^3\mathbb{E}(X^3)}{3!} + ... + \frac{t^n\mathbb{E}(X^n)}{n!} + ...  \right]\\
+\end{aligned}
+\]</span></p>
+<p>But for any <span class="math inline">\(n^{th}\)</span> moment where <span class="math inline">\(n&gt;\alpha\)</span>, <span class="math inline">\(\mathbb{E}(X^{n})=\infty\)</span>. This implies that the mfg of any heavy tail distribution (which by definition has <span class="math inline">\(\alpha &gt;0\)</span>) will be infinite.</p>
+</div>
+<div id="part-b" class="section level3 hasAnchor" number="17.2.2">
+<h3><span class="header-section-number">17.2.2</span> Part B<a href="problem-set-2.html#part-b" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math display">\[
+\begin{aligned}
+\phi_{X}(t) &amp;= \mathbb{E}[e^{itX}] = \mathbb{E}[\cos(tX) + i\sin(tX)]\\
+&amp;= \mathbb{E}[\cos(tX)] + i\mathbb{E}[\sin(tX)]\\
+\mathbb{E}[\sin(tX)] &amp;= \int ^{\infty}_{-\infty} \sin(tX)f(x)\, dx \\
+&amp;= \int ^{0}_{-\infty} \sin(tX)f(x)\, dx + \int ^{\infty}_{0} \sin(tX)f(x)\, dx \\
+&amp;= -\int ^{\infty}_{0} \sin(tX)f(x)\, dx + \int ^{\infty}_{0} \sin(tX)f(x)\, dx \\
+&amp;= 0\\
+\therefore \phi_{X}(t) &amp;= \mathbb{E}[\cos(tX)] \text{ which only takes real values }
+\end{aligned}
+\]</span></p>
+</div>
+<div id="part-c" class="section level3 hasAnchor" number="17.2.3">
+<h3><span class="header-section-number">17.2.3</span> Part C<a href="problem-set-2.html#part-c" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math display">\[
+\begin{aligned}
+\phi_{X}(t) &amp;= \mathbb{E}[e^{itX}]\\
+\phi_{Y}(t) &amp;= \mathbb{E}[e^{itY}]\\
+\phi_{Z}(t) &amp;= \mathbb{E}[e^{itZ}]\\
+&amp;= \mathbb{E}[e^{it(X+Y)}]\\
+&amp;=\mathbb{E}[e^{itX}e^{itY}]\\
+&amp;=\mathbb{E}[e^{itX}]\mathbb{E}[e^{itY}]
+\quad \text{As they are independent}\\
+&amp;= e^{-c|t|^{\alpha}}\cdot e^{-d|t|^{\alpha}}\\
+&amp;= e^{-(c+d)|t|^{\alpha}}
+\end{aligned}
+\]</span>
+Which shows that <span class="math inline">\(\phi_{Z}(t)\)</span> shares the same form as <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+</div>
+<div id="part-d" class="section level3 hasAnchor" number="17.2.4">
+<h3><span class="header-section-number">17.2.4</span> Part D<a href="problem-set-2.html#part-d" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math display">\[
+\begin{aligned}
+\phi_{X}(t) &amp;= \mathbb{E}[e^{itX}] = e^{-|t|}\\
+\phi_{\bar{X}}(t) &amp;= \mathbb{E}[e^{it\bar{X}}]\\
+&amp;= \mathbb{E}\left[ e^{it \frac{1}{n}\left(\sum^{n}_{i=1}X_{i} \right)} \right]\\
+&amp;=\mathbb{E}\left[ e^{it\frac{1}{n}X_{1}} e^{it\frac{1}{n}X_{2}}\dots e^{it\frac{1}{n}X_{n}}\right]\\
+&amp;= \mathbb{E}\left[ e^{it\frac{1}{n}X_{1}} \right] \mathbb{E}\left[e^{it\frac{1}{n}X_{2}}\right] \dots \mathbb{E}\left[e^{it\frac{1}{n}X_{n}}\right]\\
+&amp;= [e^{-|t|/n}]^{n}\\
+&amp;= e^{-|t|/n\cdot n} = e^{-|t|} \quad \text{Which is exactly the $t(1)$ distribution}
+\end{aligned}
+\]</span></p>
+</div>
+<div id="part-e" class="section level3 hasAnchor" number="17.2.5">
+<h3><span class="header-section-number">17.2.5</span> Part E<a href="problem-set-2.html#part-e" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>According to theory, <span class="math inline">\(\mathbb{E}[X^{k}]=\infty\)</span> for any <span class="math inline">\(k\geq \alpha\)</span> where <span class="math inline">\(\alpha\)</span> is the tail index.</p>
+<p>If the tail index is greater than 2, then the second order moment exists, implying both the mean and variance both exist/are finite.</p>
+<p>By definition, a sum of stable distributions would converge to a stable distribution as shown by the characteristic functions above, but according to the Central Limit Theorem, any sum of iid random variables with finite mean and variance will produce a Normal distribution.</p>
+</div>
+</div>
+<div id="q3-1" class="section level2 hasAnchor" number="17.3">
+<h2><span class="header-section-number">17.3</span> Q3<a href="problem-set-2.html#q3-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><span class="math display">\[
+\begin{aligned}
+Z&amp;=\frac{X}{Y}\\
+X &amp;\sim Exp(1) \quad Y \sim Exp(1)\\
+\bar{F}_{X}(x) &amp;= 1-(1-e^{-x}) = e^{-x}\quad x &gt; 0\\
+\bar{F}_{Y}(y) &amp;= 1-(1-e^{-y}) = e^{-y}\quad y &gt; 0
+\end{aligned}
+\]</span></p>
+<p>Show <span class="math inline">\(Z\)</span> follows a heavy-tailed distribution, and find the tail index:</p>
+<p><span class="math inline">\(Z\)</span> follows a heavy-tailed distribution if it has polynomial tails ie <span class="math inline">\(Z \propto x^{-(1+\alpha)}\)</span></p>
+<p>We will integrate w.r.t <span class="math inline">\(F_{Y}(y)\)</span>, as we condition on the fact that <span class="math inline">\(y&gt;0\)</span>. We can also convert the probability to be of <span class="math inline">\(\mathbb{P}(X&lt;\alpha y)\)</span> so that it becomes a function of <span class="math inline">\(y\)</span>, which will work in our integral.
+<span class="math display">\[
+\begin{aligned}
+\bar{F}_{Z}(z) = \mathbb{P}(Z &gt; z) &amp;= \mathbb{P}\left( \frac{X}{Y} &gt; z, x &gt; 0, y &gt; 0\right)\\
+&amp;= \int_{y=0}^{\infty}\mathbb{P}\left( \frac{X}{Y} &gt; z | Y = y \right) \, dF_{y}(y)\\
+&amp;= \int _{y=0}^{\infty}\underbrace{ \mathbb{P}(X &gt; zy) }_{ e^{-zy} }\underbrace{ f_{Y}(y) }_{ e^{-y} } \, dy\\
+&amp;\quad \quad \quad \ \ \text{as } Y = y\\
+&amp;= \int ^{\infty}_{y=0} e^{-y(z+1)}\, dy\\
+&amp;= \left[ \frac{e^{-y(z+1)}}{-(z+1)} \right]^{\infty}_{y=0}\\
+&amp;= 0 + \frac{1}{z+1} = (z+1)^{-1} \quad z &gt; 0\\
+\implies f_{Z}(z) &amp;= (z+1)^{-2} \propto x^{-(1+\alpha)} \text{ Where } \alpha = 1
+\end{aligned}
+\]</span></p>
+<p><span class="math inline">\(\therefore Z\)</span> is heavy tailed with tail index <span class="math inline">\(\alpha=1\)</span></p>
+
+</div>
+<div id="q4-1" class="section level2 hasAnchor" number="17.4">
+<h2><span class="header-section-number">17.4</span> Q4<a href="problem-set-2.html#q4-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Libraries required:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="problem-set-2.html#cb37-1" tabindex="-1"></a><span class="co"># install.packages(&quot;yahoofinancer&quot;)</span></span>
+<span id="cb37-2"><a href="problem-set-2.html#cb37-2" tabindex="-1"></a><span class="fu">library</span>(yahoofinancer)</span>
+<span id="cb37-3"><a href="problem-set-2.html#cb37-3" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb37-4"><a href="problem-set-2.html#cb37-4" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code></pre></div>
+<p>Obtain stock data from Yahoo using <code>yahoofinancer</code> methods:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="problem-set-2.html#cb38-1" tabindex="-1"></a>lto <span class="ot">&lt;-</span> Ticker<span class="sc">$</span><span class="fu">new</span>(<span class="st">&#39;L.TO&#39;</span>)</span>
+<span id="cb38-2"><a href="problem-set-2.html#cb38-2" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="problem-set-2.html#cb38-3" tabindex="-1"></a>lto_adj_close <span class="ot">=</span> lto<span class="sc">$</span><span class="fu">get_history</span>(<span class="at">start =</span> <span class="st">&#39;2015-01-01&#39;</span>, <span class="at">end =</span> <span class="st">&quot;2022-12-31&quot;</span>,</span>
+<span id="cb38-4"><a href="problem-set-2.html#cb38-4" tabindex="-1"></a>                            <span class="at">interval =</span> <span class="st">&#39;1d&#39;</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(date, adj_close)</span></code></pre></div>
+<div id="part-a-1" class="section level3 hasAnchor" number="17.4.1">
+<h3><span class="header-section-number">17.4.1</span> Part A<a href="problem-set-2.html#part-a-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Calculate daily net returns, plot the returns, sample auto-correlation plot, and Normal QQ plot.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="problem-set-2.html#cb39-1" tabindex="-1"></a><span class="fu">head</span>(lto_adj_close)</span></code></pre></div>
+<pre><code>##                  date adj_close
+## 1 2015-01-02 14:30:00  44.02380
+## 2 2015-01-05 14:30:00  43.10342
+## 3 2015-01-06 14:30:00  42.23924
+## 4 2015-01-07 14:30:00  42.65377
+## 5 2015-01-08 14:30:00  42.65377
+## 6 2015-01-09 14:30:00  41.93714</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="problem-set-2.html#cb41-1" tabindex="-1"></a>net_ret <span class="ot">=</span> lto_adj_close <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="problem-set-2.html#cb41-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">net_returns =</span> </span>
+<span id="cb41-3"><a href="problem-set-2.html#cb41-3" tabindex="-1"></a>           (adj_close <span class="sc">-</span> <span class="fu">lag</span>(adj_close, <span class="dv">1</span>)) <span class="sc">/</span> <span class="fu">lag</span>(adj_close, <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb41-4"><a href="problem-set-2.html#cb41-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(net_returns))</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="problem-set-2.html#cb42-1" tabindex="-1"></a>net_ret <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> net_returns)) <span class="sc">+</span></span>
+<span id="cb42-2"><a href="problem-set-2.html#cb42-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb42-3"><a href="problem-set-2.html#cb42-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Daily returns of Loblaws 2015-Jan-01 - 2022-Dec-31&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<blockquote>
+<p>The plot of the daily net returns demonstrate volatility clutering right after the start of 2020.</p>
+</blockquote>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="problem-set-2.html#cb43-1" tabindex="-1"></a><span class="fu">acf</span>(net_ret<span class="sc">$</span>net_returns)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<blockquote>
+<p>There are no simple auto-correlations (current returns are not correlated with past returns)</p>
+</blockquote>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="problem-set-2.html#cb44-1" tabindex="-1"></a><span class="fu">qqnorm</span>(net_ret<span class="sc">$</span>net_returns,<span class="at">datax =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb44-2"><a href="problem-set-2.html#cb44-2" tabindex="-1"></a><span class="fu">qqline</span>(net_ret<span class="sc">$</span>net_returns,<span class="at">datax =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p>Based on the QQ plot, the distribution seems leptokurtic as the sample quantiles are more distributed than the theoretical, implying heavy tails.</p>
+<blockquote>
+<p>This supports the stylized fact that returns follow heavy tail distributions.</p>
+</blockquote>
+</div>
+<div id="part-b-1" class="section level3 hasAnchor" number="17.4.2">
+<h3><span class="header-section-number">17.4.2</span> Part B<a href="problem-set-2.html#part-b-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="problem-set-2.html#cb45-1" tabindex="-1"></a>fitted <span class="ot">=</span> <span class="fu">fitdistr</span>(net_ret<span class="sc">$</span>net_returns, <span class="st">&quot;t&quot;</span>)</span>
+<span id="cb45-2"><a href="problem-set-2.html#cb45-2" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="problem-set-2.html#cb45-3" tabindex="-1"></a>mu <span class="ot">=</span> fitted<span class="sc">$</span>estimate[<span class="dv">1</span>]</span>
+<span id="cb45-4"><a href="problem-set-2.html#cb45-4" tabindex="-1"></a>sigma <span class="ot">=</span> fitted<span class="sc">$</span>estimate[<span class="dv">2</span>]</span>
+<span id="cb45-5"><a href="problem-set-2.html#cb45-5" tabindex="-1"></a>v <span class="ot">=</span> fitted<span class="sc">$</span>estimate[<span class="dv">3</span>]</span>
+<span id="cb45-6"><a href="problem-set-2.html#cb45-6" tabindex="-1"></a>var <span class="ot">=</span> sigma<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> (v <span class="sc">/</span> (v<span class="dv">-2</span>))</span>
+<span id="cb45-7"><a href="problem-set-2.html#cb45-7" tabindex="-1"></a></span>
+<span id="cb45-8"><a href="problem-set-2.html#cb45-8" tabindex="-1"></a></span>
+<span id="cb45-9"><a href="problem-set-2.html#cb45-9" tabindex="-1"></a>sample_mu <span class="ot">=</span> <span class="fu">mean</span>(net_ret<span class="sc">$</span>net_returns)</span>
+<span id="cb45-10"><a href="problem-set-2.html#cb45-10" tabindex="-1"></a>sample_var <span class="ot">=</span> <span class="fu">var</span>(net_ret<span class="sc">$</span>net_returns)</span></code></pre></div>
+<p>We have a fitted mean <span class="math inline">\(\mu\)</span> of 3.2239313^{-4} and variance <span class="math inline">\(\sigma^{2}\)</span> of 1.4635424^{-4}.
+This is compared to the sample mean <span class="math inline">\(\mu\)</span> of 5.6615327^{-4} and variance <span class="math inline">\(\sigma^2\)</span> of 1.3827263^{-4}.</p>
+<p>These differences can occur due to the fitted t-distribution smoothing away more extreme values.</p>
+</div>
+<div id="part-c-1" class="section level3 hasAnchor" number="17.4.3">
+<h3><span class="header-section-number">17.4.3</span> Part C<a href="problem-set-2.html#part-c-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will now compare two different return distribution approaches in an practical investment setting. Assume you invest all of your wealth in L.TO for 4 years (4 × 252 = 1008 days). Simulate 5,000 iterations of 1008 daily returns from the following models:</p>
+<div id="part-i" class="section level4 hasAnchor" number="17.4.3.1">
+<h4><span class="header-section-number">17.4.3.1</span> Part i<a href="problem-set-2.html#part-i" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="problem-set-2.html#cb46-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb46-2"><a href="problem-set-2.html#cb46-2" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">5000</span></span>
+<span id="cb46-3"><a href="problem-set-2.html#cb46-3" tabindex="-1"></a>m <span class="ot">=</span> <span class="dv">1008</span></span>
+<span id="cb46-4"><a href="problem-set-2.html#cb46-4" tabindex="-1"></a></span>
+<span id="cb46-5"><a href="problem-set-2.html#cb46-5" tabindex="-1"></a><span class="co"># create a matrix of 5000 simulations of 1008 daily returns</span></span>
+<span id="cb46-6"><a href="problem-set-2.html#cb46-6" tabindex="-1"></a>R_mat <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n<span class="sc">*</span>m, sample_mu, <span class="fu">sqrt</span>(sample_var)), <span class="at">nrow =</span> n, <span class="at">ncol =</span> m)</span>
+<span id="cb46-7"><a href="problem-set-2.html#cb46-7" tabindex="-1"></a></span>
+<span id="cb46-8"><a href="problem-set-2.html#cb46-8" tabindex="-1"></a>R_final <span class="ot">=</span> <span class="fu">apply</span>(<span class="dv">1</span><span class="sc">+</span>R_mat, <span class="dv">1</span>, cumprod) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb46-9"><a href="problem-set-2.html#cb46-9" tabindex="-1"></a>sim_norm_returns <span class="ot">=</span> R_final[,m]</span>
+<span id="cb46-10"><a href="problem-set-2.html#cb46-10" tabindex="-1"></a></span>
+<span id="cb46-11"><a href="problem-set-2.html#cb46-11" tabindex="-1"></a><span class="co"># max drawdown</span></span>
+<span id="cb46-12"><a href="problem-set-2.html#cb46-12" tabindex="-1"></a>mdd <span class="ot">=</span> <span class="cf">function</span>(R){ <span class="fu">return</span>(tseries<span class="sc">::</span><span class="fu">maxdrawdown</span>(R)<span class="sc">$</span>maxdrawdown) }</span>
+<span id="cb46-13"><a href="problem-set-2.html#cb46-13" tabindex="-1"></a>MDD <span class="ot">=</span> <span class="fu">apply</span>(R_final, <span class="dv">1</span>, mdd)</span></code></pre></div>
+</div>
+<div id="part-ii" class="section level4 hasAnchor" number="17.4.3.2">
+<h4><span class="header-section-number">17.4.3.2</span> Part ii<a href="problem-set-2.html#part-ii" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="problem-set-2.html#cb47-1" tabindex="-1"></a><span class="co"># using a t distribution</span></span>
+<span id="cb47-2"><a href="problem-set-2.html#cb47-2" tabindex="-1"></a><span class="co"># create a matrix of 5000 simulations of 1008 daily returns</span></span>
+<span id="cb47-3"><a href="problem-set-2.html#cb47-3" tabindex="-1"></a>R_mat_t <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>( n<span class="sc">*</span>m, mu, sigma ) <span class="sc">*</span> <span class="fu">sqrt</span>( v <span class="sc">/</span> <span class="fu">rchisq</span>( n<span class="sc">*</span>m , <span class="at">df =</span> v) ), <span class="at">nrow =</span> n, <span class="at">ncol =</span> m)</span>
+<span id="cb47-4"><a href="problem-set-2.html#cb47-4" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="problem-set-2.html#cb47-5" tabindex="-1"></a>R_final_t <span class="ot">=</span> <span class="fu">apply</span>(<span class="dv">1</span><span class="sc">+</span>R_mat_t, <span class="dv">1</span>, cumprod) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb47-6"><a href="problem-set-2.html#cb47-6" tabindex="-1"></a>sim_t_returns <span class="ot">=</span> R_final_t[,m]</span>
+<span id="cb47-7"><a href="problem-set-2.html#cb47-7" tabindex="-1"></a>MDD_t <span class="ot">=</span> <span class="fu">apply</span>(R_final_t, <span class="dv">1</span>, mdd)</span></code></pre></div>
+</div>
+<div id="part-iii" class="section level4 hasAnchor" number="17.4.3.3">
+<h4><span class="header-section-number">17.4.3.3</span> Part iii<a href="problem-set-2.html#part-iii" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="problem-set-2.html#cb48-1" tabindex="-1"></a><span class="fu">library</span>(fGarch)</span></code></pre></div>
+<pre><code>## NOTE: Packages &#39;fBasics&#39;, &#39;timeDate&#39;, and &#39;timeSeries&#39; are no longer
+## attached to the search() path when &#39;fGarch&#39; is attached.
+## 
+## If needed attach them yourself in your R script by e.g.,
+##         require(&quot;timeSeries&quot;)</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="problem-set-2.html#cb50-1" tabindex="-1"></a>garch_model<span class="ot">=</span><span class="fu">garchFit</span>(<span class="sc">~</span><span class="fu">garch</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">data=</span>net_ret<span class="sc">$</span>net_returns, <span class="at">trace =</span> <span class="cn">FALSE</span>) <span class="co"># fit GARCH(1,1) model</span></span>
+<span id="cb50-2"><a href="problem-set-2.html#cb50-2" tabindex="-1"></a>GARCH.param<span class="ot">=</span>garch_model<span class="sc">@</span>fit<span class="sc">$</span>coef <span class="co"># fitted coefficients</span></span>
+<span id="cb50-3"><a href="problem-set-2.html#cb50-3" tabindex="-1"></a>GARCH.spec<span class="ot">=</span><span class="fu">garchSpec</span>(<span class="at">model=</span><span class="fu">list</span>(<span class="at">mu=</span>GARCH.param[<span class="st">&#39;mu&#39;</span>], <span class="co"># define GARCH model specification for simulation</span></span>
+<span id="cb50-4"><a href="problem-set-2.html#cb50-4" tabindex="-1"></a>                                <span class="at">omega=</span>GARCH.param[<span class="st">&#39;omega&#39;</span>], </span>
+<span id="cb50-5"><a href="problem-set-2.html#cb50-5" tabindex="-1"></a>                                <span class="at">alpha=</span>GARCH.param[<span class="st">&#39;alpha1&#39;</span>], </span>
+<span id="cb50-6"><a href="problem-set-2.html#cb50-6" tabindex="-1"></a>                                <span class="at">beta=</span>GARCH.param[<span class="st">&#39;beta1&#39;</span>] ))</span>
+<span id="cb50-7"><a href="problem-set-2.html#cb50-7" tabindex="-1"></a>R.garch <span class="ot">=</span> <span class="fu">matrix</span>( <span class="dv">0</span>, <span class="at">nrow =</span> n, <span class="at">ncol =</span>m )</span>
+<span id="cb50-8"><a href="problem-set-2.html#cb50-8" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n){</span>
+<span id="cb50-9"><a href="problem-set-2.html#cb50-9" tabindex="-1"></a>  R.garch[i,]<span class="ot">=</span><span class="fu">as.numeric</span>(<span class="fu">garchSim</span>(GARCH.spec,m))</span>
+<span id="cb50-10"><a href="problem-set-2.html#cb50-10" tabindex="-1"></a>}</span>
+<span id="cb50-11"><a href="problem-set-2.html#cb50-11" tabindex="-1"></a>Rcm.garch <span class="ot">=</span> <span class="fu">t</span>( <span class="fu">apply</span>( <span class="dv">1</span><span class="sc">+</span>R.garch, <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">FUN =</span> cumprod) <span class="sc">-</span> <span class="dv">1</span> )</span>
+<span id="cb50-12"><a href="problem-set-2.html#cb50-12" tabindex="-1"></a>Rfn.garch <span class="ot">=</span> Rcm.garch[,m]</span>
+<span id="cb50-13"><a href="problem-set-2.html#cb50-13" tabindex="-1"></a>MDD.garch <span class="ot">=</span> <span class="fu">apply</span>(Rcm.garch, <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">FUN =</span> mdd )</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="problem-set-2.html#cb51-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb51-2"><a href="problem-set-2.html#cb51-2" tabindex="-1"></a><span class="fu">hist</span>(sim_norm_returns)</span>
+<span id="cb51-3"><a href="problem-set-2.html#cb51-3" tabindex="-1"></a><span class="fu">hist</span>(sim_t_returns)</span>
+<span id="cb51-4"><a href="problem-set-2.html#cb51-4" tabindex="-1"></a><span class="fu">hist</span>(Rfn.garch)</span>
+<span id="cb51-5"><a href="problem-set-2.html#cb51-5" tabindex="-1"></a><span class="fu">hist</span>(MDD)</span>
+<span id="cb51-6"><a href="problem-set-2.html#cb51-6" tabindex="-1"></a><span class="fu">hist</span>(MDD_t)</span>
+<span id="cb51-7"><a href="problem-set-2.html#cb51-7" tabindex="-1"></a><span class="fu">hist</span>(MDD.garch)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p>The final returns for t-distr. and GARCH gave lower negative values, but are comparable to those of Normal. In terms of maximum drawdown, the GARCH values have a smaller range, but are otherwise also comparable. Not that for for both metrics we combine/compound many returns, so the effects of heavy tails is suppressed.</p>
+<blockquote>
+<p>I definitely fucked up somewhere in these simulations…don’t know where though.</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div id="q5" class="section level2 hasAnchor" number="17.5">
+<h2><span class="header-section-number">17.5</span> Q5<a href="problem-set-2.html#q5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="part-a-2" class="section level3 hasAnchor" number="17.5.1">
+<h3><span class="header-section-number">17.5.1</span> Part A<a href="problem-set-2.html#part-a-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="problem-set-2.html#cb52-1" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">5000</span></span>
+<span id="cb52-2"><a href="problem-set-2.html#cb52-2" tabindex="-1"></a></span>
+<span id="cb52-3"><a href="problem-set-2.html#cb52-3" tabindex="-1"></a><span class="co"># simulate from t distribution with df=1</span></span>
+<span id="cb52-4"><a href="problem-set-2.html#cb52-4" tabindex="-1"></a><span class="fu">plot</span>( <span class="fu">cumsum</span>( <span class="fu">rt</span>(n , <span class="at">df =</span> <span class="dv">1</span>) ) <span class="sc">/</span> (<span class="dv">1</span><span class="sc">:</span>n), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>); </span>
+<span id="cb52-5"><a href="problem-set-2.html#cb52-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">0</span>, <span class="at">lty =</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<p>If the WLLN held for this distribution, you would expect to see the average converge to 0.</p>
+<blockquote>
+<p>The cauchy distribution will not converge to 0 because of the extreme values we have sampled will always cause large shifts in the cumulative sum.</p>
+</blockquote>
+</div>
+<div id="part-b-2" class="section level3 hasAnchor" number="17.5.2">
+<h3><span class="header-section-number">17.5.2</span> Part B<a href="problem-set-2.html#part-b-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="problem-set-2.html#cb53-1" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rt</span>(n , <span class="at">df =</span> <span class="dv">1</span>)</span>
+<span id="cb53-2"><a href="problem-set-2.html#cb53-2" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">rt</span>(n , <span class="at">df =</span> <span class="dv">1</span>)</span>
+<span id="cb53-3"><a href="problem-set-2.html#cb53-3" tabindex="-1"></a>w <span class="ot">=</span> x<span class="sc">+</span>y<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb53-4"><a href="problem-set-2.html#cb53-4" tabindex="-1"></a></span>
+<span id="cb53-5"><a href="problem-set-2.html#cb53-5" tabindex="-1"></a><span class="co"># sort w so we can create a qq plot</span></span>
+<span id="cb53-6"><a href="problem-set-2.html#cb53-6" tabindex="-1"></a>w_sorted <span class="ot">=</span> <span class="fu">sort</span>(w)</span>
+<span id="cb53-7"><a href="problem-set-2.html#cb53-7" tabindex="-1"></a>cauchy_quantiles <span class="ot">=</span> <span class="fu">qt</span>(<span class="fu">ppoints</span>(n), <span class="at">df =</span> <span class="dv">1</span>)</span>
+<span id="cb53-8"><a href="problem-set-2.html#cb53-8" tabindex="-1"></a><span class="fu">plot</span>(w_sorted, cauchy_quantiles, <span class="at">xlab=</span><span class="st">&quot;Sample Quantiles&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Theoretical Quantiles&quot;</span>)</span>
+<span id="cb53-9"><a href="problem-set-2.html#cb53-9" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>) </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p>On average, the sample and theoretical quantiles agree. With heavy tailed distributions like the Cauchy, we can expect some (but few) extreme values like the outliers we see here.</p>
+</div>
+<div id="part-c-2" class="section level3 hasAnchor" number="17.5.3">
+<h3><span class="header-section-number">17.5.3</span> Part C<a href="problem-set-2.html#part-c-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A simulation experiment demonstrating the first EVT (convergence of the max of RVs goes to one of three distributions)</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="problem-set-2.html#cb54-1" tabindex="-1"></a>m <span class="ot">=</span> <span class="dv">1000</span></span>
+<span id="cb54-2"><a href="problem-set-2.html#cb54-2" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span></span>
+<span id="cb54-3"><a href="problem-set-2.html#cb54-3" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="problem-set-2.html#cb54-4" tabindex="-1"></a>partc <span class="ot">=</span> <span class="cf">function</span>(func, an, bn, ...){</span>
+<span id="cb54-5"><a href="problem-set-2.html#cb54-5" tabindex="-1"></a>  mn <span class="ot">=</span> <span class="fu">c</span>()</span>
+<span id="cb54-6"><a href="problem-set-2.html#cb54-6" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>m){</span>
+<span id="cb54-7"><a href="problem-set-2.html#cb54-7" tabindex="-1"></a>    mn[i] <span class="ot">=</span> <span class="fu">max</span>(<span class="fu">func</span>(n,...))</span>
+<span id="cb54-8"><a href="problem-set-2.html#cb54-8" tabindex="-1"></a>  }</span>
+<span id="cb54-9"><a href="problem-set-2.html#cb54-9" tabindex="-1"></a>  yj <span class="ot">=</span> (mn <span class="sc">-</span> bn)<span class="sc">/</span>an</span>
+<span id="cb54-10"><a href="problem-set-2.html#cb54-10" tabindex="-1"></a>  <span class="fu">return</span>(yj);</span>
+<span id="cb54-11"><a href="problem-set-2.html#cb54-11" tabindex="-1"></a>}</span>
+<span id="cb54-12"><a href="problem-set-2.html#cb54-12" tabindex="-1"></a></span>
+<span id="cb54-13"><a href="problem-set-2.html#cb54-13" tabindex="-1"></a>i <span class="ot">=</span> <span class="fu">partc</span>(runif, <span class="dv">1</span><span class="sc">/</span>n, <span class="dv">1</span>)</span>
+<span id="cb54-14"><a href="problem-set-2.html#cb54-14" tabindex="-1"></a>ii <span class="ot">=</span> <span class="fu">partc</span>(rnorm, <span class="dv">1</span><span class="sc">/</span>(n<span class="sc">*</span><span class="fu">dnorm</span>(<span class="fu">qnorm</span>(<span class="dv">1-1</span><span class="sc">/</span>n))), <span class="fu">qnorm</span>(<span class="dv">1-1</span><span class="sc">/</span>n))</span>
+<span id="cb54-15"><a href="problem-set-2.html#cb54-15" tabindex="-1"></a>iii <span class="ot">=</span> <span class="fu">partc</span>(rt, n<span class="sc">/</span>pi, <span class="dv">0</span>, <span class="at">df =</span><span class="dv">1</span>)</span>
+<span id="cb54-16"><a href="problem-set-2.html#cb54-16" tabindex="-1"></a></span>
+<span id="cb54-17"><a href="problem-set-2.html#cb54-17" tabindex="-1"></a><span class="co"># overlay theoretical distribution</span></span>
+<span id="cb54-18"><a href="problem-set-2.html#cb54-18" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb54-19"><a href="problem-set-2.html#cb54-19" tabindex="-1"></a><span class="fu">hist</span>(<span class="sc">-</span>i, <span class="at">probability =</span> T)</span>
+<span id="cb54-20"><a href="problem-set-2.html#cb54-20" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,.<span class="dv">01</span>)</span>
+<span id="cb54-21"><a href="problem-set-2.html#cb54-21" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">dexp</span>(x), <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb54-22"><a href="problem-set-2.html#cb54-22" tabindex="-1"></a></span>
+<span id="cb54-23"><a href="problem-set-2.html#cb54-23" tabindex="-1"></a><span class="fu">hist</span>(ii, <span class="at">probability =</span> T)</span>
+<span id="cb54-24"><a href="problem-set-2.html#cb54-24" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>,.<span class="dv">01</span>)</span>
+<span id="cb54-25"><a href="problem-set-2.html#cb54-25" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">exp</span>( <span class="sc">-</span> x <span class="sc">-</span> <span class="fu">exp</span>(<span class="sc">-</span>x)), <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb54-26"><a href="problem-set-2.html#cb54-26" tabindex="-1"></a></span>
+<span id="cb54-27"><a href="problem-set-2.html#cb54-27" tabindex="-1"></a><span class="fu">hist</span>(iii, <span class="at">probability =</span> T)</span>
+<span id="cb54-28"><a href="problem-set-2.html#cb54-28" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">150</span>,.<span class="dv">01</span>)</span>
+<span id="cb54-29"><a href="problem-set-2.html#cb54-29" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="dv">1</span><span class="sc">/</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span>x), <span class="at">col =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p>From answer key:
+&gt;In cases i. and ii. the convergence to the theoretical distribution is evident, but in iii. the histogram is not as informative because of the extreme values involved. For the last case, one can plot the histogram &amp; density of the log-transformed normalized maxima, which actually show the convergence.
+(Note: the log-transformation of the Frechet(<span class="math inline">\(\alpha=1\)</span>) is the Gumbel distribution.)</p>
+<blockquote>
+<p>I think it is incorrect, as I think the exponential transform of the Frechet(<span class="math inline">\(\alpha=1\)</span>) is the Gumbel distribution.</p>
+</blockquote>
+<p>The solutions continue on to show:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="problem-set-2.html#cb55-1" tabindex="-1"></a><span class="fu">hist</span>( <span class="fu">log</span>(iii), <span class="at">probability =</span> T, <span class="at">main =</span> <span class="st">&quot;iii. log-transform&quot;</span> )</span>
+<span id="cb55-2"><a href="problem-set-2.html#cb55-2" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="dv">15</span>,.<span class="dv">01</span>)</span>
+<span id="cb55-3"><a href="problem-set-2.html#cb55-3" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">exp</span>( <span class="sc">-</span>x<span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>x)), <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb55-4"><a href="problem-set-2.html#cb55-4" tabindex="-1"></a><span class="fu">legend</span>( <span class="st">&quot;topright&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="fu">c</span>(<span class="st">&quot;log-Sample hist.&quot;</span>,<span class="st">&quot;log-Frechet&quot;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="problem-set-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="problem-set-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/ProblemSets/PS2.md",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

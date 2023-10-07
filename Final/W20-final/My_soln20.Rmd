@@ -1,0 +1,181 @@
+---
+title: "My_soln"
+author: "Richard Ye"
+date: "2023-04-25"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Q4
+```{r}
+library(zoo)
+library(tseries)
+tickers = c("DVEM", "EXT", "HYEM", "LTPZ", "SCHP",
+            "EDV",  "SPMB", "TLT", "GOVT")
+S=list()
+for(i in 1:length(tickers)){
+  S[[i]] = get.hist.quote(tickers[i], start='2018-01-01',
+             end='2019-12-31', quote='AdjClose', drop = TRUE)
+}
+```
+## Part A
+Calculate the log-returns of the ETFs, and plot the price and return series for the first ETF (DVEM).
+
+```{r, warning=FALSE,message=FALSE}
+R_mut=lapply(S, FUN = function(x){ log(x /stats::lag(x,-1) ) }) # calculate log returns
+m_etf = matrix(unlist(R_mut), ncol=length(tickers))
+colnames(m_etf) = tickers
+
+# Right
+plot(cbind(S[[1]] %>% head(-1), R_mut[[1]]), xlab="Time", ylab="Value")
+
+r = lapply(S, FUN=function(x){diff(log(x))}) 
+R = lapply(r, FUN=function(x){exp(x)-1}) 
+
+plot(S[[1]])
+plot(R[[1]])
+```
+
+## Part B
+[5 points] Use factanal() to fit a 2-factor model to the correlation matrix of the returns. Report the factor loadings and idiosyncratic variances of you model.
+```{r}
+fmod = factanal(m_etf, factors = 2)
+
+# Loadings?
+(b = fmod$loadings)
+
+# Variances of each etf?
+(v = fmod$uniquenesses)
+```
+
+## Part C
+[10 points] Simulate 250 daily log-returns using a multivariate Normal distribution with parameters given by the sample means and variances of the ETFs, and correla- tion matrix given by the previous factor model. Calculate and plot the cumulative net-returns of an equally weighted portfolio over the 10 ETFs.
+
+```{r}
+MU = sapply(R, mean)
+SD = sapply(R, sd)
+
+# calculates the covariance matrix using the correlation matrix from the model and sample variances
+VC = ( b%*%t(b) + diag(v) ) * (SD %*% t(SD)) 
+
+library(mvtnorm)
+Rsim = mvtnorm::rmvnorm(250, MU, VC)
+
+R_eqwt = rowMeans( exp( apply(Rsim,2,cumsum) ) - 1 )
+plot(R_eqwt, type = "l");
+```
+
+# Q5
+
+Consider a European chooser option where the holder gets to decide at time T1 whether the option becomes a call or a put with fixed strike K and maturity T2 > T1. In other words, the holder “chooses” at time T1 the form of the option payoff: 
+(ST2 − K)+ for a call, or (K − ST2 )+ for a put.
+
+Note that because of put-call parity,i.e.C(ST1,T2−T1,K)−P(ST1,T2−T1,K)=ST1 −Ke−r(T2−T1), the holder’s optimal decision at time T1 is straightforward:
+- If ST1 − Ke−r(T2−T1) > 0, they choose the call (b/c it is more valuable,i .e. C(ST1,T2 −T1,K)>P(ST1,T2 −T1,K))
+- If ST1 − Ke−r(T2−T1) < 0, they choose the put
+
+Let the current price of the underlying asset be S0 = 100, the strike price be K = 100, the choosing and expiration times be T1 = 1 and T2 = 2, and the risk-free rate be r = 5%, and assume the standard geometric Brownian motion (GBM) asset price dynamics:
+with volatility σ = 20%.
+dSt = rStdt + σStdWt
+
+## Part A
+[5 points] Use fExoticOptions::SimpleChooserOption() to find the exact price of the option.
+```{r}
+install.packages("fExoticOptions")
+S0 = K = 100; T1 = 1; T2 = 2; r = .05; v = .2
+
+# (a)
+library(fExoticOptions)
+SimpleChooserOption(S = S0, X = K, time1 = 1, Time2 = 2, 
+                    r = r, b = r, sigma = v)@price
+```
+
+
+## Part B
+(b) [10 points] Perform a simulation with n = 10,000 paths for pricing the chooser option. For each path, generate two prices: ST1 at time T1 for determining the form of the payoff, and ST2 at time T2 for determining the value of the payoff. Report the estimated price and its standard deviation.
+```{r}
+# (b)
+set.seed(123); 
+n = 10000; dT = T2-T1
+#generate two normals
+Z1 = rnorm(10000); Z2 = rnorm(10000)
+# calculate option price 
+S1 = S0*exp( (r-v^2/2)*T1 + v*sqrt(T1)*Z1 )
+S2 = S1*exp( (r-v^2/2)*dT + v*sqrt(dT)*Z2 )
+payoff.b = exp(-r*T2) * ifelse( S1 > K * exp(-r*dT), 
+                              pmax( S2 - K, 0),
+                              pmax( K - S2, 0) )
+mean(payoff.b) 
+sd(payoff.b)/sqrt(N)
+
+# (c)
+library(fOptions)
+payoff.c = exp(-r*T1) * ifelse( S1 > K * exp(-r*dT), 
+                                GBSOption( "c", S1, K, dT, r, r, v )@price,
+                                GBSOption( "p", S1, K, dT, r, r, v )@price )
+mean(payoff.c) 
+sd(payoff.c)/sqrt(N)
+
+# (d)
+m = 20; Dt = T2/m
+Z = matrix( rnorm( n * m ), n, m)
+S = matrix( S0, n, m + 1 )
+for(i in 1:m){
+  S[,i+1] = S[,i]  + r * S[,i] * Dt + v * log(S[,i]) * sqrt(Dt) * Z[,i] 
+}
+payoff.d = exp(-r*T2) * ifelse( S[, m/2 + 1] > K * exp(-r*dT),
+                                pmax( S[, m + 1] - K, 0),
+                                pmax( K - S[, m + 1], 0) )
+mean(payoff.d)
+sd(payoff.d) / sqrt(n)
+```
+
+## Part C
+(c) [5 points] Repeat the simulation experiment, but this time use the the Black- Scholes formula to value the chosen option at time T1. In other words, you don’t have to simulate ST2 ; just simulate ST1 and calculate the exact value of the chosen call or put option at time T1 using Black-Scholes. Report the estimated price and its standard deviation (should be smaller).
+(Hint: use fOptions::GBSOption() to get the Black-Scholes price.)
+```{r}
+# (b)
+set.seed(123); 
+n = 10000; dT = T2-T1
+Z1 = rnorm(10000); Z2 = rnorm(10000)
+S1 = S0*exp( (r-v^2/2)*T1 + v*sqrt(T1)*Z1 )
+S2 = S1*exp( (r-v^2/2)*dT + v*sqrt(dT)*Z2 )
+payoff.b = exp(-r*T2) * ifelse( S1 > K * exp(-r*dT), 
+                              pmax( S2 - K, 0),
+                              pmax( K - S2, 0) )
+mean(payoff.b) 
+sd(payoff.b)/sqrt(N)
+
+# (c)
+library(fOptions)
+payoff.c = exp(-r*T1) * ifelse( S1 > K * exp(-r*dT), 
+                                GBSOption( "c", S1, K, dT, r, r, v )@price,
+                                GBSOption( "p", S1, K, dT, r, r, v )@price )
+mean(payoff.c) 
+sd(payoff.c)/sqrt(N)
+```
+
+## Part D
+(d) [10 points] Repeat part (b), using the following dynamics for the asset:
+dSt = rStdt + σ log(St)dWt
+Note that the price process no longer follows GBM, so use path discretization with m = 20 steps per path to approximate ST1 and ST2. Report the estimated price and its standard deviation.
+(Note: the option choice rule at T1 does not change with asset price dynamics, since put-call parity holds for any model; but your answer will be different from part (a) which only holds for GBM.)
+
+```{r}
+# (d)
+m = 20; Dt = T2/m
+Z = matrix( rnorm( n * m ), n, m)
+S = matrix( S0, n, m + 1 )
+for(i in 1:m){
+  S[,i+1] = S[,i]  + r * S[,i] * Dt + v * log(S[,i]) * sqrt(Dt) * Z[,i] 
+}
+payoff.d = exp(-r*T2) * ifelse( S[, m/2 + 1] > K * exp(-r*dT),
+                                pmax( S[, m + 1] - K, 0),
+                                pmax( K - S[, m + 1], 0) )
+mean(payoff.d)
+sd(payoff.d) / sqrt(n)
+```
+
